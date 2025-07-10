@@ -75,8 +75,8 @@ export default class StatusController extends Controller {
       type: 'OOO',
       from: getUTCMidnightTimestampFromDate(from),
       until: getUTCMidnightTimestampFromDate(until),
-      message,
-      state: OOO_STATUS.PENDING,
+      reason: message,
+      status: OOO_STATUS.PENDING,
     };
     try {
       const response = await fetch(UPDATE_USER_STATUS_FOR_DEV, {
