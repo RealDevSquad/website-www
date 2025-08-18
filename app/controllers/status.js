@@ -5,7 +5,6 @@ import { inject as service } from '@ember/service';
 import {
   CURRENT_STATUS_UPDATE_SUCCESS,
   FUTURE_STATUS_UPDATE_SUCCESS,
-  OOO_STATUS,
   OOO_STATUS_REQUEST_FAILURE_MESSAGE,
   STATUS_UPDATE_FAILURE_MESSAGE,
   USER_STATES,
@@ -69,14 +68,13 @@ export default class StatusController extends Controller {
   }
 
   @action
-  async statusUpdateForDev(from, until, message) {
+  async statusUpdateForDev(from, until, reason) {
     this.isStatusUpdating = true;
     const statusRequestBody = {
       type: 'OOO',
       from: getUTCMidnightTimestampFromDate(from),
       until: getUTCMidnightTimestampFromDate(until),
-      message,
-      state: OOO_STATUS.PENDING,
+      reason,
     };
     try {
       const response = await fetch(UPDATE_USER_STATUS_FOR_DEV, {
@@ -87,22 +85,23 @@ export default class StatusController extends Controller {
         },
         credentials: 'include',
       });
+
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
+
       if (!response.ok) {
         this.toast.error(
-          OOO_STATUS_REQUEST_FAILURE_MESSAGE,
+          data?.message || OOO_STATUS_REQUEST_FAILURE_MESSAGE,
           'Error!',
           TOAST_OPTIONS,
         );
         return;
       }
-      let data;
-      try {
-        data = await response.json();
-      } catch (jsonError) {
-        this.toast.error('Failed to parse response', 'Error!', TOAST_OPTIONS);
-        return;
-      }
-      this.toast.success(data.message, 'Success!', TOAST_OPTIONS);
+      this.toast.success(data?.message, 'Success!', TOAST_OPTIONS);
     } catch (error) {
       this.toast.error(
         OOO_STATUS_REQUEST_FAILURE_MESSAGE,
