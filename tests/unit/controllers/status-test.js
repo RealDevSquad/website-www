@@ -1,6 +1,9 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'website-www/tests/helpers';
-import { USER_STATES } from 'website-www/constants/user-status';
+import {
+  OOO_STATUS_REQUEST_FAILURE_MESSAGE,
+  USER_STATES,
+} from 'website-www/constants/user-status';
 import Service from '@ember/service';
 import sinon from 'sinon';
 import { UPDATE_USER_STATUS } from 'website-www/constants/apis';
@@ -194,7 +197,7 @@ module('Unit | Controller | status', function (hooks) {
     assert.ok(toastService.success.notCalled, 'success toast not called');
     assert.strictEqual(
       toastService.error.firstCall.args[0],
-      'Invalid date range',
+      OOO_STATUS_REQUEST_FAILURE_MESSAGE,
       'error toast uses API message when provided',
     );
     assert.false(
