@@ -2,6 +2,8 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import apiRequest from '../utils/api-request';
+import { getUTCMidnightTimestampFromDate } from '../utils/date-conversion';
 import {
   CURRENT_STATUS_UPDATE_SUCCESS,
   FUTURE_STATUS_UPDATE_SUCCESS,
@@ -9,11 +11,7 @@ import {
   STATUS_UPDATE_FAILURE_MESSAGE,
   USER_STATES,
 } from '../constants/user-status';
-import {
-  UPDATE_USER_STATUS,
-  UPDATE_USER_STATUS_FOR_DEV,
-} from '../constants/apis';
-import { getUTCMidnightTimestampFromDate } from '../utils/date-conversion';
+import { UPDATE_USER_STATUS, CREATE_OOO_REQUEST_URL } from '../constants/apis';
 import { TOAST_OPTIONS } from '../constants/toast-options';
 
 export default class StatusController extends Controller {
@@ -68,31 +66,22 @@ export default class StatusController extends Controller {
   }
 
   @action
-  async statusUpdateForDev(from, until, reason) {
+  async createOOORequest(from, until, reason) {
     this.isStatusUpdating = true;
-    const statusRequestBody = {
+    const requestBody = {
       type: 'OOO',
       from: getUTCMidnightTimestampFromDate(from),
       until: getUTCMidnightTimestampFromDate(until),
       reason,
     };
+
     try {
-      const response = await fetch(UPDATE_USER_STATUS_FOR_DEV, {
-        method: 'POST',
-        body: JSON.stringify(statusRequestBody),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      });
-
-      let data;
-      try {
-        data = await response.json();
-      } catch {
-        data = null;
-      }
-
+      const response = await apiRequest(
+        CREATE_OOO_REQUEST_URL,
+        'POST',
+        requestBody,
+      );
+      const data = await response.json();
       if (!response.ok) {
         this.toast.error(
           data?.message || OOO_STATUS_REQUEST_FAILURE_MESSAGE,

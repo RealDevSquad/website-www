@@ -108,7 +108,7 @@ export default class UserStatusModalComponent extends Component {
 
   async updateStatusBasedOnMode(isDevMode, newStateObj) {
     if (isDevMode) {
-      await this.args.statusUpdateForDev(
+      await this.args.createOOORequest(
         this.fromDate,
         this.untilDate,
         this.reason,
