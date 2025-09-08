@@ -20,7 +20,7 @@
       @id='copy-code'
       @class='icon-button--md'
       @title='copy'
-      @onClick={{(fn this.copyHandler @code)}}
+      @onClick={{fn this.copyHandler @code}}
       @icon={{if
         this.isCopied
         'material-symbols:done'
