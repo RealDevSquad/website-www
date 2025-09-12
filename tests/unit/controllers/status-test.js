@@ -182,7 +182,7 @@ module('Unit | Controller | status', function (hooks) {
       .slice(0, 10);
     const reason = 'Personal';
 
-    const mockErrorBody = { message: 'Invalid date range' };
+    const mockErrorBody = { message: OOO_STATUS_REQUEST_FAILURE_MESSAGE };
     this.fetchStub.resolves(
       new Response(JSON.stringify(mockErrorBody), {
         status: 400,

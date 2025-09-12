@@ -81,6 +81,7 @@ export default class StatusController extends Controller {
         'POST',
         requestBody,
       );
+      const data = await response.json();
       if (!response.ok) {
         this.toast.error(
           data?.message || OOO_STATUS_REQUEST_FAILURE_MESSAGE,
@@ -90,7 +91,6 @@ export default class StatusController extends Controller {
         return;
       }
 
-      const data = await response.json();
       this.toast.success(data?.message, 'Success!', TOAST_OPTIONS);
     } catch (error) {
       this.toast.error(
