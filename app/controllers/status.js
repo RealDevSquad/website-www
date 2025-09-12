@@ -1,18 +1,19 @@
 import Controller from '@ember/controller';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import apiRequest from '../utils/api-request';
-import { getUTCMidnightTimestampFromDate } from '../utils/date-conversion';
+import { tracked } from '@glimmer/tracking';
+import { CREATE_OOO_REQUEST_URL, UPDATE_USER_STATUS } from '../constants/apis';
+import { TOAST_OPTIONS } from '../constants/toast-options';
 import {
   CURRENT_STATUS_UPDATE_SUCCESS,
   FUTURE_STATUS_UPDATE_SUCCESS,
+  OOO_REQUEST_SUCCESS_MESSAGE,
   OOO_STATUS_REQUEST_FAILURE_MESSAGE,
   STATUS_UPDATE_FAILURE_MESSAGE,
   USER_STATES,
 } from '../constants/user-status';
-import { UPDATE_USER_STATUS, CREATE_OOO_REQUEST_URL } from '../constants/apis';
-import { TOAST_OPTIONS } from '../constants/toast-options';
+import apiRequest from '../utils/api-request';
+import { getUTCMidnightTimestampFromDate } from '../utils/date-conversion';
 
 export default class StatusController extends Controller {
   @service featureFlag;
@@ -91,7 +92,11 @@ export default class StatusController extends Controller {
         return;
       }
 
-      this.toast.success(data?.message, 'Success!', TOAST_OPTIONS);
+      this.toast.success(
+        data?.message || OOO_REQUEST_SUCCESS_MESSAGE,
+        'Success!',
+        TOAST_OPTIONS,
+      );
     } catch (error) {
       this.toast.error(
         OOO_STATUS_REQUEST_FAILURE_MESSAGE,
