@@ -45,10 +45,9 @@
           {{on "input" this.handleInput}}
           data-test-textarea-reason
         ></textarea>
-
       </div>
       <button
-        disabled={{this.disableSubmitButton}}
+        disabled={{or this.disableSubmitButton @isStatusUpdating}}
         type="button"
         class={{if
           this.disableSubmitButton
@@ -58,7 +57,7 @@
         {{on "click" this.getCurrentStatusObj}}
         data-test-submit-button
       >
-        Submit
+      {{if @isStatusUpdating "creating..." "Submit"}}
       </button>
       <button
         type="button"

@@ -69,6 +69,7 @@ export default class StatusController extends Controller {
   @action
   async createOOORequest(from, until, reason) {
     this.isStatusUpdating = true;
+
     const requestBody = {
       type: 'OOO',
       from: getUTCMidnightTimestampFromDate(from),
@@ -97,6 +98,7 @@ export default class StatusController extends Controller {
         'Success!',
         TOAST_OPTIONS,
       );
+      this.toggleUserStateModal();
     } catch (error) {
       this.toast.error(
         OOO_STATUS_REQUEST_FAILURE_MESSAGE,
