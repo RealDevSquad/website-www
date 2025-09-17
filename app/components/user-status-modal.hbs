@@ -49,15 +49,11 @@
       <button
         disabled={{or this.disableSubmitButton @isStatusUpdating}}
         type="button"
-        class={{if
-          this.disableSubmitButton
-          "modal__submit--disabled"
-          "modal__submit"
-        }}
+        class={{if (or this.disableSubmitButton @isStatusUpdating) "modal__submit--disabled" "modal__submit"}}
         {{on "click" this.getCurrentStatusObj}}
         data-test-submit-button
       >
-      {{if @isStatusUpdating "creating..." "Create"}}
+      {{if @isStatusUpdating "submitting..." "Submit"}}
       </button>
       <button
         type="button"
