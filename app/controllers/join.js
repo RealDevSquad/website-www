@@ -16,10 +16,14 @@ export default class JoinController extends Controller {
 
   ANKUSH_TWITTER = ANKUSH_TWITTER;
 
-  queryParams = ['step', 'dev'];
+  queryParams = ['step', 'dev', 'oldOnboarding'];
 
   get isDevMode() {
     return this.featureFlag.isDevMode;
+  }
+
+  get isOldOnboarding() {
+    return this.oldOnboarding === 'true';
   }
 
   get applicationData() {

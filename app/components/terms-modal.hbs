@@ -1,0 +1,51 @@
+<BaseModal @isOpen={{@isOpen}}>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="stepper__greeting">Terms and Conditions</h2>
+        <button
+          type="button"
+          class="modal-close"
+          {{on "click" @onClose}}
+          aria-label="Close modal"
+        >
+          ×
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3 class="label">1. Application Accuracy</h3>
+          <p>
+            All information provided in your application must be truthful and accurate.
+            Any false or misleading information will result in immediate rejection of your application.
+          </p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="label">2. AI-Generated Content</h3>
+          <p>
+            The use of AI-generated responses or content in your application is strictly prohibited.
+            We value authentic, personal responses that reflect your genuine thoughts and experiences.
+          </p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="label">3. Review Process</h3>
+          <p>
+            Application review times may vary based on current rankings and volume.
+            By submitting your application, you acknowledge that the review process may take time.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <Reusables::Button
+          @text="Accept Terms"
+          @variant="dark"
+          @onClick={{@onAccept}}
+          @test="accept-terms"
+          @type="button"
+        />
+      </div>
+    </div>
+</BaseModal>
