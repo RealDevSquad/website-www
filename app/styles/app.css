@@ -55,6 +55,7 @@
 @import url("notifications.css");
 @import url("mobile.module.css");
 @import url("qrcode.module.css");
+@import url("confirm-modal.module.css");
 @import url("new-signup.module.css");
 
 * {

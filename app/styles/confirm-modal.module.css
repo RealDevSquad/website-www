@@ -1,0 +1,42 @@
+.confirm-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 11rem;
+  width: 24rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px grey;
+  background-color: var(--color-white);
+  border-radius: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.confirm-modal__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.confirm-modal__heading h4 {
+  font-size: 1.3rem;
+}
+
+.confirm-modal__buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+@media only screen and (width <=425px) {
+  .confirm-modal {
+    width: 95%;
+  }
+
+  .confirm-modal__heading h4 {
+    font-size: 1.1rem;
+  }
+}

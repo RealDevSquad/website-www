@@ -79,7 +79,7 @@ export default class UserStatusModalComponent extends Component {
     if (!this.untilDate) return this.showError(WARNING_MESSAGE_FOR_UNTIL_FIELD);
     if (this.untilDate < this.fromDate)
       return this.showError(WARNING_FROM_DATE_EXCEEDS_UNTIL_DATE);
-    if (!this.reason.length && !this.checkIfFromToDatesAreClose())
+    if (!this.reason.trim() && !this.checkIfFromToDatesAreClose())
       return this.showError(WARNING_MESSAGE_FOR_OOO);
     return true;
   }
@@ -108,7 +108,7 @@ export default class UserStatusModalComponent extends Component {
 
   async updateStatusBasedOnMode(isDevMode, newStateObj) {
     if (isDevMode) {
-      await this.args.statusUpdateForDev(
+      await this.args.createOOORequest(
         this.fromDate,
         this.untilDate,
         this.reason,

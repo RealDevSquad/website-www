@@ -82,7 +82,7 @@ module('Integration | Component | user-status-modal', function (hooks) {
       },
     });
     await render(hbs`
-      <UserStatusModal 
+      <UserStatusModal
         @showUserStateModal={{this.showUserStateModal}}
         @newStatus={{this.newStatus}}
         @toggleUserStateModal={{this.toggleUserStateModal}}
@@ -116,5 +116,34 @@ module('Integration | Component | user-status-modal', function (hooks) {
     assert.dom('.modal__close').exists();
     await click('.modal__close');
     assert.dom('.status-modal').doesNotExist();
+  });
+
+  test('submit button shows loading state when isStatusUpdating is true', async function (assert) {
+    this.setProperties({
+      updateStatus: () => {},
+      toggleUserStateModal: () => {},
+      newStatus: 'OOO',
+      showUserStateModal: true,
+      isStatusUpdating: false,
+      isDevMode: true,
+      createOOORequest: () => {},
+    });
+
+    await render(hbs`
+      <UserStatusModal
+          @newStatus={{this.newStatus}}
+          @showUserStateModal={{this.showUserStateModal}}
+          @toggleUserStateModal={{this.toggleUserStateModal}}
+          @updateStatus={{this.updateStatus}}
+          @isStatusUpdating={{this.isStatusUpdating}}
+          @dev={{this.isDevMode}}
+          @createOOORequest={{this.createOOORequest}}
+      />
+    `);
+
+    assert.dom('[data-test-submit-button]').hasText('Submit');
+    this.set('isStatusUpdating', true);
+    assert.dom('[data-test-submit-button]').isDisabled();
+    assert.dom('[data-test-submit-button]').hasText('submitting...');
   });
 });
