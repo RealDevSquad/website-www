@@ -39,7 +39,7 @@
           />
         {{else}}
           {{#if this.isDevMode}}
-            <NewStepper @joinDiscord={{this.joinDiscordAction}} />
+            <NewStepper />
           {{else if this.isOldOnboarding}}
             <StepperSignup
               @chaincode={{this.chaincode}}

@@ -5,10 +5,9 @@ import { inject as service } from '@ember/service';
 
 export default class DevStepperComponent extends Component {
   @service login;
-  @service toast;
   @service router;
   @service onboarding;
-  @service featureFlag;
+
   @tracked preValid = false;
   @tracked isValid = JSON.parse(localStorage.getItem('isValid')) ?? false;
   @tracked termsAccepted = false;

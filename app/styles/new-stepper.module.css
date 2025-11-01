@@ -1,37 +1,21 @@
-@import url("stepper.module.css");
-
 .welcome-screen {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
   margin: 0 auto 3rem;
   padding: 2rem;
   background-color: var(--color-bgpink);
-  border-radius: 20px;
-}
-
-.welcome-screen__logo {
-  margin-bottom: 2rem;
-}
-
-.welcome-screen__logo img {
-  width: 120px;
-  height: auto;
-}
-
-.info-list {
-  text-align: left;
-  margin-bottom: 2rem;
-  width: 100%;
-  max-width: 500px;
+  border-radius: 10px;
 }
 
 .info-item--bullet {
-  display: block;
+  display: flex;
+  align-items: center;
   margin-bottom: 1rem;
-  color: var(--neutral-neutral-600, #4a4a4a);
+  color: var(--color-black-light);
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -39,97 +23,60 @@
 .info-item--bullet::before {
   content: "•";
   color: var(--color-pink);
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-right: 0.75rem;
 }
 
-.terms-section {
-  width: 100%;
-  max-width: 500px;
-  margin-bottom: 1rem;
-}
-
 .checkbox-container {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.75rem;
-  cursor: pointer;
-  text-align: left;
-}
-
-.checkbox-container input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  margin-top: 0.1rem;
-  flex-shrink: 0;
   cursor: pointer;
 }
 
 .checkbox-text {
-  color: var(--neutral-neutral-600, #4a4a4a);
+  color: var(--color-black-light);
   font-size: 0.9rem;
   line-height: 1.4;
 }
 
+.button__start-container {
+  display: flex;
+  justify-content: center;
+}
+
 .modal-content {
-  background: white;
-  border-radius: 12px;
-  padding: 0;
+  background: var(--color-white);
+  border-radius: 10px;
+  padding: 2rem;
   width: 90vw;
   max-width: 600px;
   max-height: 80vh;
   overflow: hidden;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid var(--color-lightgrey);
-  background-color: var(--color-bgpink);
 }
 
-.modal-close {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: var(--neutral-neutral-600, #4a4a4a);
-  cursor: pointer;
-  padding: 0;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
-}
-
-.modal-close:hover {
-  background-color: var(--color-lightgrey);
-}
-
-.modal-body {
-  padding: 2rem;
-  max-height: 400px;
-  overflow-y: auto;
+.modal-header h2 {
+  font-size: 1.5rem;
 }
 
 .modal-section {
-  margin-bottom: 2rem;
-}
-
-.modal-section:last-child {
-  margin-bottom: 0;
+  padding-block: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
 .modal-footer {
-  padding: 1.5rem 2rem;
-  border-top: 1px solid var(--color-lightgrey);
-  background-color: var(--color-bgpink);
   display: flex;
   justify-content: center;
 }
@@ -140,11 +87,7 @@
     padding: 1.5rem;
   }
 
-  .stepper__greeting {
-    font-size: 1.75rem;
-  }
-
-  .welcome-screen__logo img {
+  .welcome-screen img {
     width: 100px;
   }
 
@@ -169,7 +112,7 @@
     padding: 1rem;
   }
 
-  .welcome-screen__logo img {
+  .welcome-screen img {
     width: 80px;
   }
 
