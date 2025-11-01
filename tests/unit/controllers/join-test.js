@@ -21,7 +21,7 @@ module('Unit | Controller | join', function (hooks) {
 
   test('it has queryParams', function (assert) {
     let controller = this.owner.lookup('controller:join');
-    assert.deepEqual(controller.queryParams, ['step', 'dev']);
+    assert.deepEqual(controller.queryParams, ['step', 'dev', 'oldOnboarding']);
   });
 
   test('it correctly identifies when a user is logged in', function (assert) {
