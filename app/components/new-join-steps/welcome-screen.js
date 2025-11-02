@@ -5,27 +5,26 @@ import { inject as service } from '@ember/service';
 
 export default class WelcomeScreenComponent extends Component {
   @service applicationTerms;
-
-  @tracked showModal = false;
+  @tracked isTermsModalOpen = false;
 
   @action
-  handleCheckboxClick(e) {
+  handleTermsCheckboxChange(e) {
     if (this.applicationTerms.hasUserAcceptedTerms) {
       this.applicationTerms.setTermsAcceptance(false);
     } else {
-      e.target.checked = false;
-      this.showModal = true;
+      e.preventDefault();
+      this.isTermsModalOpen = true;
     }
   }
 
   @action
-  closeModal() {
-    this.showModal = false;
+  closeTermsModal() {
+    this.isTermsModalOpen = false;
   }
 
   @action
   acceptTerms() {
-    this.showModal = false;
+    this.isTermsModalOpen = false;
     this.applicationTerms.setTermsAcceptance(true);
   }
 }

@@ -22,24 +22,24 @@
     </div>
   </div>
 
-   <label class="stepper-welcome__checkbox">
-  <input
-    type="checkbox"
-    data-test="terms-checkbox"
-    checked={{this.applicationTerms.hasUserAcceptedTerms}}
-    {{on "change" this.handleCheckboxClick}}
-  />
+  <label class="stepper-welcome__checkbox">
+    <input
+      type="checkbox"
+      data-test="terms-checkbox"
+      checked={{this.applicationTerms.hasUserAcceptedTerms}}
+      {{on "click" this.handleTermsCheckboxChange}}
+    />
 
-  <span class="stepper-welcome__checkbox-text">
-    I accept the terms and conditions.
-  </span>
-</label>
+    <span class="stepper-welcome__checkbox-text">
+      I accept the terms and conditions.
+    </span>
+  </label>
 </div>
 
-{{#if this.showModal}}
+{{#if this.isTermsModalOpen}}
     <TermsModal
-      @isOpen={{this.showModal}}
+      @isOpen={{this.isTermsModalOpen}}
       @onAccept={{this.acceptTerms}}
-      @onClose={{this.closeModal}}
+      @onClose={{this.closeTermsModal}}
     />
 {{/if}}

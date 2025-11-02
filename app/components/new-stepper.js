@@ -4,21 +4,19 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class NewStepperComponent extends Component {
+  static MIN_STEP = 0;
+  static MAX_STEP = 5;
+
   @service login;
   @service router;
   @service onboarding;
   @service applicationTerms;
 
-  @tracked preValid = false;
-  @tracked isValid = JSON.parse(localStorage.getItem('isValid')) ?? false;
   @tracked currentStep = +(
     localStorage.getItem('currentStep') ??
     this.args.step ??
     0
   );
-
-  setIsValid = (newVal) => (this.isValid = newVal);
-  setIsPreValid = (newVal) => (this.preValid = newVal);
 
   constructor() {
     super(...arguments);
@@ -34,16 +32,8 @@ export default class NewStepperComponent extends Component {
     window.removeEventListener('popstate', this.handlePopState);
   }
 
-  get applicationStatus() {
-    return this.onboarding.applicationData?.status;
-  }
-
-  get applicationFeedback() {
-    return this.onboarding.applicationData?.feedback;
-  }
-
   @action incrementStep() {
-    if (this.currentStep < 5) {
+    if (this.currentStep < NewStepperComponent.MAX_STEP) {
       this.currentStep += 1;
       localStorage.setItem('currentStep', this.currentStep);
       this.router.transitionTo(`/join?dev=true&step=${this.currentStep}`);
@@ -51,7 +41,7 @@ export default class NewStepperComponent extends Component {
   }
 
   @action decrementStep() {
-    if (this.currentStep > 0) {
+    if (this.currentStep > NewStepperComponent.MIN_STEP) {
       this.currentStep -= 1;
       localStorage.setItem('currentStep', this.currentStep);
       this.router.transitionTo(`/join?dev=true&step=${this.currentStep}`);
@@ -59,21 +49,9 @@ export default class NewStepperComponent extends Component {
   }
 
   @action startHandler() {
-    if (!this.applicationTerms.hasUserAcceptedTerms) {
-      alert('Please accept the terms and conditions to continue');
-      return;
-    }
-
     localStorage.setItem('id', this.login.userData.id);
     localStorage.setItem('first_name', this.login.userData.first_name);
     localStorage.setItem('last_name', this.login.userData.last_name);
     this.incrementStep();
-  }
-
-  @action nextStep(e) {
-    e.preventDefault();
-    this.incrementStep();
-    localStorage.setItem('isValid', false);
-    this.isValid = false;
   }
 }
