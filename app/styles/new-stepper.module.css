@@ -73,6 +73,16 @@
   font-size: 1.5rem;
 }
 
+.terms-modal__close {
+  background-color: transparent !important;
+  margin: 0 !important;
+}
+
+.terms-modal__close:hover {
+  background-color: var(--color-lightgrey) !important;
+  transition: all 0.3s ease-in-out;
+}
+
 .terms-modal__section {
   padding-block: 0.5rem;
   display: flex;

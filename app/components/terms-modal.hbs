@@ -2,13 +2,13 @@
     <div class="terms-modal__content" data-test="terms-modal-content">
       <div class="terms-modal__header">
         <h2 data-test="terms-modal-header">Terms and Conditions</h2>
-        <button
-          type="button"
-          {{on "click" @onClose}}
-          aria-label="Close modal"
-        >
-          <FaIcon @icon="xmark" />
-        </button>
+        <Reusables::IconButton
+          @id='close-modal'
+          @class='icon-button--sm terms-modal__close'
+          @title='Close modal'
+          @onClick={{@onClose}}
+          @icon='material-symbols:close'
+        />
       </div>
 
       <div>
