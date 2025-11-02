@@ -1,17 +1,21 @@
-.welcome-screen {
+.stepper-welcome {
   max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   justify-content: center;
-  align-items: center;
   margin: 0 auto 3rem;
   padding: 2rem;
   background-color: var(--color-bgpink);
   border-radius: 10px;
 }
 
-.info-item--bullet {
+.stepper-welcome__logo {
+  display: flex;
+  justify-content: center;
+}
+
+.stepper-welcome__info-item--bullet {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
@@ -20,7 +24,7 @@
   line-height: 1.5;
 }
 
-.info-item--bullet::before {
+.stepper-welcome__info-item--bullet::before {
   content: "•";
   color: var(--color-pink);
   font-size: 1.5rem;
@@ -28,95 +32,86 @@
   margin-right: 0.75rem;
 }
 
-.checkbox-container {
+.stepper-welcome__checkbox {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   cursor: pointer;
 }
 
-.checkbox-text {
+.stepper-welcome__checkbox-text {
   color: var(--color-black-light);
   font-size: 0.9rem;
   line-height: 1.4;
 }
 
-.button__start-container {
+.stepper-welcome__actions {
   display: flex;
   justify-content: center;
 }
 
-.modal-content {
+.terms-modal__content {
   background: var(--color-white);
   border-radius: 10px;
   padding: 2rem;
   width: 90vw;
-  max-width: 600px;
+  max-width: 500px;
   max-height: 80vh;
-  overflow: hidden;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-.modal-header {
+.terms-modal__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.modal-header h2 {
+.terms-modal__header h2 {
   font-size: 1.5rem;
 }
 
-.modal-section {
+.terms-modal__section {
   padding-block: 0.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
 
-.modal-footer {
+.terms-modal__footer {
   display: flex;
   justify-content: center;
 }
 
 @media screen and (width <= 768px) {
-  .welcome-screen {
+  .stepper-welcome {
     margin: 1rem auto 3rem;
     padding: 1.5rem;
   }
 
-  .welcome-screen img {
+  .stepper-welcome img {
     width: 100px;
   }
 
-  .modal-content {
+  .terms-modal__content {
     width: 95vw;
     margin: 1rem;
-  }
-
-  .modal-header,
-  .modal-footer {
-    padding: 1rem 1.5rem;
-  }
-
-  .modal-body {
-    padding: 1.5rem;
   }
 }
 
 @media (width <= 480px) {
-  .welcome-screen {
+  .stepper-welcome {
     margin: 0.5rem auto 3rem;
     padding: 1rem;
   }
 
-  .welcome-screen img {
+  .stepper-welcome img {
     width: 80px;
   }
 
-  .checkbox-text {
+  .stepper-welcome__checkbox-text {
     font-size: 0.9rem;
   }
 }

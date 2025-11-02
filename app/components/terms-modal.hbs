@@ -1,6 +1,6 @@
 <BaseModal @isOpen={{@isOpen}}>
-    <div class="modal-content">
-      <div class="modal-header">
+    <div class="terms-modal__content">
+      <div class="terms-modal__header">
         <h2>Terms and Conditions</h2>
         <button
           type="button"
@@ -11,8 +11,8 @@
         </button>
       </div>
 
-      <div class="modal-body">
-        <div class="modal-section">
+      <div>
+        <div class="terms-modal__section">
           <h3>1. Application Accuracy</h3>
           <p>
             All information provided in your application must be truthful and accurate.
@@ -20,14 +20,14 @@
           </p>
         </div>
 
-        <div class="modal-section">
+        <div class="terms-modal__section">
           <h3>2. User Profile Picture</h3>
           <p>
             Users are required to upload a professional headshot as part of their profile. The submitted image will be securely stored in our databases and used for identification and verification purposes.
           </p>
         </div>
 
-        <div class="modal-section">
+        <div class="terms-modal__section">
           <h3>3. Sharing Personal Information</h3>
           <p>
             We may use trusted third-party API services to analyze and generate AI-based reviews. By submitting your information, you consent to the secure sharing of relevant data with these services for evaluation purposes.
@@ -35,14 +35,16 @@
         </div>
       </div>
 
-      <div class="modal-footer">
-        <Reusables::Button
-          @text="Accept Terms"
-          @variant="dark"
-          @onClick={{@onAccept}}
-          @test="accept-terms"
-          @type="button"
-        />
-      </div>
+      {{#if @isTermsAccepted}}
+        <div class="terms-modal__footer">
+            <Reusables::Button
+              @text="Accept Terms"
+              @variant="dark"
+              @onClick={{@onAccept}}
+              @test="accept-terms"
+              @type="button"
+            />
+        </div>
+      {{/if}}
     </div>
 </BaseModal>

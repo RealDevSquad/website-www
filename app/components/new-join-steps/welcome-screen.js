@@ -3,12 +3,19 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class WelcomeScreenComponent extends Component {
-  @tracked isTermsAccepted = false;
   @tracked showModal = false;
 
   @action
-  openModal(event) {
-    event.preventDefault();
+  openModal(e) {
+    const isCheckboxClick = e?.target?.tagName === 'INPUT';
+    if (isCheckboxClick) {
+      e.preventDefault();
+
+      if (this.args.isTermsAccepted) {
+        this.args.onTermsChange(false);
+        return;
+      }
+    }
     this.showModal = true;
   }
 
@@ -19,14 +26,11 @@ export default class WelcomeScreenComponent extends Component {
 
   @action
   acceptTerms() {
-    this.isTermsAccepted = true;
     this.showModal = false;
-    if (this.args.onTermsChange) {
-      this.args.onTermsChange(this.isTermsAccepted);
-    }
+    this.args.onTermsChange(true);
   }
 
-  get canProceed() {
-    return this.isTermsAccepted;
+  get isTermsAccepted() {
+    return this.args.isTermsAccepted;
   }
 }

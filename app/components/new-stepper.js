@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default class DevStepperComponent extends Component {
+export default class NewStepperComponent extends Component {
   @service login;
   @service router;
   @service onboarding;
@@ -57,14 +57,10 @@ export default class DevStepperComponent extends Component {
       return;
     }
 
-    if (this.login.isLoggedIn && !this.login.isLoading) {
-      localStorage.setItem('id', this.login.userData.id);
-      localStorage.setItem('first_name', this.login.userData.first_name);
-      localStorage.setItem('last_name', this.login.userData.last_name);
-      this.incrementStep();
-    } else {
-      alert('You must be logged in to continue');
-    }
+    localStorage.setItem('id', this.login.userData.id);
+    localStorage.setItem('first_name', this.login.userData.first_name);
+    localStorage.setItem('last_name', this.login.userData.last_name);
+    this.incrementStep();
   }
 
   @action nextStep(e) {
