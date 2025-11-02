@@ -1,12 +1,12 @@
-<div class="stepper-welcome">
-  <div class="stepper-welcome__logo">
+<div class="stepper-welcome" data-test="welcome-screen">
+  <div class="stepper-welcome__logo" data-test="welcome-logo">
     <img
       src="assets/images/rds-logo.png"
       alt="RDS"
     />
   </div>
 
-  <h1 class="stepper__greeting">Ready to apply to RDS?</h1>
+  <h1 class="stepper__greeting" data-test="welcome-greeting">Ready to apply to RDS?</h1>
 
   <div>
     <div class="stepper-welcome__info-item--bullet">
@@ -25,6 +25,7 @@
    <label class="stepper-welcome__checkbox">
   <input
     type="checkbox"
+    data-test="terms-checkbox"
     checked={{this.applicationTerms.hasUserAcceptedTerms}}
     {{on "change" this.handleCheckboxClick}}
   />

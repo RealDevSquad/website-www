@@ -1,7 +1,7 @@
 <BaseModal @isOpen={{@isOpen}}>
-    <div class="terms-modal__content">
+    <div class="terms-modal__content" data-test="terms-modal-content">
       <div class="terms-modal__header">
-        <h2>Terms and Conditions</h2>
+        <h2 data-test="terms-modal-header">Terms and Conditions</h2>
         <button
           type="button"
           {{on "click" @onClose}}
