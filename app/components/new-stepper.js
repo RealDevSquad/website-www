@@ -11,19 +11,27 @@ export default class NewStepperComponent extends Component {
 
   @tracked preValid = false;
   @tracked isValid = JSON.parse(localStorage.getItem('isValid')) ?? false;
-  @tracked currentStep =
-    +localStorage.getItem('currentStep') ?? +this.args.step ?? 0;
+  @tracked currentStep = +(
+    localStorage.getItem('currentStep') ??
+    this.args.step ??
+    0
+  );
 
   setIsValid = (newVal) => (this.isValid = newVal);
   setIsPreValid = (newVal) => (this.preValid = newVal);
 
   constructor() {
     super(...arguments);
-    window.onpopstate = () => {
-      this.currentStep = Number(
-        +new URLSearchParams(window.location.search).get('step'),
-      );
+    this.handlePopState = () => {
+      const step = new URLSearchParams(window.location.search).get('step');
+      if (step !== null) this.currentStep = Number(step);
     };
+    window.addEventListener('popstate', this.handlePopState);
+  }
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+    window.removeEventListener('popstate', this.handlePopState);
   }
 
   get applicationStatus() {
