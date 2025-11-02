@@ -1,10 +1,7 @@
 <section class='stepper'>
   <form class="stepper__form" onsubmit={{this.nextStep}}>
     {{#if (eq this.currentStep 0)}}
-      <NewJoinSteps::WelcomeScreen
-        @onTermsChange={{this.setTermsAccepted}}
-        @isTermsAccepted={{this.termsAccepted}}
-      />
+      <NewJoinSteps::WelcomeScreen />
 
       <div class="stepper-welcome__actions">
         <Reusables::Button
@@ -13,7 +10,7 @@
           @onClick={{this.startHandler}}
           @test='start'
           @type='button'
-          @disabled={{not this.termsAccepted}}
+          @disabled={{not this.applicationTerms.hasUserAcceptedTerms}}
         />
       </div>
     {{/if}}

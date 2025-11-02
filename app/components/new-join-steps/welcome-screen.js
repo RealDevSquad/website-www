@@ -1,22 +1,21 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default class WelcomeScreenComponent extends Component {
+  @service applicationTerms;
+
   @tracked showModal = false;
 
   @action
-  openModal(e) {
-    const isCheckboxClick = e?.target?.tagName === 'INPUT';
-    if (isCheckboxClick) {
-      e.preventDefault();
-
-      if (this.args.isTermsAccepted) {
-        this.args.onTermsChange(false);
-        return;
-      }
+  handleCheckboxClick(e) {
+    if (this.applicationTerms.hasUserAcceptedTerms) {
+      this.applicationTerms.setTermsAcceptance(false);
+    } else {
+      e.target.checked = false;
+      this.showModal = true;
     }
-    this.showModal = true;
   }
 
   @action
@@ -27,10 +26,6 @@ export default class WelcomeScreenComponent extends Component {
   @action
   acceptTerms() {
     this.showModal = false;
-    this.args.onTermsChange(true);
-  }
-
-  get isTermsAccepted() {
-    return this.args.isTermsAccepted;
+    this.applicationTerms.setTermsAcceptance(true);
   }
 }

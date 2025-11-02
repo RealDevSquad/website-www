@@ -35,16 +35,16 @@
         </div>
       </div>
 
-      {{#if @isTermsAccepted}}
+      {{#unless this.applicationTerms.hasUserAcceptedTerms}}
         <div class="terms-modal__footer">
-            <Reusables::Button
-              @text="Accept Terms"
-              @variant="dark"
-              @onClick={{@onAccept}}
-              @test="accept-terms"
-              @type="button"
-            />
+          <Reusables::Button
+            @text="Accept Terms"
+            @variant="dark"
+            @onClick={{@onAccept}}
+            @test="accept-terms"
+            @type="button"
+          />
         </div>
-      {{/if}}
+      {{/unless}}
     </div>
 </BaseModal>

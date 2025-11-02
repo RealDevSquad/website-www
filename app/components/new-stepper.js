@@ -7,16 +7,15 @@ export default class NewStepperComponent extends Component {
   @service login;
   @service router;
   @service onboarding;
+  @service applicationTerms;
 
   @tracked preValid = false;
   @tracked isValid = JSON.parse(localStorage.getItem('isValid')) ?? false;
-  @tracked termsAccepted = false;
   @tracked currentStep =
     +localStorage.getItem('currentStep') ?? +this.args.step ?? 0;
 
   setIsValid = (newVal) => (this.isValid = newVal);
   setIsPreValid = (newVal) => (this.preValid = newVal);
-  setTermsAccepted = (accepted) => (this.termsAccepted = accepted);
 
   constructor() {
     super(...arguments);
@@ -52,7 +51,7 @@ export default class NewStepperComponent extends Component {
   }
 
   @action startHandler() {
-    if (!this.termsAccepted) {
+    if (!this.applicationTerms.hasUserAcceptedTerms) {
       alert('Please accept the terms and conditions to continue');
       return;
     }

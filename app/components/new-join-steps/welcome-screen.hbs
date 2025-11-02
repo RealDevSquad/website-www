@@ -22,17 +22,17 @@
     </div>
   </div>
 
-    <div class="stepper-welcome__checkbox">
-      <input
-        type="checkbox"
-        checked={{@isTermsAccepted}}
-        readonly
-        {{on "click" this.openModal}}
-      />
-      <span class="stepper-welcome__checkbox-text" {{on "click" (fn (mut this.showModal) true)}}>
-        I accept the terms and conditions.
-      </span>
-    </div>
+   <label class="stepper-welcome__checkbox">
+  <input
+    type="checkbox"
+    checked={{this.applicationTerms.hasUserAcceptedTerms}}
+    {{on "change" this.handleCheckboxClick}}
+  />
+
+  <span class="stepper-welcome__checkbox-text">
+    I accept the terms and conditions.
+  </span>
+</label>
 </div>
 
 {{#if this.showModal}}
@@ -40,6 +40,5 @@
       @isOpen={{this.showModal}}
       @onAccept={{this.acceptTerms}}
       @onClose={{this.closeModal}}
-      @isTermsAccepted={{@isTermsAccepted}}
     />
 {{/if}}
