@@ -26,6 +26,10 @@ export default class NewStepperComponent extends Component {
     });
   }
 
+  get showPreviousButton() {
+    return this.currentStep > this.MIN_STEP + 1;
+  }
+
   @action incrementStep() {
     if (this.currentStep < this.MAX_STEP) {
       const nextStep = this.currentStep + 1;
