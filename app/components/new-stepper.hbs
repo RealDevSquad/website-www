@@ -30,6 +30,13 @@
           @isValid={{this.isValid}}
           @setIsValid={{this.setIsValid}}
         />
+
+      {{else if (eq this.currentStep 2)}}
+        <NewJoinSteps::NewStepTwo 
+          @setIsPreValid={{this.setIsPreValid}} 
+          @isValid={{this.isValid}} 
+          @setIsValid={{this.setIsValid}}
+        />
     {{/if}}
   </form>
 

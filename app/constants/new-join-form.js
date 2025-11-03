@@ -1,7 +1,11 @@
 export const NEW_FORM_STEPS = {
-  headings: ['Upload Professional Headshot and Complete Personal Details'],
+  headings: [
+    'Upload Professional Headshot and Complete Personal Details',
+    'More personal details please',
+  ],
   subheadings: [
     'Please provide accurate information for verification purposes.',
+    'Introduce and help us get to know you better',
   ],
 };
 
@@ -20,6 +24,11 @@ export const NEW_STEP_LIMITS = {
     state: { min: 1 },
     city: { min: 1 },
     role: { min: 1 },
+  },
+  stepTwo: {
+    skills: 5,
+    company: 1,
+    introduction: { min: 100, max: 500 },
   },
 };
 
