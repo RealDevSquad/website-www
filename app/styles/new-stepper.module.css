@@ -1,0 +1,289 @@
+.stepper__form {
+  max-width: 75%;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+  background-color: var(--color-bgpink);
+  border-radius: 10px;
+}
+
+.stepper-welcome {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.stepper-welcome__logo {
+  display: flex;
+  justify-content: center;
+}
+
+.stepper-welcome__info-item--bullet {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: var(--color-black-light);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.stepper-welcome__info-item--bullet::before {
+  content: "•";
+  color: var(--color-pink);
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-right: 0.75rem;
+}
+
+.stepper-welcome__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.stepper-welcome__checkbox-text {
+  color: var(--color-black-light);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.stepper-welcome__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.terms-modal__content {
+  background: var(--color-white);
+  border-radius: 10px;
+  padding: 2rem;
+  width: 90vw;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.terms-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.terms-modal__header h2 {
+  font-size: 1.5rem;
+}
+
+.terms-modal__close {
+  background-color: transparent !important;
+  margin: 0 !important;
+}
+
+.terms-modal__close:hover {
+  background-color: var(--color-lightgrey) !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.terms-modal__section {
+  padding-block: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.terms-modal__footer {
+  display: flex;
+  justify-content: center;
+}
+
+.form-header {
+  margin-bottom: 2rem;
+}
+
+.form-header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.form-header__text {
+  flex: 1;
+}
+
+.form-header__heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: #333;
+}
+
+.form-header__subheading {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+.form-header__step-count {
+  font-size: 0.9rem;
+  color: #888;
+  font-weight: 500;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1 0%, #ec4899 100%);
+  transition: width 0.3s ease;
+}
+
+.two-column-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.two-column-layout__left,
+.two-column-layout__right {
+  padding: 1rem;
+}
+
+.section-heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.section-instruction {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+/* Image Upload Box */
+.image-upload-box {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  background-color: #fafafa;
+  margin-bottom: 1rem;
+}
+
+.image-upload-box__icon {
+  font-size: 2rem;
+  color: #999;
+  margin-bottom: 0.5rem;
+}
+
+.image-upload-box__text {
+  color: #666;
+  margin: 0;
+}
+
+.image-requirements {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.image-requirements h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.image-requirements ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.image-requirements li {
+  margin-bottom: 0.25rem;
+}
+
+.role-selection {
+  margin-top: 1rem;
+}
+
+.role-selection h4 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.role-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.role-button {
+  padding: 0.5rem 1rem;
+  border: 2px solid #e5e7eb;
+  background-color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.role-button:hover {
+  border-color: #6366f1;
+  background-color: #f8fafc;
+}
+
+.role-button--selected {
+  border-color: #6366f1;
+  background-color: #6366f1;
+  color: white;
+}
+
+@media screen and (width <= 768px) {
+  .stepper__form {
+    max-width: 85%;
+  }
+
+  .stepper-welcome {
+    margin: 1rem auto 3rem;
+    padding: 1.5rem;
+  }
+
+  .stepper-welcome img {
+    width: 100px;
+  }
+
+  .terms-modal__content {
+    width: 95vw;
+    margin: 1rem;
+  }
+}
+
+@media (width <= 480px) {
+  .stepper__form {
+    max-width: 95%;
+  }
+
+  .stepper-welcome {
+    margin: 0.5rem auto 3rem;
+    padding: 1rem;
+  }
+
+  .stepper-welcome img {
+    width: 80px;
+  }
+
+  .stepper-welcome__checkbox-text {
+    font-size: 0.9rem;
+  }
+}
