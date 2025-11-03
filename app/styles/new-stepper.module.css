@@ -156,57 +156,49 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  margin-bottom: 2rem;
 }
 
-.two-column-layout__left,
-.two-column-layout__right {
-  padding: 1rem;
+.two-column-layout__left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .section-heading {
   font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 1rem;
-  color: #333;
+  margin-bottom: 0.25rem;
+  color: var(--color-black);
 }
 
 .section-instruction {
   font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 1rem;
+  color: var(--color-black-light);
 }
 
-/* Image Upload Box */
 .image-upload-box {
-  border: 2px dashed #ccc;
-  border-radius: 8px;
+  border: 2px dashed var(--color-lightgrey);
+  border-radius: 10px;
   padding: 2rem;
   text-align: center;
-  background-color: #fafafa;
-  margin-bottom: 1rem;
+  background-color: var(--color-white);
 }
 
-.image-upload-box__icon {
-  font-size: 2rem;
-  color: #999;
-  margin-bottom: 0.5rem;
-}
-
-.image-upload-box__text {
-  color: #666;
-  margin: 0;
+.image-upload-box:hover {
+  border-color: var(--color-navyblue);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
 .image-requirements {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--color-black-light);
 }
 
 .image-requirements h4 {
   margin: 0 0 0.5rem;
   font-size: 1rem;
-  color: #333;
+  color: var(--color-black-light);
 }
 
 .image-requirements ul {
@@ -222,10 +214,11 @@
   margin-top: 1rem;
 }
 
-.role-selection h4 {
-  margin: 0 0 0.75rem;
+.role-selection p {
+  margin: 0 0 0.5rem;
   font-size: 1rem;
-  color: #333;
+  font-weight: 500;
+  color: var(--color-black);
 }
 
 .role-buttons {
@@ -236,26 +229,34 @@
 
 .role-button {
   padding: 0.5rem 1rem;
-  border: 2px solid #e5e7eb;
-  background-color: white;
+  border: 2px solid var(--profile-field-input-border-clr);
+  background-color: var(--color-white);
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: all 0.2s ease;
 }
 
 .role-button:hover {
-  border-color: #6366f1;
-  background-color: #f8fafc;
+  border-color: var(--color-navyblue);
+  background-color: var(--color-offwhite);
+  transition: all 0.3s ease;
 }
 
 .role-button--selected {
-  border-color: #6366f1;
-  background-color: #6366f1;
-  color: white;
+  border-color: var(--color-navyblue);
+  background-color: var(--color-navyblue);
+  color: var(--color-white);
+}
+
+.role-button--selected:hover {
+  background-color: var(--color-navyblue);
 }
 
 @media screen and (width <= 768px) {
+  .two-column-layout {
+    grid-template-columns: 1fr;
+  }
+
   .form-header {
     width: 87.5%;
   }

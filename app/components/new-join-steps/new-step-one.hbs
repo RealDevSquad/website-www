@@ -2,7 +2,7 @@
   <div class="two-column-layout__left">
     <h3 class="section-heading">Profile Picture</h3>
     <div class="image-upload-box">
-      <div class="image-upload-box__icon">↑</div>
+      <FaIcon @icon="upload" />
       <p class="image-upload-box__text">Upload Image</p>
     </div>
     <div class="image-requirements">
@@ -11,15 +11,15 @@
         <li>Must be a real, clear photograph (no anime, filters, or drawings)</li>
         <li>Must contain exactly one face</li>
         <li>Face must cover at least 60% of the image</li>
-        <li>Supported formats: JPG, PNG, GIF</li>
-        <li>Image will be validated during analysis</li>
+        <li>Supported formats: JPG, PNG</li>
+        <li>Image will be validated before moving to next step</li>
       </ul>
     </div>
   </div>
 
   <div class="two-column-layout__right">
     <h3 class="section-heading">Personal Details</h3>
-    <p class="section-instruction">Please provide real name and details, any spam/incorrect details will lead to rejection.</p>
+    <p class="section-instruction">Please provide correct details and choose your role carefully, it won't be changed later.</p>
 
     <Reusables::InputBox
       @field='Your Name'
@@ -32,20 +32,20 @@
       @onInput={{this.inputHandler}}
     />
 
-    <Reusables::InputBox
-      @field='Country'
+    <Reusables::Dropdown
+      @field='Your Country'
       @name='country'
-      @placeHolder='Country'
-      @type='text'
+      @placeHolder='Choose your country'
       @required={{true}}
       @value={{this.data.country}}
-      @onInput={{this.inputHandler}}
+      @options={{this.countries}}
+      @onChange={{this.inputHandler}}
     />
 
     <Reusables::InputBox
       @field='State'
       @name='state'
-      @placeHolder='State'
+      @placeHolder='Your State e.g. Karnataka'
       @type='text'
       @required={{true}}
       @value={{this.data.state}}
@@ -55,7 +55,7 @@
     <Reusables::InputBox
       @field='City'
       @name='city'
-      @placeHolder='City'
+      @placeHolder='Your City e.g. Bengaluru'
       @type='text'
       @required={{true}}
       @value={{this.data.city}}
@@ -63,7 +63,7 @@
     />
 
     <div class="role-selection">
-      <h4>Applying as:</h4>
+      <p>Applying as</p>
       <div class="role-buttons">
         {{#each this.roleOptions as |role|}}
           <button
