@@ -17,10 +17,10 @@
         <Reusables::Button
           @text="Start"
           @variant="dark"
+          @test="start"
           @type="button"
           @disabled={{not this.applicationTerms.hasUserAcceptedTerms}}
           @onClick={{this.startHandler}}
-          data-test="start"
         />
       </div>
 
@@ -40,9 +40,9 @@
         <Reusables::Button
           @text="Previous"
           @variant="light"
+          @test="prev-btn"
           @type="button"
           @onClick={{this.decrementStep}}
-          data-test-prev-btn
         />
       {{else}}
         <div></div>
@@ -51,10 +51,10 @@
       <Reusables::Button
         @text="Next"
         @variant="dark"
+        @test="next-btn"
         @type="button"
         @onClick={{this.incrementStep}}
         @disabled={{not (or this.preValid this.isValid)}}
-        data-test-next-btn
       />
     </div>
   {{/if}}
