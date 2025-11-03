@@ -1,13 +1,25 @@
-.stepper-welcome {
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  justify-content: center;
+.new-stepper__form {
+  width: 100%;
   margin: 0 auto 3rem;
   padding: 2rem;
   background-color: var(--color-bgpink);
   border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.new-stepper__buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+
+.stepper-welcome {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
 }
 
 .stepper-welcome__logo {
@@ -95,7 +107,202 @@
   justify-content: center;
 }
 
+.form-header {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.form-header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.form-header__heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.form-header__subheading {
+  color: var(--color-lightgrey);
+  margin: 0;
+}
+
+.form-header__step-count {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.form-header__step-current {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-darkblack);
+}
+
+.form-header__step-total {
+  font-size: 0.9rem;
+  color: var(--color-black-light);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-pink-low-opacity);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: var(--color-navyblue);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.two-column-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.two-column-layout__left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section-heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--color-black);
+}
+
+.section-instruction {
+  font-size: 0.9rem;
+  color: var(--color-black-light);
+}
+
+.image-upload-box {
+  border: 2px dashed var(--color-lightgrey);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  background-color: var(--color-white);
+}
+
+.image-upload-box:hover {
+  border-color: var(--color-navyblue);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.image-requirements {
+  font-size: 0.9rem;
+  color: var(--color-black-light);
+}
+
+.image-requirements h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: var(--color-black-light);
+}
+
+.image-requirements ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.image-requirements li {
+  margin-bottom: 0.25rem;
+}
+
+.role-selection {
+  margin-top: 1rem;
+}
+
+.role-selection p {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-black);
+}
+
+.role-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.role-button {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--profile-field-input-border-clr);
+  background-color: var(--color-white);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.role-button:hover {
+  border-color: var(--color-navyblue);
+  background-color: var(--color-offwhite);
+  transition: all 0.3s ease;
+}
+
+.role-button--selected {
+  border-color: var(--color-navyblue);
+  background-color: var(--color-navyblue);
+  color: var(--color-white);
+}
+
+.role-button--selected:hover {
+  background-color: var(--color-navyblue);
+}
+
+.step-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.question-heading {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem;
+  color: var(--color-black);
+}
+
+.word-count {
+  font-size: 0.8rem;
+  color: var(--color-black-light);
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+.instruction-text {
+  font-size: 0.85rem;
+  color: var(--color-black-light);
+  margin: 0.25rem 0 0;
+}
+
 @media screen and (width <= 768px) {
+  .two-column-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .form-header {
+    width: 87.5%;
+  }
+
+  .new-stepper__form {
+    max-width: 85%;
+  }
+
+  .new-stepper__buttons {
+    width: 85%;
+  }
+
   .stepper-welcome {
     margin: 1rem auto 3rem;
     padding: 1.5rem;
@@ -112,6 +319,18 @@
 }
 
 @media (width <= 480px) {
+  .form-header {
+    width: 97.5%;
+  }
+
+  .new-stepper__form {
+    max-width: 95%;
+  }
+
+  .new-stepper__buttons {
+    width: 95%;
+  }
+
   .stepper-welcome {
     margin: 0.5rem auto 3rem;
     padding: 1rem;

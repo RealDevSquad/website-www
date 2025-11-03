@@ -9,7 +9,7 @@
     />
   {{/if}}
 
-  <form class="stepper__form">
+  <form class="new-stepper__form">
     {{#if (eq this.currentStep this.MIN_STEP)}}
       <NewJoinSteps::WelcomeScreen />
 
@@ -30,11 +30,18 @@
           @isValid={{this.isValid}}
           @setIsValid={{this.setIsValid}}
         />
+
+      {{else if (eq this.currentStep 2)}}
+        <NewJoinSteps::NewStepTwo 
+          @setIsPreValid={{this.setIsPreValid}} 
+          @isValid={{this.isValid}} 
+          @setIsValid={{this.setIsValid}}
+        />
     {{/if}}
   </form>
 
   {{#if (not-eq this.currentStep this.MIN_STEP)}}
-    <div class="stepper__buttons">
+    <div class="new-stepper__buttons">
       {{#if this.showPreviousButton}}
         <Reusables::Button
           @text="Previous"

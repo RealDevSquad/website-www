@@ -4,6 +4,7 @@
   justify-content: center;
   flex-direction: column;
   min-height: 75vh;
+  width: 60vw;
   margin: 3rem 0;
 }
 
