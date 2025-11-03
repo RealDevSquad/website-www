@@ -5,6 +5,7 @@ import { validator } from '../../utils/validator';
 import { debounce } from '@ember/runloop';
 import { JOIN_DEBOUNCE_TIME } from '../../constants/join';
 import { NEW_STEP_LIMITS, ROLE_OPTIONS } from '../../constants/new-join-form';
+import { countryList } from '../../constants/country-list';
 import { inject as service } from '@ember/service';
 
 export default class NewStepOneComponent extends Component {
@@ -22,6 +23,7 @@ export default class NewStepOneComponent extends Component {
   setIsValid;
   setIsPreValid;
   roleOptions = ROLE_OPTIONS;
+  countries = countryList;
 
   constructor(...args) {
     super(...args);
