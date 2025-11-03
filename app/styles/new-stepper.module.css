@@ -99,50 +99,56 @@
 }
 
 .form-header {
+  width: 77.5%;
   margin-bottom: 2rem;
 }
 
 .form-header__content {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 1rem;
-}
-
-.form-header__text {
-  flex: 1;
 }
 
 .form-header__heading {
   font-size: 1.5rem;
   font-weight: 600;
-  margin: 0 0 0.5rem;
-  color: #333;
 }
 
 .form-header__subheading {
-  font-size: 1rem;
-  color: #666;
+  color: var(--color-lightgrey);
   margin: 0;
 }
 
 .form-header__step-count {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.form-header__step-current {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-darkblack);
+}
+
+.form-header__step-total {
   font-size: 0.9rem;
-  color: #888;
-  font-weight: 500;
+  color: var(--color-black-light);
 }
 
 .progress-bar {
   width: 100%;
   height: 8px;
-  background-color: #f0f0f0;
+  background-color: var(--color-pink-low-opacity);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .progress-bar__fill {
   height: 100%;
-  background: linear-gradient(90deg, #6366f1 0%, #ec4899 100%);
+  background: var(--color-navyblue);
+  width: 0%;
   transition: width 0.3s ease;
 }
 
@@ -250,6 +256,10 @@
 }
 
 @media screen and (width <= 768px) {
+  .form-header {
+    width: 87.5%;
+  }
+
   .stepper__form {
     max-width: 85%;
   }
@@ -270,6 +280,10 @@
 }
 
 @media (width <= 480px) {
+  .form-header {
+    width: 97.5%;
+  }
+
   .stepper__form {
     max-width: 95%;
   }

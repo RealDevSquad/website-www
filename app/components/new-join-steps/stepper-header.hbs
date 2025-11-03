@@ -1,14 +1,14 @@
 <div class="form-header">
   <div class="form-header__content">
     <div class="form-header__text">
-      <h1 class="form-header__heading">{{@heading}}</h1>
-      <p class="form-header__subheading">{{@subheading}}</p>
+      <h1 class="form-header__heading">RDS Application Form</h1>
     </div>
-    <div class="form-header__step-count">
-      Step {{@currentStep}} of {{@totalSteps}}
+    <div class="form-header__step-count" aria-live="polite">
+      <span class="form-header__step-current">{{@currentStep}}</span>
+      <span class="form-header__step-total">of {{@totalSteps}}</span>
     </div>
   </div>
-  <div class="progress-bar">
-    <div class="progress-bar__fill"></div>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow={{this.progressPercentage}}>
+    <div class="progress-bar__fill" style={{this.progressStyle}}></div>
   </div>
 </div>
