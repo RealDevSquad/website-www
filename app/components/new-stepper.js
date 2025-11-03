@@ -4,8 +4,8 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class NewStepperComponent extends Component {
-  static MIN_STEP = 0;
-  static MAX_STEP = 5;
+  MIN_STEP = 0;
+  MAX_STEP = 6;
 
   @service login;
   @service router;
