@@ -1,6 +1,6 @@
 <section class='stepper' data-test="stepper">
 
- {{#if (not-eq this.currentStep 0)}}
+  {{#if (not-eq this.currentStep this.MIN_STEP)}}
     <NewJoinSteps::StepperHeader
       @heading={{this.currentHeading}}
       @subheading={{this.currentSubheading}}
@@ -9,17 +9,18 @@
     />
   {{/if}}
 
-  <form class="stepper__form" onsubmit={{this.nextStep}}>
-    {{#if (eq this.currentStep 0)}}
+  <form class="stepper__form">
+    {{#if (eq this.currentStep this.MIN_STEP)}}
       <NewJoinSteps::WelcomeScreen />
+
       <div class="stepper-welcome__actions">
         <Reusables::Button
-          @text='Start'
-          @variant='dark'
-          @onClick={{this.startHandler}}
-          @test='start'
-          @type='button'
+          @text="Start"
+          @variant="dark"
+          @type="button"
           @disabled={{not this.applicationTerms.hasUserAcceptedTerms}}
+          @onClick={{this.startHandler}}
+          data-test="start"
         />
       </div>
 
@@ -29,7 +30,32 @@
           @isValid={{this.isValid}}
           @setIsValid={{this.setIsValid}}
         />
-
     {{/if}}
+
   </form>
+
+  {{#if (not-eq this.currentStep this.MIN_STEP)}}
+    <div class="stepper__buttons">
+      {{#if this.showPreviousButton}}
+        <Reusables::Button
+          @text="Previous"
+          @variant="light"
+          @type="button"
+          @onClick={{this.decrementStep}}
+          data-test-prev-btn
+        />
+      {{else}}
+        <div></div>
+      {{/if}}
+
+      <Reusables::Button
+        @text="Next"
+        @variant="dark"
+        @type="button"
+        @onClick={{this.incrementStep}}
+        @disabled={{not (or this.preValid this.isValid)}}
+        data-test-next-btn
+      />
+    </div>
+  {{/if}}
 </section>

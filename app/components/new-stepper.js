@@ -37,8 +37,12 @@ export default class NewStepperComponent extends Component {
     window.removeEventListener('popstate', this.handlePopState);
   }
 
+  get showPreviousButton() {
+    return this.currentStep > this.MIN_STEP + 1;
+  }
+
   @action incrementStep() {
-    if (this.currentStep < NewStepperComponent.MAX_STEP) {
+    if (this.currentStep < this.MAX_STEP) {
       this.currentStep += 1;
       localStorage.setItem('currentStep', this.currentStep);
       this.router.transitionTo(`/join?dev=true&step=${this.currentStep}`);
@@ -46,7 +50,7 @@ export default class NewStepperComponent extends Component {
   }
 
   @action decrementStep() {
-    if (this.currentStep > NewStepperComponent.MIN_STEP) {
+    if (this.currentStep > this.MIN_STEP) {
       this.currentStep -= 1;
       localStorage.setItem('currentStep', this.currentStep);
       this.router.transitionTo(`/join?dev=true&step=${this.currentStep}`);
