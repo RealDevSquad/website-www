@@ -1,8 +1,17 @@
 <section class='stepper' data-test="stepper">
+
+ {{#if (not-eq this.currentStep 0)}}
+    <NewJoinSteps::StepperHeader
+      @heading={{this.currentHeading}}
+      @subheading={{this.currentSubheading}}
+      @currentStep={{this.currentStep}}
+      @totalSteps={{6}}
+    />
+  {{/if}}
+
   <form class="stepper__form" onsubmit={{this.nextStep}}>
     {{#if (eq this.currentStep 0)}}
       <NewJoinSteps::WelcomeScreen />
-
       <div class="stepper-welcome__actions">
         <Reusables::Button
           @text='Start'
@@ -13,6 +22,14 @@
           @disabled={{not this.applicationTerms.hasUserAcceptedTerms}}
         />
       </div>
+
+      {{else if (eq this.currentStep 1)}}
+        <NewJoinSteps::NewStepOne
+          @setIsPreValid={{this.setIsPreValid}}
+          @isValid={{this.isValid}}
+          @setIsValid={{this.setIsValid}}
+        />
+
     {{/if}}
   </form>
 </section>

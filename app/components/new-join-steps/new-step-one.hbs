@@ -1,0 +1,79 @@
+<div class="two-column-layout">
+  <div class="two-column-layout__left">
+    <h3 class="section-heading">Profile Picture</h3>
+    <div class="image-upload-box">
+      <div class="image-upload-box__icon">↑</div>
+      <p class="image-upload-box__text">Upload Image</p>
+    </div>
+    <div class="image-requirements">
+      <h4>Image Requirements:</h4>
+      <ul>
+        <li>Must be a real, clear photograph (no anime, filters, or drawings)</li>
+        <li>Must contain exactly one face</li>
+        <li>Face must cover at least 60% of the image</li>
+        <li>Supported formats: JPG, PNG, GIF</li>
+        <li>Image will be validated during analysis</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="two-column-layout__right">
+    <h3 class="section-heading">Personal Details</h3>
+    <p class="section-instruction">Please provide real name and details, any spam/incorrect details will lead to rejection.</p>
+
+    <Reusables::InputBox
+      @field='Your Name'
+      @name='fullName'
+      @placeHolder='Full Name'
+      @type='text'
+      @required={{true}}
+      @value={{this.data.fullName}}
+      @onInput={{this.inputHandler}}
+    />
+
+    <Reusables::InputBox
+      @field='Country'
+      @name='country'
+      @placeHolder='Country'
+      @type='text'
+      @required={{true}}
+      @value={{this.data.country}}
+      @onInput={{this.inputHandler}}
+    />
+
+    <Reusables::InputBox
+      @field='State'
+      @name='state'
+      @placeHolder='State'
+      @type='text'
+      @required={{true}}
+      @value={{this.data.state}}
+      @onInput={{this.inputHandler}}
+    />
+
+    <Reusables::InputBox
+      @field='City'
+      @name='city'
+      @placeHolder='City'
+      @type='text'
+      @required={{true}}
+      @value={{this.data.city}}
+      @onInput={{this.inputHandler}}
+    />
+
+    <div class="role-selection">
+      <h4>Applying as:</h4>
+      <div class="role-buttons">
+        {{#each this.roleOptions as |role|}}
+          <button
+            type="button"
+            class="role-button {{if (eq this.data.role role) 'role-button--selected'}}"
+            {{on 'click' (fn this.selectRole role)}}
+          >
+            {{role}}
+          </button>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>

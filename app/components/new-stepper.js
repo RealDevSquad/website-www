@@ -17,6 +17,11 @@ export default class NewStepperComponent extends Component {
     this.args.step ??
     0
   );
+  @tracked preValid = false;
+  @tracked isValid = JSON.parse(localStorage.getItem('isValid')) ?? false;
+
+  setIsValid = (newVal) => (this.isValid = newVal);
+  setIsPreValid = (newVal) => (this.preValid = newVal);
 
   constructor() {
     super(...arguments);
