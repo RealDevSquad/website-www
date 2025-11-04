@@ -19,7 +19,7 @@ export default class NewStepperComponent extends Component {
     0
   );
   @tracked preValid = false;
-  @tracked isValid = JSON.parse(localStorage.getItem('isValid')) ?? false;
+  @tracked isValid = localStorage.getItem('isValid') === 'true';
 
   setIsValid = (newVal) => (this.isValid = newVal);
   setIsPreValid = (newVal) => (this.preValid = newVal);
@@ -29,7 +29,12 @@ export default class NewStepperComponent extends Component {
 
     this.handlePopState = () => {
       const step = new URLSearchParams(window.location.search).get('step');
-      if (step !== null) this.currentStep = Number(step);
+      if (step !== null) {
+        this.isValid = false;
+        this.preValid = false;
+        this.currentStep = Number(step);
+        localStorage.setItem('isValid', false);
+      }
     };
     window.addEventListener('popstate', this.handlePopState);
   }
@@ -53,17 +58,29 @@ export default class NewStepperComponent extends Component {
 
   @action incrementStep() {
     if (this.currentStep < this.MAX_STEP) {
+      this.isValid = false;
+      this.preValid = false;
       this.currentStep += 1;
+
       localStorage.setItem('currentStep', this.currentStep);
-      this.router.transitionTo(`/join?dev=true&step=${this.currentStep}`);
+      localStorage.setItem('isValid', false);
+      this.router.transitionTo({
+        queryParams: { dev: true, step: this.currentStep },
+      });
     }
   }
 
   @action decrementStep() {
     if (this.currentStep > this.MIN_STEP) {
+      this.isValid = false;
+      this.preValid = false;
       this.currentStep -= 1;
+
       localStorage.setItem('currentStep', this.currentStep);
-      this.router.transitionTo(`/join?dev=true&step=${this.currentStep}`);
+      localStorage.setItem('isValid', false);
+      this.router.transitionTo({
+        queryParams: { dev: true, step: this.currentStep },
+      });
     }
   }
 

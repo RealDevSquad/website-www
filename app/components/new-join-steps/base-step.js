@@ -4,46 +4,50 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { JOIN_DEBOUNCE_TIME } from '../../constants/join';
 import { validateWordCount } from '../../utils/validator';
+import { scheduleOnce } from '@ember/runloop';
 
 export default class BaseStepComponent extends Component {
-  storageKey = '';
   validationMap = {};
 
   @tracked data = {};
   @tracked errorMessage = {};
   @tracked wordCount = {};
 
-  isValid;
-  setIsValid;
-  setIsPreValid;
+  get storageKey() {
+    return '';
+  }
+
+  postLoadInitialize() {}
 
   constructor(...args) {
     super(...args);
-    this.isValid = this.args.isValid;
-    this.setIsValid = this.args.setIsValid;
-    this.setIsPreValid = this.args.setIsPreValid;
+    scheduleOnce('afterRender', this, this.initializeFormState);
+  }
 
-    const saved = JSON.parse(localStorage.getItem(this.storageKey) || 'null');
+  initializeFormState() {
+    const saved = JSON.parse(localStorage.getItem(this.storageKey) || '{}');
     this.data = saved ?? {};
 
     this.errorMessage = Object.fromEntries(
-      Object.keys(this.validationMap).map((key) => [key, '']),
+      Object.keys(this.validationMap).map((k) => [k, '']),
     );
 
     this.wordCount = Object.fromEntries(
-      Object.keys(this.validationMap).map((key) => {
-        const value = this?.data?.[key] ?? '';
-        return [key, value?.trim()?.split(/\s+/).filter(Boolean).length ?? 0];
+      Object.keys(this.validationMap).map((k) => {
+        let val = this.data[k] || '';
+        return [k, val.trim().split(/\s+/).filter(Boolean).length || 0];
       }),
     );
 
-    const validated = this.isDataValid();
-    localStorage.setItem('isValid', validated);
-    this.setIsPreValid(validated);
+    this.postLoadInitialize();
+
+    const valid = this.isDataValid();
+    this.args.setIsPreValid(valid);
+    localStorage.setItem('isValid', valid);
   }
 
   @action inputHandler(e) {
-    this.setIsPreValid(false);
+    this.args.setIsPreValid(false);
     const field = e.target.name;
     const value = e.target.value;
     debounce(this, this.handleFieldUpdate, field, value, JOIN_DEBOUNCE_TIME);
@@ -96,7 +100,12 @@ export default class BaseStepComponent extends Component {
     if (result.remainingToMin) {
       return `At least ${result.remainingToMin} more word(s) required`;
     }
-    const max = limits.max;
-    return `Maximum ${max} words allowed`;
+    return `Maximum ${limits.max} words allowed`;
+  }
+
+  syncFormValidity() {
+    const allValid = this.isDataValid();
+    this.args.setIsValid(allValid);
+    localStorage.setItem('isValid', allValid);
   }
 }

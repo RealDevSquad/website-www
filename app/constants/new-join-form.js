@@ -15,9 +15,9 @@ export const ROLE_OPTIONS = [
 
 export const NEW_STEP_LIMITS = {
   stepOne: {
-    country: 1,
-    state: 1,
-    city: 1,
-    role: 1,
+    country: { min: 1 },
+    state: { min: 1 },
+    city: { min: 1 },
+    role: { min: 1 },
   },
 };
