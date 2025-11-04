@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { NEW_FORM_STEPS } from '../constants/new-join-form';
 
 export default class NewStepperComponent extends Component {
   MIN_STEP = 0;
@@ -28,6 +29,14 @@ export default class NewStepperComponent extends Component {
 
   get showPreviousButton() {
     return this.currentStep > this.MIN_STEP + 1;
+  }
+
+  get currentHeading() {
+    return NEW_FORM_STEPS.headings[this.currentStep - 1] ?? '';
+  }
+
+  get currentSubheading() {
+    return NEW_FORM_STEPS.subheadings[this.currentStep - 1] ?? '';
   }
 
   @action incrementStep() {
