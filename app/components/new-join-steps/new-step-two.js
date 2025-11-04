@@ -1,10 +1,10 @@
+import { action } from '@ember/object';
+import { debounce } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { validator } from '../../utils/validator';
-import { debounce } from '@ember/runloop';
 import { JOIN_DEBOUNCE_TIME } from '../../constants/join';
 import { NEW_FORM_STEPS, NEW_STEP_LIMITS } from '../../constants/new-join-form';
+import { validateWordCount, validator } from '../../utils/validator';
 
 export default class NewStepTwoComponent extends Component {
   @tracked data = JSON.parse(localStorage.getItem('newStepTwoData')) ?? {
@@ -19,8 +19,18 @@ export default class NewStepTwoComponent extends Component {
     introduction: '',
   };
 
-  heading = NEW_FORM_STEPS.headings[this.currentStep - 1];
-  subHeading = NEW_FORM_STEPS.subheadings[this.currentStep - 1];
+  @tracked wordCount = {
+    introduction:
+      this?.data?.introduction?.trim()?.split(/\s+/).filter(Boolean).length ||
+      0,
+  };
+
+  maxWords = {
+    introduction: NEW_STEP_LIMITS.stepTwo.introduction.max,
+  };
+
+  heading = NEW_FORM_STEPS.headings[1];
+  subHeading = NEW_FORM_STEPS.subheadings[1];
 
   isValid;
   setIsValid;
@@ -39,13 +49,11 @@ export default class NewStepTwoComponent extends Component {
   isDataValid() {
     for (let field in this.data) {
       if (field === 'introduction') {
-        const wordCount = this.data[field].trim().split(/\s+/).length;
-        if (
-          wordCount < NEW_STEP_LIMITS.stepTwo.introduction.min ||
-          wordCount > NEW_STEP_LIMITS.stepTwo.introduction.max
-        ) {
-          return false;
-        }
+        const { isValid } = validateWordCount(
+          this.data[field],
+          NEW_STEP_LIMITS.stepTwo.introduction,
+        );
+        if (!isValid) return false;
       } else {
         const { isValid } = validator(
           this.data[field],
@@ -68,23 +76,19 @@ export default class NewStepTwoComponent extends Component {
 
       const field = e.target.name;
       if (field === 'introduction') {
-        const wordCount = this.data[field].trim().split(/\s+/).length;
-        if (wordCount < NEW_STEP_LIMITS.stepTwo.introduction.min) {
-          this.errorMessage = {
-            ...this.errorMessage,
-            [field]: `At least ${NEW_STEP_LIMITS.stepTwo.introduction.min - wordCount} more word(s) required`,
-          };
-        } else if (wordCount > NEW_STEP_LIMITS.stepTwo.introduction.max) {
-          this.errorMessage = {
-            ...this.errorMessage,
-            [field]: `Maximum ${NEW_STEP_LIMITS.stepTwo.introduction.max} words allowed`,
-          };
-        } else {
-          this.errorMessage = {
-            ...this.errorMessage,
-            [field]: '',
-          };
-        }
+        const { isValid, wordCount, remainingToMin } = validateWordCount(
+          this.data[field],
+          NEW_STEP_LIMITS.stepTwo.introduction,
+        );
+        this.wordCount = { ...this.wordCount, introduction: wordCount };
+        this.errorMessage = {
+          ...this.errorMessage,
+          [field]: isValid
+            ? ''
+            : remainingToMin
+              ? `At least ${remainingToMin} more word(s) required`
+              : `Maximum ${NEW_STEP_LIMITS.stepTwo.introduction.max} words allowed`,
+        };
       } else {
         const { isValid, remainingWords } = validator(
           this.data[field],
