@@ -42,7 +42,7 @@ export const NEW_STEP_LIMITS = {
     twitter: { min: 1 },
     github: { min: 1 },
     linkedin: { min: 1 },
-    instagram: {},
+    instagram: { min: 0 },
     peerlist: { min: 1 },
     behance: { min: 1 },
     dribble: { min: 1 },
