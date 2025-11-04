@@ -2,10 +2,12 @@ export const NEW_FORM_STEPS = {
   headings: [
     'Upload Professional Headshot and Complete Personal Details',
     'More personal details please',
+    'Your hobbies, interests, fun fact',
   ],
   subheadings: [
     'Please provide accurate information for verification purposes.',
     'Introduce and help us get to know you better',
+    'Show us your funny and interesting side',
   ],
 };
 
@@ -29,6 +31,10 @@ export const NEW_STEP_LIMITS = {
     skills: 5,
     company: 1,
     introduction: { min: 100, max: 500 },
+  },
+  stepThree: {
+    hobbies: { min: 100, max: 500 },
+    funFact: { min: 100, max: 500 },
   },
 };
 
