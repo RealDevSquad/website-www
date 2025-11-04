@@ -48,6 +48,15 @@
           @heading={{this.currentHeading}}
           @subHeading={{this.currentSubheading}}
         />
+
+      {{else if (eq this.currentStep 4)}}
+        <NewJoinSteps::NewStepFour
+          @setIsPreValid={{this.setIsPreValid}} 
+          @isValid={{this.isValid}} 
+          @setIsValid={{this.setIsValid}}
+          @heading={{this.currentHeading}}
+          @subHeading={{this.currentSubheading}}
+        />
     {{/if}}
   </form>
 
