@@ -4,12 +4,14 @@ export const NEW_FORM_STEPS = {
     'Additional Personal Information',
     'Your hobbies, interests, fun fact',
     'Connect your social profiles',
+    'Why Real Dev Squad?',
   ],
   subheadings: [
     'Please provide accurate information for verification purposes.',
     'Introduce and help us get to know you better',
     'Show us your funny and interesting side',
     'Share your social media and professional profiles',
+    'Tell us why you want to join our community',
   ],
 };
 
@@ -47,6 +49,10 @@ export const NEW_STEP_LIMITS = {
     peerlist: { min: 1 },
     behance: { min: 1 },
     dribble: { min: 1 },
+  },
+  stepFive: {
+    whyRds: { min: 100 },
+    foundFrom: { min: 1 },
   },
 };
 
