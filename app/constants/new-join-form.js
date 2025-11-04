@@ -27,8 +27,7 @@ export const NEW_STEP_LIMITS = {
     role: { min: 1 },
   },
   stepTwo: {
-    skills: 5,
-    company: 1,
+    skills: { min: 5, max: 20 },
     introduction: { min: 100, max: 500 },
   },
   stepThree: {

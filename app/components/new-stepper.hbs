@@ -36,6 +36,8 @@
           @setIsPreValid={{this.setIsPreValid}} 
           @isValid={{this.isValid}} 
           @setIsValid={{this.setIsValid}}
+          @heading={{this.currentHeading}}
+          @subHeading={{this.currentSubheading}}
         />
 
       {{else if (eq this.currentStep 3)}}
@@ -43,6 +45,8 @@
           @setIsPreValid={{this.setIsPreValid}} 
           @isValid={{this.isValid}} 
           @setIsValid={{this.setIsValid}}
+          @heading={{this.currentHeading}}
+          @subHeading={{this.currentSubheading}}
         />
     {{/if}}
   </form>
