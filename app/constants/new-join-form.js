@@ -29,6 +29,7 @@ export const NEW_STEP_LIMITS = {
   },
   stepTwo: {
     skills: { min: 5, max: 20 },
+    company: { min: 1 },
     introduction: { min: 100, max: 500 },
   },
   stepThree: {
