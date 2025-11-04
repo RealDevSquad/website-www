@@ -8,10 +8,11 @@
     @field='Phone Number'
     @name='phoneNumber'
     @placeHolder='+91 80000 00000'
-    @type='text'
+    @type='tel'
     @required={{true}}
     @value={{this.data.phoneNumber}}
     @onInput={{this.inputHandler}}
+    @variant='input--full-width'
   />
   {{#if this.errorMessage.phoneNumber}}
     <div class='error__message'>{{this.errorMessage.phoneNumber}}</div>
@@ -25,6 +26,7 @@
     @required={{true}}
     @value={{this.data.twitter}}
     @onInput={{this.inputHandler}}
+    @variant='input--full-width'
   />
   {{#if this.errorMessage.twitter}}
     <div class='error__message'>{{this.errorMessage.twitter}}</div>
@@ -39,6 +41,7 @@
       @required={{true}}
       @value={{this.data.github}}
       @onInput={{this.inputHandler}}
+      @variant='input--full-width'
     />
     {{#if this.errorMessage.github}}
       <div class='error__message'>{{this.errorMessage.github}}</div>
@@ -53,6 +56,7 @@
     @required={{true}}
     @value={{this.data.linkedin}}
     @onInput={{this.inputHandler}}
+    @variant='input--full-width'
   />
   {{#if this.errorMessage.linkedin}}
     <div class='error__message'>{{this.errorMessage.linkedin}}</div>
@@ -66,6 +70,7 @@
     @required={{false}}
     @value={{this.data.instagram}}
     @onInput={{this.inputHandler}}
+    @variant='input--full-width'
   />
   {{#if this.errorMessage.instagram}}
     <div class='error__message'>{{this.errorMessage.instagram}}</div>
@@ -79,6 +84,7 @@
     @required={{true}}
     @value={{this.data.peerlist}}
     @onInput={{this.inputHandler}}
+    @variant='input--full-width'
   />
   {{#if this.errorMessage.peerlist}}
     <div class='error__message'>{{this.errorMessage.peerlist}}</div>
@@ -93,6 +99,7 @@
       @required={{true}}
       @value={{this.data.behance}}
       @onInput={{this.inputHandler}}
+      @variant='input--full-width'
     />
     {{#if this.errorMessage.behance}}
       <div class='error__message'>{{this.errorMessage.behance}}</div>
@@ -108,6 +115,7 @@
       @required={{true}}
       @value={{this.data.dribble}}
       @onInput={{this.inputHandler}}
+      @variant='input--full-width'
     />
     {{#if this.errorMessage.dribble}}
       <div class='error__message'>{{this.errorMessage.dribble}}</div>
