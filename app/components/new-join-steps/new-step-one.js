@@ -1,83 +1,37 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { validator } from '../../utils/validator';
-import { debounce } from '@ember/runloop';
-import { JOIN_DEBOUNCE_TIME } from '../../constants/join';
+import BaseStepComponent from './base-step';
 import { NEW_STEP_LIMITS, ROLE_OPTIONS } from '../../constants/new-join-form';
 import { countryList } from '../../constants/country-list';
 import { inject as service } from '@ember/service';
 
-export default class NewStepOneComponent extends Component {
+export default class NewStepOneComponent extends BaseStepComponent {
   @service login;
 
-  @tracked data = JSON.parse(localStorage.getItem('newStepOneData')) ?? {
-    fullName: '',
-    country: '',
-    state: '',
-    city: '',
-    role: '',
+  storageKey = 'newStepOneData';
+  validationMap = {
+    country: NEW_STEP_LIMITS.stepOne.country,
+    state: NEW_STEP_LIMITS.stepOne.state,
+    city: NEW_STEP_LIMITS.stepOne.city,
+    role: NEW_STEP_LIMITS.stepOne.role,
   };
 
-  isValid;
-  setIsValid;
-  setIsPreValid;
   roleOptions = ROLE_OPTIONS;
   countries = countryList;
 
   constructor(...args) {
     super(...args);
-
-    this.isValid = this.args.isValid;
-    this.setIsValid = this.args.setIsValid;
-    this.setIsPreValid = this.args.setIsPreValid;
-
-    if (this.login.userData) {
-      this.data.fullName = `${this.login.userData.first_name} ${this.login.userData.last_name}`;
-    }
-
-    const validated = this.isDataValid();
-    localStorage.setItem('isValid', validated);
-    this.setIsPreValid(validated);
-  }
-
-  isDataValid() {
-    for (let field in this.data) {
-      if (field === 'role') {
-        if (!this.data[field]) return false;
-      } else {
-        const { isValid } = validator(
-          this.data[field],
-          NEW_STEP_LIMITS.stepOne[field],
-        );
-        if (!isValid) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  @action inputHandler(e) {
-    this.setIsPreValid(false);
-    const setValToLocalStorage = () => {
-      this.data = { ...this.data, [e.target.name]: e.target.value };
-      localStorage.setItem('newStepOneData', JSON.stringify(this.data));
-      localStorage.setItem('selectedRole', this.data.role);
+    if (this.login.userData && !this.data.fullName) {
+      this.data = {
+        ...this.data,
+        fullName: `${this.login.userData.first_name} ${this.login.userData.last_name}`,
+      };
+      localStorage.setItem(this.storageKey, JSON.stringify(this.data));
       const validated = this.isDataValid();
       this.setIsValid(validated);
       localStorage.setItem('isValid', validated);
-    };
-    debounce(this.data, setValToLocalStorage, JOIN_DEBOUNCE_TIME);
+    }
   }
 
-  @action selectRole(role) {
-    this.setIsPreValid(false);
-    this.data = { ...this.data, role };
-    localStorage.setItem('newStepOneData', JSON.stringify(this.data));
-    localStorage.setItem('selectedRole', role);
-    const validated = this.isDataValid();
-    this.setIsValid(validated);
-    localStorage.setItem('isValid', validated);
+  selectRole(role) {
+    this.inputHandler({ target: { name: 'role', value: role } });
   }
 }
