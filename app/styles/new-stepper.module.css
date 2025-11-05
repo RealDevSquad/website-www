@@ -270,6 +270,7 @@
 .form-grid {
   display: grid;
   gap: 1rem;
+  align-items: center;
 }
 
 .form-grid--2 {
@@ -290,7 +291,8 @@
 }
 
 .step-container input,
-.step-container textarea {
+.step-container textarea,
+.step-container select {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
