@@ -1,38 +1,38 @@
-<div class="form-header__text">
-  <h1 class="form-header__heading">{{@heading}}</h1>
-  <p class="form-header__subheading">{{@subHeading}}</p>
-</div>
-
-<div class="form-grid form-grid--2">
-  <div class="form-grid__item">
-    <h4 class="question-heading">What do you do for fun? Your hobbies/interests?</h4>
-    <Reusables::TextAreaBox
-      @field=''
-      @name='hobbies'
-      @placeHolder='Tell us about your hobbies and interests...'
-      @required={{true}}
-      @value={{this.data.hobbies}}
-      @onInput={{this.inputHandler}}
-    />
-    <div class="word-count">{{this.wordCount.hobbies}}/{{this.maxWords.hobbies}} words</div>
-    {{#if this.errorMessage.hobbies}}
-      <div class='error__message'>{{this.errorMessage.hobbies}}</div>
-    {{/if}}
+<div class="step-container">
+  <div class="form-header__text">
+    <h1 class="section-heading">{{@heading}}</h1>
+    <p class="section-instruction">{{@subHeading}}</p>
   </div>
 
-  <div class="form-grid__item">
-    <h4 class="question-heading">Fun fact about you</h4>
-    <Reusables::TextAreaBox
-      @field=''
-      @name='funFact'
-      @placeHolder='Share something interesting about yourself...'
-      @required={{true}}
-      @value={{this.data.funFact}}
-      @onInput={{this.inputHandler}}
-    />
-    <div class="word-count">{{this.wordCount.funFact}}/{{this.maxWords.funFact}} words</div>
-    {{#if this.errorMessage.funFact}}
-      <div class='error__message'>{{this.errorMessage.funFact}}</div>
-    {{/if}}
+  <div class="form-grid">
+    <div class="form-grid__item">
+      <Reusables::TextAreaBox
+        @field='What do you do for fun? Your hobbies/interests?'
+        @name='hobbies'
+        @placeHolder='Tell us about your hobbies and interests...'
+        @required={{true}}
+        @value={{this.data.hobbies}}
+        @onInput={{this.inputHandler}}
+      />
+      <div class="word-count">{{this.wordCount.hobbies}}/{{this.maxWords.hobbies}} words</div>
+      {{#if this.errorMessage.hobbies}}
+        <div class='error__message'>{{this.errorMessage.hobbies}}</div>
+      {{/if}}
+    </div>
+
+    <div class="form-grid__item">
+      <Reusables::TextAreaBox
+        @field='Fun fact about you'
+        @name='funFact'
+        @placeHolder='Share something interesting about yourself...'
+        @required={{true}}
+        @value={{this.data.funFact}}
+        @onInput={{this.inputHandler}}
+      />
+      <div class="word-count">{{this.wordCount.funFact}}/{{this.maxWords.funFact}} words</div>
+      {{#if this.errorMessage.funFact}}
+        <div class='error__message'>{{this.errorMessage.funFact}}</div>
+      {{/if}}
+    </div>
   </div>
 </div>
