@@ -70,4 +70,22 @@ export default class NewStepperComponent extends Component {
     sessionStorage.setItem('last_name', this.login.userData.last_name);
     this.incrementStep();
   }
+
+  @action navigateToStep(stepNumber) {
+    if (stepNumber >= this.MIN_STEP + 1 && stepNumber <= this.MAX_STEP) {
+      this.isValid = false;
+      this.preValid = false;
+      this.currentStep = stepNumber;
+      localStorage.setItem('currentStep', this.currentStep);
+      localStorage.setItem('isValid', false);
+      this.router.transitionTo({
+        queryParams: { dev: true, step: this.currentStep },
+      });
+    }
+  }
+
+  // handle create application using this action
+  @action handleSubmit() {
+    console.log('Submit review');
+  }
 }

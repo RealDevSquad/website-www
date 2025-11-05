@@ -5,6 +5,7 @@ export const NEW_FORM_STEPS = {
     'Your hobbies, interests, fun fact',
     'Connect your social profiles',
     'Why Real Dev Squad?',
+    'Review and Submit',
   ],
   subheadings: [
     'Please provide accurate information for verification purposes.',
@@ -12,6 +13,7 @@ export const NEW_FORM_STEPS = {
     'Show us your funny and interesting side',
     'Share your social media and professional profiles',
     'Tell us why you want to join our community',
+    'Review your answers before submitting.',
   ],
 };
 
