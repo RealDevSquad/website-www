@@ -1,54 +1,37 @@
 <div class="step-container">
   <div class="form-header__text">
-    <h1 class="form-header__heading">{{@heading}}</h1>
-    <p class="form-header__subheading">{{@subHeading}}</p>
+    <h1 class="section-heading">{{@heading}}</h1>
+    <p class="section-instruction">{{@subHeading}}</p>
   </div>
 
-  <div class="form-grid form-grid--2">
-    <div class="form-grid__item">
-      <Reusables::InputBox
-        @field='Your skills'
-        @name='skills'
-        @placeHolder='Enter your key skills...'
-        @type='text'
-        @required={{true}}
-        @value={{this.data.skills}}
-        @onInput={{this.inputHandler}}
-      />
-      {{#if this.errorMessage.skills}}
+  <div class="form-grid">
+    <div class="form-grid form-grid--2">
+      <div class="form-grid__item">
+        <Reusables::InputBox @field='Your skills' @name='skills' @placeHolder='Enter your key skills...' @type='text'
+          @required={{true}} @value={{this.data.skills}} @onInput={{this.inputHandler}} />
+        {{#if this.errorMessage.skills}}
         <div class='error__message'>{{this.errorMessage.skills}}</div>
-      {{/if}}
-    </div>
+        {{/if}}
+      </div>
 
-    <div class="form-grid__item">
-      <Reusables::InputBox
-        @field='Your institution/company'
-        @name='company'
-        @placeHolder='Institution or company name'
-        @type='text'
-        @required={{true}}
-        @value={{this.data.company}}
-        @onInput={{this.inputHandler}}
-      />
-      {{#if this.errorMessage.company}}
+      <div class="form-grid__item">
+        <Reusables::InputBox @field='Your institution/company' @name='company'
+          @placeHolder='Institution or company name' @type='text' @required={{true}} @value={{this.data.company}}
+          @onInput={{this.inputHandler}} />
+        {{#if this.errorMessage.company}}
         <div class='error__message'>{{this.errorMessage.company}}</div>
+        {{/if}}
+      </div>
+    </div>
+    <div class="form-grid__item">
+      <Reusables::TextAreaBox @field='Please introduce yourself' @name='introduction'
+        @placeHolder='Tell us about yourself...' @required={{true}} @value={{this.data.introduction}}
+        @onInput={{this.inputHandler}} />
+      <div class="word-count">{{this.wordCount.introduction}}/{{this.maxWords.introduction}} words</div>
+
+      {{#if this.errorMessage.introduction}}
+      <div class='error__message'>{{this.errorMessage.introduction}}</div>
       {{/if}}
     </div>
   </div>
-
-  <h4 class="question-heading">Please introduce yourself</h4>
-  <Reusables::TextAreaBox
-    @field=''
-    @name='introduction'
-    @placeHolder='Tell us about yourself...'
-    @required={{true}}
-    @value={{this.data.introduction}}
-    @onInput={{this.inputHandler}}
-  />
-  <div class="word-count">{{this.wordCount.introduction}}/{{this.maxWords.introduction}} words</div>
-  <p class="instruction-text">Share your background, experiences, and what drives you.</p>
-
-  {{#if this.errorMessage.introduction}}
-    <div class='error__message'>{{this.errorMessage.introduction}}</div>
-  {{/if}}
 </div>

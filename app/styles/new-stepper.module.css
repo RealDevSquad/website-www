@@ -264,11 +264,7 @@
 .step-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-header__text {
-  margin-bottom: 1rem;
+  gap: 1.5rem;
 }
 
 .form-grid {
@@ -277,19 +273,13 @@
 }
 
 .form-grid--2 {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .form-grid__item {
   display: flex;
   flex-direction: column;
-}
-
-.question-heading {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 1.25rem 0 0.5rem;
-  color: var(--color-black);
+  min-width: 0;
 }
 
 .word-count {
@@ -299,8 +289,15 @@
   margin-top: 0.25rem;
 }
 
-.step-container .error__message {
-  margin-top: 0.25rem;
+.step-container input,
+.step-container textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.step-container .textarea-box {
+  margin: 0;
 }
 
 .instruction-text {
