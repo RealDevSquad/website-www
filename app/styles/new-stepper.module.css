@@ -308,69 +308,6 @@
   margin: 0.25rem 0 0;
 }
 
-@media screen and (width <= 768px) {
-  .two-column-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .form-header {
-    width: 87.5%;
-  }
-
-  .new-stepper__form {
-    max-width: 85%;
-  }
-
-  .form-grid--2 {
-    grid-template-columns: 1fr;
-  }
-
-  .new-stepper__buttons {
-    width: 85%;
-  }
-
-  .stepper-welcome {
-    margin: 1rem auto 3rem;
-    padding: 1.5rem;
-  }
-
-  .stepper-welcome img {
-    width: 100px;
-  }
-
-  .terms-modal__content {
-    width: 95vw;
-    margin: 1rem;
-  }
-}
-
-@media (width <= 480px) {
-  .form-header {
-    width: 97.5%;
-  }
-
-  .new-stepper__form {
-    max-width: 95%;
-  }
-
-  .new-stepper__buttons {
-    width: 95%;
-  }
-
-  .stepper-welcome {
-    margin: 0.5rem auto 3rem;
-    padding: 1rem;
-  }
-
-  .stepper-welcome img {
-    width: 80px;
-  }
-
-  .stepper-welcome__checkbox-text {
-    font-size: 0.9rem;
-  }
-}
-
 .review-section {
   background-color: var(--color-bgpink);
   border-radius: 10px;
@@ -441,6 +378,40 @@
 }
 
 @media screen and (width <= 768px) {
+  .two-column-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .form-header {
+    width: 87.5%;
+  }
+
+  .new-stepper__form {
+    max-width: 85%;
+  }
+
+  .form-grid--2 {
+    grid-template-columns: 1fr;
+  }
+
+  .new-stepper__buttons {
+    width: 85%;
+  }
+
+  .stepper-welcome {
+    margin: 1rem auto 3rem;
+    padding: 1.5rem;
+  }
+
+  .stepper-welcome img {
+    width: 100px;
+  }
+
+  .terms-modal__content {
+    width: 95vw;
+    margin: 1rem;
+  }
+
   .review-section {
     padding: 1rem;
   }
@@ -463,5 +434,32 @@
   .review-field__value {
     text-align: left;
     max-width: 100%;
+  }
+}
+
+@media (width <= 480px) {
+  .form-header {
+    width: 97.5%;
+  }
+
+  .new-stepper__form {
+    max-width: 95%;
+  }
+
+  .new-stepper__buttons {
+    width: 95%;
+  }
+
+  .stepper-welcome {
+    margin: 0.5rem auto 3rem;
+    padding: 1rem;
+  }
+
+  .stepper-welcome img {
+    width: 80px;
+  }
+
+  .stepper-welcome__checkbox-text {
+    font-size: 0.9rem;
   }
 }
