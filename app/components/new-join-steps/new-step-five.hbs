@@ -16,8 +16,10 @@
   <div class='error__message'>{{this.errorMessage.whyRds}}</div>
 {{/if}}
 
+<div class="form-grid form-grid--2">
+<div class="form-grid__item">
 <Reusables::InputBox
-  @field='How many hours per week, are you willing to contribute?'
+  @field='No of hours/week you are willing to contribute?'
   @name='numberOfHours'
   @placeHolder='Enter value between 1-100.'
   @type='number'
@@ -29,7 +31,9 @@
 {{#if this.errorMessage.numberOfHours}}
   <div class='error__message'>{{this.errorMessage.numberOfHours}}</div>
 {{/if}}
+</div>
 
+<div class="form-grid__item">
 <Reusables::Dropdown
   @field='How did you hear about us?'
   @name='foundFrom'
@@ -42,4 +46,6 @@
 {{#if this.errorMessage.foundFrom}}
   <div class='error__message'>{{this.errorMessage.foundFrom}}</div>
 {{/if}}
+</div>
+</div>
 </div>
