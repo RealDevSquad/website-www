@@ -13,6 +13,7 @@ export default class JoinController extends Controller {
   @tracked chaincode = 'Generate chaincode';
   @tracked isChaincodeClicked = false;
   @tracked isLoading = false;
+  @tracked oldOnboarding = null;
 
   ANKUSH_TWITTER = ANKUSH_TWITTER;
 

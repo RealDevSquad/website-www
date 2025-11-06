@@ -13,7 +13,7 @@ export default class NewStepperComponent extends Component {
   @service joinApplicationTerms;
 
   @tracked currentStep =
-    Number(localStorage.getItem('currentStep') ?? this.args.step) ?? 0;
+    Number(localStorage.getItem('currentStep') ?? this.args.step) || 0;
 
   constructor() {
     super(...arguments);
@@ -46,8 +46,9 @@ export default class NewStepperComponent extends Component {
   }
 
   @action startHandler() {
-    localStorage.setItem('first_name', this.login.userData.first_name);
-    localStorage.setItem('last_name', this.login.userData.last_name);
+    sessionStorage.setItem('id', this.login.userData.id);
+    sessionStorage.setItem('first_name', this.login.userData.first_name);
+    sessionStorage.setItem('last_name', this.login.userData.last_name);
     this.incrementStep();
   }
 }
