@@ -10,7 +10,7 @@ export default class NewStepperComponent extends Component {
   @service login;
   @service router;
   @service onboarding;
-  @service applicationTerms;
+  @service joinApplicationTerms;
 
   @tracked currentStep = +(
     localStorage.getItem('currentStep') ??

@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      {{#unless this.applicationTerms.hasUserAcceptedTerms}}
+      {{#unless this.joinApplicationTerms.hasUserAcceptedTerms}}
         <div class="terms-modal__footer">
           <Reusables::Button
             @text="Accept Terms"

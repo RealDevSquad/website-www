@@ -15,7 +15,7 @@ module('Integration | Component | new-stepper', function (hooks) {
       .exists('Welcome screen is rendered');
     assert
       .dom('[data-test="welcome-greeting"]')
-      .hasText('Ready to apply to RDS?');
+      .hasText('Ready to apply to Real Dev Squad?');
     assert.dom('[data-test-button="start"]').exists('Start button exists');
   });
 
@@ -27,7 +27,7 @@ module('Integration | Component | new-stepper', function (hooks) {
   });
 
   test('start button is enabled when terms are accepted', async function (assert) {
-    const terms = this.owner.lookup('service:applicationTerms');
+    const terms = this.owner.lookup('service:joinApplicationTerms');
     terms.hasUserAcceptedTerms = true;
 
     await render(hbs`<NewStepper @step={{0}} />`);

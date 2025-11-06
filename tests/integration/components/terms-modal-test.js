@@ -26,7 +26,7 @@ module('Integration | Component | terms-modal', function (hooks) {
 
   test('it shows Accept Terms button and correctly calls onAccept action', async function (assert) {
     assert.expect(3);
-    const terms = this.owner.lookup('service:applicationTerms');
+    const terms = this.owner.lookup('service:joinApplicationTerms');
     terms.hasUserAcceptedTerms = false;
     this.setProperties({
       isOpen: true,
@@ -49,7 +49,7 @@ module('Integration | Component | terms-modal', function (hooks) {
   });
 
   test('it does not show Accept Terms button when terms are already accepted', async function (assert) {
-    const terms = this.owner.lookup('service:applicationTerms');
+    const terms = this.owner.lookup('service:joinApplicationTerms');
     terms.hasUserAcceptedTerms = true;
     this.setProperties({
       isOpen: true,

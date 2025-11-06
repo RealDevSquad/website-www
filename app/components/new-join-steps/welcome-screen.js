@@ -4,13 +4,13 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class WelcomeScreenComponent extends Component {
-  @service applicationTerms;
+  @service joinApplicationTerms;
   @tracked isTermsModalOpen = false;
 
   @action
   handleTermsCheckboxChange(e) {
-    if (this.applicationTerms.hasUserAcceptedTerms) {
-      this.applicationTerms.setTermsAccepted(false);
+    if (this.joinApplicationTerms.hasUserAcceptedTerms) {
+      this.joinApplicationTerms.setTermsAccepted(false);
     } else {
       e.preventDefault();
       this.isTermsModalOpen = true;
@@ -25,6 +25,6 @@ export default class WelcomeScreenComponent extends Component {
   @action
   acceptTerms() {
     this.isTermsModalOpen = false;
-    this.applicationTerms.setTermsAccepted(true);
+    this.joinApplicationTerms.setTermsAccepted(true);
   }
 }

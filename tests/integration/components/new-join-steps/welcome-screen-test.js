@@ -12,7 +12,7 @@ module('Integration | Component | welcome-screen', function (hooks) {
     assert.dom('[data-test="welcome-logo"]').exists('Logo is displayed');
     assert
       .dom('[data-test="welcome-greeting"]')
-      .hasText('Ready to apply to RDS?');
+      .hasText('Ready to apply to Real Dev Squad?');
     assert.dom('[data-test="terms-checkbox"]').exists('Checkbox exists');
     assert
       .dom('[data-test="terms-checkbox"]')
@@ -45,7 +45,7 @@ module('Integration | Component | welcome-screen', function (hooks) {
   });
 
   test('can uncheck checkbox after terms have been accepted', async function (assert) {
-    const terms = this.owner.lookup('service:applicationTerms');
+    const terms = this.owner.lookup('service:joinApplicationTerms');
     terms.hasUserAcceptedTerms = true;
 
     await render(hbs`<NewJoinSteps::WelcomeScreen />`);
