@@ -9,12 +9,7 @@ export default class AdminApplicationsRoute extends Route {
   @service toast;
   @service fastboot;
 
-  beforeModel(transition) {
-    if (transition?.to?.queryParams?.dev !== 'true') {
-      this.router.transitionTo('/page-not-found');
-      return;
-    }
-
+  beforeModel() {
     if (this.fastboot.isFastBoot) {
       return;
     }
