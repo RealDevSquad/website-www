@@ -62,13 +62,14 @@
       @onInput={{this.inputHandler}}
     />
 
-    <div class="role-selection">
+    <div class="role-selection" data-test-role-selection>
       <p>Applying as</p>
       <div class="role-buttons">
         {{#each this.roleOptions as |role|}}
           <button
             type="button"
             class="role-button {{if (eq this.data.role role) 'role-button--selected'}}"
+            data-test-role-button
             {{on 'click' (fn this.selectRole role)}}
           >
             {{role}}
