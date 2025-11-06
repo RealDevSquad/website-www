@@ -1,5 +1,5 @@
 export const NEW_FORM_STEPS = {
-  headings: ['Upload Professional HeadShot and fill up personal details'],
+  headings: ['Upload Professional Headshot and Complete Personal Details'],
   subheadings: [
     'Please provide accurate information for verification purposes.',
   ],
