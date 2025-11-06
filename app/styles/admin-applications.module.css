@@ -1,0 +1,547 @@
+.admin-applications__container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  min-height: 70vh;
+  font-family: raleway, sans-serif;
+}
+
+.admin-applications__summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.admin-applications__summary-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-applications__summary-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: transparent;
+  transition: width 0.25s ease;
+}
+
+.admin-applications__summary-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #dee2e6;
+  transform: translateY(-2px);
+}
+
+.admin-applications__summary-card--total::before {
+  background: var(--color-navyblue);
+}
+
+.admin-applications__summary-card--pending::before {
+  background: var(--color-soil);
+}
+
+.admin-applications__summary-card--approved::before {
+  background: var(--color-green);
+}
+
+.admin-applications__summary-card--rejected::before {
+  background: var(--color-carmine);
+}
+
+.admin-applications__summary-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.admin-applications__summary-card--total
+  .admin-applications__summary-card-icon {
+  color: var(--color-navyblue);
+  background-color: rgba(29, 18, 131, 0.08);
+}
+
+.admin-applications__summary-card--pending
+  .admin-applications__summary-card-icon {
+  color: var(--color-soil);
+  background-color: rgba(146, 104, 41, 0.08);
+}
+
+.admin-applications__summary-card--approved
+  .admin-applications__summary-card-icon {
+  color: var(--color-green);
+  background-color: rgba(73, 168, 46, 0.08);
+}
+
+.admin-applications__summary-card--rejected
+  .admin-applications__summary-card-icon {
+  color: var(--color-carmine);
+  background-color: rgba(161, 8, 41, 0.08);
+}
+
+.admin-applications__summary-card:hover .admin-applications__summary-card-icon {
+  transform: scale(1.05);
+}
+
+.admin-applications__summary-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-applications__summary-card-label {
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-applications__summary-card-value {
+  font-size: 2rem;
+  color: var(--color-darkblack);
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.admin-applications__tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e9ecef;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-applications__tabs::-webkit-scrollbar {
+  height: 3px;
+}
+
+.admin-applications__tabs::-webkit-scrollbar-track {
+  background: #f1f3f5;
+}
+
+.admin-applications__tabs::-webkit-scrollbar-thumb {
+  background: #ced4da;
+  border-radius: 2px;
+}
+
+.admin-applications__tab {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6c757d;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  margin-bottom: -0.75rem;
+}
+
+.admin-applications__tab:hover {
+  color: var(--color-navyblue);
+}
+
+.admin-applications__tab--active {
+  color: var(--color-navyblue);
+  border-bottom-color: var(--color-navyblue);
+}
+
+.admin-applications__list-container {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1.25rem;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.admin-applications__list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.admin-applications__list-title {
+  font-size: 1.25rem;
+  color: var(--color-darkblack);
+  margin: 0;
+  font-weight: 600;
+}
+
+.admin-applications__list-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-applications__sort-label {
+  font-size: 0.875rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.admin-applications__sort-select {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-darkblack);
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-applications__sort-select:hover {
+  border-color: #adb5bd;
+}
+
+.admin-applications__sort-select:focus {
+  outline: none;
+  border-color: var(--color-navyblue);
+  box-shadow: 0 0 0 2px rgba(29, 18, 131, 0.1);
+}
+
+.admin-applications__table-container {
+  overflow-x: auto;
+}
+
+.admin-applications__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-applications__table-header {
+  text-align: left;
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #e9ecef;
+  background-color: #f8f9fa;
+}
+
+.admin-applications__table-row {
+  border-bottom: 1px solid #f1f3f5;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.admin-applications__table-row:nth-child(even) {
+  background-color: #fafbfc;
+}
+
+.admin-applications__table-row:hover {
+  background-color: #f1f3f5;
+}
+
+.admin-applications__table-cell {
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-darkblack);
+  vertical-align: middle;
+}
+
+.admin-applications__candidate-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.admin-applications__candidate-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #e9ecef;
+  flex-shrink: 0;
+  display: block;
+}
+
+.admin-applications__candidate-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-applications__candidate-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-darkblack);
+  margin: 0 0 0.125rem 0;
+  line-height: 1.4;
+}
+
+.admin-applications__candidate-skills {
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-applications__status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.admin-applications__status-badge--PENDING {
+  background-color: #fff8e1;
+  color: #f57c00;
+}
+
+.admin-applications__status-badge--APPROVED {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.admin-applications__status-badge--REJECTED {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.admin-applications__status-badge--REQUEST_CHANGES {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.admin-applications__view-button {
+  padding: 0.375rem;
+  background-color: transparent;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.admin-applications__view-button:hover {
+  background-color: var(--color-navyblue);
+  color: #ffffff;
+  border-color: var(--color-navyblue);
+}
+
+.admin-applications__loading {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-applications__empty {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.admin-applications__empty p {
+  margin: 0;
+}
+
+.admin-applications__unauthorized {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--color-carmine);
+  font-size: 0.875rem;
+}
+
+.admin-applications__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  padding: 1rem 0;
+}
+
+.admin-applications__pagination-button {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-darkblack);
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-applications__pagination-button:hover:not(:disabled) {
+  background-color: var(--color-navyblue);
+  color: #ffffff;
+  border-color: var(--color-navyblue);
+}
+
+.admin-applications__pagination-button:disabled {
+  background-color: #f8f9fa;
+  color: #adb5bd;
+  cursor: not-allowed;
+  border-color: #e9ecef;
+}
+
+.admin-applications__page-info {
+  font-size: 0.875rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+@media (width <= 768px) {
+  .admin-applications__container {
+    padding: 1rem;
+  }
+
+  .admin-applications__summary-cards {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .admin-applications__summary-card {
+    padding: 0.875rem 1rem;
+  }
+
+  .admin-applications__summary-card-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .admin-applications__summary-card-value {
+    font-size: 1.5rem;
+  }
+
+  .admin-applications__summary-card-label {
+    font-size: 0.75rem;
+  }
+
+  .admin-applications__tabs {
+    gap: 0.375rem;
+  }
+
+  .admin-applications__tab {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .admin-applications__list-container {
+    padding: 1rem;
+  }
+
+  .admin-applications__list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .admin-applications__list-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .admin-applications__list-title {
+    font-size: 1.125rem;
+  }
+
+  .admin-applications__table {
+    font-size: 0.8rem;
+  }
+
+  .admin-applications__table-header {
+    padding: 0.625rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .admin-applications__table-cell {
+    padding: 0.625rem 0.5rem;
+  }
+
+  .admin-applications__candidate-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .admin-applications__candidate-name {
+    font-size: 0.8rem;
+  }
+
+  .admin-applications__candidate-skills {
+    font-size: 0.7rem;
+  }
+
+  .admin-applications__pagination {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.admin-applications__auth-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.admin-applications__skeleton-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.admin-applications__skeleton-card {
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.admin-applications__skeleton-tabs {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.admin-applications__skeleton-tab {
+  width: 100px;
+  height: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.admin-applications__skeleton-table {
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+}
