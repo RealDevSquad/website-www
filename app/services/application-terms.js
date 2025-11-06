@@ -6,7 +6,7 @@ export default class ApplicationTermsService extends Service {
   @tracked hasUserAcceptedTerms = false;
 
   @action
-  setTermsAcceptance(isAccepted) {
+  setTermsAccepted(isAccepted) {
     this.hasUserAcceptedTerms = isAccepted;
   }
 }

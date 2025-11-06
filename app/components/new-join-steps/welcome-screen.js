@@ -10,7 +10,7 @@ export default class WelcomeScreenComponent extends Component {
   @action
   handleTermsCheckboxChange(e) {
     if (this.applicationTerms.hasUserAcceptedTerms) {
-      this.applicationTerms.setTermsAcceptance(false);
+      this.applicationTerms.setTermsAccepted(false);
     } else {
       e.preventDefault();
       this.isTermsModalOpen = true;
@@ -25,6 +25,6 @@ export default class WelcomeScreenComponent extends Component {
   @action
   acceptTerms() {
     this.isTermsModalOpen = false;
-    this.applicationTerms.setTermsAcceptance(true);
+    this.applicationTerms.setTermsAccepted(true);
   }
 }

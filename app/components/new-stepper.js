@@ -4,8 +4,8 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class NewStepperComponent extends Component {
-  static MIN_STEP = 0;
-  static MAX_STEP = 5;
+  MIN_STEP = 0;
+  MAX_STEP = 6;
 
   @service login;
   @service router;
@@ -33,7 +33,7 @@ export default class NewStepperComponent extends Component {
   }
 
   @action incrementStep() {
-    if (this.currentStep < NewStepperComponent.MAX_STEP) {
+    if (this.currentStep < this.MAX_STEP) {
       this.currentStep += 1;
       localStorage.setItem('currentStep', this.currentStep);
       this.router.transitionTo(`/join?dev=true&step=${this.currentStep}`);
@@ -41,7 +41,7 @@ export default class NewStepperComponent extends Component {
   }
 
   @action decrementStep() {
-    if (this.currentStep > NewStepperComponent.MIN_STEP) {
+    if (this.currentStep > this.MIN_STEP) {
       this.currentStep -= 1;
       localStorage.setItem('currentStep', this.currentStep);
       this.router.transitionTo(`/join?dev=true&step=${this.currentStep}`);
