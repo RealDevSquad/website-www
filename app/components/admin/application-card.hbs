@@ -1,0 +1,45 @@
+<div
+  data-test-application-card
+  class="application-card application-card--{{@application.status}}"
+  {{on "click" @onClick}}
+  role="button"
+  tabindex="0"
+  {{on "keydown" (fn this.handleKeyDown @onClick)}}
+>
+  <div class="application-card__header">
+    <div
+      data-test-application-profile-pic
+      class="application-card__profile-pic"
+      aria-label="{{@application.biodata.firstName}} {{@application.biodata.lastName}}"
+    ></div>
+    <div class="application-card__info">
+      <h3 data-test-application-name class="application-card__name">
+        {{@application.biodata.firstName}} {{@application.biodata.lastName}}
+      </h3>
+      <p data-test-application-role class="application-card__role">
+        {{@application.role}}
+      </p>
+    </div>
+  </div>
+
+  <div class="application-card__body">
+    <p data-test-application-location class="application-card__location">
+      {{@application.location.city}}, {{@application.location.state}}
+    </p>
+    <p data-test-application-skills class="application-card__skills">
+      {{this.truncatedSkills}}
+    </p>
+    <div class="application-card__meta">
+      <span
+        data-test-application-status
+        class="application-card__status application-card__status--{{@application.status}}"
+      >
+        {{@application.status}}
+      </span>
+      <span data-test-application-date class="application-card__date">
+        {{@formatDate @application.submittedAt}}
+      </span>
+    </div>
+  </div>
+</div>
+
