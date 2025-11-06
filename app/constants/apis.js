@@ -42,3 +42,15 @@ export const SELF_USER_PROFILE_URL = `${APPS.API_BACKEND}/users?profile=true`;
 export const QR_AUTHORIZATION_STATUS_URL = `${APPS.API_BACKEND}/auth/qr-code-auth/authorization_status`;
 
 export const USER_AUTHENTICATED_DEVICES_URL = `${APPS.API_BACKEND}/auth/device`;
+
+export const APPLICATIONS_LIST_URL = (size = 10, page = 1) => {
+  return `${APPS.API_BACKEND}/applications?size=${size}&page=${page}`;
+};
+
+export const APPLICATION_DETAIL_URL = (id) => {
+  return `${APPS.API_BACKEND}/applications/${id}`;
+};
+
+export const APPLICATION_ACTION_URL = (id, action) => {
+  return `${APPS.API_BACKEND}/applications/${id}/${action}`;
+};

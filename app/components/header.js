@@ -7,6 +7,7 @@ import { inject as service } from '@ember/service';
 export default class HeaderComponent extends Component {
   @service router;
   @service fastboot;
+  @service login;
   @tracked isNavOpen = false;
   @tracked isMenuOpen = false;
   @tracked authURL = this.generateAuthURL();
@@ -23,6 +24,10 @@ export default class HeaderComponent extends Component {
   TASKS_URL = APPS.TASKS;
   IDENTITY_URL = APPS.IDENTITY;
   MY_STATUS_URL = APPS.MY_STATUS;
+
+  get isSuperUser() {
+    return this.login?.userData?.roles?.super_user;
+  }
 
   @action toggleNavbar() {
     this.isNavOpen = !this.isNavOpen;

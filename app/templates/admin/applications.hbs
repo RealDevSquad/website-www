@@ -1,0 +1,312 @@
+{{page-title "Admin - Applications"}}
+
+<section class="admin-applications__container">
+  {{#if this.isLoading}}
+    <div data-test-loading class="admin-applications__loading">
+      <Fa-Icon @size="2x" @icon="circle-notch" @spin={{true}} />
+    </div>
+  {{else if this.isCheckingAuth}}
+    <div data-test-checking-auth class="admin-applications__auth-skeleton">
+      <div class="admin-applications__skeleton-cards">
+        <div class="admin-applications__skeleton-card">
+          <Reusables::Skeleton />
+        </div>
+        <div class="admin-applications__skeleton-card">
+          <Reusables::Skeleton />
+        </div>
+        <div class="admin-applications__skeleton-card">
+          <Reusables::Skeleton />
+        </div>
+        <div class="admin-applications__skeleton-card">
+          <Reusables::Skeleton />
+        </div>
+      </div>
+      <div class="admin-applications__skeleton-tabs">
+        <div class="admin-applications__skeleton-tab">
+          <Reusables::Skeleton />
+        </div>
+        <div class="admin-applications__skeleton-tab">
+          <Reusables::Skeleton />
+        </div>
+        <div class="admin-applications__skeleton-tab">
+          <Reusables::Skeleton />
+        </div>
+        <div class="admin-applications__skeleton-tab">
+          <Reusables::Skeleton />
+        </div>
+        <div class="admin-applications__skeleton-tab">
+          <Reusables::Skeleton />
+        </div>
+      </div>
+      <div class="admin-applications__skeleton-table">
+        <Reusables::Skeleton />
+      </div>
+    </div>
+  {{else if this.isSuperUser}}
+    <div class="admin-applications__summary-cards">
+      <div
+        data-test-summary-card-total
+        class="admin-applications__summary-card admin-applications__summary-card--total"
+      >
+        <div class="admin-applications__summary-card-icon">
+          <Fa-Icon @icon="file-alt" @size="2x" />
+        </div>
+        <div class="admin-applications__summary-card-content">
+          <p class="admin-applications__summary-card-label">Total Applications</p>
+          <h2 class="admin-applications__summary-card-value">
+            {{this.totalApplicationsCount}}
+          </h2>
+        </div>
+      </div>
+
+      <div
+        data-test-summary-card-pending
+        class="admin-applications__summary-card admin-applications__summary-card--pending"
+      >
+        <div class="admin-applications__summary-card-icon">
+          <Fa-Icon @icon="clock" @size="2x" />
+        </div>
+        <div class="admin-applications__summary-card-content">
+          <p class="admin-applications__summary-card-label">Pending</p>
+          <h2 class="admin-applications__summary-card-value">
+            {{this.pendingApplicationsCount}}
+          </h2>
+        </div>
+      </div>
+
+      <div
+        data-test-summary-card-approved
+        class="admin-applications__summary-card admin-applications__summary-card--approved"
+      >
+        <div class="admin-applications__summary-card-icon">
+          <Fa-Icon @icon="check-circle" @size="2x" />
+        </div>
+        <div class="admin-applications__summary-card-content">
+          <p class="admin-applications__summary-card-label">Approved</p>
+          <h2 class="admin-applications__summary-card-value">
+            {{this.approvedApplicationsCount}}
+          </h2>
+        </div>
+      </div>
+
+      <div
+        data-test-summary-card-rejected
+        class="admin-applications__summary-card admin-applications__summary-card--rejected"
+      >
+        <div class="admin-applications__summary-card-icon">
+          <Fa-Icon @icon="times-circle" @size="2x" />
+        </div>
+        <div class="admin-applications__summary-card-content">
+          <p class="admin-applications__summary-card-label">Rejected</p>
+          <h2 class="admin-applications__summary-card-value">
+            {{this.rejectedApplicationsCount}}
+          </h2>
+        </div>
+      </div>
+    </div>
+
+    {{! Status Tabs }}
+    <div class="admin-applications__tabs">
+      <button
+        data-test-tab-all
+        type="button"
+        class="admin-applications__tab
+          {{if
+            (eq this.selectedStatus 'all')
+            'admin-applications__tab--active'
+          }}"
+        {{on "click" (fn this.filterByStatus "all")}}
+      >
+        All
+      </button>
+      <button
+        data-test-tab-pending
+        type="button"
+        class="admin-applications__tab
+          {{if
+            (eq this.selectedStatus 'PENDING')
+            'admin-applications__tab--active'
+          }}"
+        {{on "click" (fn this.filterByStatus "PENDING")}}
+      >
+        Pending
+      </button>
+      <button
+        data-test-tab-approved
+        type="button"
+        class="admin-applications__tab
+          {{if
+            (eq this.selectedStatus 'APPROVED')
+            'admin-applications__tab--active'
+          }}"
+        {{on "click" (fn this.filterByStatus "APPROVED")}}
+      >
+        Approved
+      </button>
+      <button
+        data-test-tab-rejected
+        type="button"
+        class="admin-applications__tab
+          {{if
+            (eq this.selectedStatus 'REJECTED')
+            'admin-applications__tab--active'
+          }}"
+        {{on "click" (fn this.filterByStatus "REJECTED")}}
+      >
+        Rejected
+      </button>
+      <button
+        data-test-tab-request-changes
+        type="button"
+        class="admin-applications__tab
+          {{if
+            (eq this.selectedStatus 'REQUEST_CHANGES')
+            'admin-applications__tab--active'
+          }}"
+        {{on "click" (fn this.filterByStatus "REQUEST_CHANGES")}}
+      >
+        Request Changes
+      </button>
+    </div>
+
+    {{! Applications List/Table View }}
+    <div class="admin-applications__list-container">
+      <div class="admin-applications__list-header">
+        <h2 class="admin-applications__list-title">Applications</h2>
+        <div class="admin-applications__list-controls">
+          <label for="sort-by" class="admin-applications__sort-label">Sort By:</label>
+          <select
+            id="sort-by"
+            data-test-sort-dropdown
+            class="admin-applications__sort-select"
+            {{on "change" this.handleSortChange}}
+          >
+            <option value="latest" selected>Latest</option>
+            <option value="oldest">Oldest</option>
+            <option value="name">Name</option>
+            <option value="status">Status</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="admin-applications__table-container">
+        <table class="admin-applications__table">
+          <thead>
+            <tr>
+              <th class="admin-applications__table-header">Candidate Name</th>
+              <th class="admin-applications__table-header">Status</th>
+              <th class="admin-applications__table-header">Role</th>
+              <th class="admin-applications__table-header">Location</th>
+              <th class="admin-applications__table-header">Application Date</th>
+              <th class="admin-applications__table-header">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each this.filteredApplications as |application|}}
+              <tr
+                data-test-application-row
+                class="admin-applications__table-row"
+                {{on "click" (fn this.viewApplication application.id)}}
+              >
+                <td class="admin-applications__table-cell">
+                  <div class="admin-applications__candidate-info">
+                    <div
+                      data-test-application-profile-pic
+                      class="admin-applications__candidate-avatar"
+                      aria-label="{{application.biodata.firstName}} {{application.biodata.lastName}}"
+                    ></div>
+                    <div class="admin-applications__candidate-details">
+                      <p class="admin-applications__candidate-name">
+                        {{application.biodata.firstName}}
+                        {{application.biodata.lastName}}
+                      </p>
+                      <p class="admin-applications__candidate-skills">
+                        {{this.truncateSkills application.professional.skills}}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td class="admin-applications__table-cell">
+                  <span
+                    data-test-application-status
+                    class="admin-applications__status-badge admin-applications__status-badge--{{application.status}}"
+                  >
+                    {{application.status}}
+                  </span>
+                </td>
+                <td class="admin-applications__table-cell">
+                  {{this.formatRole application.role}}
+                </td>
+                <td class="admin-applications__table-cell">
+                  {{application.location.city}},
+                  {{application.location.state}}
+                </td>
+                <td class="admin-applications__table-cell">
+                  {{this.formatDate application.submittedAt}}
+                </td>
+                <td class="admin-applications__table-cell">
+                  <button
+                    data-test-view-application
+                    type="button"
+                    class="admin-applications__view-button"
+                    {{on
+                      "click"
+                      (fn this.viewApplication application.id)
+                      stopPropagation=true
+                    }}
+                  >
+                    <Fa-Icon @icon="arrow-right" />
+                  </button>
+                </td>
+              </tr>
+            {{else}}
+              <tr>
+                <td
+                  colspan="6"
+                  data-test-no-applications
+                  class="admin-applications__empty"
+                >
+                  <p>No applications found</p>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    {{! Pagination }}
+    {{#if this.showPagination}}
+      <div class="admin-applications__pagination">
+        <button
+          data-test-prev-page
+          type="button"
+          class="admin-applications__pagination-button"
+          disabled={{this.isPrevDisabled}}
+          {{on "click" this.goToPrevPage}}
+        >
+          Previous
+        </button>
+        <span data-test-page-info class="admin-applications__page-info">
+          Page
+          {{this.currentPage}}
+          of
+          {{this.totalPages}}
+        </span>
+        <button
+          data-test-next-page
+          type="button"
+          class="admin-applications__pagination-button"
+          disabled={{this.isNextDisabled}}
+          {{on "click" this.goToNextPage}}
+        >
+          Next
+        </button>
+      </div>
+    {{/if}}
+  {{else}}
+    <div data-test-unauthorized class="admin-applications__unauthorized">
+      <p>You are not authorized to view this page.</p>
+    </div>
+  {{/if}}
+</section>

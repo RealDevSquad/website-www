@@ -51,6 +51,15 @@
           class="nav__element"
           href={{this.STATUS_URL}}
         >Status</a></li>
+      {{#if (and @isLoggedIn this.isSuperUser)}}
+        <li>
+          <LinkTo
+            data-test-applications-link
+            @route="admin.applications"
+            class="nav__element"
+          >Applications</LinkTo>
+        </li>
+      {{/if}}
       {{#if @dev}}
         <li>
           {{! TODO - remove query for dev when it goes to production }}
