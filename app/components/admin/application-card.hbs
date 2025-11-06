@@ -1,30 +1,30 @@
-<div
+<button
   data-test-application-card
-  class="application-card application-card--{{@application.status}}"
+  type="button"
+  class="application-card application-card--{{@application}}"
   {{on "click" @onClick}}
-  role="button"
-  tabindex="0"
-  {{on "keydown" (fn this.handleKeyDown @onClick)}}
 >
   <div class="application-card__header">
     <div
       data-test-application-profile-pic
       class="application-card__profile-pic"
-      aria-label="{{@application.biodata.firstName}} {{@application.biodata.lastName}}"
+      aria-label="{{@application}} {{@application}}"
     ></div>
     <div class="application-card__info">
-      <h3 data-test-application-name class="application-card__name">
-        {{@application.biodata.firstName}} {{@application.biodata.lastName}}
-      </h3>
+      <div data-test-application-name class="application-card__name">
+        {{@application}}
+        {{@application}}
+      </div>
       <p data-test-application-role class="application-card__role">
-        {{@application.role}}
+        {{@application}}
       </p>
     </div>
   </div>
 
   <div class="application-card__body">
     <p data-test-application-location class="application-card__location">
-      {{@application.location.city}}, {{@application.location.state}}
+      {{@application}},
+      {{@application}}
     </p>
     <p data-test-application-skills class="application-card__skills">
       {{this.truncatedSkills}}
@@ -32,14 +32,13 @@
     <div class="application-card__meta">
       <span
         data-test-application-status
-        class="application-card__status application-card__status--{{@application.status}}"
+        class="application-card__status application-card__status--{{@application}}"
       >
-        {{@application.status}}
+        {{@application}}
       </span>
       <span data-test-application-date class="application-card__date">
-        {{@formatDate @application.submittedAt}}
+        {{@formatDate @application}}
       </span>
     </div>
   </div>
-</div>
-
+</button>
