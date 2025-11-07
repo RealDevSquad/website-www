@@ -1,0 +1,36 @@
+{{page-title "Admin - Application Details"}}
+
+<section class="admin-application-detail__container">
+  {{#if (and this.isLoading (not this.isSuperUser))}}
+    <div data-test-loading class="admin-application-detail__loading">
+      <Fa-Icon @size="2x" @icon="circle-notch" @spin={{true}} />
+    </div>
+  {{else if (and this.isSuperUser @model)}}
+    <div class="admin-application-detail__header">
+      <h1 data-test-application-detail-title>
+        Application Review
+      </h1>
+    </div>
+
+    <Admin::ApplicationDetail
+      @application={{@model}}
+      @applicationId={{@model.id}}
+      @formatDate={{this.formatDate}}
+      @formatRole={{this.formatRole}}
+      @onApprove={{fn this.showFeedback "approve"}}
+      @onReject={{fn this.showFeedback "reject"}}
+      @onRequestChanges={{fn this.showFeedback "request-changes"}}
+      @feedbackText={{this.feedbackText}}
+      @onFeedbackChange={{this.updateFeedbackText}}
+      @isProcessing={{this.isProcessing}}
+      @showFeedbackInput={{this.showFeedbackInput}}
+      @selectedAction={{this.selectedAction}}
+      @onSubmitFeedback={{this.submitWithFeedback}}
+      @onCancelFeedback={{fn (mut this.showFeedbackInput) false}}
+    />
+  {{else if (and this.isSuperUser (not @model))}}
+    <div data-test-loading class="admin-application-detail__loading">
+      <Fa-Icon @size="2x" @icon="circle-notch" @spin={{true}} />
+    </div>
+  {{/if}}
+</section>

@@ -1,0 +1,93 @@
+<h3 class="application-detail-section__title">Side Quest</h3>
+<div class="application-detail-section__content">
+    {{#if @sideQuest.liftSimulation}}
+      <div class="application-detail-section__sidequest-item">
+        <h4 class="application-detail-section__sidequest-subtitle">
+          Lift Simulation
+        </h4>
+        {{#if @sideQuest.liftSimulation.link}}
+          <div class="application-detail-section__field application-detail-section__field--row">
+            <strong
+              class="application-detail-section__field-label"
+            >Link:</strong>
+            <a
+              href={{@sideQuest.liftSimulation.link}}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="application-detail-section__link"
+            >
+              View Link
+              <Fa-Icon @icon="external-link-alt" @size="xs" />
+            </a>
+          </div>
+        {{/if}}
+        {{#if @sideQuest.liftSimulation.github}}
+          <div class="application-detail-section__field application-detail-section__field--row">
+            <strong
+              class="application-detail-section__field-label"
+            >GitHub:</strong>
+            <a
+              href={{@sideQuest.liftSimulation.github}}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="application-detail-section__link"
+            >
+              View GitHub
+              <Fa-Icon @icon="external-link-alt" @size="xs" />
+            </a>
+          </div>
+        {{/if}}
+        {{#if @sideQuest.liftSimulation.message}}
+          <div class="application-detail-section__field application-detail-section__field--row">
+            <strong
+              class="application-detail-section__field-label"
+            >Message:</strong>
+            <p class="application-detail-section__field-value">
+              {{@sideQuest.liftSimulation.message}}
+            </p>
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
+
+    {{#if @sideQuest.identityVerification}}
+      <div class="application-detail-section__sidequest-item">
+        <h4 class="application-detail-section__sidequest-subtitle">
+          Identity Verification
+        </h4>
+        {{#if @sideQuest.identityVerification.link}}
+          <div class="application-detail-section__field application-detail-section__field--row">
+            <strong
+              class="application-detail-section__field-label"
+            >Link:</strong>
+            <a
+              href={{@sideQuest.identityVerification.link}}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="application-detail-section__link"
+            >
+              View Link
+              <Fa-Icon @icon="external-link-alt" @size="xs" />
+            </a>
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
+
+    {{#if @sideQuest.createdAt}}
+      <div class="application-detail-section__field application-detail-section__field--row">
+        <strong class="application-detail-section__field-label">Created At:</strong>
+        <span class="application-detail-section__field-value">
+          {{@formatDate @sideQuest.createdAt}}
+        </span>
+      </div>
+    {{/if}}
+    {{#if @sideQuest.updatedAt}}
+      <div class="application-detail-section__field application-detail-section__field--row">
+        <strong class="application-detail-section__field-label">Updated At:</strong>
+        <span class="application-detail-section__field-value">
+          {{@formatDate @sideQuest.updatedAt}}
+        </span>
+      </div>
+    {{/if}}
+  </div>

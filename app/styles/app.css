@@ -58,6 +58,7 @@
 @import url("confirm-modal.module.css");
 @import url("new-signup.module.css");
 @import url("admin-applications.module.css");
+@import url("admin-application-detail.module.css");
 @import url("application-card.module.css");
 
 * {

@@ -1,0 +1,53 @@
+<div
+  class="application-detail-section
+    {{if @gridSize (concat 'application-detail-section--' @gridSize)}}
+    {{if @isIntroduction 'application-detail-section--introduction'}}
+    {{if @additionalClass @additionalClass}}"
+>
+  <h3 class="application-detail-section__title">{{@title}}</h3>
+  <div class="application-detail-section__content">
+    {{#each-in @data as |key value|}}
+      {{#if value}}
+        <div
+          class="application-detail-section__field
+            {{if @isIntroduction 'application-detail-section__field--introduction'}}
+            {{if (or (eq key 'First Name') (eq key 'Last Name') (eq key 'City') (eq key 'State') (eq key 'Country') (eq key 'Institution') (eq key 'Skills') (eq key 'GitHub') (eq key 'LinkedIn') (eq key 'Twitter') (eq key 'Peerlist')) 'application-detail-section__field--row'}}"
+        >
+          <strong
+            class="application-detail-section__field-label {{if @isIntroduction 'application-detail-section__field-label--introduction'}}"
+          >{{key}}</strong>
+          {{#if @isLinks}}
+            {{#if value}}
+              <a
+                href={{value}}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="application-detail-section__link"
+              >
+                View {{key}}
+                <Fa-Icon @icon="external-link-alt" @size="xs" />
+              </a>
+            {{else}}
+              <span class="application-detail-section__field-value">—</span>
+            {{/if}}
+          {{else if (eq key "Skills")}}
+            <div class="application-detail-section__skills">
+              {{#each this.truncatedSkills.visible as |skill|}}
+                <span class="application-detail-section__skill-badge">{{skill}}</span>
+              {{/each}}
+              {{#if (gt this.truncatedSkills.remaining 0)}}
+                <span class="application-detail-section__skill-badge application-detail-section__skill-badge--more">
+                  +{{this.truncatedSkills.remaining}}
+                </span>
+              {{/if}}
+            </div>
+          {{else}}
+            <p
+              class="application-detail-section__field-value {{if @isIntroduction 'application-detail-section__field-value--introduction'}}"
+            >{{value}}</p>
+          {{/if}}
+        </div>
+      {{/if}}
+    {{/each-in}}
+  </div>
+</div>
