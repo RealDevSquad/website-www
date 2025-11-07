@@ -7,8 +7,4 @@ export default class NewStepThreeComponent extends BaseStepComponent {
     hobbies: NEW_STEP_LIMITS.stepThree.hobbies,
     funFact: NEW_STEP_LIMITS.stepThree.funFact,
   };
-  maxWords = {
-    hobbies: NEW_STEP_LIMITS.stepThree.hobbies.max,
-    funFact: NEW_STEP_LIMITS.stepThree.funFact.max,
-  };
 }

@@ -8,5 +8,4 @@ export default class NewStepTwoComponent extends BaseStepComponent {
     company: NEW_STEP_LIMITS.stepTwo.company,
     introduction: NEW_STEP_LIMITS.stepTwo.introduction,
   };
-  maxWords = { introduction: NEW_STEP_LIMITS.stepTwo.introduction.max };
 }

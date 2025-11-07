@@ -1,7 +1,7 @@
 <div class="step-container">
   <div class="form-header__text">
-    <h1 class="section-heading">{{@heading}}</h1>
-    <p class="section-instruction">{{@subHeading}}</p>
+    <h1 class="section-heading" data-test-heading>{{@heading}}</h1>
+    <p class="section-instruction" data-test-sub-heading>{{@subHeading}}</p>
   </div>
 
   <div class="form-grid">
@@ -10,7 +10,7 @@
         <Reusables::InputBox @field='Your skills' @name='skills' @placeHolder='Enter your key skills...' @type='text'
           @required={{true}} @value={{this.data.skills}} @onInput={{this.inputHandler}} />
         {{#if this.errorMessage.skills}}
-        <div class='error__message'>{{this.errorMessage.skills}}</div>
+        <div class='error__message' data-test-error="skills">{{this.errorMessage.skills}}</div>
         {{/if}}
       </div>
 
@@ -19,7 +19,7 @@
           @placeHolder='Institution or company name' @type='text' @required={{true}} @value={{this.data.company}}
           @onInput={{this.inputHandler}} />
         {{#if this.errorMessage.company}}
-        <div class='error__message'>{{this.errorMessage.company}}</div>
+        <div class='error__message' data-test-error="company">{{this.errorMessage.company}}</div>
         {{/if}}
       </div>
     </div>
@@ -27,10 +27,10 @@
       <Reusables::TextAreaBox @field='Please introduce yourself' @name='introduction'
         @placeHolder='Tell us about yourself...' @required={{true}} @value={{this.data.introduction}}
         @onInput={{this.inputHandler}} />
-      <div class="word-count">{{this.wordCount.introduction}}/{{this.maxWords.introduction}} words</div>
+      <div class="word-count" data-test-word-count="introduction">{{this.wordCount.introduction}}/{{this.validationMap.introduction.max}} words</div>
 
       {{#if this.errorMessage.introduction}}
-      <div class='error__message'>{{this.errorMessage.introduction}}</div>
+      <div class='error__message' data-test-error="introduction">{{this.errorMessage.introduction}}</div>
       {{/if}}
     </div>
   </div>
