@@ -1,0 +1,242 @@
+<div data-test-application-detail class="application-detail">
+  <div class="application-detail__profile-wrapper">
+    <div class="application-detail__profile">
+      {{#if @application.profilePic.url}}
+        <img
+          data-test-detail-profile-pic
+          class="application-detail__profile-pic"
+          src={{@application.profilePic.url}}
+          alt="{{@application.biodata.firstName}} {{@application.biodata.lastName}}"
+        />
+      {{else}}
+        <div
+          data-test-detail-profile-pic
+          class="application-detail__profile-pic application-detail__profile-pic--placeholder"
+          role="img"
+          aria-label="{{@application.biodata.firstName}} {{@application.biodata.lastName}}"
+        ></div>
+      {{/if}}
+      <div class="application-detail__profile-info">
+        <h2 data-test-detail-name class="application-detail__name">
+          {{@application.biodata.firstName}}
+          {{@application.biodata.lastName}}
+        </h2>
+        <p data-test-detail-role class="application-detail__role">
+          {{@formatRole @application.role}}
+        </p>
+      </div>
+      {{#if @application.status}}
+        <span
+          data-test-detail-status
+          class="application-detail__status application-detail__status--{{@application.status}}"
+        >
+          {{@application.status}}
+        </span>
+      {{/if}}
+    </div>
+    <div class="application-detail__rank-score-card">
+      <h3 class="application-detail__rank-score-title">Application Metrics</h3>
+      <div class="application-detail__rank-score-content">
+        <div class="application-detail__rank-score-item">
+          <span class="application-detail__rank-score-label">Current Rank</span>
+          <span class="application-detail__rank-score-value">#42</span>
+        </div>
+        <div class="application-detail__rank-score-item">
+          <span class="application-detail__rank-score-label">Overall Score</span>
+          <span class="application-detail__rank-score-value">78.5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="application-detail__sections">
+    <Admin::ApplicationDetail::Section
+      @title="Location"
+      @data={{this.locationSection}}
+      @gridSize="medium"
+    />
+
+    <Admin::ApplicationDetail::Section
+      @title="Professional"
+      @data={{this.professionalSection}}
+      @gridSize="medium"
+    />
+
+    <Admin::ApplicationDetail::Section
+      @title="Introduction"
+      @data={{this.introductionSection}}
+      @gridSize="full"
+      @isIntroduction={{true}}
+    />
+
+    <div class="application-detail__grid-container">
+      <div class="application-detail__grid-item application-detail__grid-item--social-and-metadata">
+        <Admin::ApplicationDetail::Section
+          @title="Social Links"
+          @data={{this.socialLinksSection}}
+          @isLinks={{true}}
+        />
+
+        <div class="application-detail-section">
+          <h3 class="application-detail-section__title">Application Metadata</h3>
+          <div class="application-detail-section__content">
+            <p>
+              <strong>Submitted At:</strong>
+              {{@formatDate @application.submittedAt}}
+            </p>
+            {{#if @application.lastEditAt}}
+              <p>
+                <strong>Last Edited At:</strong>
+                {{@formatDate @application.lastEditAt}}
+              </p>
+            {{/if}}
+            {{#if @application.nudge}}
+              <p>
+                <strong>Nudges:</strong>
+                {{@application.nudge.count}}
+                {{#if @application.nudge.lastNudgeAt}}
+                  (Last:
+                  {{@formatDate @application.nudge.lastNudgeAt}})
+                {{/if}}
+              </p>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+
+      <div class="application-detail__grid-item application-detail__grid-item--sidequest">
+        <div class="application-detail-section">
+          {{#if @application.sideQuest}}
+            <Admin::ApplicationDetail::SideQuest
+              @sideQuest={{@application.sideQuest}}
+              @formatDate={{@formatDate}}
+            />
+          {{else}}
+            <h3 class="application-detail-section__title">Side Quest</h3>
+            <div class="application-detail-section__content">
+              <p class="application-detail-section__field-value">No side quest data available</p>
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
+    {{#if @application.adminFeedback}}
+      <div class="application-detail-section application-detail-section--full">
+        <h3 class="application-detail-section__title">Admin Feedback History</h3>
+        <div class="application-detail-section__content">
+          {{#each @application.adminFeedback as |feedback|}}
+            <div class="application-detail-section__feedback-item">
+              <div class="application-detail-section__feedback-header">
+                <span
+                  class="application-detail-section__feedback-status application-detail-section__feedback-status--{{feedback.status}}"
+                >
+                  {{feedback.status}}
+                </span>
+                <span class="application-detail-section__feedback-date">
+                  {{@formatDate feedback.createdAt}}
+                </span>
+              </div>
+              <p class="application-detail-section__feedback-text">
+                {{feedback.feedback}}
+              </p>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if @application.finalScore}}
+      <div class="application-detail-section application-detail-section--small">
+        <h3 class="application-detail-section__title">Final Score</h3>
+        <div class="application-detail-section__content">
+          <p class="application-detail-section__score">
+            {{@application.finalScore}}
+          </p>
+        </div>
+      </div>
+    {{/if}}
+
+    <div class="application-detail__bottom-section">
+      <div class="application-detail__actions">
+        {{#if @showFeedbackInput}}
+          <div class="application-detail__feedback">
+            <label for="feedback-input" class="application-detail__feedback-label">
+              Feedback:
+            </label>
+            <textarea
+              id="feedback-input"
+              data-test-feedback-input
+              class="application-detail__feedback-input"
+              value={{@feedbackText}}
+              {{on "input" @onFeedbackChange}}
+              placeholder="Enter feedback for request changes or rejection"
+              rows="3"
+            ></textarea>
+            <div class="application-detail__feedback-actions">
+              <button
+                data-test-submit-feedback
+                type="button"
+                class="application-detail__button application-detail__button--{{@selectedAction}}"
+                disabled={{@isProcessing}}
+                {{on "click" @onSubmitFeedback}}
+              >
+                {{#if @isProcessing}}
+                  <Fa-Icon @icon="spinner" @spin={{true}} />
+                {{/if}}
+                Submit
+              </button>
+              <button
+                data-test-cancel-feedback
+                type="button"
+                class="application-detail__button application-detail__button--cancel"
+                {{on "click" @onCancelFeedback}}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        {{else}}
+          <div class="application-detail__buttons">
+            <button
+              data-test-approve-button
+              type="button"
+              class="application-detail__button application-detail__button--approve"
+              disabled={{@isProcessing}}
+              {{on "click" @onApprove}}
+            >
+              {{#if @isProcessing}}
+                <Fa-Icon @icon="spinner" @spin={{true}} />
+              {{/if}}
+              Approve
+            </button>
+            <button
+              data-test-request-changes-button
+              type="button"
+              class="application-detail__button application-detail__button--request-changes"
+              disabled={{@isProcessing}}
+              {{on "click" @onRequestChanges}}
+            >
+              {{#if @isProcessing}}
+                <Fa-Icon @icon="spinner" @spin={{true}} />
+              {{/if}}
+              Request Changes
+            </button>
+            <button
+              data-test-reject-button
+              type="button"
+              class="application-detail__button application-detail__button--reject"
+              disabled={{@isProcessing}}
+              {{on "click" @onReject}}
+            >
+              {{#if @isProcessing}}
+                <Fa-Icon @icon="spinner" @spin={{true}} />
+              {{/if}}
+              Reject
+            </button>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
