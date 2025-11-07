@@ -17,13 +17,7 @@ module(
     }
 
     hooks.beforeEach(function () {
-      localStorage.removeItem('newStepThreeData');
-      localStorage.removeItem('isValid');
-    });
-
-    hooks.afterEach(function () {
-      localStorage.removeItem('newStepThreeData');
-      localStorage.removeItem('isValid');
+      localStorage.clear();
     });
 
     test('it renders step three correctly', async function (assert) {
