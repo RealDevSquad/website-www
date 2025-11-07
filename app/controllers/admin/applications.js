@@ -134,6 +134,12 @@ export default class AdminApplicationsController extends Controller {
     } catch (error) {
       console.error('Error loading applications:', error);
       this.toast.error('Failed to load applications', 'Error', TOAST_OPTIONS);
+      this.model = {
+        applications: [],
+        total: 0,
+        page: 1,
+        size: this.pageSize,
+      };
     } finally {
       this.isLoading = false;
     }
@@ -155,7 +161,23 @@ export default class AdminApplicationsController extends Controller {
 
   @action
   viewApplication(applicationId) {
-    this.router.transitionTo('admin.applications.show', applicationId);
+    if (applicationId) {
+      this.router.transitionTo('admin.applications.show', applicationId);
+    }
+  }
+
+  @action
+  handleButtonClick(applicationId, event) {
+    event.stopPropagation();
+    this.viewApplication(applicationId);
+  }
+
+  @action
+  handleRowKeydown(applicationId, event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.viewApplication(applicationId);
+    }
   }
 
   @action
@@ -193,5 +215,9 @@ export default class AdminApplicationsController extends Controller {
   formatRole(role) {
     if (!role) return '';
     return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
+  }
+
+  get isDetailRoute() {
+    return this.router.currentRouteName === 'admin.applications.show';
   }
 }

@@ -57,7 +57,12 @@ export default class AdminApplicationsRoute extends Route {
     } catch (error) {
       console.error('Error fetching applications:', error);
       this.toast.error('Failed to load applications', 'Error', TOAST_OPTIONS);
-      return { applications: [], total: 0, page: 1, size: 10 };
+      return {
+        applications: [],
+        total: 0,
+        page: 1,
+        size: 10,
+      };
     }
   }
 }

@@ -42,7 +42,9 @@
         <Reusables::Skeleton />
       </div>
     </div>
-  {{else if this.isSuperUser}}
+  {{else if (not this.isCheckingAuth)}}
+    {{#if this.isSuperUser}}
+      {{#unless this.isDetailRoute}}
     <div class="admin-applications__summary-cards">
       <div
         data-test-summary-card-total
@@ -205,7 +207,10 @@
             {{#each this.filteredApplications as |application|}}
               <tr
                 data-test-application-row
-                class="admin-applications__table-row"
+                class="admin-applications__table-row admin-applications__table-row--clickable"
+                tabindex="0"
+                {{on "click" (fn this.viewApplication application.id)}}
+                {{on "keydown" (fn this.handleRowKeydown application.id)}}
               >
                 <td class="admin-applications__table-cell">
                   <div class="admin-applications__candidate-info">
@@ -249,11 +254,7 @@
                     data-test-view-application
                     type="button"
                     class="admin-applications__view-button"
-                    {{on
-                      "click"
-                      (fn this.viewApplication application.id)
-                      stopPropagation=true
-                    }}
+                    {{on "click" (fn this.handleButtonClick application.id)}}
                   >
                     <Fa-Icon @icon="arrow-right" />
                   </button>
@@ -304,9 +305,12 @@
         </button>
       </div>
     {{/if}}
-  {{else}}
-    <div data-test-unauthorized class="admin-applications__unauthorized">
-      <p>You are not authorized to view this page.</p>
-    </div>
+    {{/unless}}
+    {{else}}
+      <div data-test-unauthorized class="admin-applications__unauthorized">
+        <p>You are not authorized to view this page.</p>
+      </div>
+    {{/if}}
   {{/if}}
+  {{outlet}}
 </section>
