@@ -15,33 +15,30 @@ export default class NewStepperComponent extends Component {
   @tracked currentStep =
     Number(localStorage.getItem('currentStep') ?? this.args.step) || 0;
 
-  constructor() {
-    super(...arguments);
-    this.handlePopState = () => {
-      const step = new URLSearchParams(window.location.search).get('step');
-      if (step !== null) this.currentStep = Number(step);
-    };
-    window.addEventListener('popstate', this.handlePopState);
-  }
+  updateQueryParam(step) {
+    const existingQueryParams = this.router.currentRoute?.queryParams;
 
-  willDestroy() {
-    super.willDestroy(...arguments);
-    window.removeEventListener('popstate', this.handlePopState);
+    this.router.transitionTo('join', {
+      queryParams: {
+        ...existingQueryParams,
+        step,
+      },
+    });
   }
 
   @action incrementStep() {
     if (this.currentStep < this.MAX_STEP) {
-      this.currentStep += 1;
-      localStorage.setItem('currentStep', this.currentStep);
-      this.router.transitionTo(`/join?dev=true&step=${this.currentStep}`);
+      const nextStep = this.currentStep + 1;
+      localStorage.setItem('currentStep', String(nextStep));
+      this.updateQueryParam(nextStep);
     }
   }
 
   @action decrementStep() {
     if (this.currentStep > this.MIN_STEP) {
-      this.currentStep -= 1;
-      localStorage.setItem('currentStep', this.currentStep);
-      this.router.transitionTo(`/join?dev=true&step=${this.currentStep}`);
+      const previousStep = this.currentStep - 1;
+      localStorage.setItem('currentStep', String(previousStep));
+      this.updateQueryParam(previousStep);
     }
   }
 

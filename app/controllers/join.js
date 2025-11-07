@@ -14,6 +14,7 @@ export default class JoinController extends Controller {
   @tracked isChaincodeClicked = false;
   @tracked isLoading = false;
   @tracked oldOnboarding = null;
+  @tracked step = null;
 
   ANKUSH_TWITTER = ANKUSH_TWITTER;
 
@@ -25,6 +26,10 @@ export default class JoinController extends Controller {
 
   get isOldOnboarding() {
     return this.oldOnboarding === 'true';
+  }
+
+  get stepFromParam() {
+    return Number(this.step) ?? 0;
   }
 
   get applicationData() {
