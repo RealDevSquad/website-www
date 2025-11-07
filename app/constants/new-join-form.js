@@ -1,7 +1,7 @@
 export const NEW_FORM_STEPS = {
   headings: [
     'Upload Professional Headshot and Complete Personal Details',
-    'More personal details please',
+    'Additional Personal Information',
     'Your hobbies, interests, fun fact',
   ],
   subheadings: [
