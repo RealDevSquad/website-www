@@ -1,5 +1,5 @@
-<div class="stepper-welcome" data-test="welcome-screen">
-  <div class="stepper-welcome__logo" data-test="welcome-logo">
+<div class="welcome-screen" data-test="welcome-screen">
+  <div class="welcome-screen__logo" data-test="welcome-logo">
     <img
       src="assets/images/rds-logo.png"
       alt="RDS"
@@ -9,20 +9,20 @@
   <h1 class="stepper__greeting" data-test="welcome-greeting">Ready to apply to Real Dev Squad?</h1>
 
   <div>
-    <div class="stepper-welcome__info-item--bullet">
+    <div class="welcome-screen__info-item--bullet">
       This form should take up to 10 mins to fill.
     </div>
 
-    <div class="stepper-welcome__info-item--bullet">
+    <div class="welcome-screen__info-item--bullet">
       Have your professional headshot ready before you begin.
     </div>
 
-    <div class="stepper-welcome__info-item--bullet">
+    <div class="welcome-screen__info-item--bullet">
       Once you're done, you'll get access to quests that help improve your rank and increase your chances of selection.
     </div>
   </div>
 
-  <label class="stepper-welcome__checkbox">
+  <label class="welcome-screen__checkbox">
     <input
       type="checkbox"
       data-test="terms-checkbox"
@@ -30,7 +30,7 @@
       {{on "click" this.handleTermsCheckboxChange}}
     />
 
-    <span class="stepper-welcome__checkbox-text">
+    <span class="welcome-screen__checkbox-text">
       I agree to the Terms and Conditions.
     </span>
   </label>
