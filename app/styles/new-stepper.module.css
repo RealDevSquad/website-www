@@ -88,13 +88,13 @@
   font-size: 1.5rem;
 }
 
-.terms-modal__close {
-  background-color: transparent !important;
-  margin: 0 !important;
+.terms-modal__close.icon-button {
+  background-color: transparent;
+  margin: 0;
 }
 
-.terms-modal__close:hover {
-  background-color: var(--color-lightgrey) !important;
+.terms-modal__close.icon-button:hover {
+  background-color: var(--color-lightgrey);
   transition: all 0.3s ease-in-out;
 }
 
