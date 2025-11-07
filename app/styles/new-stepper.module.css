@@ -3,7 +3,7 @@
   margin: 0 auto 3rem;
   padding: 2rem;
   background-color: var(--color-bgpink);
-  border-radius: 10px;
+  border-radius: 0.625rem;
   box-sizing: border-box;
 }
 
@@ -16,29 +16,30 @@
   margin: 0;
 }
 
-.stepper-welcome {
+.welcome-screen {
+  width: 90%;
+  margin: 0 auto 2rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   justify-content: center;
-  margin-block: 2rem;
 }
 
-.stepper-welcome__logo {
+.welcome-screen__logo {
   display: flex;
   justify-content: center;
 }
 
-.stepper-welcome__info-item--bullet {
+.welcome-screen__info-item--bullet {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
-  color: var(--color-black-light);
+  color: var(--color-darkblack);
   font-size: 1rem;
   line-height: 1.5;
 }
 
-.stepper-welcome__info-item--bullet::before {
+.welcome-screen__info-item--bullet::before {
   content: "•";
   color: var(--color-pink);
   font-size: 1.5rem;
@@ -46,30 +47,30 @@
   margin-right: 0.75rem;
 }
 
-.stepper-welcome__checkbox {
+.welcome-screen__checkbox {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   cursor: pointer;
 }
 
-.stepper-welcome__checkbox-text {
-  color: var(--color-black-light);
+.welcome-screen__checkbox-text {
+  color: var(--color-darkblack);
   font-size: 0.9rem;
   line-height: 1.4;
 }
 
-.stepper-welcome__actions {
+.welcome-screen__actions {
   display: flex;
   justify-content: center;
 }
 
 .terms-modal__content {
   background: var(--color-white);
-  border-radius: 10px;
+  border-radius: 0.625rem;
   padding: 2rem;
   width: 90vw;
-  max-width: 500px;
+  max-width: 25rem;
   max-height: 80vh;
   overflow-y: scroll;
   display: flex;
@@ -150,9 +151,9 @@
 
 .progress-bar {
   width: 100%;
-  height: 8px;
+  height: 0.5rem;
   background-color: var(--color-pink-low-opacity);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   overflow: hidden;
 }
 
@@ -189,7 +190,7 @@
 
 .image-upload-box {
   border: 2px dashed var(--color-lightgrey);
-  border-radius: 10px;
+  border-radius: 0.625rem;
   padding: 2rem;
   text-align: center;
   background-color: var(--color-white);
@@ -242,7 +243,7 @@
   padding: 0.5rem 1rem;
   border: 2px solid var(--profile-field-input-border-clr);
   background-color: var(--color-white);
-  border-radius: 6px;
+  border-radius: 0.375rem;
   cursor: pointer;
   font-size: 0.9rem;
 }
@@ -304,10 +305,105 @@
   margin: 0;
 }
 
-.instruction-text {
-  font-size: 0.85rem;
-  color: var(--color-black-light);
-  margin: 0.25rem 0 0;
+.review-section {
+  background-color: var(--color-bgpink);
+  border-radius: 0.625rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0.125rem 0.25rem var(--color-blackshadow2);
+}
+
+.review-section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-lightgrey);
+}
+
+.review-section__header .btn--sm {
+  height: 2rem;
+  width: 5rem;
+}
+
+.review-section__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-black);
+  margin: 0;
+}
+
+.review-section__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.review-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.5rem 0;
+  gap: 1rem;
+}
+
+.review-field__label {
+  font-weight: 500;
+  color: var(--color-black);
+  flex-shrink: 0;
+  min-width: 12.5rem;
+}
+
+.review-field__value {
+  color: var(--color-black);
+  word-wrap: break-word;
+  flex: 1;
+  max-width: 60%;
+}
+
+.review-field__value--missing {
+  color: var(--text-red);
+}
+
+.review-field__value--empty {
+  color: var(--color-lightgrey);
+}
+
+.review-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-lightgrey);
+}
+
+@media screen and (width <= 1280px) {
+  .new-stepper__form {
+    width: 75vw;
+  }
+
+  .form-header {
+    width: 75vw;
+  }
+
+  .new-stepper__buttons {
+    width: 75vw;
+  }
+}
+
+@media screen and (width <= 1024px) {
+  .new-stepper__form {
+    width: 80vw;
+  }
+
+  .form-header {
+    width: 80vw;
+  }
+
+  .new-stepper__buttons {
+    width: 80vw;
+  }
 }
 
 @media screen and (width <= 768px) {
@@ -332,13 +428,13 @@
     width: 90vw;
   }
 
-  .stepper-welcome {
+  .welcome-screen {
     margin: 1rem auto;
     padding: 1.5rem;
   }
 
-  .stepper-welcome img {
-    width: 100px;
+  .welcome-screen img {
+    width: 6.25rem;
   }
 
   .terms-modal__content {
@@ -370,7 +466,7 @@
   }
 }
 
-@media (width <= 480px) {
+@media screen and (width <= 480px) {
   .form-header {
     width: 95%;
   }
@@ -384,16 +480,20 @@
     width: 95%;
   }
 
-  .stepper-welcome {
+  .terms-modal__content {
+    padding: 1rem;
+  }
+
+  .welcome-screen {
     margin: 0.5rem auto 1rem;
     padding: 1rem;
   }
 
-  .stepper-welcome img {
-    width: 80px;
+  .welcome-screen img {
+    width: 5rem;
   }
 
-  .stepper-welcome__checkbox-text {
+  .welcome-screen__checkbox-text {
     font-size: 0.9rem;
   }
 }
