@@ -13,13 +13,23 @@ export default class JoinController extends Controller {
   @tracked chaincode = 'Generate chaincode';
   @tracked isChaincodeClicked = false;
   @tracked isLoading = false;
+  @tracked oldOnboarding = null;
+  @tracked step = null;
 
   ANKUSH_TWITTER = ANKUSH_TWITTER;
 
-  queryParams = ['step', 'dev'];
+  queryParams = ['step', 'dev', 'oldOnboarding'];
 
   get isDevMode() {
     return this.featureFlag.isDevMode;
+  }
+
+  get isOldOnboarding() {
+    return this.oldOnboarding === 'true';
+  }
+
+  get stepFromParam() {
+    return Number(this.step) ?? 0;
   }
 
   get applicationData() {
