@@ -1,33 +1,51 @@
-<div class="step-container">
+<div class="step-container" data-test-step="new-step-five">
   <div class="form-header__text">
     <h1 class="section-heading">{{@heading}}</h1>
     <p class="section-instruction">{{@subHeading}}</p>
   </div>
 
-  <Reusables::TextAreaBox @field='Why you want to join Real Dev Squad?' @name='whyRds'
-    @placeHolder='Tell us why you want to join our community...' @required={{true}} @value={{this.data.whyRds}}
-    @onInput={{this.inputHandler}} />
-  {{#if this.errorMessage.whyRds}}
-  <div class='error__message'>{{this.errorMessage.whyRds}}</div>
-  {{/if}}
+<Reusables::TextAreaBox
+  @field='Why you want to join Real Dev Squad?'
+  @name='whyRds'
+  @placeHolder='Tell us why you want to join our community...'
+  @required={{true}}
+  @value={{this.data.whyRds}}
+  @onInput={{this.inputHandler}}
+/>
+{{#if this.errorMessage.whyRds}}
+  <div class='error__message' data-test-error="whyRds">{{this.errorMessage.whyRds}}</div>
+{{/if}}
 
-  <div class="form-grid form-grid--2">
-    <div class="form-grid__item">
-      <Reusables::InputBox @field='No of hours/week you are willing to contribute?' @name='numberOfHours'
-        @placeHolder='Enter value between 1-100.' @type='number' @required={{true}} @value={{this.data.numberOfHours}}
-        @onInput={{this.inputHandler}} @options={{this.heardFrom}} />
-      {{#if this.errorMessage.numberOfHours}}
-      <div class='error__message'>{{this.errorMessage.numberOfHours}}</div>
-      {{/if}}
-    </div>
+<div class="form-grid form-grid--2">
+<div class="form-grid__item">
+<Reusables::InputBox
+  @field='No of hours/week you are willing to contribute?'
+  @name='numberOfHours'
+  @placeHolder='Enter value between 1-100.'
+  @type='number'
+  @required={{true}}
+  @value={{this.data.numberOfHours}}
+  @onInput={{this.inputHandler}}
+  @options={{this.heardFrom}}
+/>
+{{#if this.errorMessage.numberOfHours}}
+  <div class='error__message' data-test-error="numberOfHours">{{this.errorMessage.numberOfHours}}</div>
+{{/if}}
+</div>
 
-    <div class="form-grid__item">
-      <Reusables::Dropdown @field='How did you hear about us?' @name='foundFrom'
-        @placeHolder='Choose from below options' @required={{true}} @value={{this.data.foundFrom}}
-        @options={{this.heardFrom}} @onChange={{this.inputHandler}} />
-      {{#if this.errorMessage.foundFrom}}
-      <div class='error__message'>{{this.errorMessage.foundFrom}}</div>
-      {{/if}}
-    </div>
-  </div>
+<div class="form-grid__item">
+<Reusables::Dropdown
+  @field='How did you hear about us?'
+  @name='foundFrom'
+  @placeHolder='Choose from below options'
+  @required={{true}}
+  @value={{this.data.foundFrom}}
+  @options={{this.heardFrom}}
+  @onChange={{this.inputHandler}}
+/>
+{{#if this.errorMessage.foundFrom}}
+  <div class='error__message' data-test-error="foundFrom">{{this.errorMessage.foundFrom}}</div>
+{{/if}}
+</div>
+</div>
 </div>
