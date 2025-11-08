@@ -16,6 +16,12 @@ export default class NewStepperComponent extends Component {
   @tracked currentStep =
     Number(localStorage.getItem('currentStep') ?? this.args.step) || 0;
 
+  @tracked preValid = false;
+  @tracked isValid = localStorage.getItem('isValid') === 'true';
+
+  setIsValid = (newVal) => (this.isValid = newVal);
+  setIsPreValid = (newVal) => (this.preValid = newVal);
+
   updateQueryParam(step) {
     const existingQueryParams = this.router.currentRoute?.queryParams;
 
@@ -43,6 +49,7 @@ export default class NewStepperComponent extends Component {
     if (this.currentStep < this.MAX_STEP) {
       const nextStep = this.currentStep + 1;
       localStorage.setItem('currentStep', String(nextStep));
+      this.currentStep = nextStep;
       this.updateQueryParam(nextStep);
     }
   }
@@ -51,6 +58,7 @@ export default class NewStepperComponent extends Component {
     if (this.currentStep > this.MIN_STEP) {
       const previousStep = this.currentStep - 1;
       localStorage.setItem('currentStep', String(previousStep));
+      this.currentStep = previousStep;
       this.updateQueryParam(previousStep);
     }
   }

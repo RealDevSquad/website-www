@@ -69,7 +69,7 @@ export default class BaseStepComponent extends Component {
   handleFieldUpdate(field, value) {
     this.updateFieldValue(field, value);
     const result = this.validateField(field, value);
-    this.updateWordCount(field, value, result);
+    this.updateWordCount(field, result);
     this.updateErrorMessage(field, result);
     this.syncFormValidity();
   }
@@ -79,11 +79,8 @@ export default class BaseStepComponent extends Component {
     localStorage.setItem(this.storageKey, JSON.stringify(this.data));
   }
 
-  updateWordCount(field, value, result) {
-    const wordCount =
-      result.wordCount ??
-      value?.trim()?.split(/\s+/).filter(Boolean).length ??
-      0;
+  updateWordCount(field, result) {
+    const wordCount = result.wordCount ?? 0;
     this.wordCount = { ...this.wordCount, [field]: wordCount };
   }
 

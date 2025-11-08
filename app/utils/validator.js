@@ -16,7 +16,7 @@ export const validator = (value, words) => {
 
 export const validateWordCount = (text, wordLimits) => {
   const trimmedText = text?.trim();
-  const wordCount = trimmedText?.split(/\s+/)?.length ?? 0;
+  const wordCount = trimmedText?.split(/\s+/).filter(Boolean).length ?? 0;
 
   const { min, max } = wordLimits;
   if (!trimmedText) {

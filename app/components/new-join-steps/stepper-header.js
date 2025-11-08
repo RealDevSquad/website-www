@@ -5,8 +5,8 @@ import { cached } from '@glimmer/tracking';
 export default class StepperHeaderComponent extends Component {
   @cached
   get progressPercentage() {
-    const totalSteps = Number(this.args.totalSteps) ?? 1;
-    const currentStep = Number(this.args.currentStep) ?? 0;
+    const totalSteps = Number(this.args.totalSteps) || 1;
+    const currentStep = Number(this.args.currentStep) || 0;
     return Math.round((currentStep / totalSteps) * 100);
   }
 
