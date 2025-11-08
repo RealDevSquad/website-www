@@ -66,6 +66,9 @@ export default class AdminApplicationsShowRoute extends Route {
     if (controller) {
       controller.feedbackText = '';
       controller.isProcessing = false;
+      if (controller._dateCache) {
+        controller._dateCache.clear();
+      }
     }
   }
 
