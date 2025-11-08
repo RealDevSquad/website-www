@@ -9,7 +9,6 @@
 @import url("input.module.css");
 @import url("dropdown.module.css");
 @import url("stepper.module.css");
-@import url("new-stepper.module.css");
 @import url("page-not-found.module.css");
 @import url("join-section.module.css");
 @import url("live-header.module.css");
@@ -58,6 +57,7 @@
 @import url("qrcode.module.css");
 @import url("confirm-modal.module.css");
 @import url("new-signup.module.css");
+@import url("new-stepper.module.css");
 
 * {
   margin: 0;
