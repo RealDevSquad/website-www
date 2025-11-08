@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { cached } from '@ember/object';
 
 export default class AdminApplicationDetailComponent extends Component {
   get locationSection() {
@@ -9,14 +10,20 @@ export default class AdminApplicationDetailComponent extends Component {
     };
   }
 
-  get professionalSection() {
-    const skills = this.args.application?.professional?.skills;
-    const skillsArray = skills
+  _processSkills(skills) {
+    return skills
       ? skills
           .split(',')
           .map((skill) => skill.trim())
           .filter(Boolean)
       : [];
+  }
+
+  @cached
+  get professionalSection() {
+    const skillsArray = this._processSkills(
+      this.args.application?.professional?.skills,
+    );
 
     return {
       Institution: this.args.application?.professional?.institution,
@@ -29,7 +36,7 @@ export default class AdminApplicationDetailComponent extends Component {
       Introduction: this.args.application?.intro?.introduction,
       'Fun Fact': this.args.application?.intro?.funFact,
       'For Fun': this.args.application?.intro?.forFun,
-      'Why RDS': this.args.application?.intro?.whyRds,
+      'Why Real Dev Squad?': this.args.application?.intro?.whyRds,
     };
   }
 

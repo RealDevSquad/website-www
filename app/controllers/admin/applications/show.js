@@ -14,6 +14,11 @@ export default class AdminApplicationsShowController extends Controller {
   @tracked showFeedbackInput = false;
   @tracked selectedAction = null;
 
+  constructor() {
+    super(...arguments);
+    this._dateCache = new Map();
+  }
+
   get isSuperUser() {
     return this.login.userData?.roles?.super_user;
   }
@@ -96,22 +101,46 @@ export default class AdminApplicationsShowController extends Controller {
     this.router.transitionTo('admin.applications');
   }
 
-  @action
   formatDate(dateString) {
     if (!dateString) return '';
 
-    const date =
-      typeof dateString === 'string' ? new Date(dateString) : dateString;
+    // Normalize input to create a consistent cache key
+    let cacheKey;
+    let date;
 
-    if (Number.isNaN(date.getTime())) {
-      return '';
+    if (dateString instanceof Date) {
+      // For Date objects, use timestamp for cache key
+      const timestamp = dateString.getTime();
+      if (Number.isNaN(timestamp)) {
+        return '';
+      }
+      cacheKey = `date_${timestamp}`;
+      date = dateString;
+    } else {
+      // For strings, use the string itself as cache key
+      cacheKey = String(dateString);
+      date = new Date(dateString);
+
+      if (Number.isNaN(date.getTime())) {
+        return '';
+      }
     }
 
-    return date.toLocaleDateString('en-US', {
+    // Check cache first
+    if (this._dateCache.has(cacheKey)) {
+      return this._dateCache.get(cacheKey);
+    }
+
+    // Format the date
+    const formatted = date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
     });
+
+    // Cache the result
+    this._dateCache.set(cacheKey, formatted);
+    return formatted;
   }
 
   @action
