@@ -2,32 +2,18 @@
   <div class="two-column-layout__left">
     <h3 class="section-heading">Profile Picture</h3>
     {{#if this.imagePreview}}
-      <div class="image-preview-container">
-        <img src={{this.imagePreview}} alt="Profile preview" class="image-preview" />
-        <Reusables::Button
-          @type="button"
-          @text="Change Image"
-          @variant="light"
-          @onClick={{this.triggerFileInput}}
-        />
-      </div>
+    <div class="image-preview-container">
+      <img src={{this.imagePreview}} alt="Profile preview" class="image-preview" />
+      <Reusables::Button @type="button" @text="Change Image" @variant="light" @onClick={{this.triggerFileInput}} />
+    </div>
     {{else}}
-      <button
-        class="image-upload-box"
-        type="button"
-        {{on 'click' this.triggerFileInput}}
-      >
-        <FaIcon @icon="upload" />
-        <p class="image-upload-box__text">Upload Image</p>
-      </button>
+    <button class="image-upload-box" type="button" {{on 'click' this.triggerFileInput}}>
+      <FaIcon @icon="upload" />
+      <p class="image-upload-box__text">Upload Image</p>
+    </button>
     {{/if}}
-    <input
-      type="file"
-      id="profile-image-input"
-      accept="image/png, image/jpeg"
-      class="image-form__input"
-      {{on 'change' this.handleImageSelect}}
-    />
+    <input type="file" id="profile-image-input" accept="image/png, image/jpeg" class="image-form__input" {{on 'change'
+      this.handleImageSelect}} />
     <div class="image-requirements">
       <h4>Image Requirements:</h4>
       <ul>
@@ -42,60 +28,29 @@
 
   <div class="two-column-layout__right">
     <h3 class="section-heading">Personal Details</h3>
-    <p class="section-instruction">Please provide correct details and choose your role carefully, it won't be changed later.</p>
+    <p class="section-instruction">Please provide correct details and choose your role carefully, it won't be changed
+      later.</p>
 
-    <Reusables::InputBox
-      @field='Your Name'
-      @name='fullName'
-      @placeHolder='Full Name'
-      @type='text'
-      @disabled={{true}}
-      @required={{true}}
-      @value={{this.data.fullName}}
-      @onInput={{this.inputHandler}}
-    />
+    <Reusables::InputBox @field='Your Name' @name='fullName' @placeHolder='Full Name' @type='text' @disabled={{true}}
+      @required={{true}} @value={{this.data.fullName}} @onInput={{this.inputHandler}} />
 
-    <Reusables::Dropdown
-      @field='Your Country'
-      @name='country'
-      @placeHolder='Choose your country'
-      @required={{true}}
-      @value={{this.data.country}}
-      @options={{this.countries}}
-      @onChange={{this.inputHandler}}
-    />
+    <Reusables::Dropdown @field='Your Country' @name='country' @placeHolder='Choose your country' @required={{true}}
+      @value={{this.data.country}} @options={{this.countries}} @onChange={{this.inputHandler}} />
 
-    <Reusables::InputBox
-      @field='State'
-      @name='state'
-      @placeHolder='Your State e.g. Karnataka'
-      @type='text'
-      @required={{true}}
-      @value={{this.data.state}}
-      @onInput={{this.inputHandler}}
-    />
+    <Reusables::InputBox @field='State' @name='state' @placeHolder='Your State e.g. Karnataka' @type='text'
+      @required={{true}} @value={{this.data.state}} @onInput={{this.inputHandler}} />
 
-    <Reusables::InputBox
-      @field='City'
-      @name='city'
-      @placeHolder='Your City e.g. Bengaluru'
-      @type='text'
-      @required={{true}}
-      @value={{this.data.city}}
-      @onInput={{this.inputHandler}}
-    />
+    <Reusables::InputBox @field='City' @name='city' @placeHolder='Your City e.g. Bengaluru' @type='text'
+      @required={{true}} @value={{this.data.city}} @onInput={{this.inputHandler}} />
 
     <div class="role-selection">
       <p>Applying as</p>
-      <div class="role-buttons">
+      <div class="role-buttons" role="radiogroup" aria-label="Select your role">
         {{#each this.roleOptions as |role|}}
-          <button
-            type="button"
-            class="role-button {{if (eq this.data.role role) 'role-button--selected'}}"
-            {{on 'click' (fn this.selectRole role)}}
-          >
-            {{role}}
-          </button>
+        <button type="button" class="role-button {{if (eq this.data.role role) 'role-button--selected'}}" role="radio"
+          aria-checked="{{if (eq this.data.role role) 'true' 'false'}}" {{on 'click' (fn this.selectRole role)}}>
+          {{role}}
+        </button>
         {{/each}}
       </div>
     </div>
