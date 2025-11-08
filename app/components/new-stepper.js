@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { NEW_FORM_STEPS } from '../constants/new-join-form';
+import { getLocalStorageItem, setLocalStorageItem } from '../utils/storage';
 
 export default class NewStepperComponent extends Component {
   MIN_STEP = 0;
@@ -14,10 +15,10 @@ export default class NewStepperComponent extends Component {
   @service joinApplicationTerms;
 
   @tracked currentStep =
-    Number(localStorage.getItem('currentStep') ?? this.args.step) || 0;
+    Number(getLocalStorageItem('currentStep') ?? this.args.step) || 0;
 
   @tracked preValid = false;
-  @tracked isValid = localStorage.getItem('isValid') === 'true';
+  @tracked isValid = getLocalStorageItem('isValid') === 'true';
 
   setIsValid = (newVal) => (this.isValid = newVal);
   setIsPreValid = (newVal) => (this.preValid = newVal);
@@ -48,7 +49,7 @@ export default class NewStepperComponent extends Component {
   @action incrementStep() {
     if (this.currentStep < this.MAX_STEP) {
       const nextStep = this.currentStep + 1;
-      localStorage.setItem('currentStep', String(nextStep));
+      setLocalStorageItem('currentStep', String(nextStep));
       this.currentStep = nextStep;
       this.updateQueryParam(nextStep);
     }
@@ -57,7 +58,7 @@ export default class NewStepperComponent extends Component {
   @action decrementStep() {
     if (this.currentStep > this.MIN_STEP) {
       const previousStep = this.currentStep - 1;
-      localStorage.setItem('currentStep', String(previousStep));
+      setLocalStorageItem('currentStep', String(previousStep));
       this.currentStep = previousStep;
       this.updateQueryParam(previousStep);
     }

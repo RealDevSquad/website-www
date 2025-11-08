@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import { JOIN_DEBOUNCE_TIME } from '../../constants/join';
 import { validateWordCount } from '../../utils/validator';
 import { scheduleOnce } from '@ember/runloop';
+import { getLocalStorageItem, setLocalStorageItem } from '../../utils/storage';
 
 export default class BaseStepComponent extends Component {
   stepValidation = {};
@@ -25,7 +26,7 @@ export default class BaseStepComponent extends Component {
   }
 
   initializeFormState() {
-    const saved = JSON.parse(localStorage.getItem(this.storageKey) || '{}');
+    const saved = JSON.parse(getLocalStorageItem(this.storageKey, '{}'));
     this.data = saved ?? {};
 
     this.errorMessage = Object.fromEntries(
@@ -43,7 +44,7 @@ export default class BaseStepComponent extends Component {
 
     const valid = this.isDataValid();
     this.args.setIsPreValid(valid);
-    localStorage.setItem('isValid', valid);
+    setLocalStorageItem('isValid', String(valid));
   }
 
   @action inputHandler(e) {
@@ -76,7 +77,7 @@ export default class BaseStepComponent extends Component {
 
   updateFieldValue(field, value) {
     this.data = { ...this.data, [field]: value };
-    localStorage.setItem(this.storageKey, JSON.stringify(this.data));
+    setLocalStorageItem(this.storageKey, JSON.stringify(this.data));
   }
 
   updateWordCount(field, result) {
@@ -103,6 +104,6 @@ export default class BaseStepComponent extends Component {
   syncFormValidity() {
     const allValid = this.isDataValid();
     this.args.setIsValid(allValid);
-    localStorage.setItem('isValid', allValid);
+    setLocalStorageItem('isValid', String(allValid));
   }
 }
