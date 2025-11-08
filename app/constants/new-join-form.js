@@ -11,6 +11,7 @@ export const ROLE_OPTIONS = [
   'Product Manager',
   'Project Manager',
   'QA',
+  'Social Media',
 ];
 
 export const NEW_STEP_LIMITS = {
@@ -20,4 +21,8 @@ export const NEW_STEP_LIMITS = {
     city: { min: 1 },
     role: { min: 1 },
   },
+};
+
+export const STEP_DATA_STORAGE_KEY = {
+  stepOne: 'newStepOneData',
 };

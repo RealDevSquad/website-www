@@ -7,7 +7,7 @@ import { validateWordCount } from '../../utils/validator';
 import { scheduleOnce } from '@ember/runloop';
 
 export default class BaseStepComponent extends Component {
-  validationMap = {};
+  stepValidation = {};
 
   @tracked data = {};
   @tracked errorMessage = {};
@@ -29,11 +29,11 @@ export default class BaseStepComponent extends Component {
     this.data = saved ?? {};
 
     this.errorMessage = Object.fromEntries(
-      Object.keys(this.validationMap).map((k) => [k, '']),
+      Object.keys(this.stepValidation).map((k) => [k, '']),
     );
 
     this.wordCount = Object.fromEntries(
-      Object.keys(this.validationMap).map((k) => {
+      Object.keys(this.stepValidation).map((k) => {
         let val = this.data[k] || '';
         return [k, val.trim().split(/\s+/).filter(Boolean).length || 0];
       }),
@@ -54,12 +54,12 @@ export default class BaseStepComponent extends Component {
   }
 
   validateField(field, value) {
-    const limits = this.validationMap[field];
+    const limits = this.stepValidation[field];
     return validateWordCount(value, limits);
   }
 
   isDataValid() {
-    for (let field of Object.keys(this.validationMap)) {
+    for (let field of Object.keys(this.stepValidation)) {
       const result = this.validateField(field, this.data[field]);
       if (!result.isValid) return false;
     }
@@ -92,7 +92,7 @@ export default class BaseStepComponent extends Component {
   }
 
   formatError(field, result) {
-    const limits = this.validationMap[field];
+    const limits = this.stepValidation[field];
     if (result.isValid) return '';
     if (result.remainingToMin) {
       return `At least ${result.remainingToMin} more word(s) required`;

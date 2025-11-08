@@ -1,10 +1,33 @@
 <div class="two-column-layout">
   <div class="two-column-layout__left">
     <h3 class="section-heading">Profile Picture</h3>
-    <div class="image-upload-box">
-      <FaIcon @icon="upload" />
-      <p class="image-upload-box__text">Upload Image</p>
-    </div>
+    {{#if this.imagePreview}}
+      <div class="image-preview-container">
+        <img src={{this.imagePreview}} alt="Profile preview" class="image-preview" />
+        <Reusables::Button
+          @type="button"
+          @text="Change Image"
+          @variant="light"
+          @onClick={{this.triggerFileInput}}
+        />
+      </div>
+    {{else}}
+      <button
+        class="image-upload-box"
+        type="button"
+        {{on 'click' this.triggerFileInput}}
+      >
+        <FaIcon @icon="upload" />
+        <p class="image-upload-box__text">Upload Image</p>
+      </button>
+    {{/if}}
+    <input
+      type="file"
+      id="profile-image-input"
+      accept="image/png, image/jpeg"
+      class="image-form__input"
+      {{on 'change' this.handleImageSelect}}
+    />
     <div class="image-requirements">
       <h4>Image Requirements:</h4>
       <ul>
