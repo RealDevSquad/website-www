@@ -70,8 +70,15 @@ export default class AdminApplicationsShowController extends Controller {
         throw new Error(`Failed to ${actionType} application`);
       }
 
+      const pastTenseMap = {
+        approve: 'approved',
+        reject: 'rejected',
+        'request-changes': 'requested changes',
+      };
+      const pastTense = pastTenseMap[actionType] || `${actionType}d`;
+
       this.toast.success(
-        `Application ${actionType}d successfully`,
+        `Application ${pastTense} successfully`,
         'Success',
         TOAST_OPTIONS,
       );
