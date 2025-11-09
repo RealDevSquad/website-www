@@ -1,12 +1,12 @@
-<div class="step-container">
+<div class="step-container" data-test="review-step">
   <div class="form-header__text">
-    <h1 class="section-heading">{{@heading}}</h1>
-    <p class="section-instruction">{{@subHeading}}</p>
+    <h1 class="section-heading" data-test="review-heading">{{@heading}}</h1>
+    <p class="section-instruction" data-test="review-subheading">{{@subHeading}}</p>
   </div>
 
-  <div class="review-section">
+  <div class="review-section" data-test="review-section-personal">
     <div class="review-section__header">
-      <h3 class="review-section__title">Personal Information</h3>
+      <h3 class="review-section__title" data-test="review-section-title">Personal Information</h3>
       <Reusables::Button
         @text="Edit"
         @variant="light btn--sm"
@@ -43,9 +43,9 @@
     </div>
   </div>
 
-  <div class="review-section">
+  <div class="review-section" data-test="review-section-professional">
     <div class="review-section__header">
-      <h3 class="review-section__title">Professional Details</h3>
+      <h3 class="review-section__title" data-test="review-section-title">Professional Details</h3>
       <Reusables::Button
         @text="Edit"
         @variant="light btn--sm"
@@ -76,9 +76,9 @@
     </div>
   </div>
 
-  <div class="review-section">
+  <div class="review-section" data-test="review-section-hobbies">
     <div class="review-section__header">
-      <h3 class="review-section__title">Hobbies & Interests</h3>
+      <h3 class="review-section__title" data-test="review-section-title">Hobbies & Interests</h3>
       <Reusables::Button
         @text="Edit"
         @variant="light btn--sm"
@@ -103,9 +103,9 @@
     </div>
   </div>
 
-  <div class="review-section">
+  <div class="review-section" data-test="review-section-social">
     <div class="review-section__header">
-      <h3 class="review-section__title">Social Profiles</h3>
+      <h3 class="review-section__title" data-test="review-section-title">Social Profiles</h3>
       <Reusables::Button
         @text="Edit"
         @variant="light btn--sm"
@@ -172,9 +172,9 @@
     </div>
   </div>
 
-  <div class="review-section">
+  <div class="review-section" data-test="review-section-why-rds">
     <div class="review-section__header">
-      <h3 class="review-section__title">Why Real Dev Squad?</h3>
+      <h3 class="review-section__title" data-test="review-section-title">Why Real Dev Squad?</h3>
       <Reusables::Button
         @text="Edit"
         @variant="light btn--sm"
