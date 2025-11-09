@@ -11,6 +11,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import Service from '@ember/service';
 import sinon from 'sinon';
 import * as RunLoop from '@ember/runloop';
+import { STEP_DATA_STORAGE_KEY } from '../../../../app/constants/new-join-form';
 
 module(
   'Integration | Component | new-join-steps/new-step-one',
@@ -118,8 +119,8 @@ module(
 
       await settled();
 
-      const raw = localStorage.getItem('newStepOneData');
-      assert.ok(raw, 'newStepOneData saved in localStorage');
+      const raw = localStorage.getItem(STEP_DATA_STORAGE_KEY.stepOne);
+      assert.ok(raw, 'new step one data saved in localStorage');
       const parsed = JSON.parse(raw);
       assert.strictEqual(parsed.state, 'Karnataka', 'state persisted');
       assert.strictEqual(parsed.city, 'Bengaluru', 'city persisted');

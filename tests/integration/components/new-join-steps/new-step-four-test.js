@@ -2,6 +2,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'website-www/tests/helpers';
+import { STEP_DATA_STORAGE_KEY } from 'website-www/constants/new-join-form';
 
 module(
   'Integration | Component | new-join-steps/new-step-four',
@@ -32,7 +33,7 @@ module(
 
     test('it shows GitHub input when role is developer', async function (assert) {
       window.localStorage.setItem(
-        'newStepOneData',
+        STEP_DATA_STORAGE_KEY.stepOne,
         JSON.stringify({ role: 'Developer' }),
       );
 
@@ -48,7 +49,7 @@ module(
 
     test('it shows designer inputs when role is designer', async function (assert) {
       window.localStorage.setItem(
-        'newStepOneData',
+        STEP_DATA_STORAGE_KEY.stepOne,
         JSON.stringify({ role: 'Designer' }),
       );
 
