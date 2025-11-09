@@ -11,7 +11,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import Service from '@ember/service';
 import sinon from 'sinon';
 import * as RunLoop from '@ember/runloop';
-import { STEP_DATA_STORAGE_KEY } from '../../../../app/constants/new-join-form';
+import { STEP_DATA_STORAGE_KEY } from 'website-www/constants/new-join-form';
 
 module(
   'Integration | Component | new-join-steps/new-step-one',
