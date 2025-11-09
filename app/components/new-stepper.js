@@ -8,6 +8,7 @@ import { getLocalStorageItem, setLocalStorageItem } from '../utils/storage';
 export default class NewStepperComponent extends Component {
   MIN_STEP = 0;
   MAX_STEP = 6;
+  applicationId = '4gchuf690';
 
   @service login;
   @service router;
@@ -25,7 +26,6 @@ export default class NewStepperComponent extends Component {
 
   updateQueryParam(step) {
     const existingQueryParams = this.router.currentRoute?.queryParams;
-
     this.router.transitionTo('join', {
       queryParams: {
         ...existingQueryParams,
@@ -44,6 +44,10 @@ export default class NewStepperComponent extends Component {
 
   get currentSubheading() {
     return NEW_FORM_STEPS.subheadings[this.currentStep - 1] ?? '';
+  }
+
+  get firstName() {
+    return localStorage.getItem('first_name') ?? '';
   }
 
   @action incrementStep() {
@@ -76,16 +80,17 @@ export default class NewStepperComponent extends Component {
       this.isValid = false;
       this.preValid = false;
       this.currentStep = stepNumber;
-      localStorage.setItem('currentStep', this.currentStep);
-      localStorage.setItem('isValid', false);
-      this.router.transitionTo({
-        queryParams: { dev: true, step: this.currentStep },
-      });
+      setLocalStorageItem('currentStep', String(stepNumber));
+      setLocalStorageItem('isValid', 'false');
+      this.updateQueryParam(stepNumber);
     }
   }
 
-  // handle create application using this action
   @action handleSubmit() {
-    console.log('Submit review');
+    // ToDo: handle create application
+    console.log('Submit application for review');
+    this.currentStep = this.MAX_STEP + 1;
+    setLocalStorageItem('currentStep', String(this.currentStep));
+    this.updateQueryParam(this.currentStep);
   }
 }
