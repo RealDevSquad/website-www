@@ -18,20 +18,20 @@
     <div class="review-section__content">
       <div class="review-field">
         <span class="review-field__label">Full Name:</span>
-        <span class="review-field__value {{unless this.stepOneData.fullName 'review-field__value--missing'}}">
-          {{if this.stepOneData.fullName this.stepOneData.fullName 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.one.fullName 'review-field__value--missing'}}">
+          {{if this.stepData.one.fullName this.stepData.one.fullName 'Not provided'}}
         </span>
       </div>
       <div class="review-field">
         <span class="review-field__label">Location:</span>
-        <span class="review-field__value {{unless this.hasLocation 'review-field__value--missing'}}">
+        <span class="review-field__value {{unless this.locationDisplay 'review-field__value--missing'}}">
           {{this.locationDisplay}}
         </span>
       </div>
       <div class="review-field">
         <span class="review-field__label">Applying as:</span>
-        <span class="review-field__value {{unless this.stepOneData.role 'review-field__value--missing'}}">
-          {{if this.stepOneData.role this.stepOneData.role 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.one.role 'review-field__value--missing'}}">
+          {{if this.stepData.one.role this.stepData.one.role 'Not provided'}}
         </span>
       </div>
       <div class="review-field">
@@ -57,20 +57,20 @@
     <div class="review-section__content">
       <div class="review-field">
         <span class="review-field__label">Skills:</span>
-        <span class="review-field__value {{unless this.stepTwoData.skills 'review-field__value--missing'}}">
-          {{if this.stepTwoData.skills this.stepTwoData.skills 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.two.skills 'review-field__value--missing'}}">
+          {{if this.stepData.two.skills this.stepData.two.skills 'Not provided'}}
         </span>
       </div>
       <div class="review-field">
         <span class="review-field__label">Institution/Company:</span>
-        <span class="review-field__value {{unless this.stepTwoData.company 'review-field__value--missing'}}">
-          {{if this.stepTwoData.company this.stepTwoData.company 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.two.company 'review-field__value--missing'}}">
+          {{if this.stepData.two.company this.stepData.two.company 'Not provided'}}
         </span>
       </div>
       <div class="review-field">
         <span class="review-field__label">Introduction:</span>
-        <span class="review-field__value {{unless this.stepTwoData.introduction 'review-field__value--missing'}}">
-          {{if this.stepTwoData.introduction this.stepTwoData.introduction 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.two.introduction 'review-field__value--missing'}}">
+          {{if this.stepData.two.introduction this.stepData.two.introduction 'Not provided'}}
         </span>
       </div>
     </div>
@@ -90,14 +90,14 @@
     <div class="review-section__content">
       <div class="review-field">
         <span class="review-field__label">Hobbies:</span>
-        <span class="review-field__value {{unless this.stepThreeData.hobbies 'review-field__value--missing'}}">
-          {{if this.stepThreeData.hobbies this.stepThreeData.hobbies 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.three.hobbies 'review-field__value--missing'}}">
+          {{if this.stepData.three.hobbies this.stepData.three.hobbies 'Not provided'}}
         </span>
       </div>
       <div class="review-field">
         <span class="review-field__label">Fun Fact:</span>
-        <span class="review-field__value {{unless this.stepThreeData.funFact 'review-field__value--missing'}}">
-          {{if this.stepThreeData.funFact this.stepThreeData.funFact 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.three.funFact 'review-field__value--missing'}}">
+          {{if this.stepData.three.funFact this.stepData.three.funFact 'Not provided'}}
         </span>
       </div>
     </div>
@@ -117,55 +117,55 @@
     <div class="review-section__content">
       <div class="review-field">
         <span class="review-field__label">Phone Number:</span>
-        <span class="review-field__value {{unless this.stepFourData.phoneNumber 'review-field__value--missing'}}">
-          {{if this.stepFourData.phoneNumber this.stepFourData.phoneNumber 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.four.phoneNumber 'review-field__value--missing'}}">
+          {{if this.stepData.four.phoneNumber this.stepData.four.phoneNumber 'Not provided'}}
         </span>
       </div>
       <div class="review-field">
         <span class="review-field__label">Twitter:</span>
-        <span class="review-field__value {{unless this.stepFourData.twitter 'review-field__value--missing'}}">
-          {{if this.stepFourData.twitter this.stepFourData.twitter 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.four.twitter 'review-field__value--missing'}}">
+          {{if this.stepData.four.twitter this.stepData.four.twitter 'Not provided'}}
         </span>
       </div>
       {{#if this.showGitHub}}
         <div class="review-field">
           <span class="review-field__label">GitHub:</span>
-          <span class="review-field__value {{unless this.stepFourData.github 'review-field__value--missing'}}">
-            {{if this.stepFourData.github this.stepFourData.github 'Not provided'}}
+          <span class="review-field__value {{unless this.stepData.four.github 'review-field__value--missing'}}">
+            {{if this.stepData.four.github this.stepData.four.github 'Not provided'}}
           </span>
         </div>
       {{/if}}
       <div class="review-field">
         <span class="review-field__label">LinkedIn:</span>
-        <span class="review-field__value {{unless this.stepFourData.linkedin 'review-field__value--missing'}}">
-          {{if this.stepFourData.linkedin this.stepFourData.linkedin 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.four.linkedin 'review-field__value--missing'}}">
+          {{if this.stepData.four.linkedin this.stepData.four.linkedin 'Not provided'}}
         </span>
       </div>
       <div class="review-field">
         <span class="review-field__label">Instagram:</span>
-        <span class="review-field__value {{if this.stepFourData.instagram '' 'review-field__value--empty'}}">
-          {{if this.stepFourData.instagram this.stepFourData.instagram 'Not uploaded'}}
+        <span class="review-field__value {{if this.stepData.four.instagram '' 'review-field__value--empty'}}">
+          {{if this.stepData.four.instagram this.stepData.four.instagram 'Not uploaded'}}
         </span>
       </div>
       <div class="review-field">
         <span class="review-field__label">Peerlist:</span>
-        <span class="review-field__value {{unless this.stepFourData.peerlist 'review-field__value--missing'}}">
-          {{if this.stepFourData.peerlist this.stepFourData.peerlist 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.four.peerlist 'review-field__value--missing'}}">
+          {{if this.stepData.four.peerlist this.stepData.four.peerlist 'Not provided'}}
         </span>
       </div>
       {{#if this.showBehance}}
         <div class="review-field">
           <span class="review-field__label">Behance:</span>
-          <span class="review-field__value {{unless this.stepFourData.behance 'review-field__value--missing'}}">
-            {{if this.stepFourData.behance this.stepFourData.behance 'Not provided'}}
+          <span class="review-field__value {{unless this.stepData.four.behance 'review-field__value--missing'}}">
+            {{if this.stepData.four.behance this.stepData.four.behance 'Not provided'}}
           </span>
         </div>
       {{/if}}
       {{#if this.showDribble}}
         <div class="review-field">
           <span class="review-field__label">Dribble:</span>
-          <span class="review-field__value {{unless this.stepFourData.dribble 'review-field__value--missing'}}">
-            {{if this.stepFourData.dribble this.stepFourData.dribble 'Not provided'}}
+          <span class="review-field__value {{unless this.stepData.four.dribble 'review-field__value--missing'}}">
+            {{if this.stepData.four.dribble this.stepData.four.dribble 'Not provided'}}
           </span>
         </div>
       {{/if}}
@@ -186,20 +186,20 @@
     <div class="review-section__content">
       <div class="review-field">
         <span class="review-field__label">Why you want to join Real Dev Squad?:</span>
-        <span class="review-field__value {{unless this.stepFiveData.whyRds 'review-field__value--missing'}}">
-          {{if this.stepFiveData.whyRds this.stepFiveData.whyRds 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.five.whyRds 'review-field__value--missing'}}">
+          {{if this.stepData.five.whyRds this.stepData.five.whyRds 'Not provided'}}
         </span>
       </div>
       <div class="review-field">
         <span class="review-field__label">Hours per week:</span>
-        <span class="review-field__value {{unless this.stepFiveData.numberOfHours 'review-field__value--missing'}}">
-          {{if this.stepFiveData.numberOfHours this.stepFiveData.numberOfHours 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.five.numberOfHours 'review-field__value--missing'}}">
+          {{if this.stepData.five.numberOfHours this.stepData.five.numberOfHours 'Not provided'}}
         </span>
       </div>
       <div class="review-field">
         <span class="review-field__label">How did you hear about us?:</span>
-        <span class="review-field__value {{unless this.stepFiveData.foundFrom 'review-field__value--missing'}}">
-          {{if this.stepFiveData.foundFrom this.stepFiveData.foundFrom 'Not provided'}}
+        <span class="review-field__value {{unless this.stepData.five.foundFrom 'review-field__value--missing'}}">
+          {{if this.stepData.five.foundFrom this.stepData.five.foundFrom 'Not provided'}}
         </span>
       </div>
     </div>

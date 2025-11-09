@@ -1,12 +1,16 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { getLocalStorageItem } from '../../utils/storage';
+import { STEP_DATA_STORAGE_KEY } from '../../constants/new-join-form';
 
 export default class NewStepSixComponent extends Component {
-  @tracked stepOneData = {};
-  @tracked stepTwoData = {};
-  @tracked stepThreeData = {};
-  @tracked stepFourData = {};
-  @tracked stepFiveData = {};
+  @tracked stepData = {
+    one: {},
+    two: {},
+    three: {},
+    four: {},
+    five: {},
+  };
 
   constructor(...args) {
     super(...args);
@@ -14,25 +18,25 @@ export default class NewStepSixComponent extends Component {
   }
 
   loadAllStepData() {
-    this.stepOneData = JSON.parse(
-      localStorage.getItem('newStepOneData') || '{}',
+    this.stepData.one = JSON.parse(
+      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepOne),
     );
-    this.stepTwoData = JSON.parse(
-      localStorage.getItem('newStepTwoData') || '{}',
+    this.stepData.two = JSON.parse(
+      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepTwo),
     );
-    this.stepThreeData = JSON.parse(
-      localStorage.getItem('newStepThreeData') || '{}',
+    this.stepData.three = JSON.parse(
+      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepThree),
     );
-    this.stepFourData = JSON.parse(
-      localStorage.getItem('newStepFourData') || '{}',
+    this.stepData.four = JSON.parse(
+      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepFour),
     );
-    this.stepFiveData = JSON.parse(
-      localStorage.getItem('newStepFiveData') || '{}',
+    this.stepData.five = JSON.parse(
+      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepFive),
     );
   }
 
   get userRole() {
-    return this.stepOneData.role || '';
+    return this.stepData.one.role || '';
   }
 
   get showGitHub() {
@@ -48,18 +52,6 @@ export default class NewStepSixComponent extends Component {
   }
 
   get locationDisplay() {
-    const parts = [];
-    if (this.stepOneData.city) parts.push(this.stepOneData.city);
-    if (this.stepOneData.state) parts.push(this.stepOneData.state);
-    if (this.stepOneData.country) parts.push(this.stepOneData.country);
-    return parts.length > 0 ? parts.join(', ') : 'Not provided';
-  }
-
-  get hasLocation() {
-    return !!(
-      this.stepOneData.country ||
-      this.stepOneData.state ||
-      this.stepOneData.city
-    );
+    return `${this.stepData.one.city}, ${this.stepData.one.state}, ${this.stepData.one.country}`;
   }
 }
