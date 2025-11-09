@@ -84,7 +84,7 @@ module(
       assert.dom('[data-test-error="skills"]').exists();
     });
 
-    test('it saves to localStorage and calls callbacks', async function (assert) {
+    test('it correctly updates step two data to localStorage', async function (assert) {
       let setIsPreValidCalled = false;
       let isValidValue = null;
 
@@ -124,7 +124,7 @@ module(
       );
     });
 
-    test('it loads data from localStorage', async function (assert) {
+    test('it loads step two data from localStorage', async function (assert) {
       const testData = {
         skills: generateWords(10),
         company: 'Real Dev Squad',
