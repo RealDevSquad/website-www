@@ -41,7 +41,7 @@ module(
     });
 
     test('it renders fields, pre-fills full name, and disables the name input', async function (assert) {
-      assert.expect(5);
+      assert.expect(6);
 
       this.setProperties({
         setIsValid: sinon.spy(),
