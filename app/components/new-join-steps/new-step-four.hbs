@@ -4,121 +4,59 @@
     <p class="section-instruction">{{@subHeading}}</p>
   </div>
 
-  <Reusables::InputBox
-    @field='Phone Number'
-    @name='phoneNumber'
-    @placeHolder='+91 80000 00000'
-    @type='tel'
-    @required={{true}}
-    @value={{this.data.phoneNumber}}
-    @onInput={{this.inputHandler}}
-    @variant='input--full-width'
-  />
+  <Reusables::InputBox @field='Phone Number' @name='phoneNumber' @placeHolder='+91 80000 00000' @type='tel'
+    @required={{true}} @value={{this.data.phoneNumber}} @onInput={{this.inputHandler}} @variant='input--full-width' />
   {{#if this.errorMessage.phoneNumber}}
-    <div class='error__message'>{{this.errorMessage.phoneNumber}}</div>
+  <div class='error__message'>{{this.errorMessage.phoneNumber}}</div>
   {{/if}}
 
-  <Reusables::InputBox
-    @field='Twitter'
-    @name='twitter'
-    @placeHolder='https://twitter.com/gangster-rishi'
-    @type='text'
-    @required={{true}}
-    @value={{this.data.twitter}}
-    @onInput={{this.inputHandler}}
-    @variant='input--full-width'
-  />
+  <Reusables::InputBox @field='Twitter' @name='twitter' @placeHolder='https://twitter.com/gangster-rishi' @type='text'
+    @required={{true}} @value={{this.data.twitter}} @onInput={{this.inputHandler}} @variant='input--full-width' />
   {{#if this.errorMessage.twitter}}
-    <div class='error__message'>{{this.errorMessage.twitter}}</div>
+  <div class='error__message'>{{this.errorMessage.twitter}}</div>
   {{/if}}
 
   {{#if this.showGitHub}}
-    <Reusables::InputBox
-      @field='GitHub'
-      @name='github'
-      @placeHolder='https://github.com/codewithrishi'
-      @type='text'
-      @required={{true}}
-      @value={{this.data.github}}
-      @onInput={{this.inputHandler}}
-      @variant='input--full-width'
-    />
-    {{#if this.errorMessage.github}}
-      <div class='error__message'>{{this.errorMessage.github}}</div>
-    {{/if}}
+  <Reusables::InputBox @field='GitHub' @name='github' @placeHolder='https://github.com/codewithrishi' @type='text'
+    @required={{true}} @value={{this.data.github}} @onInput={{this.inputHandler}} @variant='input--full-width' />
+  {{#if this.errorMessage.github}}
+  <div class='error__message'>{{this.errorMessage.github}}</div>
+  {{/if}}
   {{/if}}
 
-  <Reusables::InputBox
-    @field='LinkedIn'
-    @name='linkedin'
-    @placeHolder='https://linkedin.com/in/professional-rishi'
-    @type='text'
-    @required={{true}}
-    @value={{this.data.linkedin}}
-    @onInput={{this.inputHandler}}
-    @variant='input--full-width'
-  />
+  <Reusables::InputBox @field='LinkedIn' @name='linkedin' @placeHolder='https://linkedin.com/in/professional-rishi'
+    @type='text' @required={{true}} @value={{this.data.linkedin}} @onInput={{this.inputHandler}}
+    @variant='input--full-width' />
   {{#if this.errorMessage.linkedin}}
-    <div class='error__message'>{{this.errorMessage.linkedin}}</div>
+  <div class='error__message'>{{this.errorMessage.linkedin}}</div>
   {{/if}}
 
-  <Reusables::InputBox
-    @field='Instagram'
-    @name='instagram'
-    @placeHolder='https://instagram.com/gangster-rishi'
-    @type='text'
-    @required={{false}}
-    @value={{this.data.instagram}}
-    @onInput={{this.inputHandler}}
-    @variant='input--full-width'
-  />
+  <Reusables::InputBox @field='Instagram' @name='instagram' @placeHolder='https://instagram.com/gangster-rishi'
+    @type='text' @required={{false}} @value={{this.data.instagram}} @onInput={{this.inputHandler}}
+    @variant='input--full-width' />
   {{#if this.errorMessage.instagram}}
-    <div class='error__message'>{{this.errorMessage.instagram}}</div>
+  <div class='error__message'>{{this.errorMessage.instagram}}</div>
   {{/if}}
 
-  <Reusables::InputBox
-    @field='Peerlist'
-    @name='peerlist'
-    @placeHolder='https://peerlist.io/richy-rishi'
-    @type='text'
-    @required={{true}}
-    @value={{this.data.peerlist}}
-    @onInput={{this.inputHandler}}
-    @variant='input--full-width'
-  />
+  <Reusables::InputBox @field='Peerlist' @name='peerlist' @placeHolder='https://peerlist.io/richy-rishi' @type='text'
+    @required={{true}} @value={{this.data.peerlist}} @onInput={{this.inputHandler}} @variant='input--full-width' />
   {{#if this.errorMessage.peerlist}}
-    <div class='error__message'>{{this.errorMessage.peerlist}}</div>
+  <div class='error__message'>{{this.errorMessage.peerlist}}</div>
   {{/if}}
 
   {{#if this.showBehance}}
-    <Reusables::InputBox
-      @field='Behance'
-      @name='behance'
-      @placeHolder='https://behance.net/designer-rishi'
-      @type='text'
-      @required={{true}}
-      @value={{this.data.behance}}
-      @onInput={{this.inputHandler}}
-      @variant='input--full-width'
-    />
-    {{#if this.errorMessage.behance}}
-      <div class='error__message'>{{this.errorMessage.behance}}</div>
-    {{/if}}
+  <Reusables::InputBox @field='Behance' @name='behance' @placeHolder='https://behance.net/designer-rishi' @type='text'
+    @required={{true}} @value={{this.data.behance}} @onInput={{this.inputHandler}} @variant='input--full-width' />
+  {{#if this.errorMessage.behance}}
+  <div class='error__message'>{{this.errorMessage.behance}}</div>
+  {{/if}}
   {{/if}}
 
   {{#if this.showDribble}}
-    <Reusables::InputBox
-      @field='Dribble'
-      @name='dribble'
-      @placeHolder='https://dribbble.com/dribwithrishi'
-      @type='text'
-      @required={{true}}
-      @value={{this.data.dribble}}
-      @onInput={{this.inputHandler}}
-      @variant='input--full-width'
-    />
-    {{#if this.errorMessage.dribble}}
-      <div class='error__message'>{{this.errorMessage.dribble}}</div>
-    {{/if}}
+  <Reusables::InputBox @field='Dribble' @name='dribble' @placeHolder='https://dribbble.com/dribwithrishi' @type='text'
+    @required={{true}} @value={{this.data.dribble}} @onInput={{this.inputHandler}} @variant='input--full-width' />
+  {{#if this.errorMessage.dribble}}
+  <div class='error__message'>{{this.errorMessage.dribble}}</div>
+  {{/if}}
   {{/if}}
 </div>

@@ -1,11 +1,14 @@
 import BaseStepComponent from './base-step';
-import { NEW_STEP_LIMITS } from '../../constants/new-join-form';
+import {
+  NEW_STEP_LIMITS,
+  STEP_DATA_STORAGE_KEY,
+} from '../../constants/new-join-form';
 import { phoneNumberRegex } from '../../constants/regex';
 
 export default class NewStepFourComponent extends BaseStepComponent {
-  storageKey = 'newStepFourData';
+  storageKey = STEP_DATA_STORAGE_KEY.stepFour;
 
-  validationMap = {
+  stepValidation = {
     phoneNumber: NEW_STEP_LIMITS.stepFour.phoneNumber,
     twitter: NEW_STEP_LIMITS.stepFour.twitter,
     linkedin: NEW_STEP_LIMITS.stepFour.linkedin,
@@ -22,21 +25,21 @@ export default class NewStepFourComponent extends BaseStepComponent {
 
   postLoadInitialize() {
     if (this.userRole === 'Developer') {
-      this.validationMap.github = NEW_STEP_LIMITS.stepFour.github;
+      this.stepValidation.github = NEW_STEP_LIMITS.stepFour.github;
     }
 
     if (this.userRole === 'Designer') {
-      this.validationMap.behance = NEW_STEP_LIMITS.stepFour.behance;
-      this.validationMap.dribble = NEW_STEP_LIMITS.stepFour.dribble;
+      this.stepValidation.behance = NEW_STEP_LIMITS.stepFour.behance;
+      this.stepValidation.dribble = NEW_STEP_LIMITS.stepFour.dribble;
     }
 
     // re-calculate the errorMessage and wordCount for new input fields
     this.errorMessage = Object.fromEntries(
-      Object.keys(this.validationMap).map((k) => [k, '']),
+      Object.keys(this.stepValidation).map((k) => [k, '']),
     );
 
     this.wordCount = Object.fromEntries(
-      Object.keys(this.validationMap).map((k) => {
+      Object.keys(this.stepValidation).map((k) => {
         let val = this.data[k] || '';
         return [k, val.trim().split(/\s+/).filter(Boolean).length || 0];
       }),
