@@ -14,7 +14,7 @@
         @value={{this.data.hobbies}}
         @onInput={{this.inputHandler}}
       />
-      <div class="word-count" data-test-word-count="hobbies">{{this.wordCount.hobbies}}/{{this.validationMap.hobbies.max}} words</div>
+      <div class="word-count" data-test-word-count="hobbies">{{this.wordCount.hobbies}}/{{this.stepValidation.hobbies.max}} words</div>
       {{#if this.errorMessage.hobbies}}
         <div class='error__message' data-test-error="hobbies">{{this.errorMessage.hobbies}}</div>
       {{/if}}
@@ -29,7 +29,7 @@
         @value={{this.data.funFact}}
         @onInput={{this.inputHandler}}
       />
-      <div class="word-count" data-test-word-count="funFact">{{this.wordCount.funFact}}/{{this.validationMap.funFact.max}} words</div>
+      <div class="word-count" data-test-word-count="funFact">{{this.wordCount.funFact}}/{{this.stepValidation.funFact.max}} words</div>
       {{#if this.errorMessage.funFact}}
         <div class='error__message' data-test-error="funFact">{{this.errorMessage.funFact}}</div>
       {{/if}}

@@ -40,4 +40,6 @@ export const NEW_STEP_LIMITS = {
 
 export const STEP_DATA_STORAGE_KEY = {
   stepOne: 'newStepOneData',
+  stepTwo: 'newStepTwoData',
+  stepThree: 'newStepThreeData',
 };

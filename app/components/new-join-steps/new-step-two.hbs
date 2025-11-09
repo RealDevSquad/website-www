@@ -27,7 +27,7 @@
       <Reusables::TextAreaBox @field='Please introduce yourself' @name='introduction'
         @placeHolder='Tell us about yourself...' @required={{true}} @value={{this.data.introduction}}
         @onInput={{this.inputHandler}} />
-      <div class="word-count" data-test-word-count="introduction">{{this.wordCount.introduction}}/{{this.validationMap.introduction.max}} words</div>
+      <div class="word-count" data-test-word-count="introduction">{{this.wordCount.introduction}}/{{this.stepValidation.introduction.max}} words</div>
 
       {{#if this.errorMessage.introduction}}
       <div class='error__message' data-test-error="introduction">{{this.errorMessage.introduction}}</div>
