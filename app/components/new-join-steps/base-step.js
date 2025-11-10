@@ -43,12 +43,10 @@ export default class BaseStepComponent extends Component {
     this.postLoadInitialize();
 
     const valid = this.isDataValid();
-    this.args.setIsPreValid(valid);
-    setLocalStorageItem('isValid', String(valid));
+    this.args.onValidityChange(valid);
   }
 
   @action inputHandler(e) {
-    this.args.setIsPreValid(false);
     const field = e.target.name;
     const value = e.target.value;
     debounce(this, this.handleFieldUpdate, field, value, JOIN_DEBOUNCE_TIME);
@@ -103,7 +101,6 @@ export default class BaseStepComponent extends Component {
 
   syncFormValidity() {
     const allValid = this.isDataValid();
-    this.args.setIsValid(allValid);
-    setLocalStorageItem('isValid', String(allValid));
+    this.args.onValidityChange(allValid);
   }
 }
