@@ -8,12 +8,19 @@
 }
 
 .new-stepper__buttons {
-  width: 60vw;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 1rem;
-  margin: 0;
+  width: 60vw;
+}
+
+.prev-button {
+  grid-column: 1;
+}
+
+.next-button {
+  grid-column: 3;
+  justify-self: end;
 }
 
 .welcome-screen,
