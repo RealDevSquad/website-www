@@ -4,8 +4,8 @@
   </div>
 
   <div class="form-header__text">
-    <h1 class="section-heading">{{@firstName}}, thank you for applying to RDS.</h1>
-    <p class="section-instruction">Great work filling up the application. However, it takes more to join us early.</p>
+    <h1 class="section-heading" data-test="thank-you-heading">{{@firstName}}, thank you for applying to RDS.</h1>
+    <p class="section-instruction" data-test="thank-you-subheading">Great work filling up the application. However, it takes more to join us early.</p>
   </div>
 
   <div class="thank-you-screen__info-container">
@@ -22,12 +22,18 @@
     </div>
   </div>
 
-  <div class="application-id">
+  <div class="application-id" data-test="application-id">
     <h3>Application ID</h3>
-    <p>{{@applicationId}}</p>
+    <p data-test="application-id-value">{{@applicationId}}</p>
   </div>
 
   <div class="thank-you-screen__actions">
-    <Reusables::Button @text="Track application" @variant="dark" @test="track-application" @type="button" />
+    <Reusables::Button 
+      @text="Track application" 
+      @variant="dark" 
+      @test="track-application" 
+      @type="button"
+      @onClick={{this.handleTrackApplication}}
+    />
   </div>
 </div>
