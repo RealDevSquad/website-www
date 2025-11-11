@@ -45,9 +45,7 @@ export default class NewStepperComponent extends Component {
   @service onboarding;
   @service joinApplicationTerms;
 
-  @tracked currentStep =
-    Number(this.args.step || getLocalStorageItem('currentStep')) ||
-    this.MIN_STEP;
+  @tracked currentStep = 0;
   @tracked canAccessStep = false;
   @tracked canProceedFromStep = false;
 
@@ -56,21 +54,28 @@ export default class NewStepperComponent extends Component {
     scheduleOnce('afterRender', this, this.initializeFromQuery);
   }
 
-  clampStep(step) {
-    return Math.max(this.MIN_STEP, Math.min(this.MAX_STEP + 1, step));
-  }
-
-  persistStep(step) {
-    setLocalStorageItem('currentStep', String(step));
-  }
-
   initializeFromQuery() {
+    const storedStep = getLocalStorageItem('currentStep');
+    const stepFromArgs = this.args.step;
+    this.currentStep = storedStep
+      ? Number(storedStep)
+      : stepFromArgs != null
+        ? Number(stepFromArgs)
+        : 0;
     const targetStep = this.currentStep;
     const accessibleStep = this.resolveAccessibleStep(targetStep);
     this.currentStep = accessibleStep;
     this.canProceedFromStep = this.isStepComplete(accessibleStep);
     this.persistStep(accessibleStep);
     this.updateQueryParam(accessibleStep);
+  }
+  
+  clampStep(step) {
+    return Math.max(this.MIN_STEP, Math.min(this.MAX_STEP + 1, step));
+  }
+
+  persistStep(step) {
+    setLocalStorageItem('currentStep', String(step));
   }
 
   updateQueryParam(step) {
@@ -98,14 +103,15 @@ export default class NewStepperComponent extends Component {
   get firstName() {
     return localStorage.getItem('first_name') ?? '';
   }
-
-  @action onCurrentStepValidityChange(isValid) {
-    this.canProceedFromStep = Boolean(isValid);
-    if (isValid) {
-      this.persistStep(this.currentStep);
-    }
+  
+  get isNextButtonDisabled() {
+    return !(this.preValid || this.isValid);
   }
 
+  get isReviewStep() {
+    return this.currentStep === this.MAX_STEP;
+  }
+  
   resolveAccessibleStep(stepNumber) {
     const desiredStep = this.clampStep(stepNumber);
     for (let step = 1; step < desiredStep; step++) {
@@ -138,6 +144,13 @@ export default class NewStepperComponent extends Component {
       }
     }
     return true;
+  }
+
+  @action onCurrentStepValidityChange(isValid) {
+    this.canProceedFromStep = Boolean(isValid);
+    if (isValid) {
+      this.persistStep(this.currentStep);
+    }
   }
 
   @action incrementStep() {
