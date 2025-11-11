@@ -50,12 +50,13 @@
     <Reusables::InputBox @field='City' @name='city' @placeHolder='Your City e.g. Bengaluru' @type='text'
       @required={{true}} @value={{this.data.city}} @onInput={{this.inputHandler}} />
 
-    <div class="role-selection">
+    <div class="role-selection" data-test-role-selection>
       <p>Applying as</p>
       <div class="role-buttons" role="radiogroup" aria-label="Select your role">
         {{#each this.roleOptions as |role|}}
         <button type="button" class="role-button {{if (eq this.data.role role) 'role-button--selected'}}" role="radio"
-          aria-checked="{{if (eq this.data.role role) 'true' 'false'}}" {{on 'click' (fn this.selectRole role)}}>
+          data-test-role-button aria-checked="{{if (eq this.data.role role) 'true' 'false'}}" {{on 'click' (fn
+          this.selectRole role)}}>
           {{role}}
         </button>
         {{/each}}
