@@ -22,10 +22,10 @@ export const ROLE_OPTIONS = [
 
 export const NEW_STEP_LIMITS = {
   stepOne: {
-    country: { min: 1 },
+    country: { min: 1, type: 'dropdown' },
     state: { min: 1 },
     city: { min: 1 },
-    role: { min: 1 },
+    role: { min: 1, type: 'select' },
   },
   stepTwo: {
     skills: { min: 5, max: 20 },

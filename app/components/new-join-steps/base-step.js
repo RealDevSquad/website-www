@@ -26,8 +26,15 @@ export default class BaseStepComponent extends Component {
   }
 
   initializeFormState() {
-    const saved = JSON.parse(getLocalStorageItem(this.storageKey, '{}'));
-    this.data = saved ?? {};
+    let saved = {};
+    try {
+      const stored = getLocalStorageItem(this.storageKey, '{}');
+      saved = stored ? JSON.parse(stored) : {};
+    } catch (e) {
+      console.warn('Failed to parse stored form data:', e);
+      saved = {};
+    }
+    this.data = saved;
 
     this.errorMessage = Object.fromEntries(
       Object.keys(this.stepValidation).map((k) => [k, '']),
@@ -35,7 +42,7 @@ export default class BaseStepComponent extends Component {
 
     this.wordCount = Object.fromEntries(
       Object.keys(this.stepValidation).map((k) => {
-        let val = this.data[k] || '';
+        let val = String(this.data[k] || '');
         return [k, val.trim().split(/\s+/).filter(Boolean).length || 0];
       }),
     );
@@ -48,6 +55,7 @@ export default class BaseStepComponent extends Component {
   }
 
   @action inputHandler(e) {
+    if (!e?.target) return;
     this.args.setIsPreValid(false);
     const field = e.target.name;
     const value = e.target.value;
@@ -56,11 +64,17 @@ export default class BaseStepComponent extends Component {
 
   validateField(field, value) {
     const limits = this.stepValidation[field];
+    const fieldType = limits?.type || 'text';
+
+    if (fieldType === 'select' || fieldType === 'dropdown') {
+      const hasValue = value && String(value).trim().length > 0;
+      return { isValid: hasValue };
+    }
     return validateWordCount(value, limits);
   }
 
   isDataValid() {
-    for (let field of Object.keys(this.stepValidation)) {
+    for (const field of Object.keys(this.stepValidation)) {
       const result = this.validateField(field, this.data[field]);
       if (!result.isValid) return false;
     }
@@ -95,10 +109,15 @@ export default class BaseStepComponent extends Component {
   formatError(field, result) {
     const limits = this.stepValidation[field];
     if (result.isValid) return '';
+
+    const fieldType = limits?.type || 'text';
+    if (fieldType === 'select' || fieldType === 'dropdown') {
+      return 'Please choose an option';
+    }
     if (result.remainingToMin) {
       return `At least ${result.remainingToMin} more word(s) required`;
     }
-    return `Maximum ${limits.max} words allowed`;
+    return `Maximum ${limits?.max ?? 'N/A'} words allowed`;
   }
 
   syncFormValidity() {
