@@ -55,7 +55,6 @@ export default class BaseStepComponent extends Component {
 
   @action inputHandler(e) {
     if (!e?.target) return;
-    this.args.setIsPreValid(false);
     const field = e.target.name;
     const value = e.target.value;
     debounce(this, this.handleFieldUpdate, field, value, JOIN_DEBOUNCE_TIME);

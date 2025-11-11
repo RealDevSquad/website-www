@@ -54,7 +54,7 @@ export const NEW_STEP_LIMITS = {
   },
   stepFive: {
     whyRds: { min: 100 },
-    foundFrom: { min: 1 },
+    foundFrom: { min: 1, type: 'dropdown' },
   },
 };
 

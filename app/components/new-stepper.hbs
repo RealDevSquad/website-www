@@ -64,7 +64,7 @@
 
     <Reusables::Button @text={{if this.isReviewStep "Submit" "Next" }} @variant="dark" @class="next-button" @test={{if
       this.isReviewStep "submit-review" "next-btn" }} @type="button" @onClick={{if this.isReviewStep this.handleSubmit
-      this.incrementStep}} @disabled={{unless this.isReviewStep this.isNextButtonDisabled}} />
+      this.incrementStep}} @disabled={{not this.canProceedFromStep}} />
   </div>
   {{/if}}
 </section>

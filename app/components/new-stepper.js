@@ -69,7 +69,7 @@ export default class NewStepperComponent extends Component {
     this.persistStep(accessibleStep);
     this.updateQueryParam(accessibleStep);
   }
-  
+
   clampStep(step) {
     return Math.max(this.MIN_STEP, Math.min(this.MAX_STEP + 1, step));
   }
@@ -101,17 +101,13 @@ export default class NewStepperComponent extends Component {
   }
 
   get firstName() {
-    return localStorage.getItem('first_name') ?? '';
-  }
-  
-  get isNextButtonDisabled() {
-    return !(this.preValid || this.isValid);
+    return sessionStorage.getItem('first_name') ?? '';
   }
 
   get isReviewStep() {
     return this.currentStep === this.MAX_STEP;
   }
-  
+
   resolveAccessibleStep(stepNumber) {
     const desiredStep = this.clampStep(stepNumber);
     for (let step = 1; step < desiredStep; step++) {
