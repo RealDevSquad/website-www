@@ -2,9 +2,19 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'website-www/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import Service from '@ember/service';
 
 module('Integration | Component | new-stepper', function (hooks) {
   setupRenderingTest(hooks);
+
+  hooks.beforeEach(function () {
+    class RouterStub extends Service {
+      currentRoute = { queryParams: {} };
+      transitionTo() {}
+    }
+
+    this.owner.register('service:router', RouterStub);
+  });
 
   test('it renders the welcome screen at step 0', async function (assert) {
     await render(hbs`<NewStepper @step={{0}} />`);
