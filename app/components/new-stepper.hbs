@@ -1,35 +1,20 @@
 <section class='stepper' data-test="stepper">
-
   {{#if (and (not-eq this.currentStep this.MIN_STEP) (not-eq this.currentStep 7))}}
-    <NewJoinSteps::StepperHeader
-      @heading={{this.currentHeading}}
-      @subheading={{this.currentSubheading}}
-      @currentStep={{this.currentStep}}
-      @totalSteps={{this.MAX_STEP}}
-    />
+    <NewJoinSteps::StepperHeader @currentStep={{this.currentStep}} @totalSteps={{this.MAX_STEP}} />
   {{/if}}
 
   <form class="new-stepper__form">
     {{#if (eq this.currentStep this.MIN_STEP)}}
-      <NewJoinSteps::WelcomeScreen />
+    <NewJoinSteps::WelcomeScreen />
 
-      <div class="welcome-screen__actions">
-        <Reusables::Button
-          @text='Start'
-          @variant='dark'
-          @onClick={{this.startHandler}}
-          @test='start'
-          @type='button'
-          @disabled={{not this.joinApplicationTerms.hasUserAcceptedTerms}}
-        />
-      </div>
+    <div class="welcome-screen__actions">
+      <Reusables::Button @text='Start' @variant='dark' @onClick={{this.startHandler}} @test='start' @type='button'
+        @disabled={{not this.joinApplicationTerms.hasUserAcceptedTerms}} />
+    </div>
 
       {{else if (eq this.currentStep 1)}}
-        <NewJoinSteps::NewStepOne
-          @setIsPreValid={{this.setIsPreValid}}
-          @isValid={{this.isValid}}
-          @setIsValid={{this.setIsValid}}
-        />
+        <NewJoinSteps::NewStepOne @setIsPreValid={{this.setIsPreValid}} @isValid={{this.isValid}}
+      @setIsValid={{this.setIsValid}} />
 
       {{else if (eq this.currentStep 2)}}
         <NewJoinSteps::NewStepTwo
@@ -86,16 +71,9 @@
 
   {{#if (and (not-eq this.currentStep this.MIN_STEP) (not-eq this.currentStep 7))}}
     <div class="new-stepper__buttons">
-      {{#if this.showPreviousButton}}
-        <Reusables::Button
-          @text="Previous"
-          @variant="light"
-          @test="prev-btn"
-          @type="button"
-          @onClick={{this.decrementStep}}
-        />
-      {{else}}
-        <div></div>
+      {{#if this.showPreviousButton}
+        <Reusables::Button @text="Previous" @variant="light" @test="prev-btn" @type="button" @onClick={{this.decrementStep}}
+        @class="prev-button" />
       {{/if}}
 
       {{#if (eq this.currentStep 6)}}

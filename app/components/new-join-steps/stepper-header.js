@@ -7,7 +7,7 @@ export default class StepperHeaderComponent extends Component {
   get progressPercentage() {
     const totalSteps = Number(this.args.totalSteps) || 1;
     const currentStep = Number(this.args.currentStep) || 0;
-    return Math.round((currentStep / totalSteps) * 100);
+    return Math.min(100, Math.round((currentStep / totalSteps) * 100));
   }
 
   @cached
