@@ -14,11 +14,22 @@ export default class NewStepperComponent extends Component {
   @service onboarding;
   @service joinApplicationTerms;
 
-  @tracked currentStep =
-    Number(getLocalStorageItem('currentStep') ?? this.args.step) || 0;
-
   @tracked preValid = false;
   @tracked isValid = getLocalStorageItem('isValid') === 'true';
+
+  @tracked currentStep = 0;
+
+  constructor() {
+    super(...arguments);
+
+    const storedStep = getLocalStorageItem('currentStep');
+    const stepFromArgs = this.args.step;
+    this.currentStep = storedStep
+      ? Number(storedStep)
+      : stepFromArgs != null
+        ? Number(stepFromArgs)
+        : 0;
+  }
 
   setIsValid = (newVal) => (this.isValid = newVal);
   setIsPreValid = (newVal) => (this.preValid = newVal);
@@ -44,6 +55,10 @@ export default class NewStepperComponent extends Component {
 
   get currentSubheading() {
     return NEW_FORM_STEPS.subheadings[this.currentStep - 1] ?? '';
+  }
+
+  get isNextButtonDisabled() {
+    return !(this.preValid || this.isValid);
   }
 
   @action incrementStep() {

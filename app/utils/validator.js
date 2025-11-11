@@ -20,7 +20,11 @@ export const validateWordCount = (text, wordLimits) => {
 
   const { min, max } = wordLimits;
   if (!trimmedText) {
-    return { isValid: false, wordCount: 0, remainingToMin: min };
+    return {
+      isValid: min === 0,
+      wordCount: 0,
+      remainingToMin: min > 0 ? min : 0,
+    };
   }
 
   if (wordCount < min) {
