@@ -1,6 +1,6 @@
 <section class='stepper' data-test="stepper">
   {{#if (and (not-eq this.currentStep this.MIN_STEP) (not-eq this.currentStep 7))}}
-    <NewJoinSteps::StepperHeader @currentStep={{this.currentStep}} @totalSteps={{this.MAX_STEP}} />
+  <NewJoinSteps::StepperHeader @currentStep={{this.currentStep}} @totalSteps={{this.MAX_STEP}} />
   {{/if}}
 
   <form class="new-stepper__form">
@@ -12,88 +12,46 @@
         @disabled={{not this.joinApplicationTerms.hasUserAcceptedTerms}} />
     </div>
 
-      {{else if (eq this.currentStep 1)}}
-        <NewJoinSteps::NewStepOne @setIsPreValid={{this.setIsPreValid}} @isValid={{this.isValid}}
+    {{else if (eq this.currentStep 1)}}
+    <NewJoinSteps::NewStepOne @setIsPreValid={{this.setIsPreValid}} @isValid={{this.isValid}}
       @setIsValid={{this.setIsValid}} />
 
-      {{else if (eq this.currentStep 2)}}
-        <NewJoinSteps::NewStepTwo
-          @setIsPreValid={{this.setIsPreValid}}
-          @isValid={{this.isValid}}
-          @setIsValid={{this.setIsValid}}
-          @heading={{this.currentHeading}}
-          @subHeading={{this.currentSubheading}}
-        />
+    {{else if (eq this.currentStep 2)}}
+    <NewJoinSteps::NewStepTwo @setIsPreValid={{this.setIsPreValid}} @isValid={{this.isValid}}
+      @setIsValid={{this.setIsValid}} @heading={{this.currentHeading}} @subHeading={{this.currentSubheading}} />
 
-      {{else if (eq this.currentStep 3)}}
-        <NewJoinSteps::NewStepThree
-          @setIsPreValid={{this.setIsPreValid}}
-          @isValid={{this.isValid}}
-          @setIsValid={{this.setIsValid}}
-          @heading={{this.currentHeading}}
-          @subHeading={{this.currentSubheading}}
-        />
+    {{else if (eq this.currentStep 3)}}
+    <NewJoinSteps::NewStepThree @setIsPreValid={{this.setIsPreValid}} @isValid={{this.isValid}}
+      @setIsValid={{this.setIsValid}} @heading={{this.currentHeading}} @subHeading={{this.currentSubheading}} />
 
-      {{else if (eq this.currentStep 4)}}
-        <NewJoinSteps::NewStepFour
-          @setIsPreValid={{this.setIsPreValid}}
-          @isValid={{this.isValid}}
-          @setIsValid={{this.setIsValid}}
-          @heading={{this.currentHeading}}
-          @subHeading={{this.currentSubheading}}
-        />
+    {{else if (eq this.currentStep 4)}}
+    <NewJoinSteps::NewStepFour @setIsPreValid={{this.setIsPreValid}} @isValid={{this.isValid}}
+      @setIsValid={{this.setIsValid}} @heading={{this.currentHeading}} @subHeading={{this.currentSubheading}} />
 
-      {{else if (eq this.currentStep 5)}}
-        <NewJoinSteps::NewStepFive
-          @setIsPreValid={{this.setIsPreValid}}
-          @isValid={{this.isValid}}
-          @setIsValid={{this.setIsValid}}
-          @heading={{this.currentHeading}}
-          @subHeading={{this.currentSubheading}}
-        />
+    {{else if (eq this.currentStep 5)}}
+    <NewJoinSteps::NewStepFive @setIsPreValid={{this.setIsPreValid}} @isValid={{this.isValid}}
+      @setIsValid={{this.setIsValid}} @heading={{this.currentHeading}} @subHeading={{this.currentSubheading}} />
 
-      {{else if (eq this.currentStep 6)}}
-        <NewJoinSteps::NewStepSix
-          @heading={{this.currentHeading}}
-          @subHeading={{this.currentSubheading}}
-          @navigateToStep={{this.navigateToStep}}
-          @onSubmit={{this.handleSubmit}}
-        />
+    {{else if (eq this.currentStep 6)}}
+    <NewJoinSteps::NewStepSix @heading={{this.currentHeading}} @subHeading={{this.currentSubheading}}
+      @navigateToStep={{this.navigateToStep}} @onSubmit={{this.handleSubmit}} />
 
-      {{else if (eq this.currentStep 7)}}
-        <NewJoinSteps::ThankYouScreen
-          @firstName={{this.firstName}}
-          @applicationId={{this.applicationId}}
-          @onTrackApplication={{this.handleTrackApplication}}
-        />
+    {{else if (eq this.currentStep 7)}}
+    <NewJoinSteps::ThankYouScreen @firstName={{this.firstName}} @applicationId={{this.applicationId}}
+      @onTrackApplication={{this.handleTrackApplication}} />
     {{/if}}
   </form>
 
   {{#if (and (not-eq this.currentStep this.MIN_STEP) (not-eq this.currentStep 7))}}
-    <div class="new-stepper__buttons">
-      {{#if this.showPreviousButton}
-        <Reusables::Button @text="Previous" @variant="light" @test="prev-btn" @type="button" @onClick={{this.decrementStep}}
-        @class="prev-button" />
-      {{/if}}
+  <div class="new-stepper__buttons">
+    {{#if this.showPreviousButton}}
+    <Reusables::Button @text="Previous" @variant="light" @test="prev-btn" @type="button" @onClick={{this.decrementStep}}
+      @class="prev-button" />
+    {{/if}}
 
-      {{#if (eq this.currentStep 6)}}
-        <Reusables::Button
-          @text="Submit"
-          @variant="dark"
-          @test="submit-review"
-          @type="button"
-          @onClick={{this.handleSubmit}}
-        />
-      {{else}}
-        <Reusables::Button
-          @text="Next"
-          @variant="dark"
-          @test="next-btn"
-          @type="button"
-          @onClick={{this.incrementStep}}
-          @disabled={{not (or this.preValid this.isValid)}}
-        />
-      {{/if}}
-    </div>
+    <Reusables::Button @text={{if this.isReviewStep "Submit" "Next" }} @variant="dark" @class="next-button" @test={{if
+      this.isReviewStep "submit-review" "next-btn" }} @type="button" @onClick={{if this.isReviewStep this.handleSubmit
+      this.incrementStep}} @disabled={{unless this.isReviewStep this.isNextButtonDisabled}} />
+  </div>
   {{/if}}
 </section>

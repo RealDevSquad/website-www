@@ -65,6 +65,10 @@ export default class NewStepperComponent extends Component {
     return !(this.preValid || this.isValid);
   }
 
+  get isReviewStep() {
+    return this.currentStep === this.MAX_STEP;
+  }
+
   @action incrementStep() {
     if (this.currentStep < this.MAX_STEP) {
       const nextStep = this.currentStep + 1;
