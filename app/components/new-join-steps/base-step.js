@@ -64,6 +64,12 @@ export default class BaseStepComponent extends Component {
 
   validateField(field, value) {
     const limits = this.stepValidation[field];
+    const fieldType = limits?.type || 'text';
+
+    if (fieldType === 'select' || fieldType === 'dropdown') {
+      const hasValue = value && String(value).trim().length > 0;
+      return { isValid: hasValue };
+    }
     return validateWordCount(value, limits);
   }
 
@@ -103,6 +109,11 @@ export default class BaseStepComponent extends Component {
   formatError(field, result) {
     const limits = this.stepValidation[field];
     if (result.isValid) return '';
+
+    const fieldType = limits?.type || 'text';
+    if (fieldType === 'select' || fieldType === 'dropdown') {
+      return 'Please choose an option';
+    }
     if (result.remainingToMin) {
       return `At least ${result.remainingToMin} more word(s) required`;
     }
