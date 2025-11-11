@@ -2,8 +2,6 @@
 
   {{#if (not-eq this.currentStep this.MIN_STEP)}}
     <NewJoinSteps::StepperHeader
-      @heading={{this.currentHeading}}
-      @subheading={{this.currentSubheading}}
       @currentStep={{this.currentStep}}
       @totalSteps={{this.MAX_STEP}}
     />
@@ -53,7 +51,7 @@
         @test="next-btn"
         @type="button"
         @onClick={{this.incrementStep}}
-        @disabled={{not (or this.preValid this.isValid)}}
+        @disabled={{this.isNextButtonDisabled}}
       />
     </div>
   {{/if}}

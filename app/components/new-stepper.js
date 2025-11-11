@@ -46,6 +46,10 @@ export default class NewStepperComponent extends Component {
     return NEW_FORM_STEPS.subheadings[this.currentStep - 1] ?? '';
   }
 
+  get isNextButtonDisabled() {
+    return !(this.preValid || this.isValid);
+  }
+
   @action incrementStep() {
     if (this.currentStep < this.MAX_STEP) {
       const nextStep = this.currentStep + 1;
