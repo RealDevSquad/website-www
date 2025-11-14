@@ -1,0 +1,23 @@
+<div class="admin-application-detail">
+  <LinkTo
+    @route="applications"
+    @query={{hash dev="true"}}
+    class="btn btn-back"
+  >← Back to Applications</LinkTo>
+  <h2>Application Details</h2>
+  {{#if this.model}}
+    <div class="application-detail-content">
+      <div class="application-section">
+        <h3>Basic Information</h3>
+        <p><strong>Application ID:</strong> {{this.model.id}}</p>
+        <p><strong>User ID:</strong> {{this.model.userId}}</p>
+      </div>
+    </div>
+  {{else}}
+    <div class="application-error">
+      <p class="error-message">Application not found.</p>
+      <p class="error-description">The application you're looking for doesn't
+        exist or may have been removed.</p>
+    </div>
+  {{/if}}
+</div>

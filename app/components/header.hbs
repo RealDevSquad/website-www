@@ -61,6 +61,15 @@
           >Live</LinkTo>
         </li>
       {{/if}}
+      {{#if (and @dev this.isSuperUser)}}
+        <li>
+          <LinkTo
+            @route="applications"
+            @query={{hash dev="true"}}
+            class="nav__element"
+          >Applications</LinkTo>
+        </li>
+      {{/if}}
     </ul>
   </nav>
 

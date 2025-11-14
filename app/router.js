@@ -24,4 +24,7 @@ Router.map(function () {
   this.route('notifications');
   this.route('mobile');
   this.route('new-signup');
+  this.route('applications', function () {
+    this.route('detail', { path: '/:id' });
+  });
 });
