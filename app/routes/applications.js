@@ -57,8 +57,7 @@ export default class ApplicationsRoute extends Route {
       }
 
       const applicationsData = await applicationsResponse.json();
-      const applications = applicationsData.applications || [];
-      return applications;
+      return applicationsData.applications || [];
     } catch (error) {
       console.error('Error fetching applications:', error);
       this.toast.error(
