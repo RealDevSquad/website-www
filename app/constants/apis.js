@@ -43,8 +43,21 @@ export const QR_AUTHORIZATION_STATUS_URL = `${APPS.API_BACKEND}/auth/qr-code-aut
 
 export const USER_AUTHENTICATED_DEVICES_URL = `${APPS.API_BACKEND}/auth/device`;
 
-export const APPLICATIONS_URL = (size = 6) => {
-  return `${APPS.API_BACKEND}/applications?size=${size}&dev=true`;
+export const APPLICATIONS_URL = (size = 12, status = null, role = null) => {
+  const params = new URLSearchParams({
+    size: size.toString(),
+    dev: 'true',
+  });
+
+  if (status) {
+    params.append('status', status);
+  }
+
+  if (role) {
+    params.append('role', role);
+  }
+
+  return `${APPS.API_BACKEND}/applications?${params.toString()}`;
 };
 
 export const APPLICATION_BY_ID_URL = (applicationId) => {

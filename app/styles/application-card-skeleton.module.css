@@ -1,0 +1,117 @@
+.application-card-skeleton {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px var(--color-blackshadow2);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+}
+
+.application-card-skeleton__header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "avatar name status";
+  align-items: start;
+  gap: 0.75rem;
+}
+
+.application-card-skeleton__name-section {
+  grid-area: name;
+  min-width: 0;
+  padding-right: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.application-card-skeleton__body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.application-card-skeleton__info-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.application-card-skeleton__avatar,
+.application-card-skeleton__name,
+.application-card-skeleton__location,
+.application-card-skeleton__status,
+.application-card-skeleton__label,
+.application-card-skeleton__value {
+  background: var(--color-lightgrey);
+  background-image: linear-gradient(
+    90deg,
+    var(--color-lightgrey) 0%,
+    var(--color-lightgrey) 40%,
+    var(--color-white) 50%,
+    var(--color-lightgrey) 60%,
+    var(--color-lightgrey) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 4px;
+}
+
+.application-card-skeleton__avatar {
+  grid-area: avatar;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.application-card-skeleton__name {
+  width: 60%;
+  height: 1rem;
+}
+
+.application-card-skeleton__location {
+  width: 40%;
+  height: 0.75rem;
+}
+
+.application-card-skeleton__status {
+  grid-area: status;
+  width: 3.75rem;
+  height: 1.25rem;
+  border-radius: 6px;
+}
+
+.application-card-skeleton__label {
+  width: 3.75rem;
+  height: 0.75rem;
+}
+
+.application-card-skeleton__value {
+  width: 50%;
+  height: 0.75rem;
+  justify-self: end;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@media (width <= 768px) {
+  .application-card-skeleton {
+    padding: 0.875rem;
+  }
+
+  .application-card-skeleton__avatar {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
