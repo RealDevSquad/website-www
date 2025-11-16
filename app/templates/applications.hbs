@@ -1,19 +1,97 @@
 <div class="admin-applications">
   {{#unless (eq this.router.currentRouteName "applications.detail")}}
-    <h1>Applications</h1>
-    {{#if (and this.model (gt this.model.length 0))}}
-      <ul class="applications-list">
-        {{#each this.model as |application|}}
-          {{#if application.id}}
-            <li class="application-item">
-              <span class="application-id">Application ID:
-                {{application.id}}</span>
-            </li>
+    <div class="admin-applications__header">
+      <div class="admin-applications__title-section">
+        <h1 class="admin-applications__title">Applications</h1>
+        <p class="admin-applications__subtitle">View and manage applications</p>
+      </div>
+      <div class="admin-applications__tabs">
+        <Tabs class="applications-tabs">
+          <section class="tabs_list">
+            {{#each this.tabs as |tab|}}
+              <Tab
+                @tabId={{tab.id}}
+                @test={{tab.label}}
+                @label={{tab.label}}
+                @variant={{if tab.active "active" ""}}
+                @disabled={{tab.disabled}}
+                @onClick={{this.tabHandler}}
+              />
+            {{/each}}
+          </section>
+        </Tabs>
+      </div>
+    </div>
+    <div class="admin-applications__filters">
+      <div class="admin-applications__filter-group">
+        <select
+          id="role-filter"
+          class="admin-applications__filter-select"
+          {{on "change" this.onRoleChange}}
+        >
+          <option value="" selected={{not this.role}}>All Roles</option>
+          {{#each this.roleOptions as |roleOption|}}
+            <option
+              value={{roleOption.value}}
+              selected={{eq this.role roleOption.value}}
+            >
+              {{roleOption.label}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="admin-applications__filter-group">
+        <select
+          id="status-filter"
+          class="admin-applications__filter-select"
+          {{on "change" this.onStatusChange}}
+        >
+          <option value="" selected={{not this.status}}>All Status</option>
+          {{#each this.statusOptions as |statusOption|}}
+            <option
+              value={{statusOption.value}}
+              selected={{eq this.status statusOption.value}}
+            >
+              {{statusOption.label}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    {{#if (eq this.activeTab "Applications")}}
+      {{#if this.isLoading}}
+        <div class="applications-grid">
+          {{#each this.skeletonCount}}
+            <ApplicationCardSkeleton />
+          {{/each}}
+        </div>
+      {{else if
+        (and this.filteredApplications (gt this.filteredApplications.length 0))
+      }}
+        <div class="applications-grid">
+          {{#each this.filteredApplications as |application|}}
+            {{#if application.id}}
+              <ApplicationCard @application={{application}} />
+            {{/if}}
+          {{/each}}
+          {{#if this.isLoadingMore}}
+            {{#each this.skeletonCount}}
+              <ApplicationCardSkeleton />
+            {{/each}}
           {{/if}}
-        {{/each}}
-      </ul>
-    {{else}}
-      <p>No applications found.</p>
+        </div>
+        {{#if this.hasMore}}
+          <div
+            id="infinite-scroll-trigger"
+            class="infinite-scroll-trigger"
+            {{did-insert this.setupInfiniteScroll}}
+          ></div>
+        {{/if}}
+      {{else}}
+        <p class="applications-empty">No applications found.</p>
+      {{/if}}
+    {{else if (eq this.activeTab "Stats")}}
+      <p>Stats coming soon...</p>
     {{/if}}
   {{/unless}}
   {{outlet}}

@@ -1,19 +1,20 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
-import { TOAST_OPTIONS } from '../constants/toast-options';
 import { APPLICATIONS_URL, SELF_USER_PROFILE_URL } from '../constants/apis';
-import redirectAuth from '../utils/redirect-auth';
-import { ERROR_MESSAGES } from '../constants/error-messages';
 import apiRequest from '../utils/api-request';
+import redirectAuth from '../utils/redirect-auth';
+import { TOAST_OPTIONS } from '../constants/toast-options';
 
-const APPLICATIONS_SIZE = 6;
+const APPLICATIONS_SIZE = 12;
 
 export default class ApplicationsRoute extends Route {
-  @service toast;
   @service router;
+  @service toast;
 
   queryParams = {
     dev: { refreshModel: true },
+    status: { refreshModel: false },
+    role: { refreshModel: false },
   };
 
   beforeModel(transition) {
@@ -31,10 +32,10 @@ export default class ApplicationsRoute extends Route {
       const userResponse = await apiRequest(SELF_USER_PROFILE_URL);
 
       if (userResponse.status === 401) {
-        this.toast.error(ERROR_MESSAGES.notLoggedIn, '', TOAST_OPTIONS);
+        const userData = await userResponse.json();
+        this.toast.error(userData.message, '', TOAST_OPTIONS);
         setTimeout(redirectAuth, 2000);
-        this.router.replaceWith('/page-not-found');
-        return null;
+        return { isTokenExpired: true };
       }
 
       if (!userResponse.ok) {
@@ -43,29 +44,68 @@ export default class ApplicationsRoute extends Route {
 
       const userData = await userResponse.json();
 
-      if (!userData?.roles?.super_user) {
+      const isSuperUser =
+        userData?.roles?.super_user ||
+        userData?.disabled_roles?.includes('super_user');
+
+      if (!isSuperUser) {
         this.router.replaceWith('/page-not-found');
         return null;
       }
 
-      const applicationsResponse = await apiRequest(
-        APPLICATIONS_URL(APPLICATIONS_SIZE),
+      const applicationsData = await this.fetchApplications(
+        params.status,
+        params.role,
       );
 
-      if (!applicationsResponse.ok) {
-        throw new Error(`HTTP error! status: ${applicationsResponse.status}`);
-      }
-
-      const applicationsData = await applicationsResponse.json();
-      return applicationsData.applications || [];
+      return {
+        status: params.status || null,
+        role: params.role || null,
+        applications: applicationsData.applications || [],
+        nextLink: applicationsData.next || null,
+        totalCount: applicationsData.totalCount || 0,
+      };
     } catch (error) {
-      console.error('Error fetching applications:', error);
       this.toast.error(
-        'Something went wrong. ' + error.message,
+        `Something went wrong. ${error.message}`,
         'Error!',
         TOAST_OPTIONS,
       );
-      return null;
+      return {
+        status: params.status || null,
+        role: params.role || null,
+        applications: [],
+        nextLink: null,
+        totalCount: 0,
+      };
+    }
+  }
+
+  async fetchApplications(status, role) {
+    const applicationsResponse = await apiRequest(
+      APPLICATIONS_URL(APPLICATIONS_SIZE, status, role),
+    );
+
+    if (!applicationsResponse.ok) {
+      throw new Error(`HTTP error! status: ${applicationsResponse.status}`);
+    }
+
+    return await applicationsResponse.json();
+  }
+
+  setupController(controller, model) {
+    super.setupController(controller, model);
+
+    if (model) {
+      controller.status = model.status;
+      controller.role = model.role;
+      controller.allApplications = model.applications ?? [];
+      controller.nextLink = model.nextLink ?? null;
+      controller.totalCount = model.totalCount ?? 0;
+      controller.isLoading = false;
+      controller.isInfiniteScrollSetup = false;
+    } else {
+      controller.isLoading = true;
     }
   }
 }

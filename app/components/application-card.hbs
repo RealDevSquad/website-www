@@ -1,0 +1,52 @@
+<div class="application-card" data-test-application-card={{@application.id}}>
+  <div class="application-card__header">
+    {{#if @application.profilePic.url}}
+      <img
+        src={{@application.profilePic.url}}
+        alt="{{@application.biodata.firstName}} {{@application.biodata.lastName}}"
+        class="application-card__avatar"
+      />
+    {{else}}
+      <div class="application-card__avatar application-card__avatar--placeholder">
+        {{this.initials}}
+      </div>
+    {{/if}}
+    <div class="application-card__name-section">
+      <h3 class="application-card__name">
+        {{@application.biodata.firstName}} {{@application.biodata.lastName}}
+      </h3>
+      <span class="application-card__location">
+        {{@application.location.city}}, {{@application.location.state}}
+      </span>
+    </div>
+    <div class="application-card__status-wrapper">
+      <span class="application-card__status application-card__status--{{this.statusClass}}">
+        {{@application.status}}
+      </span>
+    </div>
+  </div>
+
+  <div class="application-card__body">
+    <div class="application-card__info-row">
+      <span class="application-card__label">Role:</span>
+      <span class="application-card__value">{{this.formattedRole}}</span>
+    </div>
+    {{#if @application.finalScore}}
+      <div class="application-card__info-row">
+        <span class="application-card__label">Score:</span>
+        <span class="application-card__value">{{@application.finalScore}}</span>
+      </div>
+    {{/if}}
+    <div class="application-card__info-row">
+      <span class="application-card__label">Institution:</span>
+      <span class="application-card__value">{{@application.professional.institution}}</span>
+    </div>
+    {{#if @application.lastEditAt}}
+      <div class="application-card__info-row">
+        <span class="application-card__label">Updated:</span>
+        <span class="application-card__value">{{this.formattedDate}}</span>
+      </div>
+    {{/if}}
+  </div>
+</div>
+
