@@ -1,0 +1,170 @@
+.application-card {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+}
+
+.application-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 15%);
+  cursor: pointer;
+}
+
+.application-card__header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "avatar name status";
+  align-items: start;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.application-card__avatar {
+  grid-area: avatar;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.application-card__avatar--placeholder {
+  grid-area: avatar;
+  background: var(--color-cultured);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-navyblue);
+}
+
+.application-card__name-section {
+  grid-area: name;
+  min-width: 0;
+  padding-right: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.application-card__name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  color: var(--color-darkblack);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.application-card__location {
+  font-size: 0.75rem;
+  color: var(--color-darkgrey);
+  display: block;
+}
+
+.application-card__status-wrapper {
+  grid-area: status;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.application-card__badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.application-card__badge--new {
+  background: var(--color-pink);
+  color: var(--color-white);
+}
+
+.application-card__body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.application-card__info-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.application-card__label {
+  font-size: 0.75rem;
+  color: var(--color-darkgrey);
+  font-weight: 500;
+}
+
+.application-card__value {
+  font-size: 0.75rem;
+  color: var(--color-darkblack);
+  font-weight: 400;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  justify-self: end;
+}
+
+.application-card__status {
+  padding: 0.25rem 0.625rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.application-card__status--pending {
+  background: var(--color-yellow-low-opacity);
+  color: var(--color-soil);
+}
+
+.application-card__status--accepted {
+  background: var(--color-green-low-opacity);
+  color: var(--color-green);
+}
+
+.application-card__status--rejected {
+  background: var(--color-pink-low-opacity);
+  color: var(--color-carmine);
+}
+
+.application-card__status--request-changes {
+  background: var(--color-light-navyblue);
+  color: var(--color-navyblue);
+}
+
+@media (width <= 768px) {
+  .application-card {
+    padding: 0.875rem;
+  }
+
+  .application-card__avatar {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .application-card__name {
+    font-size: 0.9rem;
+  }
+}

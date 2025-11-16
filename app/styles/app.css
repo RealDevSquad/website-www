@@ -58,6 +58,9 @@
 @import url("confirm-modal.module.css");
 @import url("new-signup.module.css");
 @import url("new-stepper.module.css");
+@import url("applications.module.css");
+@import url("application-card.module.css");
+@import url("application-card-skeleton.module.css");
 
 * {
   margin: 0;
