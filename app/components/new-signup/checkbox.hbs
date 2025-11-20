@@ -3,24 +3,25 @@
     {{this.label}}
   </h2>
 
-  <div class="user-details__role-field">
-    {{#each this.checkboxData as |data|}}
-      <label
-        class="user_details__checkbox-label"
-        data-test-checkbox-label={{data.name}}
-      >
-        <input
-          type="checkbox"
-          name={{data.name}}
-          checked={{false}}
-          {{on "change" this.checkboxFieldChanged}}
-          class="user-details__checkbox-input"
-          data-test-checkbox-input={{data.name}}
-        />
-        {{data.label}}
-      </label>
-    {{/each}}
-  </div>
+<div class="user-details__role-field">
+  {{#each this.checkboxData as |data|}}
+    <label
+      class="user_details__checkbox-label"
+      data-test-checkbox-label={{data.name}}
+    >
+      <input
+        type="radio"
+        name="role"
+        value={{data.name}}
+        checked={{eq this.signupDetails.role data.name}}
+        {{on "change" (fn this.checkboxFieldChanged data.name)}}
+        class="user-details__checkbox-input"
+        data-test-checkbox-input={{data.name}}
+      />
+      {{data.label}}
+    </label>
+  {{/each}}
+</div>
 
   <div class="signup-action__btn">
     <Reusables::Button

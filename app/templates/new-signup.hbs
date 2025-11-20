@@ -30,16 +30,6 @@
         @error={{this.error}}
       />
     {{else if (and this.isDevMode (eq step this.FOURTH_STEP))}}
-      <NewSignup::Input
-        @onClick={{fn this.changeStep this.FIFTH_STEP}}
-        @dev={{this.isDevMode}}
-        @currentStep={{step}}
-        @onChange={{this.handleInputChange}}
-        @isButtonDisabled={{this.isButtonDisabled}}
-        @isLoading={{this.isLoading}}
-        @error={{this.error}}
-      />
-    {{else if (and this.isDevMode (eq step this.FIFTH_STEP))}}
       <NewSignup::Checkbox
         @onClick={{this.register}}
         @dev={{this.isDevMode}}

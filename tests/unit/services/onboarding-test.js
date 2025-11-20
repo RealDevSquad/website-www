@@ -67,7 +67,7 @@ module('Unit | Service | onboarding', function (hooks) {
   });
 
   test('signup method for non-Developer role', async function (assert) {
-    assert.expect(2);
+    assert.expect(4);
 
     let service = this.owner.lookup('service:onboarding');
     let store = this.owner.lookup('service:store');
@@ -94,14 +94,16 @@ module('Unit | Service | onboarding', function (hooks) {
 
     let dataToUpdate = {
       username: 'testuser',
-      roles: {
-        maven: true,
-      },
+      role: 'maven',
     };
 
     await service.signup(dataToUpdate);
 
-    assert.verifySteps(['store.createRecord called']);
+    assert.verifySteps([
+      'store.createRecord called',
+      'setProperties called',
+      'save called',
+    ]);
   });
 
   test('discordInvite method', async function (assert) {
