@@ -90,24 +90,36 @@ module('Unit | Controller | new-signup', function (hooks) {
     );
   });
 
-  test('handleCheckboxInputChange updates roles and toggles button state', function (assert) {
-    controller.send('handleCheckboxInputChange', 'developer', true);
-    assert.true(controller.signupDetails.roles.developer, 'Developer role set');
-    assert.false(
-      controller.isButtonDisabled,
-      'Button enabled when one role is selected',
-    );
+test('handleCheckboxInputChange updates role and toggles button state', function (assert) {
+  controller.send('handleCheckboxInputChange', 'developer');
+  assert.equal(controller.signupDetails.role, 'developer');
+  assert.false(
+    controller.isButtonDisabled,
+    'Button enabled when one role is selected',
+  );
 
-    controller.send('handleCheckboxInputChange', 'developer', false);
-    assert.false(
-      controller.signupDetails.roles.developer,
-      'Developer role unset',
-    );
-    assert.true(
-      controller.isButtonDisabled,
-      'Button disabled when no roles selected',
-    );
-  });
+  controller.send('handleCheckboxInputChange', 'developer');
+  assert.equal(
+    controller.signupDetails.role,
+    'developer',
+    'Role remains selected when same role is chosen again',
+  );
+  assert.false(
+    controller.isButtonDisabled,
+    'Button remains enabled when role is selected',
+  );
+
+  controller.send('handleCheckboxInputChange', '');
+  assert.strictEqual(
+    controller.signupDetails.role,
+    '',
+    'Role is unset when empty value is passed',
+  );
+  assert.true(
+    controller.isButtonDisabled,
+    'Button disabled when no role selected',
+  );
+});
 
   test('generateUsername returns username on success', async function (assert) {
     fetchStub.resolves({
@@ -158,7 +170,6 @@ module('Unit | Controller | new-signup', function (hooks) {
     controller.signupDetails = {
       firstName: fakeUserData.first_name,
       lastName: fakeUserData.last_name,
-      roles: { developer: true },
     };
 
     sinon.stub(controller, 'generateUsername').resolves(fakeUserData.username);
@@ -179,7 +190,6 @@ module('Unit | Controller | new-signup', function (hooks) {
     controller.signupDetails = {
       firstName: fakeUserData.first_name,
       lastName: fakeUserData.last_name,
-      roles: { developer: true },
     };
 
     sinon.stub(controller, 'generateUsername').resolves(fakeUserData.username);
@@ -204,13 +214,12 @@ module('Unit | Controller | new-signup', function (hooks) {
     controller.signupDetails = {
       firstName: fakeUserData.first_name,
       lastName: fakeUserData.last_name,
-      username: 'mock-username',
-      roles: { developer: true },
+      roles: 'developer',
     };
 
     sinon.stub(controller, 'checkUserName').resolves(true);
     sinon
-      .stub(controller, 'newRegisterUser')
+      .stub(controller, 'registerUser')
       .throws(new Error(SIGNUP_ERROR_MESSAGES.others));
 
     await controller.signup();

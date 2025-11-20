@@ -12,7 +12,7 @@ module('Integration | Component | new-signup/checkbox', function (hooks) {
 
     this.setProperties({
       onClick: function () {
-        this.currentStep = NEW_SIGNUP_STEPS[5];
+        this.currentStep = NEW_SIGNUP_STEPS[3];
       },
       currentStep: 'role',
       isDevMode: true,
@@ -32,7 +32,7 @@ module('Integration | Component | new-signup/checkbox', function (hooks) {
     assert.expect(2);
     this.setProperties({
       onClick: function () {
-        this.currentStep = NEW_SIGNUP_STEPS[5];
+        this.currentStep = NEW_SIGNUP_STEPS[3];
       },
       currentStep: 'role',
       isDevMode: true,
@@ -50,7 +50,7 @@ module('Integration | Component | new-signup/checkbox', function (hooks) {
   });
 
   test('render label and checkbox (under dev flag)', async function (assert) {
-    assert.expect(10);
+    assert.expect(16);
 
     this.setProperties({
       onClick: function () {
@@ -67,20 +67,24 @@ module('Integration | Component | new-signup/checkbox', function (hooks) {
         @dev={{this.isDevMode}}
       />`);
 
-    assert.dom('[data-test-checkbox-label]').exists({ count: 4 });
-    assert.dom('[data-test-checkbox-input]').exists({ count: 4 });
+    assert.dom('[data-test-checkbox-label]').exists({ count: 7 });
+    assert.dom('[data-test-checkbox-input]').exists({ count: 7 });
 
     assert.dom('[data-test-checkbox-input="developer"]').isNotChecked();
     assert.dom('[data-test-checkbox-input="designer"]').isNotChecked();
+    assert.dom('[data-test-checkbox-input="project_manager"]').isNotChecked();
     assert.dom('[data-test-checkbox-input="maven"]').isNotChecked();
-    assert.dom('[data-test-checkbox-input="productmanager"]').isNotChecked();
+    assert.dom('[data-test-checkbox-input="product_manager"]').isNotChecked();
+    assert.dom('[data-test-checkbox-input="qa"]').isNotChecked();
+    assert.dom('[data-test-checkbox-input="social_media"]').isNotChecked();
 
     assert.dom('[data-test-checkbox-label="developer"]').hasText('Developer');
     assert.dom('[data-test-checkbox-label="designer"]').hasText('Designer');
     assert.dom('[data-test-checkbox-label="maven"]').hasText('Maven');
-    assert
-      .dom('[data-test-checkbox-label="productmanager"]')
-      .hasText('Product Manager');
+    assert.dom('[data-test-checkbox-label="product_manager"]').hasText('Product Manager');
+    assert.dom('[data-test-checkbox-label="project_manager"]').hasText('Project Manager');
+    assert.dom('[data-test-checkbox-label="qa"]').hasText('QA');
+    assert.dom('[data-test-checkbox-label="social_media"]').hasText('Social Media');
   });
 
   test('checkbox is checked after the click (under dev flag)', async function (assert) {
@@ -88,15 +92,15 @@ module('Integration | Component | new-signup/checkbox', function (hooks) {
 
     this.setProperties({
       onClick: function () {
-        this.currentStep = NEW_SIGNUP_STEPS[5];
+        this.currentStep = NEW_SIGNUP_STEPS[3];
       },
       currentStep: 'role',
       isDevMode: true,
     });
 
-    this.set('onChange', function (roleKey, value) {
+    this.set('onChange', function (selectedRole,value) {
       assert.strictEqual(
-        roleKey,
+        selectedRole,
         'developer',
         'onChange action called with correct roleKey',
       );
