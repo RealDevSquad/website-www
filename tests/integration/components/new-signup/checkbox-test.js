@@ -81,10 +81,16 @@ module('Integration | Component | new-signup/checkbox', function (hooks) {
     assert.dom('[data-test-checkbox-label="developer"]').hasText('Developer');
     assert.dom('[data-test-checkbox-label="designer"]').hasText('Designer');
     assert.dom('[data-test-checkbox-label="maven"]').hasText('Maven');
-    assert.dom('[data-test-checkbox-label="product_manager"]').hasText('Product Manager');
-    assert.dom('[data-test-checkbox-label="project_manager"]').hasText('Project Manager');
+    assert
+      .dom('[data-test-checkbox-label="product_manager"]')
+      .hasText('Product Manager');
+    assert
+      .dom('[data-test-checkbox-label="project_manager"]')
+      .hasText('Project Manager');
     assert.dom('[data-test-checkbox-label="qa"]').hasText('QA');
-    assert.dom('[data-test-checkbox-label="social_media"]').hasText('Social Media');
+    assert
+      .dom('[data-test-checkbox-label="social_media"]')
+      .hasText('Social Media');
   });
 
   test('checkbox is checked after the click (under dev flag)', async function (assert) {
@@ -98,7 +104,7 @@ module('Integration | Component | new-signup/checkbox', function (hooks) {
       isDevMode: true,
     });
 
-    this.set('onChange', function (selectedRole,value) {
+    this.set('onChange', function (selectedRole, value) {
       assert.strictEqual(
         selectedRole,
         'developer',
