@@ -44,7 +44,7 @@ const APP_URLS = {
     IDENTITY: '/identity',
     MY_STATUS: '/status',
     DASHBOARD: `${SCHEME}staging-dashboard.${DOMAIN}`,
-    API_BACKEND: `${SCHEME}staging-api.${DOMAIN}`,
+    API_BACKEND: `http://localhost:3000`,
   },
   test: {
     HOME: `${SCHEME}${DOMAIN}`,

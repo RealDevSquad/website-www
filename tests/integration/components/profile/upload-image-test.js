@@ -77,7 +77,9 @@ module('Integration | Component | image uploader', function (hooks) {
       dataTransfer,
     });
     await waitFor('p.message-text__failure');
-    assert.dom('p.message-text__failure').exists('Error message is shown for invalid file type');
+    assert
+      .dom('p.message-text__failure')
+      .exists('Error message is shown for invalid file type');
   });
 
   test('it renders crop UI when an image is selected', async function (assert) {

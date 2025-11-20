@@ -12,7 +12,7 @@ export default class ImageCropperComponent extends Component {
 
   @action loadCropper() {
     const image = document.getElementById('image-cropper');
-    if(!image){
+    if (!image) {
       return;
     }
     this.cropper = new Cropper(image, {
