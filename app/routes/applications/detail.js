@@ -1,22 +1,17 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
-import { TOAST_OPTIONS } from '../../constants/toast-options';
-import redirectAuth from '../../utils/redirect-auth';
-import { ERROR_MESSAGES } from '../../constants/error-messages';
 import {
-  SELF_USER_PROFILE_URL,
   APPLICATION_BY_ID_URL,
+  SELF_USER_PROFILE_URL,
 } from '../../constants/apis';
+import { ERROR_MESSAGES } from '../../constants/error-messages';
+import { TOAST_OPTIONS } from '../../constants/toast-options';
 import apiRequest from '../../utils/api-request';
+import redirectAuth from '../../utils/redirect-auth';
+
 export default class ApplicationsDetailRoute extends Route {
   @service toast;
   @service router;
-
-  beforeModel(transition) {
-    if (transition?.to?.queryParams?.dev !== 'true') {
-      this.router.replaceWith('/page-not-found');
-    }
-  }
 
   async model(params) {
     try {
@@ -25,7 +20,6 @@ export default class ApplicationsDetailRoute extends Route {
       if (userResponse.status === 401) {
         this.toast.error(ERROR_MESSAGES.notLoggedIn, '', TOAST_OPTIONS);
         setTimeout(redirectAuth, 2000);
-        this.router.replaceWith('/page-not-found');
         return null;
       }
 
@@ -47,7 +41,7 @@ export default class ApplicationsDetailRoute extends Route {
       }
 
       const applicationData = await applicationResponse.json();
-      return applicationData;
+      return applicationData?.application;
     } catch (error) {
       this.toast.error(
         'Something went wrong. ' + error.message,

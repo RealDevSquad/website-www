@@ -33,7 +33,6 @@ export default class ApplicationsRoute extends Route {
       if (userResponse.status === 401) {
         this.toast.error(ERROR_MESSAGES.notLoggedIn, '', TOAST_OPTIONS);
         setTimeout(redirectAuth, 2000);
-        this.router.replaceWith('/page-not-found');
         return null;
       }
 
@@ -41,17 +40,9 @@ export default class ApplicationsRoute extends Route {
         throw new Error(`HTTP error! status: ${userResponse.status}`);
       }
 
-      const userData = await userResponse.json();
-
-      if (!userData?.roles?.super_user) {
-        this.router.replaceWith('/page-not-found');
-        return null;
-      }
-
       const applicationsResponse = await apiRequest(
         APPLICATIONS_URL(APPLICATIONS_SIZE),
       );
-
       if (!applicationsResponse.ok) {
         throw new Error(`HTTP error! status: ${applicationsResponse.status}`);
       }
@@ -59,7 +50,6 @@ export default class ApplicationsRoute extends Route {
       const applicationsData = await applicationsResponse.json();
       return applicationsData.applications || [];
     } catch (error) {
-      console.error('Error fetching applications:', error);
       this.toast.error(
         'Something went wrong. ' + error.message,
         'Error!',
