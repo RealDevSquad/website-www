@@ -223,4 +223,65 @@ module('Integration | Component | header', function (hooks) {
     assert.dom('[data-test-dropdown-toggle]').doesNotExist();
     assert.dom('[data-test-login]').doesNotExist();
   });
+
+  test('applications link is visible for super user under dev flag', async function (assert) {
+    this.owner.register(
+      'service:login',
+      {
+        userData: { roles: { super_user: true } },
+      },
+      { instantiate: false },
+    );
+
+    this.setProperties({
+      firstName: 'John',
+      isLoggedIn: true,
+      isLoading: false,
+      dev: true,
+    });
+
+    this.set('signOut', () => {
+      this.isLoggedIn = false;
+    });
+
+    await render(hbs`
+      <Header
+        @firstName={{this.firstName}}
+        @isLoggedIn={{this.isLoggedIn}}
+        @isLoading={{this.isLoading}}
+        @signOut={{this.signOut}}
+        @dev={{this.dev}}
+      />
+    `);
+
+    assert.dom('[data-test-applications]').exists();
+    assert
+      .dom('[data-test-applications]')
+      .hasAttribute('href', '/applications?dev=true');
+  });
+
+  test('applications link is not visible for normal user under dev flag', async function (assert) {
+    this.setProperties({
+      firstName: 'John',
+      isLoggedIn: true,
+      isLoading: false,
+      dev: true,
+    });
+
+    this.set('signOut', () => {
+      this.isLoggedIn = false;
+    });
+
+    await render(hbs`
+      <Header
+        @firstName={{this.firstName}}
+        @isLoggedIn={{this.isLoggedIn}}
+        @isLoading={{this.isLoading}}
+        @signOut={{this.signOut}}
+        @dev={{this.dev}}
+      />
+    `);
+
+    assert.dom('[data-test-applications]').doesNotExist();
+  });
 });
