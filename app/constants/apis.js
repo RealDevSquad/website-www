@@ -44,3 +44,11 @@ export const SELF_USER_PROFILE_URL = `${APPS.API_BACKEND}/users?profile=true`;
 export const QR_AUTHORIZATION_STATUS_URL = `${APPS.API_BACKEND}/auth/qr-code-auth/authorization_status`;
 
 export const USER_AUTHENTICATED_DEVICES_URL = `${APPS.API_BACKEND}/auth/device`;
+
+export const APPLICATIONS_URL = (size = 6) => {
+  return `${APPS.API_BACKEND}/applications?size=${size}&dev=true`;
+};
+
+export const APPLICATION_BY_ID_URL = (applicationId) => {
+  return `${APPS.API_BACKEND}/applications/${applicationId}?dev=true`;
+};
