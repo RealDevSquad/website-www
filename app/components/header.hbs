@@ -64,6 +64,7 @@
       {{#if (and @dev this.isSuperUser)}}
         <li>
           <LinkTo
+            data-test-applications
             @route="applications"
             @query={{hash dev="true"}}
             class="nav__element"
