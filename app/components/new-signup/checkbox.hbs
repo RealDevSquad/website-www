@@ -13,7 +13,7 @@
         type="radio"
         name="role"
         value={{data.name}}
-        checked={{eq this.signupDetails.role data.name}}
+        checked={{eq @signupDetails.role data.name}}
         {{on "change" (fn this.checkboxFieldChanged data.name)}}
         class="user-details__checkbox-input"
         data-test-checkbox-input={{data.name}}
