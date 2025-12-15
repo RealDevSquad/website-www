@@ -11,6 +11,12 @@ export default class SignupComponent extends Component {
 
   @action inputFieldChanged({ target: { value } }) {
     const { onChange, currentStep } = this.args;
-    onChange(currentStep, value);
+
+    const sanitizedInput = value.replace(/\s/g, '');
+    if (value !== sanitizedInput) {
+      event.target.value = sanitizedInput;
+    }
+
+    onChange(currentStep, sanitizedInput);
   }
 }
