@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'website-www/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { render, triggerEvent } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { NEW_SIGNUP_STEPS } from 'website-www/constants/new-signup';
 
@@ -135,5 +135,35 @@ module('Integration | Component | new-signup/input', function (hooks) {
     `);
 
     assert.dom('[data-test-button="signup"]').isDisabled();
+  });
+
+  test('input field should remove spaces as user types', async function (assert) {
+    assert.expect(1);
+
+    this.setProperties({
+      currentStep: 'firstname',
+      onChange: (step, value) => {
+        this.inputValue = value;
+      },
+      onClick: () => {},
+    });
+
+    await render(hbs`
+      <NewSignup::Input
+        @currentStep={{this.currentStep}}
+        @onChange={{this.onChange}}
+        @onClick={{this.onClick}}
+      />
+    `);
+
+    const input = this.element.querySelector('[data-test-signup-form-input]');
+    input.value = 'John Doe';
+    await triggerEvent(input, 'input');
+
+    assert.strictEqual(
+      this.inputValue,
+      'JohnDoe',
+      'Spaces should be removed from input',
+    );
   });
 });
