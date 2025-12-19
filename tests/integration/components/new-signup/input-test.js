@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'website-www/tests/helpers';
-import { render, triggerEvent } from '@ember/test-helpers';
+import { render, triggerEvent, typeIn } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { NEW_SIGNUP_STEPS } from 'website-www/constants/new-signup';
 
@@ -137,11 +137,11 @@ module('Integration | Component | new-signup/input', function (hooks) {
     assert.dom('[data-test-button="signup"]').isDisabled();
   });
 
-  test('input field should remove spaces as user types', async function (assert) {
+  test('input field should remove spaces if user pastes text', async function (assert) {
     assert.expect(1);
 
     this.setProperties({
-      currentStep: 'firstname',
+      currentStep: 'firstName',
       onChange: (step, value) => {
         this.inputValue = value;
       },
@@ -165,5 +165,33 @@ module('Integration | Component | new-signup/input', function (hooks) {
       'JohnDoe',
       'Spaces should be removed from input',
     );
+  });
+
+  test('input field should not accept spaces', async function (assert) {
+    assert.expect(1);
+
+    this.setProperties({
+      currentStep: 'firstName',
+      onChange: (step, value) => {
+        this.inputValue = value;
+      },
+      onClick: () => {},
+    });
+
+    await render(hbs`
+      <NewSignup::Input
+        @currentStep={{this.currentStep}}
+        @onChange={{this.onChange}}
+        @onClick={{this.onClick}}
+      />
+    `);
+
+    const input = this.element.querySelector('[data-test-signup-form-input]');
+
+    await typeIn(input, 'John Doe');
+
+    assert
+      .dom(input)
+      .hasValue('JohnDoe', 'Keydown prevention blocked the space');
   });
 });
