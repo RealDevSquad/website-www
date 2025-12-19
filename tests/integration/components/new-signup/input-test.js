@@ -137,61 +137,182 @@ module('Integration | Component | new-signup/input', function (hooks) {
     assert.dom('[data-test-button="signup"]').isDisabled();
   });
 
-  test('input field should remove spaces if user pastes text', async function (assert) {
-    assert.expect(1);
-
-    this.setProperties({
-      currentStep: 'firstName',
-      onChange: (step, value) => {
-        this.inputValue = value;
-      },
-      onClick: () => {},
+  module('whitespace handling', function (hooks) {
+    hooks.beforeEach(function () {
+      this.setProperties({
+        currentStep: 'firstName',
+        onChange: (step, value) => {
+          this.inputValue = value;
+        },
+        onClick: () => {},
+      });
     });
 
-    await render(hbs`
-      <NewSignup::Input
-        @currentStep={{this.currentStep}}
-        @onChange={{this.onChange}}
-        @onClick={{this.onClick}}
-      />
-    `);
+    test('should prevent single space when typing', async function (assert) {
+      await render(hbs`
+        <NewSignup::Input
+          @currentStep={{this.currentStep}}
+          @onChange={{this.onChange}}
+          @onClick={{this.onClick}}
+        />
+      `);
 
-    const input = this.element.querySelector('[data-test-signup-form-input]');
-    input.value = 'John Doe';
-    await triggerEvent(input, 'input');
+      const input = this.element.querySelector('[data-test-signup-form-input]');
 
-    assert.strictEqual(
-      this.inputValue,
-      'JohnDoe',
-      'Spaces should be removed from input',
-    );
-  });
+      await typeIn(input, 'John Doe');
 
-  test('input field should not accept spaces', async function (assert) {
-    assert.expect(1);
-
-    this.setProperties({
-      currentStep: 'firstName',
-      onChange: (step, value) => {
-        this.inputValue = value;
-      },
-      onClick: () => {},
+      assert
+        .dom(input)
+        .hasValue('JohnDoe', 'Single space should be prevented when typing');
     });
 
-    await render(hbs`
-      <NewSignup::Input
-        @currentStep={{this.currentStep}}
-        @onChange={{this.onChange}}
-        @onClick={{this.onClick}}
-      />
-    `);
+    test('should remove multiple consecutive spaces when typing', async function (assert) {
+      await render(hbs`
+        <NewSignup::Input
+          @currentStep={{this.currentStep}}
+          @onChange={{this.onChange}}
+          @onClick={{this.onClick}}
+        />
+      `);
 
-    const input = this.element.querySelector('[data-test-signup-form-input]');
+      const input = this.element.querySelector('[data-test-signup-form-input]');
 
-    await typeIn(input, 'John Doe');
+      await typeIn(input, 'John   Doe');
 
-    assert
-      .dom(input)
-      .hasValue('JohnDoe', 'Keydown prevention blocked the space');
+      assert
+        .dom(input)
+        .hasValue('JohnDoe', 'Multiple consecutive spaces should be removed');
+    });
+
+    test('should remove single space when pasting', async function (assert) {
+      await render(hbs`
+        <NewSignup::Input
+          @currentStep={{this.currentStep}}
+          @onChange={{this.onChange}}
+          @onClick={{this.onClick}}
+        />
+      `);
+
+      const input = this.element.querySelector('[data-test-signup-form-input]');
+      input.value = 'John Doe';
+      await triggerEvent(input, 'input');
+
+      assert.strictEqual(
+        this.inputValue,
+        'JohnDoe',
+        'Single space should be removed when pasting',
+      );
+      assert.dom(input).hasValue('JohnDoe');
+    });
+
+    test('should remove leading and trailing spaces when pasting', async function (assert) {
+      await render(hbs`
+        <NewSignup::Input
+          @currentStep={{this.currentStep}}
+          @onChange={{this.onChange}}
+          @onClick={{this.onClick}}
+        />
+      `);
+
+      const input = this.element.querySelector('[data-test-signup-form-input]');
+      input.value = ' John Doe ';
+      await triggerEvent(input, 'input');
+
+      assert.strictEqual(
+        this.inputValue,
+        'JohnDoe',
+        'Leading and trailing spaces should be removed',
+      );
+      assert.dom(input).hasValue('JohnDoe');
+    });
+
+    test('should handle input with only spaces', async function (assert) {
+      await render(hbs`
+        <NewSignup::Input
+          @currentStep={{this.currentStep}}
+          @onChange={{this.onChange}}
+          @onClick={{this.onClick}}
+        />
+      `);
+
+      const input = this.element.querySelector('[data-test-signup-form-input]');
+      input.value = '   ';
+      await triggerEvent(input, 'input');
+
+      assert.strictEqual(
+        this.inputValue,
+        '',
+        'Input with only spaces should result in empty string',
+      );
+      assert.dom(input).hasValue('');
+    });
+
+    test('should remove mixed whitespace characters when pasting', async function (assert) {
+      await render(hbs`
+        <NewSignup::Input
+          @currentStep={{this.currentStep}}
+          @onChange={{this.onChange}}
+          @onClick={{this.onClick}}
+        />
+      `);
+
+      const input = this.element.querySelector('[data-test-signup-form-input]');
+      input.value = 'John\t\nDoe';
+      await triggerEvent(input, 'input');
+
+      assert.strictEqual(
+        this.inputValue,
+        'JohnDoe',
+        'Tabs and newlines should be removed',
+      );
+      assert.dom(input).hasValue('JohnDoe');
+    });
+
+    test('should accept text without whitespace', async function (assert) {
+      await render(hbs`
+        <NewSignup::Input
+          @currentStep={{this.currentStep}}
+          @onChange={{this.onChange}}
+          @onClick={{this.onClick}}
+        />
+      `);
+
+      const input = this.element.querySelector('[data-test-signup-form-input]');
+
+      await typeIn(input, 'JohnDoe');
+
+      assert.strictEqual(
+        this.inputValue,
+        'JohnDoe',
+        'Text without whitespace should be accepted as-is',
+      );
+      assert.dom(input).hasValue('JohnDoe');
+    });
+
+    test('should handle combination of typing and pasting with whitespace', async function (assert) {
+      await render(hbs`
+        <NewSignup::Input
+          @currentStep={{this.currentStep}}
+          @onChange={{this.onChange}}
+          @onClick={{this.onClick}}
+        />
+      `);
+
+      const input = this.element.querySelector('[data-test-signup-form-input]');
+
+      // First type some text
+      await typeIn(input, 'John ');
+
+      // Then paste text with spaces
+      input.value = input.value + ' Doe Smith';
+      await triggerEvent(input, 'input');
+
+      assert.strictEqual(
+        this.inputValue,
+        'JohnDoeSmith',
+        'Combination of typing and pasting should remove all spaces',
+      );
+      assert.dom(input).hasValue('JohnDoeSmith');
+    });
   });
 });
