@@ -14,20 +14,21 @@ export default class SignupComponent extends Component {
 
     const rawValue = event.target.value;
 
-    if (rawValue.includes(' ')) {
+    if (/\s/.test(rawValue)) {
+      const cursorPosition = event.target.selectionStart;
       const sanitizedInput = rawValue.replace(/\s/g, '');
-      onChange(currentStep, sanitizedInput);
 
-      if (rawValue !== sanitizedInput) {
-        event.target.value = sanitizedInput;
-      }
+      event.target.value = sanitizedInput;
+      event.target.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+
+      onChange(currentStep, sanitizedInput);
     } else {
       onChange(currentStep, rawValue);
     }
   }
 
   @action handleKeydown(event) {
-    if (event.key === ' ' || event.code === 'Space') {
+    if (/\s/.test(event.key)) {
       event.preventDefault();
     }
   }
