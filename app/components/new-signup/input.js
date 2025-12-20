@@ -18,8 +18,18 @@ export default class SignupComponent extends Component {
       const cursorPosition = event.target.selectionStart;
       const sanitizedInput = rawValue.replace(/\s/g, '');
 
+      const textBeforeCursor = rawValue.substring(0, cursorPosition);
+      const nonWhitespaceBeforeCursor = textBeforeCursor.replace(
+        /\s/g,
+        '',
+      ).length;
+      const newCursorPosition = Math.min(
+        nonWhitespaceBeforeCursor,
+        sanitizedInput.length,
+      );
+
       event.target.value = sanitizedInput;
-      event.target.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+      event.target.setSelectionRange(newCursorPosition, newCursorPosition);
 
       onChange(currentStep, sanitizedInput);
     } else {
