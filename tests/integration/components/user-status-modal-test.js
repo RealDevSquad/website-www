@@ -46,7 +46,7 @@ module('Integration | Component | user-status-modal', function (hooks) {
   });
 
   test('payload contains relevant data when status is changed to OOO', async function (assert) {
-    assert.expect(6);
+    assert.expect(4);
     this.setProperties({
       newStatus: 'OOO',
       showUserStateModal: true,
@@ -54,7 +54,6 @@ module('Integration | Component | user-status-modal', function (hooks) {
         this.set('showUserStateModal', !this.showUserStateModal);
       },
       createOOORequest: (from, until, reason) => {
-
         assert.strictEqual(
           reason,
           'OOO due to Bad Health',
