@@ -54,7 +54,7 @@ module('Integration | Component | user-status-modal', function (hooks) {
         this.set('showUserStateModal', !this.showUserStateModal);
       },
       createOOORequest: (from, until, reason) => {
-        console.log('createOOORequest Payload:', { from, until, reason });
+
         assert.strictEqual(
           reason,
           'OOO due to Bad Health',
