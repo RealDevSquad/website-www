@@ -9,8 +9,31 @@ export default class SignupComponent extends Component {
     return LABEL_TEXT[currentStep];
   }
 
-  @action inputFieldChanged({ target: { value } }) {
+  @action inputFieldChanged(event) {
     const { onChange, currentStep } = this.args;
-    onChange(currentStep, value);
+
+    const rawValue = event.target.value;
+
+    if (/\s/.test(rawValue)) {
+      const cursorPosition = event.target.selectionStart;
+      const sanitizedInput = rawValue.replace(/\s/g, '');
+
+      const textBeforeCursor = rawValue.substring(0, cursorPosition);
+      const spacesBeforeCursor = (textBeforeCursor.match(/\s/g) || []).length;
+      const newCursorPosition = cursorPosition - spacesBeforeCursor;
+
+      event.target.value = sanitizedInput;
+      event.target.setSelectionRange(newCursorPosition, newCursorPosition);
+
+      onChange(currentStep, sanitizedInput);
+    } else {
+      onChange(currentStep, rawValue);
+    }
+  }
+
+  @action handleKeydown(event) {
+    if (/\s/.test(event.key)) {
+      event.preventDefault();
+    }
   }
 }

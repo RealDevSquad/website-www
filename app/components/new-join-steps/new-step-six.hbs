@@ -1,0 +1,207 @@
+<div class="step-container">
+  <div class="form-header__text">
+    <h1 class="section-heading">{{@heading}}</h1>
+    <p class="section-instruction">{{@subHeading}}</p>
+  </div>
+
+  <div class="review-section">
+    <div class="review-section__header">
+      <h3 class="review-section__title">Personal Information</h3>
+      <Reusables::Button
+        @text="Edit"
+        @variant="light btn--sm"
+        @test="edit-step-1"
+        @type="button"
+        @onClick={{fn @navigateToStep 1}}
+      />
+    </div>
+    <div class="review-section__content">
+      <div class="review-field">
+        <span class="review-field__label">Full Name:</span>
+        <span class="review-field__value {{unless this.stepData.one.fullName 'review-field__value--missing'}}">
+          {{if this.stepData.one.fullName this.stepData.one.fullName 'Not provided'}}
+        </span>
+      </div>
+      <div class="review-field">
+        <span class="review-field__label">Location:</span>
+        <span class="review-field__value {{unless this.locationDisplay 'review-field__value--missing'}}">
+          {{this.locationDisplay}}
+        </span>
+      </div>
+      <div class="review-field">
+        <span class="review-field__label">Applying as:</span>
+        <span class="review-field__value {{unless this.stepData.one.role 'review-field__value--missing'}}">
+          {{if this.stepData.one.role this.stepData.one.role 'Not provided'}}
+        </span>
+      </div>
+      <div class="review-field">
+        <span class="review-field__label">Profile Image:</span>
+        <span class="review-field__value review-field__value--empty">
+          Not uploaded
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="review-section">
+    <div class="review-section__header">
+      <h3 class="review-section__title">Professional Details</h3>
+      <Reusables::Button
+        @text="Edit"
+        @variant="light btn--sm"
+        @test="edit-step-2"
+        @type="button"
+        @onClick={{fn @navigateToStep 2}}
+      />
+    </div>
+    <div class="review-section__content">
+      <div class="review-field">
+        <span class="review-field__label">Skills:</span>
+        <span class="review-field__value {{unless this.stepData.two.skills 'review-field__value--missing'}}">
+          {{if this.stepData.two.skills this.stepData.two.skills 'Not provided'}}
+        </span>
+      </div>
+      <div class="review-field">
+        <span class="review-field__label">Institution/Company:</span>
+        <span class="review-field__value {{unless this.stepData.two.company 'review-field__value--missing'}}">
+          {{if this.stepData.two.company this.stepData.two.company 'Not provided'}}
+        </span>
+      </div>
+      <div class="review-field">
+        <span class="review-field__label">Introduction:</span>
+        <span class="review-field__value {{unless this.stepData.two.introduction 'review-field__value--missing'}}">
+          {{if this.stepData.two.introduction this.stepData.two.introduction 'Not provided'}}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="review-section">
+    <div class="review-section__header">
+      <h3 class="review-section__title">Hobbies & Interests</h3>
+      <Reusables::Button
+        @text="Edit"
+        @variant="light btn--sm"
+        @test="edit-step-3"
+        @type="button"
+        @onClick={{fn @navigateToStep 3}}
+      />
+    </div>
+    <div class="review-section__content">
+      <div class="review-field">
+        <span class="review-field__label">Hobbies:</span>
+        <span class="review-field__value {{unless this.stepData.three.hobbies 'review-field__value--missing'}}">
+          {{if this.stepData.three.hobbies this.stepData.three.hobbies 'Not provided'}}
+        </span>
+      </div>
+      <div class="review-field">
+        <span class="review-field__label">Fun Fact:</span>
+        <span class="review-field__value {{unless this.stepData.three.funFact 'review-field__value--missing'}}">
+          {{if this.stepData.three.funFact this.stepData.three.funFact 'Not provided'}}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="review-section">
+    <div class="review-section__header">
+      <h3 class="review-section__title">Social Profiles</h3>
+      <Reusables::Button
+        @text="Edit"
+        @variant="light btn--sm"
+        @test="edit-step-4"
+        @type="button"
+        @onClick={{fn @navigateToStep 4}}
+      />
+    </div>
+    <div class="review-section__content">
+      <div class="review-field">
+        <span class="review-field__label">Phone Number:</span>
+        <span class="review-field__value {{unless this.stepData.four.phoneNumber 'review-field__value--missing'}}">
+          {{if this.stepData.four.phoneNumber this.stepData.four.phoneNumber 'Not provided'}}
+        </span>
+      </div>
+      <div class="review-field">
+        <span class="review-field__label">Twitter:</span>
+        <span class="review-field__value {{unless this.stepData.four.twitter 'review-field__value--missing'}}">
+          {{if this.stepData.four.twitter this.stepData.four.twitter 'Not provided'}}
+        </span>
+      </div>
+      {{#if this.showGitHub}}
+        <div class="review-field">
+          <span class="review-field__label">GitHub:</span>
+          <span class="review-field__value {{unless this.stepData.four.github 'review-field__value--missing'}}">
+            {{if this.stepData.four.github this.stepData.four.github 'Not provided'}}
+          </span>
+        </div>
+      {{/if}}
+      <div class="review-field">
+        <span class="review-field__label">LinkedIn:</span>
+        <span class="review-field__value {{unless this.stepData.four.linkedin 'review-field__value--missing'}}">
+          {{if this.stepData.four.linkedin this.stepData.four.linkedin 'Not provided'}}
+        </span>
+      </div>
+      <div class="review-field">
+        <span class="review-field__label">Instagram:</span>
+        <span class="review-field__value {{if this.stepData.four.instagram '' 'review-field__value--empty'}}">
+          {{if this.stepData.four.instagram this.stepData.four.instagram 'Not uploaded'}}
+        </span>
+      </div>
+      <div class="review-field">
+        <span class="review-field__label">Peerlist:</span>
+        <span class="review-field__value {{unless this.stepData.four.peerlist 'review-field__value--missing'}}">
+          {{if this.stepData.four.peerlist this.stepData.four.peerlist 'Not provided'}}
+        </span>
+      </div>
+      {{#if this.showBehance}}
+        <div class="review-field">
+          <span class="review-field__label">Behance:</span>
+          <span class="review-field__value {{unless this.stepData.four.behance 'review-field__value--missing'}}">
+            {{if this.stepData.four.behance this.stepData.four.behance 'Not provided'}}
+          </span>
+        </div>
+      {{/if}}
+      {{#if this.showDribble}}
+        <div class="review-field">
+          <span class="review-field__label">Dribble:</span>
+          <span class="review-field__value {{unless this.stepData.four.dribble 'review-field__value--missing'}}">
+            {{if this.stepData.four.dribble this.stepData.four.dribble 'Not provided'}}
+          </span>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="review-section">
+    <div class="review-section__header">
+      <h3 class="review-section__title">Why Real Dev Squad?</h3>
+      <Reusables::Button
+        @text="Edit"
+        @variant="light btn--sm"
+        @test="edit-step-5"
+        @type="button"
+        @onClick={{fn @navigateToStep 5}}
+      />
+    </div>
+    <div class="review-section__content">
+      <div class="review-field">
+        <span class="review-field__label">Why you want to join Real Dev Squad?:</span>
+        <span class="review-field__value {{unless this.stepData.five.whyRds 'review-field__value--missing'}}">
+          {{if this.stepData.five.whyRds this.stepData.five.whyRds 'Not provided'}}
+        </span>
+      </div>
+      <div class="review-field">
+        <span class="review-field__label">Hours per week:</span>
+        <span class="review-field__value {{unless this.stepData.five.numberOfHours 'review-field__value--missing'}}">
+          {{if this.stepData.five.numberOfHours this.stepData.five.numberOfHours 'Not provided'}}
+        </span>
+      </div>
+      <div class="review-field">
+        <span class="review-field__label">How did you hear about us?:</span>
+        <span class="review-field__value {{unless this.stepData.five.foundFrom 'review-field__value--missing'}}">
+          {{if this.stepData.five.foundFrom this.stepData.five.foundFrom 'Not provided'}}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

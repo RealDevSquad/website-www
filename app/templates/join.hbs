@@ -39,6 +39,8 @@
           />
         {{else}}
           {{#if this.isDevMode}}
+            <NewStepper @step={{this.stepFromParam}} />
+          {{else if this.isOldOnboarding}}
             <StepperSignup
               @chaincode={{this.chaincode}}
               @isChaincodeClicked={{this.isChaincodeClicked}}

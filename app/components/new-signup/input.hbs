@@ -13,6 +13,7 @@
       placeholder="Darth"
       aria-labelledby="signup-form-label"
       {{on "input" this.inputFieldChanged}}
+      {{on "keydown" this.handleKeydown}}
       data-test-signup-form-input
     />
     {{#if @error}}
