@@ -107,8 +107,8 @@ export default class UserStatusModalComponent extends Component {
   async updateStatusBasedOnMode(newStateObj) {
     if (this.args.newStatus === USER_STATES.OOO) {
       await this.args.createOOORequest(
-        newStateObj.from,
-        newStateObj.until,
+        this.fromDate,
+        this.untilDate,
         this.reason,
       );
     } else {
