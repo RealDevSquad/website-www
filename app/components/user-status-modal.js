@@ -111,8 +111,6 @@ export default class UserStatusModalComponent extends Component {
         getUTCMidnightTimestampFromDate(this.untilDate),
         this.reason,
       );
-    } else {
-      await this.args.updateStatus({ currentStatus: newStateObj });
     }
   }
 
