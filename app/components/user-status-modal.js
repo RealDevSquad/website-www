@@ -104,7 +104,7 @@ export default class UserStatusModalComponent extends Component {
     return false;
   }
 
-  async updateStatusBasedOnMode(newStateObj) {
+  async updateStatusBasedOnMode() {
     if (this.args.newStatus === USER_STATES.OOO) {
       await this.args.createOOORequest(
         getUTCMidnightTimestampFromDate(this.fromDate),
