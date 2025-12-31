@@ -61,13 +61,13 @@ module('Integration | Component | user-status-modal', function (hooks) {
         );
         assert.strictEqual(
           typeof from,
-          'number',
-          'From is a numeric timestamp',
+          'string',
+          'From is a date string',
         );
         assert.strictEqual(
           typeof until,
-          'number',
-          'Until is a numeric timestamp',
+          'string',
+          'Until is a date string',
         );
       },
     });
