@@ -59,16 +59,8 @@ module('Integration | Component | user-status-modal', function (hooks) {
           'OOO due to Bad Health',
           'Reason is present in the payload',
         );
-        assert.strictEqual(
-          typeof from,
-          'string',
-          'From is a date string',
-        );
-        assert.strictEqual(
-          typeof until,
-          'string',
-          'Until is a date string',
-        );
+        assert.strictEqual(typeof from, 'string', 'From is a date string');
+        assert.strictEqual(typeof until, 'string', 'Until is a date string');
       },
     });
     await render(hbs`
