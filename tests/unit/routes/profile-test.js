@@ -18,7 +18,7 @@ module('Unit | Route | profile', function (hooks) {
 
   test('it exists', function (assert) {
     let route = this.owner.lookup('route:profile');
-    assert.ok(route);
+    assert.ok(route, 'Test the route exists and is accessible');
   });
 
   test('it fetches and transforms model data correctly', async function (assert) {
