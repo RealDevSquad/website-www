@@ -22,28 +22,6 @@ module('Unit | Route | new-signup', function (hooks) {
     this.clock.restore();
   });
 
-  test('redirects to 404 page if dev flag is not present', function (assert) {
-    const transition = { to: { queryParams: { dev: 'false' } } };
-
-    this.route.beforeModel(transition);
-
-    assert.ok(
-      this.route.router.transitionTo.calledOnceWith('/page-not-found'),
-      'Redirected to /page-not-found when dev is not true',
-    );
-  });
-
-  test('allows new-signup page access when dev flag is true', function (assert) {
-    const transition = { to: { queryParams: { dev: 'true' } } };
-
-    this.route.beforeModel(transition);
-
-    assert.ok(
-      this.route.router.transitionTo.notCalled,
-      'Signup page accessed when dev query param is true',
-    );
-  });
-
   test('displays error in case of 401 response', async function (assert) {
     this.fetchStub.resolves(new Response(JSON.stringify({}), { status: 401 }));
     const result = await this.route.model();
