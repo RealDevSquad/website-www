@@ -10,12 +10,6 @@ export default class IdentityRoute extends Route {
   @service login;
   @service fastboot;
 
-  beforeModel(transition) {
-    if (transition?.to?.queryParams?.dev !== 'true') {
-      this.router.transitionTo('/page-not-found');
-    }
-  }
-
   async model() {
     if (this.fastboot.isFastBoot) {
       return null;
