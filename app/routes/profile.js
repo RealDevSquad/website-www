@@ -10,12 +10,7 @@ const BASE_URL = APPS.API_BACKEND;
 export default class ProfileRoute extends Route {
   @service toast;
   @service fastboot;
-  @service router;
-  beforeModel(transition) {
-    if (transition?.to?.queryParams?.dev !== 'true') {
-      this.router.transitionTo('/page-not-found');
-    }
-  }
+
   async model() {
     try {
       const res = await fetch(`${BASE_URL}/users/isDeveloper`, {
