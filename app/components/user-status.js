@@ -20,7 +20,7 @@ export default class UserStatusComponent extends Component {
     },
     [USER_STATES.OOO]: {
       status: USER_STATES.OOO,
-      message: 'Request OOO Status',
+      message: 'Request OOO',
       class: 'buttons__ooo',
     },
   };
