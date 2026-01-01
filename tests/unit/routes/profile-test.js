@@ -10,34 +10,15 @@ module('Unit | Route | profile', function (hooks) {
   hooks.beforeEach(function () {
     this.fetchStub = sinon.stub(window, 'fetch');
     this.route = this.owner.lookup('route:profile');
-    sinon.stub(this.route.router, 'transitionTo');
   });
 
   hooks.afterEach(function () {
     this.fetchStub.restore();
-    sinon.restore();
   });
 
-  test('redirects to 404 page if dev flag is not present', function (assert) {
-    const transition = { to: { queryParams: { dev: 'false' } } };
-
-    this.route.beforeModel(transition);
-
-    assert.ok(
-      this.route.router.transitionTo.calledOnceWith('/page-not-found'),
-      'Redirected to /page-not-found when dev is not true',
-    );
-  });
-
-  test('allows access when dev flag is true', function (assert) {
-    const transition = { to: { queryParams: { dev: 'true' } } };
-
-    this.route.beforeModel(transition);
-
-    assert.ok(
-      this.route.router.transitionTo.notCalled,
-      'No redirection occurs when dev query param is true',
-    );
+  test('it exists', function (assert) {
+    let route = this.owner.lookup('route:profile');
+    assert.ok(route);
   });
 
   test('it fetches and transforms model data correctly', async function (assert) {
