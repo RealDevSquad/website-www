@@ -44,9 +44,7 @@ module('Integration | Component | user-status', function (hooks) {
     `);
 
     assert.dom('[data-test-status]').containsText('You are Idle');
-    assert
-      .dom('[data-test-update-status-OOO]')
-      .containsText('Request OOO Status');
+    assert.dom('[data-test-update-status-OOO]').containsText('Request OOO');
   });
 
   test('show relevant data when status is OOO', async function (assert) {
