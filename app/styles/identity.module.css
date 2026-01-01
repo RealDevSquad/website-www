@@ -118,6 +118,10 @@
   margin-top: 20px;
 }
 
+.identity-box-button:hover {
+  cursor: pointer;
+}
+
 @media (width <= 460px) {
   .identity-box-button {
     font-size: 12px;
@@ -228,6 +232,10 @@
   position: absolute;
   right: 4%;
   bottom: 8%;
+}
+
+.identity-next-button:hover {
+  cursor: pointer;
 }
 
 .identity-box-input {

@@ -25,17 +25,7 @@
   <div class="buttons">
     {{#each this.currentUserStatus as |currentStatus|}}
       {{#if (eq @status currentStatus.status)}}
-        {{#if @dev}}
-          <button
-            data-test-request-status-OOO
-            class="buttons__request--ooo"
-            type="button"
-            {{on "click" this.changeStatus}}
-          >
-            <span>Request OOO Status</span>
-          </button>
-        {{else}}
-          {{#if (eq currentStatus.status "OOO")}}
+    {{#if (eq currentStatus.status "OOO")}}
             <button
               data-test-cancel-status-OOO
               class="buttons__cancel--ooo"
@@ -60,8 +50,7 @@
                 <span>{{otherPossibleStatus.message}}</span>
               </button>
             {{/each}}
-          {{/if}}
-        {{/if}}
+       {{/if}}
       {{/if}}
     {{/each}}
   </div>

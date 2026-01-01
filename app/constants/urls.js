@@ -7,6 +7,7 @@ const APP_URLS = {
   production: {
     HOME: `${SCHEME}${DOMAIN}`,
     WELCOME: `${SCHEME}welcome.${DOMAIN}`,
+    GOTO: `${SCHEME}${DOMAIN}/goto`,
     EVENTS: `${SCHEME}${DOMAIN}/events`,
     MEMBERS: `${SCHEME}members.${DOMAIN}`,
     STATUS: `${SCHEME}status.${DOMAIN}`,
@@ -20,6 +21,7 @@ const APP_URLS = {
   staging: {
     HOME: `${SCHEME}staging-www.${DOMAIN}`,
     WELCOME: `${SCHEME}staging-welcome.${DOMAIN}`,
+    GOTO: `${SCHEME}staging-www.${DOMAIN}/goto`,
     EVENTS: `${SCHEME}staging-www.${DOMAIN}/events`,
     MEMBERS: `${SCHEME}staging-members.${DOMAIN}`,
     STATUS: `${SCHEME}staging-status.${DOMAIN}`,
@@ -33,6 +35,7 @@ const APP_URLS = {
   development: {
     HOME: `${SCHEME}staging-www.${DOMAIN}`,
     WELCOME: `${SCHEME}staging-welcome.${DOMAIN}`,
+    GOTO: `${SCHEME}staging-www.${DOMAIN}/goto`,
     EVENTS: `${SCHEME}staging-www.${DOMAIN}/events`,
     MEMBERS: `${SCHEME}staging-members.${DOMAIN}`,
     STATUS: `${SCHEME}staging-status.${DOMAIN}`,
@@ -46,6 +49,7 @@ const APP_URLS = {
   test: {
     HOME: `${SCHEME}${DOMAIN}`,
     WELCOME: `${SCHEME}welcome.${DOMAIN}`,
+    GOTO: `${SCHEME}${DOMAIN}/goto`,
     EVENTS: `${SCHEME}${DOMAIN}/events`,
     MEMBERS: `${SCHEME}members.${DOMAIN}`,
     STATUS: `${SCHEME}status.${DOMAIN}`,

@@ -1,21 +1,19 @@
 import Controller from '@ember/controller';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { CREATE_OOO_REQUEST_URL, UPDATE_USER_STATUS } from '../constants/apis';
+import { TOAST_OPTIONS } from '../constants/toast-options';
 import {
   CURRENT_STATUS_UPDATE_SUCCESS,
   FUTURE_STATUS_UPDATE_SUCCESS,
-  OOO_STATUS,
+  OOO_REQUEST_SUCCESS_MESSAGE,
   OOO_STATUS_REQUEST_FAILURE_MESSAGE,
   STATUS_UPDATE_FAILURE_MESSAGE,
   USER_STATES,
 } from '../constants/user-status';
-import {
-  UPDATE_USER_STATUS,
-  UPDATE_USER_STATUS_FOR_DEV,
-} from '../constants/apis';
+import apiRequest from '../utils/api-request';
 import { getUTCMidnightTimestampFromDate } from '../utils/date-conversion';
-import { TOAST_OPTIONS } from '../constants/toast-options';
 
 export default class StatusController extends Controller {
   @service featureFlag;
@@ -69,40 +67,38 @@ export default class StatusController extends Controller {
   }
 
   @action
-  async statusUpdateForDev(from, until, message) {
+  async createOOORequest(from, until, reason) {
     this.isStatusUpdating = true;
-    const statusRequestBody = {
+
+    const requestBody = {
       type: 'OOO',
       from: getUTCMidnightTimestampFromDate(from),
       until: getUTCMidnightTimestampFromDate(until),
-      message,
-      state: OOO_STATUS.PENDING,
+      reason,
     };
+
     try {
-      const response = await fetch(UPDATE_USER_STATUS_FOR_DEV, {
-        method: 'POST',
-        body: JSON.stringify(statusRequestBody),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      });
+      const response = await apiRequest(
+        CREATE_OOO_REQUEST_URL,
+        'POST',
+        requestBody,
+      );
+      const data = await response.json();
       if (!response.ok) {
         this.toast.error(
-          OOO_STATUS_REQUEST_FAILURE_MESSAGE,
+          data?.message || OOO_STATUS_REQUEST_FAILURE_MESSAGE,
           'Error!',
           TOAST_OPTIONS,
         );
         return;
       }
-      let data;
-      try {
-        data = await response.json();
-      } catch (jsonError) {
-        this.toast.error('Failed to parse response', 'Error!', TOAST_OPTIONS);
-        return;
-      }
-      this.toast.success(data.message, 'Success!', TOAST_OPTIONS);
+
+      this.toast.success(
+        data?.message || OOO_REQUEST_SUCCESS_MESSAGE,
+        'Success!',
+        TOAST_OPTIONS,
+      );
+      this.toggleUserStateModal();
     } catch (error) {
       this.toast.error(
         OOO_STATUS_REQUEST_FAILURE_MESSAGE,

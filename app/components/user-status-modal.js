@@ -22,7 +22,6 @@ import { TOAST_OPTIONS } from '../constants/toast-options';
 
 export default class UserStatusModalComponent extends Component {
   @service toast;
-  @service featureFlag;
   @tracked currentStatus;
   @tracked fromDate = '';
   @tracked untilDate = '';
@@ -45,7 +44,6 @@ export default class UserStatusModalComponent extends Component {
 
   @action
   async getCurrentStatusObj() {
-    const isDevMode = this.featureFlag.isDevMode;
     if (!this.isValidStatusChange()) return;
 
     const updatedAt = Date.now();
@@ -56,7 +54,7 @@ export default class UserStatusModalComponent extends Component {
       message: this.reason,
       state: this.args.newStatus,
     };
-    await this.updateStatusBasedOnMode(isDevMode, newStateObj);
+    await this.updateStatusBasedOnMode(newStateObj);
     this.resetInputFields();
     this.disableSubmitButton = true;
   }
@@ -79,7 +77,7 @@ export default class UserStatusModalComponent extends Component {
     if (!this.untilDate) return this.showError(WARNING_MESSAGE_FOR_UNTIL_FIELD);
     if (this.untilDate < this.fromDate)
       return this.showError(WARNING_FROM_DATE_EXCEEDS_UNTIL_DATE);
-    if (!this.reason.length && !this.checkIfFromToDatesAreClose())
+    if (!this.reason.trim() && !this.checkIfFromToDatesAreClose())
       return this.showError(WARNING_MESSAGE_FOR_OOO);
     return true;
   }
@@ -106,15 +104,13 @@ export default class UserStatusModalComponent extends Component {
     return false;
   }
 
-  async updateStatusBasedOnMode(isDevMode, newStateObj) {
-    if (isDevMode) {
-      await this.args.statusUpdateForDev(
+  async updateStatusBasedOnMode() {
+    if (this.args.newStatus === USER_STATES.OOO) {
+      await this.args.createOOORequest(
         this.fromDate,
         this.untilDate,
         this.reason,
       );
-    } else {
-      await this.args.updateStatus({ currentStatus: newStateObj });
     }
   }
 

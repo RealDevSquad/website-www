@@ -12,8 +12,9 @@ export const STATUS_UPDATE_FAILURE_MESSAGE =
   'Status Update failed. Something went wrong.';
 export const STATUS_NOT_EXIST_FAILURE_MESSAGE =
   "Your Status data doesn't exist yet. Please choose your status from the options below.";
+export const OOO_REQUEST_SUCCESS_MESSAGE = 'OOO request created successfully!';
 export const OOO_STATUS_REQUEST_FAILURE_MESSAGE =
-  'OOO status request failed. Something went wrong.';
+  "Couldn't create OOO request. Something went wrong.";
 export const USER_STATES = {
   IDLE: 'IDLE',
   ACTIVE: 'ACTIVE',

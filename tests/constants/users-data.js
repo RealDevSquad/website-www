@@ -61,3 +61,13 @@ export const nonSuperUserData = {
     super_user: false,
   },
 };
+
+export const fakeUserData = {
+  id: 'dZ0stx6x9ltOSMzON9kb',
+  github_created_at: 1625506111960,
+  github_display_name: 'Rishi Dharkar',
+  github_id: 'rishidharkar',
+  username: 'rishi-dharkar-1',
+  first_name: 'Rishi',
+  last_name: 'Dharkar',
+};

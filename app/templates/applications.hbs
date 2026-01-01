@@ -1,0 +1,20 @@
+<div class="admin-applications">
+  {{#unless (eq this.router.currentRouteName "applications.detail")}}
+    <h1>Applications</h1>
+    {{#if (and this.model (gt this.model.length 0))}}
+      <ul class="applications-list">
+        {{#each this.model as |application|}}
+          {{#if application.id}}
+            <li class="application-item">
+              <span class="application-id">Application ID:
+                {{application.id}}</span>
+            </li>
+          {{/if}}
+        {{/each}}
+      </ul>
+    {{else}}
+      <p>No applications found.</p>
+    {{/if}}
+  {{/unless}}
+  {{outlet}}
+</div>

@@ -1,53 +1,59 @@
 {{page-title "Identity"}}
 
 <div class="identity-page">
-  <img alt="header" class="identity-header" src="/assets/images/identity/header.svg" />
-  <img alt="hero" class="identity-hero" src="/assets/images/identity/hero.svg" />
-  <img alt="rds" class="identity-rds-logo" src="/assets/images/identity/logo.svg" />
+  <img
+    alt="header"
+    class="identity-header"
+    src="/assets/images/identity/header.svg"
+  />
+  <img
+    alt="hero"
+    class="identity-hero"
+    src="/assets/images/identity/hero.svg"
+  />
+  <img
+    alt="rds"
+    class="identity-rds-logo"
+    src="/assets/images/identity/logo.svg"
+  />
 
-  {{#if (eq this.initialState "getStarted")}}
+  {{#if (eq this.state "getStarted")}}
     <div class="identity-heading">
       Connect your Profile Service with Identity Service
     </div>
   {{/if}}
-  
-  <div class="identity-box">
 
-    {{#if (eq this.initialState "getStarted")}}
-
+  <div class='identity-box'>
+    {{#if (eq this.state 'getStarted')}}
       <Identity::GetStarted @setState={{this.setState}} />
     {{else if (eq this.state 'step1')}}
       <Identity::Step1 @setState={{this.setState}} />
     {{else if (eq this.state 'step2')}}
       <Identity::Step2
         @setState={{this.setState}}
-        @profileURL={{this.profileURL}}
+        @profileURL={{@model.profileURL}}
       />
     {{else if (eq this.state 'step3')}}
       <Identity::Step3 @setState={{this.setState}} />
-
-     {{else if (eq this.initialState 'reload')}}
+    {{else if (eq this.state 'reload')}}
       <Identity::Reload />
-       {{else if (eq this.initialState 'verified')}}
+    {{else if (eq this.state 'verified')}}
       <Identity::Verified />
-      {{else if (eq this.initialState 'blocked')}}
-
+    {{else if (eq this.state 'blocked')}}
       <Identity::Blocked @setState={{this.setState}} />
-
     {{/if}}
   </div>
-  
+
   <img
-    alt='header-hero'
-    class='identity-header-hero'
-    src='/assets/images/identity/header-hero.svg'
-    width='10%'
+    alt="header-hero"
+    class="identity-header-hero"
+    src="/assets/images/identity/header-hero.svg"
+    width="10%"
   />
   <img
-    alt='footer'
-    class='identity-footer'
-    src='/assets/images/identity/footer.svg'
-    width='100%'
+    alt="footer"
+    class="identity-footer"
+    src="/assets/images/identity/footer.svg"
+    width="100%"
   />
 </div>
-

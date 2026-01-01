@@ -1,0 +1,34 @@
+<div class="user-details">
+  <h2
+    id="signup-form-label"
+    class="user-details__heading"
+    data-test-signup-form-label
+  >
+    {{this.label}}
+  </h2>
+  <div class="user-details__field">
+    <Input
+      @value={{get @signupDetails @currentStep}}
+      @type="text"
+      placeholder="Darth"
+      aria-labelledby="signup-form-label"
+      {{on "input" this.inputFieldChanged}}
+      {{on "keydown" this.handleKeydown}}
+      data-test-signup-form-input
+    />
+    {{#if @error}}
+      <p class="signup-action__error-message">{{@error}}</p>
+    {{/if}}
+  </div>
+
+  <div class="signup-action__btn">
+    <Reusables::Button
+      @type="button"
+      @text={{if (or @dev (not (eq @currentStep "lastName"))) "Next" "Submit"}}
+      @test="signup"
+      @isLoading={{@isLoading}}
+      @onClick={{@onClick}}
+      @disabled={{@isButtonDisabled}}
+    />
+  </div>
+</div>

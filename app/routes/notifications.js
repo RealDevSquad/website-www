@@ -11,7 +11,7 @@ export default class NotificationsRoute extends Route {
 
   beforeModel(transition) {
     if (transition?.to?.queryParams?.dev !== 'true') {
-      this.router.transitionTo('page-not-found');
+      this.router.transitionTo('/page-not-found');
     }
   }
 }

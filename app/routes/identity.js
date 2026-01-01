@@ -40,17 +40,36 @@ export default class IdentityRoute extends Route {
       }
 
       const data = await response.json();
-
       if (!data?.roles?.in_discord) {
         this.router.transitionTo('index');
         return null;
       }
-
       return data;
     } catch (error) {
       console.error('Error fetching user data:', error);
       this.router.transitionTo('index');
       return null;
+    }
+  }
+  setupController(controller, model) {
+    super.setupController(controller, model);
+
+    controller.userData = this.login.userData;
+    controller.profileURL = controller.userData?.profileURL;
+
+    const profileStatus = model?.profileStatus;
+    switch (profileStatus) {
+      case 'PENDING':
+        controller.state = 'reload';
+        break;
+      case 'VERIFIED':
+        controller.state = 'verified';
+        break;
+      case 'BLOCKED':
+        controller.state = 'blocked';
+        break;
+      default:
+        controller.state = 'getStarted';
     }
   }
 }

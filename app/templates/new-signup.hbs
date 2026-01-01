@@ -1,0 +1,56 @@
+{{page-title "New Sign Up"}}
+
+<div class="user-details__container">
+  {{#let this.currentStep as |step|}}
+    {{#if (eq step this.FIRST_STEP)}}
+      <NewSignup::Info
+        @onClick={{fn this.changeStep this.SECOND_STEP}}
+        @currentStep={{step}}
+      />
+    {{else if (eq step this.SECOND_STEP)}}
+      <NewSignup::Input
+        @onClick={{fn this.changeStep this.THIRD_STEP}}
+        @currentStep={{step}}
+        @onChange={{this.handleInputChange}}
+        @isButtonDisabled={{this.isButtonDisabled}}
+        @isLoading={{this.isLoading}}
+      />
+    {{else if (eq step this.THIRD_STEP)}}
+      <NewSignup::Input
+        @onClick={{if
+          this.isDevMode
+          (fn this.changeStep this.FOURTH_STEP)
+          this.register
+        }}
+        @dev={{this.isDevMode}}
+        @currentStep={{step}}
+        @onChange={{this.handleInputChange}}
+        @isButtonDisabled={{this.isButtonDisabled}}
+        @isLoading={{this.isLoading}}
+        @error={{this.error}}
+      />
+    {{else if (and this.isDevMode (eq step this.FOURTH_STEP))}}
+      <NewSignup::Input
+        @onClick={{fn this.changeStep this.FIFTH_STEP}}
+        @dev={{this.isDevMode}}
+        @currentStep={{step}}
+        @onChange={{this.handleInputChange}}
+        @isButtonDisabled={{this.isButtonDisabled}}
+        @isLoading={{this.isLoading}}
+        @error={{this.error}}
+      />
+    {{else if (and this.isDevMode (eq step this.FIFTH_STEP))}}
+      <NewSignup::Checkbox
+        @onClick={{this.register}}
+        @dev={{this.isDevMode}}
+        @currentStep={{step}}
+        @onChange={{this.handleCheckboxInputChange}}
+        @isButtonDisabled={{this.isButtonDisabled}}
+        @isLoading={{this.isLoading}}
+        @error={{this.error}}
+      />
+    {{else if (eq step this.LAST_STEP)}}
+      <NewSignup::Info @onClick={{this.completeSignUp}} @currentStep={{step}} />
+    {{/if}}
+  {{/let}}
+</div>

@@ -1,0 +1,31 @@
+<BaseModal
+  @closeModal={{@closeConfirmModal}}
+  @openModal={{@openConfirmModal}}
+  @isOpen={{@isOpen}}
+>
+  <div data-test-confirm-modal class="confirm-modal">
+    <div class="confirm-modal__heading">
+      <h4>Device Scan Confirmation</h4>
+      <p data-test-confirm-modal-message>Are you sure you are the one who
+        scanned this QR code? Do you want to proceed?</p>
+    </div>
+    <div class="confirm-modal__buttons">
+      <Reusables::Button
+        @type="button"
+        @text="Cancel"
+        @variant="light btn--sm"
+        @test="confirm-modal-cancel"
+        @disabled={{@actionButtonDisabled}}
+        @onClick={{@onCancel}}
+      />
+      <Reusables::Button
+        @type="button"
+        @text="Confirm"
+        @variant="dark btn--sm"
+        @test="confirm-modal-authorise"
+        @disabled={{@actionButtonDisabled}}
+        @onClick={{@onConfirm}}
+      />
+    </div>
+  </div>
+</BaseModal>

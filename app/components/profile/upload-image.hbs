@@ -9,7 +9,7 @@
   />
   <div>
     <button
-      class='image-form__button btn'
+      class='image-form__button profile-btn'
       type='button'
       disabled={{this.isImageUploading}}
       data-test-btn='back'
@@ -18,7 +18,7 @@
       Back
     </button>
     <button
-      class='image-form__button btn'
+      class='image-form__button profile-btn'
       type='button'
       data-test-btn='upload-image'
       disabled={{this.isImageUploading}}
@@ -59,7 +59,7 @@
         Drag and drop file here or
       </p>
       <label
-        class='image-form__button btn
+        class='image-form__button profile-btn
           {{if this.isImageUploading "image-form__button--disabled"}}'
         for='image'
         data-test-btn='browse'

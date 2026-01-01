@@ -1,0 +1,25 @@
+<div class="landing" data-test-landing>
+  <h2 class="landing__main-heading" data-test-mainHeading>
+    {{this.mainHeading}}
+  </h2>
+  <h3 class="landing__sub-heading" data-test-subHeading>
+    {{this.subHeading}}
+  </h3>
+  {{#if (eq @currentStep this.GET_STARTED)}}
+    <ul class="landing__features-lists">
+      <li class="landing__features-list" data-test-li1>Use Features</li>
+      <li class="landing__features-list" data-test-li2>Display yourself on the
+        (members) page</li>
+    </ul>
+  {{/if}}
+
+  <div class="get-started__btn" data-test-get-started-btn>
+    <Reusables::Button
+      @type="button"
+      @text={{if (eq @currentStep this.GET_STARTED) "Get Started" "Let's Go"}}
+      @test="get-started"
+      @disabled={{false}}
+      @onClick={{@onClick}}
+    />
+  </div>
+</div>

@@ -30,7 +30,7 @@ module('Unit | Route | notifications', function (hooks) {
     });
     assert.strictEqual(
       transitionToCalls[0],
-      'page-not-found',
+      '/page-not-found',
       'Redirected to /page-not-found when dev=false',
     );
 
@@ -41,7 +41,7 @@ module('Unit | Route | notifications', function (hooks) {
     });
     assert.strictEqual(
       transitionToCalls[1],
-      'page-not-found',
+      '/page-not-found',
       'Redirected to /page-not-found when dev flag is missing',
     );
 

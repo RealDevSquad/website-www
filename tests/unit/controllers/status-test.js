@@ -1,9 +1,14 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'website-www/tests/helpers';
-import { USER_STATES } from 'website-www/constants/user-status';
+import {
+  OOO_STATUS_REQUEST_FAILURE_MESSAGE,
+  USER_STATES,
+} from 'website-www/constants/user-status';
 import Service from '@ember/service';
 import sinon from 'sinon';
 import { UPDATE_USER_STATUS } from 'website-www/constants/apis';
+import { CREATE_OOO_REQUEST_URL } from 'website-www/constants/apis';
+import { getUTCMidnightTimestampFromDate } from 'website-www/utils/date-conversion';
 
 class MockToastService extends Service {
   success() {}
@@ -116,6 +121,88 @@ module('Unit | Controller | status', function (hooks) {
     assert.ok(
       controller.showUserStateModal,
       'User state modal is shown for OOO status',
+    );
+  });
+
+  test('createOOORequest sends correct request and shows success toast (under dev flag)', async function (assert) {
+    assert.expect(5);
+    const controller = this.owner.lookup('controller:status');
+    const toastService = this.owner.lookup('service:toast');
+    toastService.success = sinon.spy();
+    toastService.error = sinon.spy();
+
+    const from = new Date(Date.now()).toISOString().slice(0, 10);
+    const until = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 10);
+    const reason = 'Travel';
+
+    const expectedBody = {
+      type: 'OOO',
+      from: getUTCMidnightTimestampFromDate(from),
+      until: getUTCMidnightTimestampFromDate(until),
+      reason,
+    };
+
+    const mockSuccessBody = { message: 'OOO request created' };
+    this.fetchStub.resolves(
+      new Response(JSON.stringify(mockSuccessBody), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    await controller.createOOORequest(from, until, reason);
+
+    assert.ok(this.fetchStub.calledOnce, 'fetch called once');
+    const [calledUrl, calledOptions] = this.fetchStub.firstCall.args;
+    assert.strictEqual(calledUrl, CREATE_OOO_REQUEST_URL, 'called correct URL');
+    assert.deepEqual(
+      JSON.parse(calledOptions.body),
+      expectedBody,
+      'request body matches expected payload',
+    );
+    assert.ok(toastService.success.calledOnce, 'success toast called');
+    assert.false(
+      controller.isStatusUpdating,
+      'isStatusUpdating reset to false',
+    );
+  });
+
+  test('createOOORequest shows error toast on non-ok response (under dev flag)', async function (assert) {
+    assert.expect(5);
+    const controller = this.owner.lookup('controller:status');
+    const toastService = this.owner.lookup('service:toast');
+    toastService.success = sinon.spy();
+    toastService.error = sinon.spy();
+
+    const from = new Date(Date.now()).toISOString().slice(0, 10);
+    const until = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 10);
+    const reason = 'Personal';
+
+    const mockErrorBody = { message: OOO_STATUS_REQUEST_FAILURE_MESSAGE };
+    this.fetchStub.resolves(
+      new Response(JSON.stringify(mockErrorBody), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    await controller.createOOORequest(from, until, reason);
+
+    assert.ok(this.fetchStub.calledOnce, 'fetch called once');
+    assert.ok(toastService.error.calledOnce, 'error toast called');
+    assert.ok(toastService.success.notCalled, 'success toast not called');
+    assert.strictEqual(
+      toastService.error.firstCall.args[0],
+      OOO_STATUS_REQUEST_FAILURE_MESSAGE,
+      'error toast uses API message when provided',
+    );
+    assert.false(
+      controller.isStatusUpdating,
+      'isStatusUpdating reset to false',
     );
   });
 });

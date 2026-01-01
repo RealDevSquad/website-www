@@ -1,0 +1,50 @@
+<BaseModal @isOpen={{@isOpen}}>
+    <div class="terms-modal__content" data-test="terms-modal-content">
+      <div class="terms-modal__header">
+        <h2 data-test="terms-modal-header">Terms and Conditions</h2>
+        <Reusables::IconButton
+          @id='close-modal'
+          @class='icon-button--sm terms-modal__close'
+          @title='Close modal'
+          @onClick={{@onClose}}
+          @icon='material-symbols:close'
+        />
+      </div>
+
+      <div>
+        <div class="terms-modal__section">
+          <h3>1. Application Accuracy</h3>
+          <p>
+            All information provided in your application must be truthful and accurate.
+            Any false or misleading information will result in immediate rejection of your application.
+          </p>
+        </div>
+
+        <div class="terms-modal__section">
+          <h3>2. User Profile Picture</h3>
+          <p>
+            Users are required to upload a professional headshot as part of their profile. The submitted image will be securely stored in our databases and used for identification and verification purposes.
+          </p>
+        </div>
+
+        <div class="terms-modal__section">
+          <h3>3. Sharing Personal Information</h3>
+          <p>
+            We may use trusted third-party API services to analyze and generate AI-based reviews. By submitting your information, you consent to the secure sharing of relevant data with these services for evaluation purposes.
+          </p>
+        </div>
+      </div>
+
+      {{#unless this.joinApplicationTerms.hasUserAcceptedTerms}}
+        <div class="terms-modal__footer">
+          <Reusables::Button
+            @text="Accept Terms"
+            @variant="dark"
+            @onClick={{@onAccept}}
+            @test="accept-terms"
+            @type="button"
+          />
+        </div>
+      {{/unless}}
+    </div>
+</BaseModal>

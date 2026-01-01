@@ -101,4 +101,14 @@
   --tip-icon-alert-bg: #ff6f00;
   --new-message-box-alert-bg: #ff6f00;
   --info-tab-after-border-l: #fff;
+  --user-details-bg: #f0f2f5;
+  --user-details-input-border: #a9a9a9;
+  --landing-page-main-heading: #000;
+  --landing-page-sub-heading: #000;
+  --button-get-started-bg: #041484;
+  --button-get-started-text: #fff;
+  --button-signup-bg: #008000;
+  --button-signup-text: #fff;
+  --button-signup-disabled: #ccc;
+  --error: #f00;
 }

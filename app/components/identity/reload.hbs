@@ -2,10 +2,5 @@
 <div class='identity-box-desc' data-test-reload-desc>Reload to complete and
   verify the link between Profile Service and RealDevSquad Service.</div>
 <button
-  class='identity-box-button'
-  data-test-blocked-button 
-  type="button" 
-  {{on "click" (fn this.setState "step1")}}
->
-  Retry
-</button>
+  class='identity-box-button' type="button" {{on 'click' this.handleReload}}
+>Reload</button>
