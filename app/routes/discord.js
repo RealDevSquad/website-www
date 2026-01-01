@@ -11,12 +11,6 @@ export default class DiscordRoute extends Route {
     token: { refreshModel: true },
   };
 
-  beforeModel(transition) {
-    if (!transition.to.queryParams.dev) {
-      this.router.transitionTo('page-not-found');
-    }
-  }
-
   async model() {
     try {
       const token = this.paramsFor('discord').token;
