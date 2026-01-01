@@ -46,39 +46,21 @@ module('Integration | Component | user-status-modal', function (hooks) {
   });
 
   test('payload contains relevant data when status is changed to OOO', async function (assert) {
-    assert.expect(6);
+    assert.expect(4);
     this.setProperties({
       newStatus: 'OOO',
       showUserStateModal: true,
       toggleUserStateModal: () => {
         this.set('showUserStateModal', !this.showUserStateModal);
       },
-      updateStatus: (statusPayLoad) => {
-        const {
-          currentStatus: { state, from, until, message, updatedAt },
-        } = statusPayLoad;
-        console.log('Payload:', JSON.stringify(statusPayLoad, null, 2));
-        assert.strictEqual(state, 'OOO', 'New state is present in the payload');
+      createOOORequest: (from, until, reason) => {
         assert.strictEqual(
-          message,
+          reason,
           'OOO due to Bad Health',
-          'Message is present in the payload',
+          'Reason is present in the payload',
         );
-        assert.strictEqual(
-          typeof from,
-          'number',
-          'From is a numeric timestamp',
-        );
-        assert.strictEqual(
-          typeof until,
-          'number',
-          'Until is a numeric timestamp',
-        );
-        assert.strictEqual(
-          typeof updatedAt,
-          'number',
-          'UpdatedAt is a numeric timestamp',
-        );
+        assert.strictEqual(typeof from, 'string', 'From is a date string');
+        assert.strictEqual(typeof until, 'string', 'Until is a date string');
       },
     });
     await render(hbs`
@@ -87,6 +69,7 @@ module('Integration | Component | user-status-modal', function (hooks) {
         @newStatus={{this.newStatus}}
         @toggleUserStateModal={{this.toggleUserStateModal}}
         @updateStatus={{this.updateStatus}}
+        @createOOORequest={{this.createOOORequest}}
       />
     `);
 
@@ -125,7 +108,6 @@ module('Integration | Component | user-status-modal', function (hooks) {
       newStatus: 'OOO',
       showUserStateModal: true,
       isStatusUpdating: false,
-      isDevMode: true,
       createOOORequest: () => {},
     });
 
@@ -136,7 +118,6 @@ module('Integration | Component | user-status-modal', function (hooks) {
           @toggleUserStateModal={{this.toggleUserStateModal}}
           @updateStatus={{this.updateStatus}}
           @isStatusUpdating={{this.isStatusUpdating}}
-          @dev={{this.isDevMode}}
           @createOOORequest={{this.createOOORequest}}
       />
     `);

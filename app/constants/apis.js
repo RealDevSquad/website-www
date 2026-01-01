@@ -35,7 +35,7 @@ export const SELF_USER_STATUS_URL = `${APPS.API_BACKEND}/users/status/self`;
 
 export const UPDATE_USER_STATUS = `${APPS.API_BACKEND}/users/status/self?userStatusFlag=true`;
 
-export const CREATE_OOO_REQUEST_URL = `${APPS.API_BACKEND}/requests?dev=true`;
+export const CREATE_OOO_REQUEST_URL = `${APPS.API_BACKEND}/requests`;
 
 export const SELF_USER_PROFILE_URL = `${APPS.API_BACKEND}/users?profile=true`;
 
