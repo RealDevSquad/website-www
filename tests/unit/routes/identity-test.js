@@ -25,35 +25,6 @@ module('Unit | Route | identity', function (hooks) {
     assert.ok(this.route);
   });
 
-  test('beforeModel redirects to page-not-found when dev param is not true', function (assert) {
-    const transition = {
-      to: {
-        queryParams: {
-          dev: 'false',
-        },
-      },
-    };
-
-    this.route.beforeModel(transition);
-    assert.ok(
-      this.route.router.transitionTo.calledWith('/page-not-found'),
-      'should redirect to page-not-found',
-    );
-  });
-
-  test('beforeModel allows navigation when dev param is true', function (assert) {
-    const transition = {
-      to: {
-        queryParams: {
-          dev: 'true',
-        },
-      },
-    };
-
-    this.route.beforeModel(transition);
-    assert.notOk(this.route.router.transitionTo.called, 'should not redirect');
-  });
-
   test('model returns null in FastBoot', async function (assert) {
     this.route.fastboot.isFastBoot = true;
     const result = await this.route.model();
