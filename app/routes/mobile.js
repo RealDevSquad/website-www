@@ -9,12 +9,6 @@ export default class MobileRoute extends Route {
   @service toast;
   @service router;
 
-  beforeModel(transition) {
-    if (transition?.to?.queryParams?.dev !== 'true') {
-      this.router.transitionTo('/page-not-found');
-    }
-  }
-
   async model() {
     try {
       const response = await fetch(SELF_USER_PROFILE_URL, {

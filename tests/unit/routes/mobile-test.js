@@ -10,34 +10,16 @@ module('Unit | Route | mobile', function (hooks) {
   hooks.beforeEach(function () {
     this.fetchStub = sinon.stub(window, 'fetch');
     this.route = this.owner.lookup('route:mobile');
-    sinon.stub(this.route.router, 'transitionTo');
   });
 
   hooks.afterEach(function () {
     this.fetchStub.restore();
-    sinon.restore();
   });
 
-  test('redirects to 404 page if dev flag is not present', function (assert) {
-    const transition = { to: { queryParams: { dev: 'false' } } };
-
-    this.route.beforeModel(transition);
-
-    assert.ok(
-      this.route.router.transitionTo.calledOnceWith('/page-not-found'),
-      'Redirected to /page-not-found when dev is not true',
-    );
-  });
-
-  test('allows access when dev flag is true', function (assert) {
-    const transition = { to: { queryParams: { dev: 'true' } } };
-
-    this.route.beforeModel(transition);
-
-    assert.ok(
-      this.route.router.transitionTo.notCalled,
-      'No redirection occurs when dev query param is true',
-    );
+  test('it exists', function (assert) {
+    assert.expect(1);
+    const route = this.owner.lookup('route:mobile');
+    assert.ok(route, 'The mobile route exists');
   });
 
   test('it fetches user profile and returns userId if API responds with 200', async function (assert) {
