@@ -10,14 +10,6 @@ import redirectAuth from '../utils/redirect-auth';
 export default class NewSignupRoute extends Route {
   @service toast;
   @service router;
-  isDevMode = false;
-
-  beforeModel(transition) {
-    if (transition?.to?.queryParams?.dev !== 'true') {
-      this.router.transitionTo('/page-not-found');
-    }
-    this.isDevMode = true;
-  }
 
   async model() {
     try {
