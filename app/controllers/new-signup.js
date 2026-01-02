@@ -31,14 +31,12 @@ export default class NewSignupController extends Controller {
   SECOND_STEP = NEW_SIGNUP_STEPS[1];
   THIRD_STEP = NEW_SIGNUP_STEPS[2];
   FOURTH_STEP = NEW_SIGNUP_STEPS[3];
-  FIFTH_STEP = NEW_SIGNUP_STEPS[4];
-  LAST_STEP = NEW_SIGNUP_STEPS[5];
+  LAST_STEP = NEW_SIGNUP_STEPS[4];
 
   @tracked signupDetails = {
     firstName: '',
     lastName: '',
-    username: '',
-    roles: {},
+    role: '',
   };
 
   get isDevMode() {
@@ -82,22 +80,11 @@ export default class NewSignupController extends Controller {
     }
   }
 
-  async registerUser(user) {
-    return await apiRequest(SELF_USERS_URL, 'PATCH', user);
-  }
-
-  async newRegisterUser(signupDetails, roles) {
+  async registerUser(signupDetails, devFlag) {
     const getResponse = await apiRequest(SELF_USER_PROFILE_URL);
     const userData = await getResponse.json();
-
-    const res = await this.registerUser({
-      ...signupDetails,
-      roles: {
-        ...userData.roles,
-        ...roles,
-      },
-    });
-
+    const url = SELF_USERS_URL(userData?.id, devFlag);
+    const res = await apiRequest(url, 'PATCH', signupDetails);
     if (!res) {
       throw new Error(SIGNUP_ERROR_MESSAGES.others);
     }
@@ -134,48 +121,40 @@ export default class NewSignupController extends Controller {
     else this.isButtonDisabled = true;
   }
 
-  @action handleCheckboxInputChange(key, value) {
-    set(this.signupDetails.roles, key, value);
-    if (Object.values(this.signupDetails.roles).includes(true)) {
-      this.isButtonDisabled = false;
-    } else {
-      this.isButtonDisabled = true;
-    }
+  @action handleCheckboxInputChange(selectedRole) {
+    this.signupDetails.role = selectedRole;
+    this.isButtonDisabled = !selectedRole;
   }
 
   @action async signup() {
     try {
       let username;
+      const { firstName, lastName, role } = this.signupDetails;
       this.isLoading = true;
-      if (!this.isDevMode)
-        username = await this.generateUsername(
-          this.signupDetails.firstName,
-          this.signupDetails.lastName,
-        );
-      const signupDetails = {
-        first_name: this.signupDetails.firstName,
-        last_name: this.signupDetails.lastName,
-        username: this.isDevMode ? this.signupDetails.username : username,
-      };
-      const roles = {};
-      Object.entries(this.signupDetails.roles).forEach(([key, value]) => {
-        if (value === true) {
-          roles[key] = value;
-        }
-      });
 
-      const isUsernameAvailable = await this.checkUserName(
-        signupDetails.username,
-      );
-      if (!isUsernameAvailable) {
-        this.isLoading = false;
-        this.isButtonDisabled = false;
-        return (this.error = SIGNUP_ERROR_MESSAGES.userName);
+      if (!this.isDevMode) {
+        username = await this.generateUsername(firstName, lastName);
+
+        const isUsernameAvailable = await this.checkUserName(username);
+
+        if (!isUsernameAvailable) {
+          this.isLoading = false;
+          this.isButtonDisabled = false;
+          return (this.error = SIGNUP_ERROR_MESSAGES.userName);
+        }
       }
 
-      const res = this.isDevMode
-        ? await this.newRegisterUser(signupDetails, roles)
-        : await this.registerUser(signupDetails);
+      const basePayload = {
+        first_name: firstName,
+        last_name: lastName,
+      };
+
+      const signupDetails = this.isDevMode
+        ? { ...basePayload, role }
+        : { ...basePayload, username };
+
+      const res = await this.registerUser(signupDetails, this.isDevMode);
+
       if (res?.status === 204) {
         this.currentStep = this.LAST_STEP;
       } else {
