@@ -5,7 +5,7 @@
   >{{@user}} (<span>{{this.participantsCount}}</span>) </p>
   <ul>
     {{#if (not-eq @minimumParticipants @role)}}
-      <li data-test-sidebar-user={{'peer.id'}} class='user'>
+      <li data-test-sidebar-user='peer.id' class='user'>
         <p>No {{@user}} in the stream</p>
       </li>
     {{else}}
