@@ -114,6 +114,9 @@ importers:
       ember-cli-clipboard:
         specifier: 1.0.0
         version: 1.0.0(@babel/core@7.24.7)(webpack@5.91.0)
+      ember-cli-code-coverage:
+        specifier: ^3.1.0
+        version: 3.1.0(@embroider/compat@3.8.0(@embroider/core@3.5.0))(@embroider/core@3.5.0)
       ember-cli-dependency-checker:
         specifier: 3.3.2
         version: 3.3.2(ember-cli@5.9.0(handlebars@4.7.8)(underscore@1.13.7))
@@ -1296,6 +1299,14 @@ packages:
     resolution: {integrity: sha512-Ey6176gZmeqZuY/W/nZiUyvmb1/qInjcpiZjXWi6nON+nxJpD1bxtSoBxNliGISae32n6OwbY+TSXPZ1CfS4bw==}
     engines: {node: '>=18'}
 
+  '@istanbuljs/load-nyc-config@1.1.0':
+    resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
+    engines: {node: '>=8'}
+
+  '@istanbuljs/schema@0.1.3':
+    resolution: {integrity: sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==}
+    engines: {node: '>=8'}
+
   '@jridgewell/gen-mapping@0.3.8':
     resolution: {integrity: sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA==}
     engines: {node: '>=6.0.0'}
@@ -2125,6 +2136,10 @@ packages:
   babel-plugin-htmlbars-inline-precompile@5.3.1:
     resolution: {integrity: sha512-QWjjFgSKtSRIcsBhJmEwS2laIdrA6na8HAlc/pEAhjHgQsah/gMiBFRZvbQTy//hWxR4BMwV7/Mya7q5H8uHeA==}
     engines: {node: 10.* || >= 12.*}
+
+  babel-plugin-istanbul@6.1.1:
+    resolution: {integrity: sha512-Y1IQok9821cC9onCx5otgFfRm7Lm+I+wwxOx738M/WLPZ9Q42m4IG5W0FNX8WLL2gYMZo3JkuXIH2DOpWM+qwA==}
+    engines: {node: '>=8'}
 
   babel-plugin-module-resolver@3.2.0:
     resolution: {integrity: sha512-tjR0GvSndzPew/Iayf4uICWZqjBwnlMWjSx6brryfQ81F9rxBVqwDJtFCV8oOs0+vJeefK9TmdZtkIFdFe1UnA==}
@@ -3492,6 +3507,18 @@ packages:
     resolution: {integrity: sha512-PdsSnWK6OkPQJMxkw/J+5TU2uaVm5KCb9gk8fad/bhwkMjkl6TMvPNyFkqtfxVhh7tGfs0Ka4Xjsi6oQzyigeg==}
     engines: {node: 14.* || >= 16}
 
+  ember-cli-code-coverage@3.1.0:
+    resolution: {integrity: sha512-ODRYNClYaUglbGZX86iOhOTIZI86QDxmEgKVHqaPjQNKKhoBeJcfb9n4sRSFK8w6YrYsjenKI6V6h9oT3lVhtg==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      '@embroider/compat': ^0.47.0 || ^1.0.0 || ^2.0.0 || >=3.0.0
+      '@embroider/core': ^0.47.0 || ^1.0.0 || ^2.0.0 || >=3.0.0
+    peerDependenciesMeta:
+      '@embroider/compat':
+        optional: true
+      '@embroider/core':
+        optional: true
+
   ember-cli-dependency-checker@3.3.2:
     resolution: {integrity: sha512-PwkrW5oYsdPWwt+0Tojufmv/hxVETTjkrEdK7ANQB2VSnqpA5UcYubwpQM9ONuR2J8wyNDMwEHlqIrk/FYtBsQ==}
     engines: {node: '>= 6'}
@@ -4338,6 +4365,10 @@ packages:
     resolution: {integrity: sha512-VW6Pxhsrk0KAOqs3WEd0klDiF/+V7gQOpAvY1jVU/LHmaD/kQO4523aiJuikX/QAKYiW6x8Jh+RJej1almdtCA==}
     engines: {node: '>= 0.4'}
 
+  get-package-type@0.1.0:
+    resolution: {integrity: sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q==}
+    engines: {node: '>=8.0.0'}
+
   get-proto@1.0.1:
     resolution: {integrity: sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==}
     engines: {node: '>= 0.4'}
@@ -4592,6 +4623,9 @@ packages:
   html-encoding-sniffer@4.0.0:
     resolution: {integrity: sha512-Y22oTqIU4uuPgEemfz7NDJz6OeKf12Lsu+QC+s3BVpda64lTiMYCyGwg5ki4vFxkMwQdeZDl2adZoqUgdFuTgQ==}
     engines: {node: '>=18'}
+
+  html-escaper@2.0.2:
+    resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
 
   html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
@@ -4993,6 +5027,26 @@ packages:
     resolution: {integrity: sha512-WhB9zCku7EGTj/HQQRz5aUQEUeoQZH2bWcltRErOpymJ4boYE6wL9Tbr23krRPSZ+C5zqNSrSw+Cc7sZZ4b7vg==}
     engines: {node: '>=0.10.0'}
 
+  istanbul-lib-coverage@3.2.2:
+    resolution: {integrity: sha512-O8dpsF+r0WV/8MNRKfnmrtCWhuKjxrq2w+jpzBL5UZKTi2LeVWnWOmWRxFlesJONmc+wLAGvKQZEOanko0LFTg==}
+    engines: {node: '>=8'}
+
+  istanbul-lib-instrument@5.2.1:
+    resolution: {integrity: sha512-pzqtp31nLv/XFOzXGuvhCb8qhjmTVo5vjVk19XE4CRlSWz0KoeJ3bw9XsA7nOp9YBf4qHjwBxkDzKcME/J29Yg==}
+    engines: {node: '>=8'}
+
+  istanbul-lib-report@3.0.1:
+    resolution: {integrity: sha512-GCfE1mtsHGOELCU8e/Z7YWzpmybrx/+dSTfLrvY8qRmaY6zXTKWn6WQIjaAFw069icm6GVMNkgu0NzI4iPZUNw==}
+    engines: {node: '>=10'}
+
+  istanbul-lib-source-maps@4.0.1:
+    resolution: {integrity: sha512-n3s8EwkdFIJCG3BPKBYvskgXGoy88ARzvegkitk60NxRdwltLOTaH7CUiMRXvwYorl0Q712iEjcWB+fK/MrWVw==}
+    engines: {node: '>=10'}
+
+  istanbul-reports@3.1.7:
+    resolution: {integrity: sha512-BewmUXImeuRk2YY0PVbxgKAysvhRPUQE0h5QRM++nVWyubKGV0l8qQ5op8+B2DOmwSe63Jivj0BjkPQVf8fP5g==}
+    engines: {node: '>=8'}
+
   istextorbinary@2.1.0:
     resolution: {integrity: sha512-kT1g2zxZ5Tdabtpp9VSdOzW9lb6LXImyWbzbQeTxoRtHhurC9Ej9Wckngr2+uepPL09ky/mJHmN9jeJPML5t6A==}
     engines: {node: '>=0.12'}
@@ -5317,6 +5371,10 @@ packages:
     resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
     engines: {node: '>=8'}
 
+  make-dir@4.0.0:
+    resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
+    engines: {node: '>=10'}
+
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
 
@@ -5577,6 +5635,10 @@ packages:
 
   no-case@3.0.4:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
+
+  node-dir@0.1.17:
+    resolution: {integrity: sha512-tmPX422rYgofd4epzrNoOXiE8XFZYOcCq1vD7MAXCDO+O+zndlA2ztdKKMa+EeuBG5tHETpr4ml4RGgpqDCCAg==}
+    engines: {node: '>= 0.10.5'}
 
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
@@ -6980,6 +7042,10 @@ packages:
     resolution: {integrity: sha512-B8wRRkmre4ERucLM/uXx4MOV5cbnOlVAqUst+1+iLKPI0dOgFO28f84ptoQt9HEI537PMzfYa/d+GEPKTRXmYA==}
     engines: {node: '>=10'}
     hasBin: true
+
+  test-exclude@6.0.0:
+    resolution: {integrity: sha512-cAGWPIyOHU6zlmg88jwm7VRyXnMN7iV68OGAbYDk/Mh/xC/pzVPlQtY6ngoIH/5/tciuhGfvESU8GrHrcxD56w==}
+    engines: {node: '>=8'}
 
   testem@3.15.2:
     resolution: {integrity: sha512-mRzqZktqTCWi/rUP/RQOKXvMtuvY3lxuzBVb1xGXPnRNGMEj/1DaLGn6X447yOsz6SlWxSsZfcNuiE7fT1MOKg==}
@@ -9298,6 +9364,16 @@ snapshots:
 
   '@inquirer/figures@1.0.10': {}
 
+  '@istanbuljs/load-nyc-config@1.1.0':
+    dependencies:
+      camelcase: 5.3.1
+      find-up: 4.1.0
+      get-package-type: 0.1.0
+      js-yaml: 3.14.1
+      resolve-from: 5.0.0
+
+  '@istanbuljs/schema@0.1.3': {}
+
   '@jridgewell/gen-mapping@0.3.8':
     dependencies:
       '@jridgewell/set-array': 1.2.1
@@ -10319,6 +10395,16 @@ snapshots:
       magic-string: 0.25.9
       parse-static-imports: 1.1.0
       string.prototype.matchall: 4.0.12
+
+  babel-plugin-istanbul@6.1.1:
+    dependencies:
+      '@babel/helper-plugin-utils': 7.26.5
+      '@istanbuljs/load-nyc-config': 1.1.0
+      '@istanbuljs/schema': 0.1.3
+      istanbul-lib-instrument: 5.2.1
+      test-exclude: 6.0.0
+    transitivePeerDependencies:
+      - supports-color
 
   babel-plugin-module-resolver@3.2.0:
     dependencies:
@@ -12226,6 +12312,25 @@ snapshots:
       - supports-color
       - webpack
 
+  ember-cli-code-coverage@3.1.0(@embroider/compat@3.8.0(@embroider/core@3.5.0))(@embroider/core@3.5.0):
+    dependencies:
+      babel-plugin-istanbul: 6.1.1
+      body-parser: 1.20.3
+      ember-cli-babel: 7.26.11
+      express: 4.21.2
+      fs-extra: 9.1.0
+      istanbul-lib-coverage: 3.2.2
+      istanbul-lib-report: 3.0.1
+      istanbul-lib-source-maps: 4.0.1
+      istanbul-reports: 3.1.7
+      node-dir: 0.1.17
+      walk-sync: 2.2.0
+    optionalDependencies:
+      '@embroider/compat': 3.8.0(@embroider/core@3.5.0)
+      '@embroider/core': 3.5.0
+    transitivePeerDependencies:
+      - supports-color
+
   ember-cli-dependency-checker@3.3.2(ember-cli@5.9.0(handlebars@4.7.8)(underscore@1.13.7)):
     dependencies:
       chalk: 2.4.2
@@ -13878,6 +13983,8 @@ snapshots:
       hasown: 2.0.2
       math-intrinsics: 1.1.0
 
+  get-package-type@0.1.0: {}
+
   get-proto@1.0.1:
     dependencies:
       dunder-proto: 1.0.1
@@ -14168,6 +14275,8 @@ snapshots:
   html-encoding-sniffer@4.0.0:
     dependencies:
       whatwg-encoding: 3.1.1
+
+  html-escaper@2.0.2: {}
 
   html-tags@3.3.1: {}
 
@@ -14575,6 +14684,37 @@ snapshots:
 
   isobject@3.0.1: {}
 
+  istanbul-lib-coverage@3.2.2: {}
+
+  istanbul-lib-instrument@5.2.1:
+    dependencies:
+      '@babel/core': 7.24.7(supports-color@8.1.1)
+      '@babel/parser': 7.26.7
+      '@istanbuljs/schema': 0.1.3
+      istanbul-lib-coverage: 3.2.2
+      semver: 6.3.1
+    transitivePeerDependencies:
+      - supports-color
+
+  istanbul-lib-report@3.0.1:
+    dependencies:
+      istanbul-lib-coverage: 3.2.2
+      make-dir: 4.0.0
+      supports-color: 7.2.0
+
+  istanbul-lib-source-maps@4.0.1:
+    dependencies:
+      debug: 4.4.0(supports-color@8.1.1)
+      istanbul-lib-coverage: 3.2.2
+      source-map: 0.6.1
+    transitivePeerDependencies:
+      - supports-color
+
+  istanbul-reports@3.1.7:
+    dependencies:
+      html-escaper: 2.0.2
+      istanbul-lib-report: 3.0.1
+
   istextorbinary@2.1.0:
     dependencies:
       binaryextensions: 2.3.0
@@ -14958,6 +15098,10 @@ snapshots:
     dependencies:
       semver: 6.3.1
 
+  make-dir@4.0.0:
+    dependencies:
+      semver: 7.7.0
+
   makeerror@1.0.12:
     dependencies:
       tmpl: 1.0.5
@@ -15238,6 +15382,10 @@ snapshots:
     dependencies:
       lower-case: 2.0.2
       tslib: 2.8.1
+
+  node-dir@0.1.17:
+    dependencies:
+      minimatch: 3.1.2
 
   node-fetch@2.7.0:
     dependencies:
@@ -16780,6 +16928,12 @@ snapshots:
       acorn: 8.14.0
       commander: 2.20.3
       source-map-support: 0.5.21
+
+  test-exclude@6.0.0:
+    dependencies:
+      '@istanbuljs/schema': 0.1.3
+      glob: 7.2.3
+      minimatch: 3.1.2
 
   testem@3.15.2(handlebars@4.7.8)(underscore@1.13.7):
     dependencies:
