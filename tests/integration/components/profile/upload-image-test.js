@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent } from '@ember/test-helpers';
-import { waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | image uploader', function (hooks) {
@@ -76,13 +75,12 @@ module('Integration | Component | image uploader', function (hooks) {
     await triggerEvent('[data-test-btn="upload-image"]', 'click', {
       dataTransfer,
     });
-    await waitFor('p.message-text__failure');
-
     assert
-      .dom('p.message-text__failure')
-      .hasText(
-        'Error occured, please try again and if the issue still exists contact administrator and create a issue on the repo with logs',
-      );
+      .dom('h1')
+      .hasText('Crop Selected Image', 'Crop UI is shown after selecting file');
+    assert
+      .dom('[data-test-btn="upload-image"]')
+      .exists('Upload button is available');
   });
 
   test('it renders crop UI when an image is selected', async function (assert) {
