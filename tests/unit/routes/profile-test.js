@@ -16,7 +16,7 @@ module('Unit | Route | profile', function (hooks) {
     this.fetchStub.restore();
   });
 
-  test('it exists', function (assert) {
+  test('profile route exists and is accessible', function (assert) {
     let route = this.owner.lookup('route:profile');
     assert.ok(route, 'Test the route exists and is accessible');
   });
