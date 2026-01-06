@@ -16,7 +16,7 @@ module('Unit | Route | mobile', function (hooks) {
     this.fetchStub.restore();
   });
 
-  test('it exists', function (assert) {
+  test('mobile route exists and is accessible', function (assert) {
     assert.expect(1);
     const route = this.owner.lookup('route:mobile');
     assert.ok(route, 'The mobile route exists');
