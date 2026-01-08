@@ -60,7 +60,7 @@
       @message="Are you sure to end this event?"
       @closeText="Cancel"
       @confirmText="End"
-      @confirmHandler={{(fn this.buttonClickHandler "leave-room")}}
+      @confirmHandler={{fn this.buttonClickHandler "leave-room"}}
     />
   </BaseModal>
   {{#if (eq this.activeTab "Screenshare")}}

@@ -1,10 +1,9 @@
 import { action } from '@ember/object';
-import { debounce } from '@ember/runloop';
+import { debounce, scheduleOnce } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { JOIN_DEBOUNCE_TIME } from '../../constants/join';
 import { validateWordCount } from '../../utils/validator';
-import { scheduleOnce } from '@ember/runloop';
 import { getLocalStorageItem, setLocalStorageItem } from '../../utils/storage';
 
 export default class BaseStepComponent extends Component {
