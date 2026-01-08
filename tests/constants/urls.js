@@ -4,10 +4,10 @@ export const APPS = {
   EVENTS: 'https://realdevsquad.com/events',
   MEMBERS: 'https://members.realdevsquad.com',
   STATUS: 'https://status.realdevsquad.com',
-  PROFILE: 'https://my.realdevsquad.com/profile',
-  TASKS: 'https://my.realdevsquad.com/tasks',
-  IDENTITY: 'https://my.realdevsquad.com/identity',
-  MY_STATUS: 'https://my.realdevsquad.com',
+  PROFILE: 'https://realdevsquad.com/profile',
+  TASKS: 'https://status.realdevsquad.com/tasks',
+  IDENTITY: 'https://realdevsquad.com/identity',
+  MY_STATUS: 'https://realdevsquad.com/status',
   STAGING_API_BACKEND: 'https://staging-api.realdevsquad.com',
 };
 
