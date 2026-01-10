@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import fetch from 'fetch';
+
 import redirectAuth from '../utils/redirect-auth';
 import {
   STATUS_NOT_EXIST_FAILURE_MESSAGE,

@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { APPS, AUTH } from '../constants/urls';
 import { tracked } from '@glimmer/tracking';
-import fetch from 'fetch';
+
 
 export default class GotoController extends Controller {
   queryParams = ['dev'];

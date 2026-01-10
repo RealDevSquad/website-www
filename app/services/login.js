@@ -1,7 +1,7 @@
 import Service, { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { APPS, AUTH } from '../constants/urls';
-import fetch from 'fetch';
+
 
 export default class LoginService extends Service {
   @service store;
