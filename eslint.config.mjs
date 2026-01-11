@@ -16,7 +16,7 @@ import globals from 'globals';
 import js from '@eslint/js';
 
 import ember from 'eslint-plugin-ember/recommended';
-import prettier from 'eslint-plugin-prettier/recommended';
+import eslintConfigPrettier from 'eslint-config-prettier';
 import qunit from 'eslint-plugin-qunit';
 import n from 'eslint-plugin-n';
 
@@ -35,7 +35,7 @@ const esmParserOptions = {
 
 export default [
   js.configs.recommended,
-  prettier,
+  eslintConfigPrettier,
   ember.configs.base,
   ember.configs.gjs,
   /**
@@ -62,7 +62,6 @@ export default [
   },
   {
     rules: {
-      'qunit/require-expect': [1, 'except-simple'],
       'no-self-assign': ['warn'],
     },
   },
@@ -88,6 +87,7 @@ export default [
     },
     rules: {
       ...qunit.configs.recommended.rules,
+      'qunit/require-expect': [1, 'except-simple'],
     },
   },
   /**
@@ -102,6 +102,7 @@ export default [
       'blueprints/*/index.js',
       'testem.js',
       'testem*.js',
+      'index.js',
       '.prettierrc.js',
       '.stylelintrc.js',
       '.template-lintrc.js',

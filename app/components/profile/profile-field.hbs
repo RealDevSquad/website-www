@@ -2,12 +2,12 @@
   <label data-test-profile-field-label class='profile-field-label' for={{@id}}>{{@label}}</label>
   <div class="profile-field-input-container">
     <img data-test-profile-field-icon src={{@icon_url}} alt="">
-    <Input 
+    <input
       data-test-profile-field-input
-      @type="text" 
+      type="text"
       id={{@id}}
-      @value={{@value}}
-      placeholder={{@placeholder}} 
+      value={{@value}}
+      placeholder={{@placeholder}}
       class="profile-field-input"
       required={{@required}}
       disabled={{@isDeveloper}}

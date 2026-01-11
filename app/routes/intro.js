@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { APPLICATION_ID_LINK, APPLICATION_URL } from '../constants/apis';
 import { APPS } from '../constants/urls';
 
