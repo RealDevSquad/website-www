@@ -33,7 +33,7 @@ const APP_URLS = {
     DASHBOARD: `${SCHEME}staging-dashboard.${DOMAIN}`,
   },
   development: {
-    HOME: '/',
+    HOME: `${SCHEME}dev.${DOMAIN}`,
     WELCOME: `${SCHEME}staging-welcome.${DOMAIN}`,
     GOTO: '/goto',
     EVENTS: '/events',

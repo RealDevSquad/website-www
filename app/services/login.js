@@ -32,7 +32,12 @@ export default class LoginService extends Service {
         throw response;
       })
       .then((user) => {
-        if (user.incompleteUserDetails && !this.featureFlag.isDevMode)
+        const currentPath = window.location.pathname;
+        if (
+          user.incompleteUserDetails &&
+          !this.featureFlag.isDevMode &&
+          currentPath !== '/new-signup'
+        )
           window.location.replace(AUTH.SIGN_UP);
         this.isLoggedIn = true;
         this.userData = user;
