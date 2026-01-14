@@ -29,7 +29,7 @@ export default class JoinController extends Controller {
   }
 
   get stepFromParam() {
-    return Number(this.step) ?? 0;
+    return Number(this.step ?? 0);
   }
 
   get applicationData() {
@@ -70,7 +70,7 @@ export default class JoinController extends Controller {
       this.chaincode = chaincode;
       this.isChaincodeClicked = true;
       this.toast.info('Generated New Chaincode!!', '', TOAST_OPTIONS);
-    } catch (error) {
+    } catch {
       this.toast.error(
         'Something went wrong. Please check console errors.',
         '',

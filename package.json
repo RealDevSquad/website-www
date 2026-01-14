@@ -32,7 +32,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "@100mslive/hms-video-store": "0.13.0",
+    "@100mslive/hms-video-store": "0.10.6",
     "@warp-drive/ember": "5.7.0",
     "cropperjs": "^2.1.0",
     "d3-cloud": "1.2.8",
@@ -82,6 +82,7 @@
     "ember-data": "5.7.0",
     "ember-in-viewport": "4.1.0",
     "ember-keyboard": "9.0.4",
+    "ember-lifeline": "^7.0.0",
     "ember-load-initializers": "3.0.1",
     "ember-modifier": "4.2.2",
     "ember-page-title": "9.0.3",
@@ -120,18 +121,15 @@
     "crypto"
   ],
   "engines": {
-    "node": ">= 20.11"
+    "node": ">= 25"
   },
   "ember": {
     "edition": "octane"
   },
   "volta": {
-    "node": "20.19.6"
+    "node": "25.3.0"
   },
   "pre-commit": {
     "run": "lint"
-  },
-  "resolutions": {
-    "ember-cli-htmlbars": "6.3.0"
   }
 }

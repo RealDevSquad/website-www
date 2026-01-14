@@ -1,45 +1,49 @@
-<div class='identity-box-heading' data-test-step1-heading>Step 1: Chaincode
+<div class="identity-box-heading" data-test-step1-heading>Step 1: Chaincode
   Generation</div>
-<div class='identity-box-desc' data-test-step1-desc>A private key that you need
+<div class="identity-box-desc" data-test-step1-desc>A private key that you need
   to use in your profile service URL and deploy for validation that you’re the
   source of URL.</div>
 {{#if this.isChaincodeGenerated}}
-  <div class='identity-chaincode-copy-box'>
-    <div class='identity-chaincode-box' data-test-step1-chaincode>
-      {{if this.isChaincodeVisible this.chaincode '********************'}}
+  <div class="identity-chaincode-copy-box">
+    <div class="identity-chaincode-box" data-test-step1-chaincode>
+      {{if this.isChaincodeVisible this.chaincode "********************"}}
       <img
-        class='identity-box-eye
-          {{if this.isChaincodeVisible "" "identity-box-eye-margin"}}'
-        alt={{if this.isChaincodeVisible 'closeeye' 'openeye'}}
+        class="identity-box-eye
+          {{if this.isChaincodeVisible '' 'identity-box-eye-margin'}}"
+        alt={{if this.isChaincodeVisible "closeeye" "openeye"}}
         src={{if
           this.isChaincodeVisible
-          '/assets/images/identity/closeeye.svg'
-          '/assets/images/identity/openeye.svg'
+          "/assets/images/identity/closeeye.svg"
+          "/assets/images/identity/openeye.svg"
         }}
         role="button"
-        {{on 'click' this.handleEyeClick}}
+        {{on "click" this.handleEyeClick}}
         data-test-step1-eye
       /></div>
-    <button class='identity-copy-box' type="button" {{on 'click' this.handleCopy}}>
-      <img alt='copy' src='/assets/images/identity/copy.svg' />
-      <div class='identity-copy-text'>Copy</div>
+    <button
+      class="identity-copy-box"
+      type="button"
+      {{on "click" this.handleCopy}}
+    >
+      <img alt="copy" src="/assets/images/identity/copy.svg" />
+      <div class="identity-copy-text">Copy</div>
     </button>
   </div>
 {{else}}
   <button
-    class='identity-box-button'
+    class="identity-box-button"
     data-test-step1-button
-    type='button'
-    {{on 'click' this.handleGenerateChaincode}}
-  >{{#if this.isGeneratingChaincode}}<div class='loader'></div>{{else}}
+    type="button"
+    {{on "click" this.handleGenerateChaincode}}
+  >{{#if this.isGeneratingChaincode}}<div class="loader"></div>{{else}}
       Generate Chaincode
     {{/if}}</button>
 {{/if}}
 {{#if this.isChaincodeGenerated}}
   <button
-    class='identity-next-button'
+    class="identity-next-button"
     data-test-step1-next-button
-    type='button'
-    {{on 'click' this.handleNext}}
+    type="button"
+    {{on "click" this.handleNext}}
   >Next</button>
 {{/if}}

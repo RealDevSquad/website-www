@@ -43,7 +43,7 @@ export default class Step3Component extends Component {
             toastNotificationTimeoutOptions,
           );
         }
-      } catch (error) {
+      } catch {
         this.toast.error(
           'Something went wrong. Please check console errors.',
           '',

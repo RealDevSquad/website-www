@@ -1,34 +1,34 @@
-  <h3 class='details' data-test-required-heading>
-    Fields marked with
-    <span class='required'>*</span>
-    are mandatory
-  </h3>
-  <Reusables::InputBox
-    @field='Your City'
-    @name='city'
-    @placeHolder='e.g. Bengaluru'
-    @type='text'
-    @required={{true}}
-    @value={{this.data.city}}
-    @onInput={{this.inputHandler}}
-  />
+<h3 class="details" data-test-required-heading>
+  Fields marked with
+  <span class="required">*</span>
+  are mandatory
+</h3>
+<Reusables::InputBox
+  @field="Your City"
+  @name="city"
+  @placeHolder="e.g. Bengaluru"
+  @type="text"
+  @required={{true}}
+  @value={{this.data.city}}
+  @onInput={{this.inputHandler}}
+/>
 
-  <Reusables::InputBox
-    @field='Your State'
-    @name='state'
-    @placeHolder='e.g. Karnataka'
-    @type='text'
-    @required={{true}}
-    @value={{this.data.state}}
-    @onInput={{this.inputHandler}}
-  />
+<Reusables::InputBox
+  @field="Your State"
+  @name="state"
+  @placeHolder="e.g. Karnataka"
+  @type="text"
+  @required={{true}}
+  @value={{this.data.state}}
+  @onInput={{this.inputHandler}}
+/>
 
-  <Reusables::Dropdown
-    @field='Your Country'
-    @name='country'
-    @placeHolder='Choose your country'
-    @required={{true}}
-    @value={{this.data.country}}
-    @options={{this.countries}}
-    @onChange={{this.inputHandler}}
-  />
+<Reusables::Dropdown
+  @field="Your Country"
+  @name="country"
+  @placeHolder="Choose your country"
+  @required={{true}}
+  @value={{this.data.country}}
+  @options={{this.countries}}
+  @onChange={{this.inputHandler}}
+/>

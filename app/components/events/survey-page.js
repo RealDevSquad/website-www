@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { debounce } from '@ember/runloop';
+import { debounceTask } from 'ember-lifeline';
 import { service } from '@ember/service';
 import {
   QUESTION_DEBOUNCE_TIME,
@@ -121,34 +121,34 @@ export default class SurveyPageComponent extends Component {
     this.isQuestionSubmitButtonDisabled = true;
   }
 
+  setQuestion(event) {
+    this.question = event.target.value;
+
+    if (this.question.length > QUESTION_MIN_LENGTH) {
+      this.isQuestionValid = true;
+    } else {
+      this.isQuestionValid = false;
+    }
+
+    if (!this.isMaxCharactersChecked && this.isQuestionValid) {
+      this.isQuestionSubmitButtonDisabled = false;
+      return;
+    }
+
+    if (
+      this.isMaxCharactersChecked &&
+      this.maxCharacters &&
+      this.isQuestionValid
+    ) {
+      this.isQuestionSubmitButtonDisabled = false;
+      return;
+    }
+
+    this.isQuestionSubmitButtonDisabled = true;
+  }
+
   @action onQuestionInput(event) {
-    const setQuestion = () => {
-      this.question = event.target.value;
-
-      if (this.question.length > QUESTION_MIN_LENGTH) {
-        this.isQuestionValid = true;
-      } else {
-        this.isQuestionValid = false;
-      }
-
-      if (!this.isMaxCharactersChecked && this.isQuestionValid) {
-        this.isQuestionSubmitButtonDisabled = false;
-        return;
-      }
-
-      if (
-        this.isMaxCharactersChecked &&
-        this.maxCharacters &&
-        this.isQuestionValid
-      ) {
-        this.isQuestionSubmitButtonDisabled = false;
-        return;
-      }
-
-      this.isQuestionSubmitButtonDisabled = true;
-    };
-
-    debounce(setQuestion, QUESTION_DEBOUNCE_TIME, event.target.value);
+    debounceTask(this, 'setQuestion', event, QUESTION_DEBOUNCE_TIME);
   }
 
   onQuestionModalUnmount() {

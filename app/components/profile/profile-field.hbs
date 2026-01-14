@@ -1,7 +1,14 @@
-<section data-test-profile-field class={{if @showError 'profile-field profile-field-error' 'profile-field'}}>
-  <label data-test-profile-field-label class='profile-field-label' for={{@id}}>{{@label}}</label>
+<section
+  data-test-profile-field
+  class={{if @showError "profile-field profile-field-error" "profile-field"}}
+>
+  <label
+    data-test-profile-field-label
+    class="profile-field-label"
+    for={{@id}}
+  >{{@label}}</label>
   <div class="profile-field-input-container">
-    <img data-test-profile-field-icon src={{@icon_url}} alt="">
+    <img data-test-profile-field-icon src={{@icon_url}} alt="" />
     <input
       data-test-profile-field-input
       type="text"
@@ -11,13 +18,13 @@
       class="profile-field-input"
       required={{@required}}
       disabled={{@isDeveloper}}
-      {{on 'input' this.inputFieldChanged}}
-      {{on 'blur' this.checkInputValidation}}
+      {{on "input" this.inputFieldChanged}}
+      {{on "blur" this.checkInputValidation}}
     />
   </div>
   {{#if @showError}}
-  <p data-test-profile-field-error class="profile-field-error-message">
-    {{@errorMessage}}
-  </p>
+    <p data-test-profile-field-error class="profile-field-error-message">
+      {{@errorMessage}}
+    </p>
   {{/if}}
 </section>

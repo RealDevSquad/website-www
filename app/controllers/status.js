@@ -99,7 +99,7 @@ export default class StatusController extends Controller {
         TOAST_OPTIONS,
       );
       this.toggleUserStateModal();
-    } catch (error) {
+    } catch {
       this.toast.error(
         OOO_STATUS_REQUEST_FAILURE_MESSAGE,
         'Error!',

@@ -1,16 +1,16 @@
-<div data-test-dropdown class='dropdown'>
-  <label data-test-label class='label' for={{@name}}>{{@field}}</label>
+<div data-test-dropdown class="dropdown">
+  <label data-test-label class="label" for={{@name}}>{{@field}}</label>
   {{#if @required}}
-    <span data-test-required class='required'>*</span>
+    <span data-test-required class="required">*</span>
   {{/if}}
 
   <select
     data-test-dropdown-field
-    class='dropdown__field select'
+    class="dropdown__field select"
     name={{@name}}
     id={{@name}}
     required={{@required}}
-    {{on 'change' @onChange}}
+    {{on "change" @onChange}}
   >
     <option
       data-test-dropdown-default

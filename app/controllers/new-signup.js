@@ -58,7 +58,7 @@ export default class NewSignupController extends Controller {
 
       const user = await response.json();
       return user.username;
-    } catch (error) {
+    } catch {
       this.toast.error(
         SIGNUP_ERROR_MESSAGES.usernameGeneration,
         'error!',
@@ -74,7 +74,7 @@ export default class NewSignupController extends Controller {
       const data = await response.json();
       const { isUsernameAvailable } = data;
       return isUsernameAvailable;
-    } catch (error) {
+    } catch {
       this.toast.error(SIGNUP_ERROR_MESSAGES.others, 'error!', TOAST_OPTIONS);
       return false;
     }

@@ -82,7 +82,7 @@ export default class DebugGridsComponent extends Component {
         'Success!',
         TOAST_OPTIONS,
       );
-    } catch (error) {
+    } catch {
       // On failure, revert the toggle button state
       this.debugUserRolesData = {
         ...this.debugUserRolesData,

@@ -1,21 +1,21 @@
-<div class='identity-box-heading' data-test-step2-heading>Step 2: Profile
+<div class="identity-box-heading" data-test-step2-heading>Step 2: Profile
   Service URL</div>
-<div class='identity-box-desc' data-test-step2-desc>Set the chaincode on your
+<div class="identity-box-desc" data-test-step2-desc>Set the chaincode on your
   profile service, deploy it and enter your profile service URL.</div>
 <label class="identity-box-input-label">
-<input
-  value={{this.profileURL}}
-  class='identity-box-input'
-  placeholder='E.g.: https://my-profile-service.com'
-  data-test-step2-input
-/>
+  <input
+    value={{this.profileURL}}
+    class="identity-box-input"
+    placeholder="E.g.: https://my-profile-service.com"
+    data-test-step2-input
+  />
 </label>
 {{#if this.profileURL}}
   <button
-    class='identity-next-button'
+    class="identity-next-button"
     data-test-step2-next-button
-    type='button'
-    {{on 'click' this.handleNext}}
+    type="button"
+    {{on "click" this.handleNext}}
   >
-    {{#if this.savingURL}}<div class='loader'></div>{{else}}Next{{/if}}</button>
+    {{#if this.savingURL}}<div class="loader"></div>{{else}}Next{{/if}}</button>
 {{/if}}

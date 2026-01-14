@@ -3,7 +3,6 @@ import { service } from '@ember/service';
 import { APPS, AUTH } from '../constants/urls';
 import { tracked } from '@glimmer/tracking';
 
-
 export default class GotoController extends Controller {
   queryParams = ['dev'];
   @service router;

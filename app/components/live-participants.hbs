@@ -1,11 +1,11 @@
-<div data-test-sidebar-body-role class='body__role-user'>
+<div data-test-sidebar-body-role class="body__role-user">
   <p
     data-test-sidebar-body-role-guest
-    class='role-user__type guestUsers'
+    class="role-user__type guestUsers"
   >{{@user}} (<span>{{this.participantsCount}}</span>) </p>
   <ul>
     {{#if (not-eq @minimumParticipants @role)}}
-      <li data-test-sidebar-user='peer.id' class='user'>
+      <li data-test-sidebar-user="peer.id" class="user">
         <p>No {{@user}} in the stream</p>
       </li>
     {{else}}
@@ -13,8 +13,8 @@
         {{#if (eq peer.roleName @role)}}
           <li
             data-test-sidebar-user={{peer.id}}
-            class='user
-              {{if (eq peer.id this.liveService.localPeer.id) "self" ""}}'
+            class="user
+              {{if (eq peer.id this.liveService.localPeer.id) 'self' ''}}"
           >
             <p>{{peer.name}}</p>
             {{#if
@@ -29,7 +29,7 @@
                     this.liveService.isUserRemoved (eq @peerToRemove.id peer.id)
                   )
                 }}
-                  <div class='loading'>
+                  <div class="loading">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -37,16 +37,16 @@
                 {{else}}
                   {{#if (not-eq peer.roleName this.ROLES.host)}}
                     <button
-                      type='button'
-                      class='user__btn'
-                      {{on 'click' (fn @openKickoutModal peer)}}
+                      type="button"
+                      class="user__btn"
+                      {{on "click" (fn @openKickoutModal peer)}}
                     >
                       <IconifyIcon
-                        data-test-icon='remove'
-                        @icon='material-symbols:person-remove'
-                        width='36'
-                        height='36'
-                        color='red'
+                        data-test-icon="remove"
+                        @icon="material-symbols:person-remove"
+                        width="36"
+                        height="36"
+                        color="red"
                       />
                     </button>
                   {{/if}}

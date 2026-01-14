@@ -1,8 +1,5 @@
-  import { modifier } from 'ember-modifier';
+import { modifier } from 'ember-modifier';
 
-  export default modifier(function setupInViewport(
-    element,
-    [callback]
-  ) {
-    callback?.(element);
-  });
+export default modifier(function setupInViewport(element, [callback]) {
+  callback?.(element);
+});

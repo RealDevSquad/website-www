@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { htmlSafe } from '@ember/template';
 import { imageUrl } from '../utils/cloudinary-image';
 
 export default class WheelAnimationsComponent extends Component {
   width = document.body.clientWidth;
-  @tracked noOfMembers = this.args.users.length;
+  get noOfMembers() {
+    return this.args.users.length;
+  }
   resizeImageUrl = imageUrl;
 
   memberStyle = (index) => {

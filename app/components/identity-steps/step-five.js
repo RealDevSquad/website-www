@@ -31,7 +31,7 @@ export default class IdentityStepsStepFiveComponent extends Component {
       } else {
         throw new Error('Your request has not been queued');
       }
-    } catch (error) {
+    } catch {
       this.toast.error(
         'Something went wrong. Please check console errors.',
         'Error',

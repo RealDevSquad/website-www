@@ -17,7 +17,7 @@ export default class Step2Component extends Component {
       try {
         const newUrl = new URL(str);
         return newUrl.protocol === 'https:';
-      } catch (err) {
+      } catch {
         return false;
       }
     };
