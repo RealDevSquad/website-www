@@ -19,10 +19,9 @@ import apiRequest from '../utils/api-request';
 export default class NewSignupController extends Controller {
   @service toast;
 
-  queryParams = ['currentStep', 'dev', 'signupDev'];
+  queryParams = ['currentStep', 'dev'];
 
   @tracked dev;
-  @tracked signupDev;
   @tracked isLoading = false;
   @tracked isButtonDisabled = true;
   @tracked error = '';
@@ -42,8 +41,7 @@ export default class NewSignupController extends Controller {
   };
 
   get isDevMode() {
-    // replace this signupDev with dev flag once new-signup page is not under dev flag
-    return this.signupDev === 'true';
+    return this.dev === 'true';
   }
 
   async generateUsername(firstname, lastname) {

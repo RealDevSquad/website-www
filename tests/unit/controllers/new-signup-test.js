@@ -200,7 +200,7 @@ module('Unit | Controller | new-signup', function (hooks) {
   });
 
   test('signup catches error and shows correct error message (dev flag enabled)', async function (assert) {
-    controller.signupDev = 'true'; // replace signupDev with dev once dev is removed from new-signup
+    controller.dev = 'true';
     controller.signupDetails = {
       firstName: fakeUserData.first_name,
       lastName: fakeUserData.last_name,
