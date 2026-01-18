@@ -12,6 +12,13 @@ module.exports = function (defaults) {
     'ember-fetch': {
       preferNative: true,
     },
+    babel: {
+      plugins: [
+        ...require('ember-cli-code-coverage').buildBabelPlugin({
+          embroider: true,
+        }),
+      ],
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
