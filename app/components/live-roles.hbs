@@ -1,14 +1,14 @@
-<section data-test-live-roles-card class='card__live live__join'>
-  <h3 data-test-live-roles-card-title class='card__live__title'>Join the Event</h3>
-  <p class='card__subtitle'>What role suits you best?🤔</p>
-  <div class='live__roles'>
+<section data-test-live-roles-card class="card__live live__join">
+  <h3 data-test-live-roles-card-title class="card__live__title">Join the Event</h3>
+  <p class="card__subtitle">What role suits you best?🤔</p>
+  <div class="live__roles">
     {{#each-in @roles as |role|}}
       <Reusables::Button
-        @test='select-role'
-        @type='button'
-        @variant='dark'
+        @test="select-role"
+        @type="button"
+        @variant="dark"
         @text={{role}}
-        @onClick={{(fn @clickHandler role)}}
+        @onClick={{fn @clickHandler role}}
       />
     {{/each-in}}
   </div>

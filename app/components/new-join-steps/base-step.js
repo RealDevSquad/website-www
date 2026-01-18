@@ -1,10 +1,9 @@
 import { action } from '@ember/object';
-import { debounce } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { debounceTask } from 'ember-lifeline';
 import { JOIN_DEBOUNCE_TIME } from '../../constants/join';
 import { validateWordCount } from '../../utils/validator';
-import { scheduleOnce } from '@ember/runloop';
 import { getLocalStorageItem, setLocalStorageItem } from '../../utils/storage';
 
 export default class BaseStepComponent extends Component {
@@ -22,7 +21,7 @@ export default class BaseStepComponent extends Component {
 
   constructor(...args) {
     super(...args);
-    scheduleOnce('afterRender', this, this.initializeFormState);
+    this.initializeFormState();
   }
 
   initializeFormState() {
@@ -59,7 +58,7 @@ export default class BaseStepComponent extends Component {
     this.args.setIsPreValid(false);
     const field = e.target.name;
     const value = e.target.value;
-    debounce(this, this.handleFieldUpdate, field, value, JOIN_DEBOUNCE_TIME);
+    debounceTask(this, 'handleFieldUpdate', field, value, JOIN_DEBOUNCE_TIME);
   }
 
   validateField(field, value) {

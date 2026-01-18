@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { countryList } from '../../constants/country-list';
 import { validator } from '../../utils/validator';
-import { debounce } from '@ember/runloop';
+import { debounceTask } from 'ember-lifeline';
 import { STEP_ONE_LIMITS, JOIN_DEBOUNCE_TIME } from '../../constants/join';
 
 export default class StepOneComponent extends Component {
@@ -36,15 +36,16 @@ export default class StepOneComponent extends Component {
     return true;
   }
 
+  setValToLocalStorage(e) {
+    this.data = { ...this.data, [e.target.name]: e.target.value };
+    localStorage.setItem('stepOneData', JSON.stringify(this.data));
+    const validated = this.isDataValid();
+    this.setIsValid(validated);
+    localStorage.setItem('isValid', validated);
+  }
+
   @action inputHandler(e) {
     this.setIsPreValid(false);
-    const setValToLocalStorage = () => {
-      this.data = { ...this.data, [e.target.name]: e.target.value };
-      localStorage.setItem('stepOneData', JSON.stringify(this.data));
-      const validated = this.isDataValid();
-      this.setIsValid(validated);
-      localStorage.setItem('isValid', validated);
-    };
-    debounce(this.data, setValToLocalStorage, JOIN_DEBOUNCE_TIME);
+    debounceTask(this, 'setValToLocalStorage', e, JOIN_DEBOUNCE_TIME);
   }
 }

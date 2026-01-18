@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { debounce } from '@ember/runloop';
-import { inject as service } from '@ember/service';
+import { debounceTask } from 'ember-lifeline';
+import { service } from '@ember/service';
 import { ROLE } from '../../constants/stepper-signup-data';
 import { JOIN_DEBOUNCE_TIME } from '../../constants/join';
 export default class SignupStepsStepOneComponent extends Component {
@@ -44,41 +44,40 @@ export default class SignupStepsStepOneComponent extends Component {
     }
   }
 
-  @action inputHandler(e) {
-    const passVal = () => {
-      this.data = {
-        ...this.data,
-        [e.target.name]: e.target.value,
-      };
-      this.mavenRoleConfirm = e.target.checked;
-      if (this.isSignupDetailsFilled()) {
-        this.isSignupButtonDisabled = false;
-      } else {
-        this.isSignupButtonDisabled = true;
-      }
-      const field = e.target.name;
-      if (field === 'firstname' || field === 'lastname') {
-        const { isValid } = this.nameValidator(e.target.value);
-        this.errorMessage = {
-          ...this.errorMessage,
-          [field]: isValid
-            ? `No spaces, numbers, or special characters allowed.`
-            : '',
-        };
-      }
-      if (
-        this.data.firstname.trim() > '' &&
-        this.data.lastname.trim() > '' &&
-        this.errorMessage.firstname === '' &&
-        this.errorMessage.lastname === ''
-      ) {
-        this.isValid = false;
-      } else {
-        this.isValid = true;
-      }
+  passVal(e) {
+    this.data = {
+      ...this.data,
+      [e.target.name]: e.target.value,
     };
-
-    debounce(this.data, passVal, JOIN_DEBOUNCE_TIME);
+    this.mavenRoleConfirm = e.target.checked;
+    if (this.isSignupDetailsFilled()) {
+      this.isSignupButtonDisabled = false;
+    } else {
+      this.isSignupButtonDisabled = true;
+    }
+    const field = e.target.name;
+    if (field === 'firstname' || field === 'lastname') {
+      const { isValid } = this.nameValidator(e.target.value);
+      this.errorMessage = {
+        ...this.errorMessage,
+        [field]: isValid
+          ? `No spaces, numbers, or special characters allowed.`
+          : '',
+      };
+    }
+    if (
+      this.data.firstname.trim() > '' &&
+      this.data.lastname.trim() > '' &&
+      this.errorMessage.firstname === '' &&
+      this.errorMessage.lastname === ''
+    ) {
+      this.isValid = false;
+    } else {
+      this.isValid = true;
+    }
+  }
+  @action inputHandler(e) {
+    debounceTask(this, 'passVal', e, JOIN_DEBOUNCE_TIME);
   }
 
   @action async signup() {

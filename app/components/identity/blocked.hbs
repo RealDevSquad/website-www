@@ -1,8 +1,10 @@
-<div class='identity-box-heading' data-test-blocked-heading>Status Blocked</div>
-<div class='identity-box-desc' data-test-blocked-desc>The system failed to link
+<div class="identity-box-heading" data-test-blocked-heading>Status Blocked</div>
+<div class="identity-box-desc" data-test-blocked-desc>The system failed to link
   your profile service with the Identity service,
-  <span class='identity-box-desc-bold'>Please try again!</span></div>
+  <span class="identity-box-desc-bold">Please try again!</span></div>
 <button
-  class='identity-box-button'
-  data-test-blocked-button type="button" {{on 'click' (fn @setState 'step1')}}
+  class="identity-box-button"
+  data-test-blocked-button
+  type="button"
+  {{on "click" (fn @setState "step1")}}
 >Retry</button>

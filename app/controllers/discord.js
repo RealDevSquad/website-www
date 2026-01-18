@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { TOAST_OPTIONS } from '../constants/toast-options';
 import { APPS } from '../constants/urls';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
