@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { CREATE_OOO_REQUEST_URL, UPDATE_USER_STATUS } from '../constants/apis';
 import { TOAST_OPTIONS } from '../constants/toast-options';
@@ -99,7 +99,7 @@ export default class StatusController extends Controller {
         TOAST_OPTIONS,
       );
       this.toggleUserStateModal();
-    } catch (error) {
+    } catch {
       this.toast.error(
         OOO_STATUS_REQUEST_FAILURE_MESSAGE,
         'Error!',

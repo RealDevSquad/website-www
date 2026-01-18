@@ -1,35 +1,35 @@
-<div class='logs' data-test-logs-page-container>
-  <h2 class='logs__heading' data-test-logs-heading>
+<div class="logs" data-test-logs-page-container>
+  <h2 class="logs__heading" data-test-logs-heading>
     Event logs
   </h2>
-  <div class='logs__main' data-test-logs-main>
+  <div class="logs__main" data-test-logs-main>
     {{#if @isLogsLoading}}
-      <div class='loader' data-test-logs-loader>
+      <div class="loader" data-test-logs-loader>
         Loading...
       </div>
     {{else}}
       {{#if @isNoLogsPresent}}
-        <div class='fallback' data-test-logs-fallback>
+        <div class="fallback" data-test-logs-fallback>
           No logs available, for the event!
         </div>
       {{else}}
         {{#each @eventLogsData as |log|}}
-          <div class='log-card' data-test-log-card='{{log.timestampInSeconds}}'>
+          <div class="log-card" data-test-log-card="{{log.timestampInSeconds}}">
             <span
-              class='log-card__time log-card__text'
-              data-test-log-card-time='{{log.timestampInSeconds}}'
+              class="log-card__time log-card__text"
+              data-test-log-card-time="{{log.timestampInSeconds}}"
             >[{{log.timestamp}}]</span>
             <span
-              class='log-card__removed-peer log-card__text'
-              data-test-log-card-removed-peer='{{log.timestampInSeconds}}'
+              class="log-card__removed-peer log-card__text"
+              data-test-log-card-removed-peer="{{log.timestampInSeconds}}"
             >{{log.peerName}}</span>
             <span
-              class='log-card__text'
-              data-test-log-card-text='{{log.timestampInSeconds}}'
+              class="log-card__text"
+              data-test-log-card-text="{{log.timestampInSeconds}}"
             >was removed by</span>
             <span
-              class='log-card__removed-by log-card__text'
-              data-test-log-removed-by='{{log.timestampInSeconds}}'
+              class="log-card__removed-by log-card__text"
+              data-test-log-removed-by="{{log.timestampInSeconds}}"
             >{{log.removedByUsername}}</span>
           </div>
         {{/each}}

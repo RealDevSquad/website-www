@@ -7,30 +7,61 @@
   <div class="form-grid">
     <div class="form-grid form-grid--2">
       <div class="form-grid__item">
-        <Reusables::InputBox @field='Your skills' @name='skills' @placeHolder='Enter your key skills...' @type='text'
-          @required={{true}} @value={{this.data.skills}} @onInput={{this.inputHandler}} />
+        <Reusables::InputBox
+          @field="Your skills"
+          @name="skills"
+          @placeHolder="Enter your key skills..."
+          @type="text"
+          @required={{true}}
+          @value={{this.data.skills}}
+          @onInput={{this.inputHandler}}
+        />
         {{#if this.errorMessage.skills}}
-        <div class='error__message' data-test-error="skills">{{this.errorMessage.skills}}</div>
+          <div
+            class="error__message"
+            data-test-error="skills"
+          >{{this.errorMessage.skills}}</div>
         {{/if}}
       </div>
 
       <div class="form-grid__item">
-        <Reusables::InputBox @field='Your institution/company' @name='company'
-          @placeHolder='Institution or company name' @type='text' @required={{true}} @value={{this.data.company}}
-          @onInput={{this.inputHandler}} />
+        <Reusables::InputBox
+          @field="Your institution/company"
+          @name="company"
+          @placeHolder="Institution or company name"
+          @type="text"
+          @required={{true}}
+          @value={{this.data.company}}
+          @onInput={{this.inputHandler}}
+        />
         {{#if this.errorMessage.company}}
-        <div class='error__message' data-test-error="company">{{this.errorMessage.company}}</div>
+          <div
+            class="error__message"
+            data-test-error="company"
+          >{{this.errorMessage.company}}</div>
         {{/if}}
       </div>
     </div>
     <div class="form-grid__item">
-      <Reusables::TextAreaBox @field='Please introduce yourself' @name='introduction'
-        @placeHolder='Tell us about yourself...' @required={{true}} @value={{this.data.introduction}}
-        @onInput={{this.inputHandler}} />
-      <div class="word-count" data-test-word-count="introduction">{{this.wordCount.introduction}}/{{this.stepValidation.introduction.max}} words</div>
+      <Reusables::TextAreaBox
+        @field="Please introduce yourself"
+        @name="introduction"
+        @placeHolder="Tell us about yourself..."
+        @required={{true}}
+        @value={{this.data.introduction}}
+        @onInput={{this.inputHandler}}
+      />
+      <div
+        class="word-count"
+        data-test-word-count="introduction"
+      >{{this.wordCount.introduction}}/{{this.stepValidation.introduction.max}}
+        words</div>
 
       {{#if this.errorMessage.introduction}}
-      <div class='error__message' data-test-error="introduction">{{this.errorMessage.introduction}}</div>
+        <div
+          class="error__message"
+          data-test-error="introduction"
+        >{{this.errorMessage.introduction}}</div>
       {{/if}}
     </div>
   </div>
