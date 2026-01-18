@@ -54,7 +54,7 @@
         @variant="dark btn--sm btn-pink ask-question-modal__submit-button"
         @test="question-modal-cancel"
         @onClick={{@onSubmit}}
-        @disabled={{(or @isSubmitButtonDisabled @isQuestionApiLoading)}}
+        @disabled={{or @isSubmitButtonDisabled @isQuestionApiLoading}}
         @isLoading={{@isQuestionApiLoading}}
       />
     </div>
