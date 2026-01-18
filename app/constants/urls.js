@@ -17,6 +17,7 @@ const APP_URLS = {
     MY_STATUS: `${SCHEME}${DOMAIN}/status`,
     API_BACKEND: `${SCHEME}api.${DOMAIN}`,
     DASHBOARD: `${SCHEME}dashboard.${DOMAIN}`,
+    SIGN_UP: `${SCHEME}${DOMAIN}/new-signup`,
   },
   staging: {
     HOME: `${SCHEME}staging-www.${DOMAIN}`,
@@ -31,9 +32,10 @@ const APP_URLS = {
     MY_STATUS: `${SCHEME}staging-www.${DOMAIN}/status`,
     API_BACKEND: `${SCHEME}staging-api.${DOMAIN}`,
     DASHBOARD: `${SCHEME}staging-dashboard.${DOMAIN}`,
+    SIGN_UP: `${SCHEME}staging-www.${DOMAIN}/new-signup`,
   },
   development: {
-    HOME: '/',
+    HOME: `${SCHEME}dev.${DOMAIN}`,
     WELCOME: `${SCHEME}staging-welcome.${DOMAIN}`,
     GOTO: '/goto',
     EVENTS: '/events',
@@ -45,6 +47,7 @@ const APP_URLS = {
     MY_STATUS: '/status',
     DASHBOARD: `${SCHEME}staging-dashboard.${DOMAIN}`,
     API_BACKEND: `${SCHEME}staging-api.${DOMAIN}`,
+    SIGN_UP: `${SCHEME}dev.${DOMAIN}/new-signup`,
   },
   test: {
     HOME: `${SCHEME}${DOMAIN}`,
@@ -59,6 +62,7 @@ const APP_URLS = {
     MY_STATUS: `${SCHEME}${DOMAIN}/status`,
     API_BACKEND: `${SCHEME}staging-api.${DOMAIN}`,
     DASHBOARD: `${SCHEME}staging-dashboard.${DOMAIN}`,
+    SIGN_UP: '/new-signup',
   },
 };
 
@@ -73,7 +77,7 @@ export const ABOUT = {
 export const AUTH = {
   GITHUB_SIGN_IN: `${APPS.API_BACKEND}/auth/github/login`,
   GOOGLE_SIGN_IN: `${APPS.API_BACKEND}/auth/google/login?dev=true`,
-  SIGN_UP: `${APPS.HOME}/new-signup`,
+  SIGN_UP: APPS.SIGN_UP,
 };
 
 export const SOCIALS = {

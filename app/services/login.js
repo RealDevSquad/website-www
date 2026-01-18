@@ -31,8 +31,14 @@ export default class LoginService extends Service {
         throw response;
       })
       .then((user) => {
-        if (user.incompleteUserDetails && !this.featureFlag.isDevMode)
+        if (
+          user.incompleteUserDetails &&
+          !this.featureFlag.isDevMode &&
+          !this.fastboot.isFastBoot &&
+          window.location.pathname !== '/new-signup'
+        ) {
           window.location.replace(AUTH.SIGN_UP);
+        }
         this.isLoggedIn = true;
         this.userData = user;
       })
