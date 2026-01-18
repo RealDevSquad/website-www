@@ -28,9 +28,10 @@
     />
     <div class="survey-page__recent-question">
       <h3 class="survey-page__recent-question-heading">Recent Question</h3>
-      <p class="survey-page__recent-question-text">{{(or
-          @questionAsked.question "No recent question"
-        )}}</p>
+      <p class="survey-page__recent-question-text">{{or
+          @questionAsked.question
+          "No recent question"
+        }}</p>
     </div>
   </div>
   <div class="survey-page__answers-container">

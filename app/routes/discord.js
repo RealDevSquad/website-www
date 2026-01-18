@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { APPS } from '../constants/urls';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import redirectAuth from '../utils/redirect-auth';
 import { TOAST_OPTIONS } from '../constants/toast-options';
 

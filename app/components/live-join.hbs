@@ -1,44 +1,44 @@
-<section data-test-live-join class='card__live live__join'>
-  <h3 data-test-live-join-title class='card__live-title'>
-    {{#if (eq @buttonText 'Join')}}
+<section data-test-live-join class="card__live live__join">
+  <h3 data-test-live-join-title class="card__live-title">
+    {{#if (eq @buttonText "Join")}}
       Join the Event
     {{else}}
       Create a Event
     {{/if}}
   </h3>
-  <form data-test-live-join-form onsubmit={{@clickHandler}} class='card__form'>
+  <form data-test-live-join-form onsubmit={{@clickHandler}} class="card__form">
     <Reusables::InputBox
-      @field='Name'
-      @name='name'
-      @type='text'
-      @placeHolder='Enter your name'
+      @field="Name"
+      @name="name"
+      @type="text"
+      @placeHolder="Enter your name"
       @required={{true}}
       @value={{@name}}
-      @onInput={{fn @inputHandler 'name'}}
+      @onInput={{fn @inputHandler "name"}}
     />
-    {{#if (eq @role 'maven')}}
+    {{#if (eq @role "maven")}}
       <Reusables::InputBox
-        @field='Room Code'
-        @name='roomCode'
-        @type='text'
-        @placeHolder='Enter room code'
+        @field="Room Code"
+        @name="roomCode"
+        @type="text"
+        @placeHolder="Enter room code"
         @required={{true}}
         @value={{@roomCode}}
-        @onInput={{fn @inputHandler 'roomCode'}}
+        @onInput={{fn @inputHandler "roomCode"}}
       />
     {{/if}}
     <div>
       <Reusables::Button
-        @test='live-join-back-button'
-        @type='button'
-        @variant='light'
-        @text='Back'
+        @test="live-join-back-button"
+        @type="button"
+        @variant="light"
+        @text="Back"
         @onClick={{@backHandler}}
       />
       <Reusables::Button
-        @test='live-join-submit-button'
-        @type='button'
-        @variant='dark'
+        @test="live-join-submit-button"
+        @type="button"
+        @variant="dark"
         @text={{@buttonText}}
         @onClick={{@clickHandler}}
       />

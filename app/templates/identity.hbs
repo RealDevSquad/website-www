@@ -23,23 +23,23 @@
     </div>
   {{/if}}
 
-  <div class='identity-box'>
-    {{#if (eq this.state 'getStarted')}}
+  <div class="identity-box">
+    {{#if (eq this.state "getStarted")}}
       <Identity::GetStarted @setState={{this.setState}} />
-    {{else if (eq this.state 'step1')}}
+    {{else if (eq this.state "step1")}}
       <Identity::Step1 @setState={{this.setState}} />
-    {{else if (eq this.state 'step2')}}
+    {{else if (eq this.state "step2")}}
       <Identity::Step2
         @setState={{this.setState}}
         @profileURL={{@model.profileURL}}
       />
-    {{else if (eq this.state 'step3')}}
+    {{else if (eq this.state "step3")}}
       <Identity::Step3 @setState={{this.setState}} />
-    {{else if (eq this.state 'reload')}}
+    {{else if (eq this.state "reload")}}
       <Identity::Reload />
-    {{else if (eq this.state 'verified')}}
+    {{else if (eq this.state "verified")}}
       <Identity::Verified />
-    {{else if (eq this.state 'blocked')}}
+    {{else if (eq this.state "blocked")}}
       <Identity::Blocked @setState={{this.setState}} />
     {{/if}}
   </div>

@@ -388,7 +388,7 @@
 
 .review-field__value {
   color: var(--color-black);
-  word-wrap: break-word;
+  overflow-wrap: break-word;
   flex: 1;
   max-width: 60%;
 }

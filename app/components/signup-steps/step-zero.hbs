@@ -1,29 +1,32 @@
-<div class='logo logos-container__rds' data-test-rds-logo>
-     <img
-      src='assets/icons/rds-github-link.png'
-      alt='RDS-Logo'
-      class='logo__github-rds'
-      data-test-rds-logo-img
+<div class="logo logos-container__rds" data-test-rds-logo>
+  <img
+    src="assets/icons/rds-github-link.png"
+    alt="RDS-Logo"
+    class="logo__github-rds"
+    data-test-rds-logo-img
+  />
+  {{#if this.login.isLoggedIn}}
+    <h2 class="heading__h3" data-test-signup-heading>Thank you for connecting
+      your GitHub</h2>
+    <p class="p2-description" data-test-signup-paragraph>Please continue with
+      Sign Up with in order to use features display yourself on members page etc</p>
+    <Reusables::Button
+      @text="Let's Go"
+      @variant="dark"
+      @onClick={{@startHandler}}
+      @test="lets-go"
+      @type="button"
     />
-{{#if this.login.isLoggedIn}}
-  <h2 class="heading__h3" data-test-signup-heading>Thank you for connecting your GitHub</h2>
-  <p class="p2-description" data-test-signup-paragraph>Please continue with Sign Up with in order to use features display yourself on members page etc</p> 
-  <Reusables::Button
-    @text="Let's Go"
-    @variant='dark'
-    @onClick={{@startHandler}}
-    @test='lets-go'
-    @type='button'
-  />
   {{else}}
-<p class="welcome__heading" data-test-signup-heading>Welcome to RDS</p>
-<p class="welcome__description" data-test-signup-paragraph>To start your journey, please sign in with your GitHub account.</p>
-  <Reusables::Button
-    @text='SignIn'
-    @variant='dark'
-    @onClick={{this.loginWithGithub}}
-    @test='signIn'
-    @type='button'
-  />
-{{/if}}
-  </div>
+    <p class="welcome__heading" data-test-signup-heading>Welcome to RDS</p>
+    <p class="welcome__description" data-test-signup-paragraph>To start your
+      journey, please sign in with your GitHub account.</p>
+    <Reusables::Button
+      @text="SignIn"
+      @variant="dark"
+      @onClick={{this.loginWithGithub}}
+      @test="signIn"
+      @type="button"
+    />
+  {{/if}}
+</div>

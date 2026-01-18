@@ -1,10 +1,19 @@
 {{page-title "Events"}}
 
 <div class="events-page">
-    <img class="events-page__rds-image" src="/assets/images/rds-logo-2x.png" alt="RDS">
-    <h1 class="events-page__heading">Past Events</h1>
-    {{#each this.EVENTS_MAPPING as |event| }}
-    <EventCard @title={{event.title}} @description={{event.description}} @timing={{event.timing}} @eventLink={{event.eventLink}}
-        @speakers={{event.speakers}} />
-    {{/each}}
+  <img
+    class="events-page__rds-image"
+    src="/assets/images/rds-logo-2x.png"
+    alt="RDS"
+  />
+  <h1 class="events-page__heading">Past Events</h1>
+  {{#each this.EVENTS_MAPPING as |event|}}
+    <EventCard
+      @title={{event.title}}
+      @description={{event.description}}
+      @timing={{event.timing}}
+      @eventLink={{event.eventLink}}
+      @speakers={{event.speakers}}
+    />
+  {{/each}}
 </div>

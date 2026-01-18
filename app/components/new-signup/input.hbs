@@ -7,9 +7,9 @@
     {{this.label}}
   </h2>
   <div class="user-details__field">
-    <Input
-      @value={{get @signupDetails @currentStep}}
-      @type="text"
+    <input
+      value={{get @signupDetails @currentStep}}
+      type="text"
       placeholder="Darth"
       aria-labelledby="signup-form-label"
       {{on "input" this.inputFieldChanged}}

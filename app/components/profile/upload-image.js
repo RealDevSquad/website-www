@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { TOAST_OPTIONS } from '../../constants/toast-options';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class UploadImageComponent extends Component {
   formData;
