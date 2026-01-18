@@ -6,6 +6,7 @@
   "repository": "",
   "license": "MIT",
   "author": "",
+  "packageManager": "pnpm@10.10.0",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -114,13 +115,13 @@
     "crypto"
   ],
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   },
   "ember": {
     "edition": "octane"
   },
   "volta": {
-    "node": "18.19.1"
+    "node": "22.19.0"
   },
   "pre-commit": {
     "run": "lint"

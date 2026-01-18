@@ -1,0 +1,6 @@
+onlyBuiltDependencies:
+  - '@fortawesome/fontawesome-common-types'
+  - '@fortawesome/free-solid-svg-icons'
+  - core-js
+  - pre-commit
+  - spawn-sync
