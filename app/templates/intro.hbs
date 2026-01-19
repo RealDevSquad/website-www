@@ -2,15 +2,16 @@
 
 <section class="intro__container">
   {{#if this.login.isLoading}}
-    <div data-test-loading class='intro__loading'>
-      <Fa-Icon @size='2x' @icon='circle-notch' @spin={{true}} />
+    <div data-test-loading class="intro__loading">
+      <Fa-Icon @size="2x" @icon="circle-notch" @spin={{true}} />
     </div>
   {{else}}
     {{#if this.login.userData.roles.super_user}}
-      <ApplicantIntro 
-        @data={{this.model}} 
+      <ApplicantIntro
+        @data={{this.model}}
         @isLoading={{this.login.isLoading}}
-        @isSuperUser={{this.login.userData.roles.super_user}} />
+        @isSuperUser={{this.login.userData.roles.super_user}}
+      />
     {{else}}
       <Unauthorized />
     {{/if}}

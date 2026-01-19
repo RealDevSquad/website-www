@@ -1,33 +1,33 @@
-<div class='live-panel' data-test-live-panel>
+<div class="live-panel" data-test-live-panel>
   {{#if (eq @role this.ROLES.host)}}
     <Reusables::IconButton
-      @id='screen-share'
-      @class='icon-button--md'
-      @title={{if @isScreenShareOn 'Stop Share' 'Screen Share'}}
+      @id="screen-share"
+      @class="icon-button--md"
+      @title={{if @isScreenShareOn "Stop Share" "Screen Share"}}
       @onClick={{@buttonClickHandler}}
       @icon={{if
         @isScreenShareOn
-        'material-symbols:stop-screen-share'
-        'material-symbols:screen-share'
+        "material-symbols:stop-screen-share"
+        "material-symbols:screen-share"
       }}
     />
     <Reusables::IconButton
-      @id='copy-link'
-      @class='icon-button--md'
-      @title='Room code for maven'
+      @id="copy-link"
+      @class="icon-button--md"
+      @title="Room code for maven"
       @onClick={{@openRoomCodeModal}}
-      @icon='material-symbols:code'
+      @icon="material-symbols:code"
     />
   {{/if}}
   <Reusables::IconButton
-    @id='leave-room'
-    @class='icon-button--md icon-button--pink-bg'
-    @title={{if (eq @role this.ROLES.host) 'End Room' 'Leave Room'}}
+    @id="leave-room"
+    @class="icon-button--md icon-button--pink-bg"
+    @title={{if (eq @role this.ROLES.host) "End Room" "Leave Room"}}
     @onClick={{if
       (eq @role this.ROLES.host)
       @openWarningModal
       @buttonClickHandler
     }}
-    @icon='material-symbols:call-end'
+    @icon="material-symbols:call-end"
   />
 </div>

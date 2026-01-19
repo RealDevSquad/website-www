@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { toastNotificationTimeoutOptions } from '../../constants/toast-notification';
 import { APPS } from '../../constants/urls';
 
@@ -17,7 +17,7 @@ export default class Step2Component extends Component {
       try {
         const newUrl = new URL(str);
         return newUrl.protocol === 'https:';
-      } catch (err) {
+      } catch {
         return false;
       }
     };

@@ -1,29 +1,29 @@
 <div
-  data-test='profile-service-url-Linking'
-  class='profile-service-url-linking-page'
+  data-test="profile-service-url-Linking"
+  class="profile-service-url-linking-page"
 >
   <h3
-    data-test='heading'
-    class='profile-service-url-linking-page__heading heading__h3'
+    data-test="heading"
+    class="profile-service-url-linking-page__heading heading__h3"
   >
     Link Profile Service
   </h3>
   <p
-    data-test='description'
-    class='profile-service-url-linking-page__description'
+    data-test="description"
+    class="profile-service-url-linking-page__description"
   >
     Ensure that you have deployed your profile service,
     <br />
     Click on link button to start the linking process for joining RealDevSquad.
   </p>
 
-  <div class='profile-service-url-linking-page__button'>
+  <div class="profile-service-url-linking-page__button">
     <Reusables::Button
-      @text='Link'
-      @variant='dark'
+      @text="Link"
+      @variant="dark"
       @onClick={{this.handleVerify}}
-      @test='next'
-      @type='button'
+      @test="next"
+      @type="button"
       @isLoading={{this.isLoading}}
     />
   </div>

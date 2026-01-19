@@ -1,28 +1,32 @@
 {{#if this.isDevMode}}
-  <section data-test-join class='join'>
-    <h3 data-test-join-title class='join__title'>How to Join</h3>
-    <h2 data-test-join-title-highlighted class='join__title-highlighted'>Real
+  <section data-test-join class="join">
+    <h3 data-test-join-title class="join__title">How to Join</h3>
+    <h2 data-test-join-title-highlighted class="join__title-highlighted">Real
       Dev Squad</h2>
-    <p data-test-para='1' class='join__para'>Our squad focuses on quality and we
+    <p data-test-para="1" class="join__para">Our squad focuses on quality and we
       want to work with people who are willing to be serious about their growth
       in the squad.
     </p>
-    <p data-test-para='2' class='join__para'>It's okay if you don't know much
+    <p data-test-para="2" class="join__para">It's okay if you don't know much
       yet, but it won't be okay to not put in any efforts for yourself. We want
       to value everyone's time and efforts.
     </p>
-    <div class='links__container'>
-    <LinkTo data-test-join-link @route='subscribe' class='subscribe__link join__link'>Subscribe <span>🔔</span></LinkTo>
-    {{!-- TODO: remove this button to stop redirecting to join page --}}
-    {{!-- <LinkTo data-test-join-link @route='join' class='join__link'>Join the Squad</LinkTo> --}}
+    <div class="links__container">
+      <LinkTo
+        data-test-join-link
+        @route="subscribe"
+        class="subscribe__link join__link"
+      >Subscribe <span>🔔</span></LinkTo>
+      {{! TODO: remove this button to stop redirecting to join page }}
+      {{! <LinkTo data-test-join-link @route='join' class='join__link'>Join the Squad</LinkTo> }}
     </div>
   </section>
 {{else}}
-  <section data-test-join class='join'>
-    <h3 data-test-join-title class='join__title join__title--new'>How can you
+  <section data-test-join class="join">
+    <h3 data-test-join-title class="join__title join__title--new">How can you
       join?</h3>
 
-    <p data-test-para='first' class='join__para join__para--new'>Our squad
+    <p data-test-para="first" class="join__para join__para--new">Our squad
       focuses on quality and we want to work with people who are willing to be
       serious about their growth in the squad.It's okay if you don't know much
       yet, but it won't be okay to not put in any efforts for yourself. We want
@@ -32,22 +36,22 @@
     <LinkTo
       data-test-join-link
       {{! @todo add join link route when join flow gets opened }}
-      @route='index'
-      class='join__link join__link--new'
+      @route="index"
+      class="join__link join__link--new"
       @disabled={{true}}
     >
       Join the Squad
     </LinkTo>
-    
-    {{!-- NOTE: This has the new code on feature flag off --}}
-    {{!-- If something goes wrong, we can enable a flag to restore previous behaviour --}}
-    {{!-- TODO: Clean up by Feb, 2025 --}}
+
+    {{! NOTE: This has the new code on feature flag off }}
+    {{! If something goes wrong, we can enable a flag to restore previous behaviour }}
+    {{! TODO: Clean up by Feb, 2025 }}
     {{#if this.isDevMode}}
-    <p data-test-join-later-text class='join__later-text'>
-      We're currently not accepting new applications. Please come back later.
-    </p>
+      <p data-test-join-later-text class="join__later-text">
+        We're currently not accepting new applications. Please come back later.
+      </p>
     {{else}}
-    <NoticeForJoining data-test-join-later-text class="join__later-text"/>
+      <NoticeForJoining data-test-join-later-text class="join__later-text" />
     {{/if}}
   </section>
 {{/if}}

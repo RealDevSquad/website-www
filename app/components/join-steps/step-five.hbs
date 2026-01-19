@@ -1,20 +1,20 @@
-<section class='joining'>
-  <div class='joining__copy'>
-    <h3 class='details' data-test-link-text>Here is your personalized link</h3>
-    <p id='url' class='copy__link'>
+<section class="joining">
+  <div class="joining__copy">
+    <h3 class="details" data-test-link-text>Here is your personalized link</h3>
+    <p id="url" class="copy__link">
       {{this.joinLink}}
     </p>
     <CopyButton
       data-test-copy-btn
-      @target='#url'
+      @target="#url"
       @onSuccess={{this.onSuccess}}
       @onError={{this.onError}}
-      class='btn btn-dark'
+      class="btn btn-dark"
     >
       Copy
     </CopyButton>
   </div>
-  <div class='joining__info'>
+  <div class="joining__info">
     <p data-test-next-text>Next Steps :</p>
     <ol data-test-instructions>
       <li data-test-instone>Click on the copy button.</li>
@@ -30,10 +30,10 @@
     </ol>
   </div>
   <Reusables::Button
-    @test='back-to-home'
-    @variant='light'
-    @type='button'
+    @test="back-to-home"
+    @variant="light"
+    @type="button"
     @onClick={{this.backToHome}}
-    @text='Back to Home'
+    @text="Back to Home"
   />
 </section>

@@ -1,66 +1,66 @@
-<h3 class='details' data-test-required-heading>
+<h3 class="details" data-test-required-heading>
   Fields marked with
-  <span class='required'>*</span>
+  <span class="required">*</span>
   are mandatory
 </h3>
 
 <Reusables::TextAreaBox
-  @field='Introduce Yourself'
-  @name='introduction'
-  @placeHolder='We would love to know you in not more than 100 words'
+  @field="Introduce Yourself"
+  @name="introduction"
+  @placeHolder="We would love to know you in not more than 100 words"
   @required={{true}}
   @value={{this.data.introduction}}
   @onInput={{this.inputHandler}}
 />
 {{#if this.errorMessage.introduction}}
-  <div class='error__message'>{{this.errorMessage.introduction}}</div>
+  <div class="error__message">{{this.errorMessage.introduction}}</div>
 {{/if}}
 <Reusables::InputBox
-  @field='Your Skills'
-  @name='skills'
-  @placeHolder='Fuel us with your OP skills'
-  @type='text'
+  @field="Your Skills"
+  @name="skills"
+  @placeHolder="Fuel us with your OP skills"
+  @type="text"
   @required={{true}}
   @value={{this.data.skills}}
   @onInput={{this.inputHandler}}
 />
 {{#if this.errorMessage.skills}}
-  <div class='error__message'>{{this.errorMessage.skills}}</div>
+  <div class="error__message">{{this.errorMessage.skills}}</div>
 {{/if}}
 
 <Reusables::InputBox
-  @field='Name of your college/company'
-  @name='college'
-  @placeHolder='Hogwarts School of Witchcraft and Wizardry'
-  @type='text'
+  @field="Name of your college/company"
+  @name="college"
+  @placeHolder="Hogwarts School of Witchcraft and Wizardry"
+  @type="text"
   @required={{true}}
   @value={{this.data.college}}
   @onInput={{this.inputHandler}}
 />
 {{#if this.errorMessage.college}}
-  <div class='error__message'>{{this.errorMessage.college}}</div>
+  <div class="error__message">{{this.errorMessage.college}}</div>
 {{/if}}
 
 <Reusables::TextAreaBox
-  @field='What do you do for fun?'
-  @name='forFun'
+  @field="What do you do for fun?"
+  @name="forFun"
   @placeHolder="Tell us about the things you do in your spare time. Do you play any sports like Cricket? Or are you into reading books or watching movies? Feel free to tell us whatever you'd like. We would love to know more about you in not less than 100 words"
   @required={{true}}
   @value={{this.data.forFun}}
   @onInput={{this.inputHandler}}
 />
 {{#if this.errorMessage.forFun}}
-  <div class='error__message'>{{this.errorMessage.forFun}}</div>
+  <div class="error__message">{{this.errorMessage.forFun}}</div>
 {{/if}}
 
 <Reusables::TextAreaBox
-  @field='Fun facts about you'
-  @name='funFact'
-  @placeHolder='Tell us fun facts about you that makes you unique in not less than 100 words'
+  @field="Fun facts about you"
+  @name="funFact"
+  @placeHolder="Tell us fun facts about you that makes you unique in not less than 100 words"
   @required={{true}}
   @value={{this.data.funFact}}
   @onInput={{this.inputHandler}}
 />
 {{#if this.errorMessage.funFact}}
-  <div class='error__message'>{{this.errorMessage.funFact}}</div>
+  <div class="error__message">{{this.errorMessage.funFact}}</div>
 {{/if}}

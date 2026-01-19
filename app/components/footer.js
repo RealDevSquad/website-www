@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { ABOUT, APPS } from '../constants/urls';
 import { APPS_PROPERTIES, ABOUT_PROPERTIES } from '../constants/footer-data';
 import { SOCIAL_LINK_PROPERTIES } from '../constants/social-data';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class FooterComponent extends Component {
