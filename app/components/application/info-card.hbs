@@ -4,12 +4,12 @@
     {{#each @sections as |section|}}
       {{#if (eq section.type "grid")}}
         <div class="info-section" data-test-info-section>
-            {{#each section.items as |item|}}
-              <div class="info-item" data-test-info-item>
-                <label class="info-label">{{item.label}}</label>
-                <p class="info-value">{{item.value}}</p>
-              </div>
-            {{/each}}
+          {{#each section.items as |item|}}
+            <div class="info-item" data-test-info-item>
+              <label class="info-label">{{item.label}}</label>
+              <p class="info-value">{{item.value}}</p>
+            </div>
+          {{/each}}
         </div>
       {{else}}
         <div class="info-section" data-test-info-section>
