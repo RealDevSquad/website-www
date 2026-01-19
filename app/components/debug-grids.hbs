@@ -85,9 +85,13 @@
               data-test-debug-apply-privileges-button
               class="privileges-toggle"
             >
-          <input type="checkbox" class="privileges-toggle__checkbox" data-test-toggle-checkbox checked={{this.debugUserRolesData.super_user}}
-          {{on "change" this.toggleSuperUser}}
-          />
+              <input
+                type="checkbox"
+                class="privileges-toggle__checkbox"
+                data-test-toggle-checkbox
+                checked={{this.debugUserRolesData.super_user}}
+                {{on "change" this.toggleSuperUser}}
+              />
               <span class="privileges-toggle__slider"></span>
             </label>
           </div>

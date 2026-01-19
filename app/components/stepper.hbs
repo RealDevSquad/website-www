@@ -1,7 +1,7 @@
-<section class='stepper'>
+<section class="stepper">
   {{#each this.TITLE_MESSAGES as |message|}}
     {{#if (eq this.currentStep message.step)}}
-      <h1 data-test-message={{message.id}} class='stepper__greeting'>
+      <h1 data-test-message={{message.id}} class="stepper__greeting">
         {{message.greeting}}
       </h1>
     {{/if}}
@@ -9,7 +9,7 @@
 
   {{#if (not-eq this.currentStep 0)}}
     {{#if (not-eq this.currentStep 5)}}
-      <h3 class='details' data-test-step-detail>
+      <h3 class="details" data-test-step-detail>
         Step
         {{this.currentStep}}
         of 4 :
@@ -22,70 +22,82 @@
         {{else if (eq this.currentStep 4)}}
           Preview
         {{/if}}
-      </h3>  
+      </h3>
     {{/if}}
   {{/if}}
-  
+
   <form class="stepper__form" onsubmit={{this.nextStep}}>
     {{#if (eq this.currentStep 1)}}
-      <JoinSteps::StepOne @setIsPreValid={{this.setIsPreValid}} @isValid={{this.isValid}} @setIsValid={{this.setIsValid}} />
+      <JoinSteps::StepOne
+        @setIsPreValid={{this.setIsPreValid}}
+        @isValid={{this.isValid}}
+        @setIsValid={{this.setIsValid}}
+      />
     {{else if (eq this.currentStep 2)}}
-      <JoinSteps::StepTwo @setIsPreValid={{this.setIsPreValid}} @isValid={{this.isValid}} @setIsValid={{this.setIsValid}}/>
+      <JoinSteps::StepTwo
+        @setIsPreValid={{this.setIsPreValid}}
+        @isValid={{this.isValid}}
+        @setIsValid={{this.setIsValid}}
+      />
     {{else if (eq this.currentStep 3)}}
-      <JoinSteps::StepThree @setIsPreValid={{this.setIsPreValid}} @isValid={{this.isValid}} @setIsValid={{this.setIsValid}}/>
+      <JoinSteps::StepThree
+        @setIsPreValid={{this.setIsPreValid}}
+        @isValid={{this.isValid}}
+        @setIsValid={{this.setIsValid}}
+      />
     {{else if (eq this.currentStep 4)}}
       <JoinSteps::StepFour login={{this.login}} />
     {{else if (eq this.currentStep 5)}}
-        <JoinSteps::StatusCard 
+      <JoinSteps::StatusCard
         @status={{this.applicationStatus}}
         @feedback={{this.applicationFeedback}}
         @joinDiscord={{@joinDiscord}}
-          />
+      />
     {{/if}}
 
     {{#if (eq this.currentStep 0)}}
       <Reusables::Button
-        @text='Start'
-        @variant='dark'
+        @text="Start"
+        @variant="dark"
         @onClick={{this.startHandler}}
-        @test='start'
-        @type='button'
+        @test="start"
+        @type="button"
       />
     {{else if (eq this.currentStep 4)}}
-      <div class='stepper__buttons'>
+      <div class="stepper__buttons">
         <Reusables::Button
-          @text='Previous'
-          @variant='light'
+          @text="Previous"
+          @variant="light"
           @onClick={{this.decrementStep}}
-          @test='prev'
-          @type='button'
+          @test="prev"
+          @type="button"
         />
         <Reusables::Button
-          @text='Submit'
-          @variant='dark'
+          @text="Submit"
+          @variant="dark"
           @onClick={{this.joinHandler}}
-          @test='submit'
-          @type='button'
+          @test="submit"
+          @type="button"
         />
       </div>
     {{else if (not-eq this.currentStep 5)}}
-      <div class='stepper__buttons'>
+      <div class="stepper__buttons">
         <Reusables::Button
           data-test-prev-btn
-          @text='Previous'
-          @variant='light'
+          @text="Previous"
+          @variant="light"
           @onClick={{this.decrementStep}}
-          @test='prev'
-          @type='button'
+          @test="prev"
+          @type="button"
         />
         <Reusables::Button
           data-test-next-btn
-          @text={{if (eq this.currentStep 3) 'Preview' 'Next'}}
-          @variant='dark'
+          @text={{if (eq this.currentStep 3) "Preview" "Next"}}
+          @variant="dark"
           @disabled={{if (or this.preValid this.isValid) false true}}
           @onClick={{this.nextStep}}
-          @test='next'
-          @type='submit'
+          @test="next"
+          @type="submit"
         />
       </div>
     {{/if}}

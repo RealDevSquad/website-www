@@ -1,13 +1,13 @@
 <video
   data-test-video
-  class='video-screen
-    {{if this.liveService.isScreenShareOn "" "video-screen--fill"}}'
+  class="video-screen
+    {{if this.liveService.isScreenShareOn '' 'video-screen--fill'}}"
   controls
   src={{@src}}
-  type='video/mp4'
+  type="video/mp4"
   autoplay
   muted
   playsinlne
   loop
-  {{create-global-ref 'videoEl'}}
+  {{create-global-ref "videoEl"}}
 ></video>

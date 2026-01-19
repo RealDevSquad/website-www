@@ -1,12 +1,10 @@
 <div class="welcome-screen" data-test="welcome-screen">
   <div class="welcome-screen__logo" data-test="welcome-logo">
-    <img
-      src="assets/images/rds-logo.png"
-      alt="RDS"
-    />
+    <img src="assets/images/rds-logo.png" alt="RDS" />
   </div>
 
-  <h1 class="stepper__greeting" data-test="welcome-greeting">Ready to apply to Real Dev Squad?</h1>
+  <h1 class="stepper__greeting" data-test="welcome-greeting">Ready to apply to
+    Real Dev Squad?</h1>
 
   <div>
     <div class="welcome-screen__info-item--bullet">
@@ -18,7 +16,8 @@
     </div>
 
     <div class="welcome-screen__info-item--bullet">
-      Once you're done, you'll get access to quests that help improve your rank and increase your chances of selection.
+      Once you're done, you'll get access to quests that help improve your rank
+      and increase your chances of selection.
     </div>
   </div>
 
@@ -37,9 +36,9 @@
 </div>
 
 {{#if this.isTermsModalOpen}}
-    <TermsModal
-      @isOpen={{this.isTermsModalOpen}}
-      @onAccept={{this.acceptTerms}}
-      @onClose={{this.closeTermsModal}}
-    />
+  <TermsModal
+    @isOpen={{this.isTermsModalOpen}}
+    @onAccept={{this.acceptTerms}}
+    @onClose={{this.closeTermsModal}}
+  />
 {{/if}}

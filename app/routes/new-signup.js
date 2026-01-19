@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { TOAST_OPTIONS } from '../constants/toast-options';
 import { SIGNUP_ERROR_MESSAGES } from '../constants/new-signup';
 import { ERROR_MESSAGES } from '../constants/error-messages';

@@ -1,21 +1,35 @@
 <div data-test-status-card class="status-card">
   {{#if this.currentStatusDetails}}
     <div data-test-status-card-heading-icon class="status-card__heading-icon">
-      <h3 data-test-status-card-heading class="status-card__heading heading__h3">
+      <h3
+        data-test-status-card-heading
+        class="status-card__heading heading__h3"
+      >
         {{this.currentStatusDetails.heading}}
       </h3>
-      <FaIcon 
-        data-test-icon={{this.status}} 
-        @icon={{this.currentStatusDetails.icon}} 
-        @size="2x" 
+      <FaIcon
+        data-test-icon={{this.status}}
+        @icon={{this.currentStatusDetails.icon}}
+        @size="2x"
         class="{{this.currentStatusDetails.icon}}-icon"
       />
     </div>
 
-    <div data-test-status-card-description-container class="status-card__description">
+    <div
+      data-test-status-card-description-container
+      class="status-card__description"
+    >
       {{#if (eq this.status this.APPLICATION_STATUS_TYPES.pending)}}
         <p data-test-status-card-description-1>
-          Your application is currently under review. Please check this page regularly for updates. If you don't receive an update within 10 days, please reach out to Ankush on <a href={{this.ANKUSH_TWITTER}} target="_blank" rel="noopener noreferrer">X</a> by providing below link 👇.
+          Your application is currently under review. Please check this page
+          regularly for updates. If you don't receive an update within 10 days,
+          please reach out to Ankush on
+          <a
+            href={{this.ANKUSH_TWITTER}}
+            target="_blank"
+            rel="noopener noreferrer"
+          >X</a>
+          by providing below link 👇.
         </p>
       {{else if (eq this.status this.APPLICATION_STATUS_TYPES.rejected)}}
         <p data-test-status-card-description-1>
@@ -24,23 +38,28 @@
 
         {{#if this.feedback}}
           <div class="status-card__feedback">
-            <p data-test-status-card-feedback-title><strong>Feedback:</strong></p>
+            <p data-test-status-card-feedback-title><strong
+              >Feedback:</strong></p>
             <p data-test-status-card-feedback-content>{{this.feedback}}</p>
           </div>
         {{/if}}
 
         <p data-test-status-card-description-encouragement>
-           Don't be discouraged. We encourage you to apply again in the future.
+          Don't be discouraged. We encourage you to apply again in the future.
         </p>
       {{else if (eq this.status this.APPLICATION_STATUS_TYPES.accepted)}}
-        <p data-test-status-card-description-1 class="status-card__congrats"><b>Congratulations!</b> Your application has been accepted.</p>
+        <p data-test-status-card-description-1 class="status-card__congrats"><b
+          >Congratulations!</b>
+          Your application has been accepted.</p>
         {{#if this.feedback}}
           <div class="status-card__feedback">
-            <p data-test-status-card-description-2><strong>Feedback:</strong></p>
+            <p data-test-status-card-description-2><strong
+              >Feedback:</strong></p>
             <p data-test-status-card-description-3>{{this.feedback}}</p>
           </div>
         {{/if}}
-        <p data-test-status-card-description-4>You're almost there! Join our Discord server to connect with the team.</p>
+        <p data-test-status-card-description-4>You're almost there! Join our
+          Discord server to connect with the team.</p>
       {{/if}}
     </div>
 
@@ -48,11 +67,11 @@
       <div class="joining__copy">
         <h3 class="details" data-test-link-text>Here is your personalized link</h3>
         <p id="url" class="copy__link">{{this.introLink}}</p>
-        <CopyButton 
-          data-test-copy-btn 
-          @target="#url" 
-          @onSuccess={{this.onSuccess}} 
-          @onError={{this.onError}} 
+        <CopyButton
+          data-test-copy-btn
+          @target="#url"
+          @onSuccess={{this.onSuccess}}
+          @onError={{this.onError}}
           class="btn btn-dark"
         >
           Copy
@@ -62,11 +81,11 @@
 
     {{#if (eq this.status this.APPLICATION_STATUS_TYPES.accepted)}}
       <div class="status-card__buttons">
-        <Reusables::Button 
-          @text="Join Discord" 
-          @variant="dark" 
-          @onClick={{@joinDiscord}} 
-          @test="join-discord-link" 
+        <Reusables::Button
+          @text="Join Discord"
+          @variant="dark"
+          @onClick={{@joinDiscord}}
+          @test="join-discord-link"
           @type="button"
         />
       </div>
