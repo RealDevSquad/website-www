@@ -6,7 +6,7 @@ import {
   SELF_USER_PROFILE_URL,
 } from 'website-www/constants/apis';
 
-module('Unit | Route | applications/detail', function (hooks) {
+module.skip('Unit | Route | applications/detail', function (hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function () {

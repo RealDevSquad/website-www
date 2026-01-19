@@ -1,18 +1,53 @@
-<div class="admin-application-detail">
-  <h2>Application Details</h2>
-  {{#if this.model}}
-  <div class="application-detail-content">
-    <div class="application-section">
-      <h3>Basic Information</h3>
-      <p>Application ID: {{this.model.id}}</p>
-      <p>User ID: {{this.model.userId}}</p>
+<div class="admin-application-detail" data-test-application-detail>
+  {{#if this.application}}
+    <Application::DetailHeader
+      @application={{this.application}}
+      @userDetails={{this.currentUser}}
+      @isAdmin={{this.isAdmin}}
+      data-test-detail-header
+    />
+
+    <div class="admin-message" data-test-admin-message>
+      <IconifyIcon @icon="mdi:information" />
+      <span>{{this.showAdminMessage}}</span>
     </div>
-  </div>
+
+    <div class="detail-main-content" data-test-detail-main-content>
+      <div class="detail-left-column" data-test-detail-left-column>
+        <Application::InfoCard
+          @title="About You"
+          @sections={{this.aboutYouSections}}
+          data-test-about-you-card
+        />
+      </div>
+
+      <div class="detail-right-column" data-test-detail-right-column>
+        <h3>Feedback History</h3>
+        <div class="feedback-history" data-test-feedback-history>
+          {{#if this.hasFeedback}}
+            {{#each this.application.feedback as |feedback|}}
+              <Application::FeedbackCard
+                @status={{feedback.status}}
+                @feedbackText={{feedback.feedback}}
+                @reviewerName={{feedback.reviewerName}}
+                @createdAt={{feedback.createdAt}}
+                data-test-feedback-card
+              />
+            {{/each}}
+          {{else}}
+            <div class="no-feedback" data-test-no-feedback>
+              <p>No feedback yet</p>
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
   {{else}}
-  <div class="application-error">
-    <p class="error-message">Application not found.</p>
-    <p class="error-description">The application you're looking for doesn't
-      exist or may have been removed.</p>
-  </div>
+    <div class="application-error" data-test-application-error>
+      <p class="error-message" data-test-error-message>Application not found.</p>
+      <p class="error-description" data-test-error-description>The application you're looking for doesn't
+        exist or may have been removed.</p>
+    </div>
   {{/if}}
 </div>

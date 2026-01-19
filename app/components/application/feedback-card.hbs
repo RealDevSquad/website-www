@@ -1,0 +1,13 @@
+<div class="feedback-card" data-test-feedback-card>
+  <div class="feedback-header" data-test-feedback-header>
+    <Application::StatusBadge
+      @status={{@status}}
+      data-test-status-badge
+    />
+    <span class="feedback-date" data-test-feedback-date>{{this.formattedDate}}</span>
+  </div>
+  <div class="feedback-content" data-test-feedback-content>
+    <p class="feedback-text" data-test-feedback-text>{{@feedbackText}}</p>
+    <p class="feedback-reviewer" data-test-feedback-reviewer>by {{@reviewerName}}</p>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="detail-header" data-test-detail-header>
+  <div class="detail-header-left" data-test-header-profile>
+    <div class="header-profile">
+      <img
+        src={{this.imageUrl}}
+        alt="Profile"
+        class="profile-image"
+        data-test-profile-image
+      />
+      <div class="profile-info">
+        <div class="profile-name-row">
+          <h2 class="user-name" data-test-user-name>
+            {{this.fullName}}
+          </h2>
+          <Application::StatusBadge @status={{this.status}} />
+        </div>
+        <p class="profile-role">{{this.role}}</p>
+        <div class="profile-meta">
+          <div class="meta-item">
+            <IconifyIcon @icon="mdi:map-marker" />
+            {{this.location}}
+          </div>
+          <div class="meta-item">
+            <IconifyIcon @icon="mdi:lightbulb-on" />
+            {{this.skills}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-links-container" data-test-social-links-container>
+      {{#each this.socialLinks as |link|}}
+        <Application::SocialLinkPill
+          @platform={{link.platform}}
+          @userName={{link.userName}}
+          data-test-social-link
+        />
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="detail-header-right">
+    <div class="header-score-nudge" data-test-header-score-nudge>
+      <div class="score-display" data-test-score-display>
+        <span class="score-value" data-test-score-value>{{this.score}}</span>
+        <span class="score-label">Score</span>
+      </div>
+      <div class="score-display" data-test-nudge-details>
+        <span class="score-value">{{this.nudgeCount}}</span>
+        <span class="score-label">Nudges</span>
+      </div>
+    </div>
+    <div class="header-actions" data-test-header-actions>
+      {{#if @isAdmin}}
+        <Reusables::Button
+          @text="Dashboard"
+          @variant="dark"
+          @class="btn--xs"
+          @onClick={{this.navigateToDashboard}}
+          data-test-navigate-button
+        />
+      {{else}}
+        <Reusables::Button
+          @text="Nudge"
+          @variant="dark"
+          @class="btn--xs"
+          @disabled={{this.isNudgeDisabled}}
+          @onClick={{this.nudgeApplication}}
+          data-test-nudge-button
+        />
+        <Reusables::Button
+          @text="Edit"
+          @variant="light"
+          @class="btn--xs"
+          @onClick={{this.editApplication}}
+          data-test-edit-button
+        />
+      {{/if}}
+    </div>
+  </div>
+</div>
