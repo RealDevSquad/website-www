@@ -48,11 +48,11 @@ export default class DetailHeader extends Component {
     if (this.status !== 'pending') {
       return true;
     }
-    if (!this.lastNudgedAt) {
+    if (!this.application?.lastNudgedAt) {
       return false;
     }
     const now = Date.now();
-    const lastNudgeTime = new Date(this.lastNudgedAt).getTime();
+    const lastNudgeTime = new Date(this.application.lastNudgedAt).getTime();
     const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
     return now - lastNudgeTime < TWENTY_FOUR_HOURS;
   }

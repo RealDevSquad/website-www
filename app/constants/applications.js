@@ -15,7 +15,7 @@ export const mapSocialIcons = {
 
 export const mapSocialUrls = {
   github: 'https://github.com',
-  linkedin: 'https://linkedin.com',
+  linkedin: 'https://linkedin.com/in',
   twitter: 'https://twitter.com',
   instagram: 'https://instagram.com',
   peerlist: 'https://peerlist.io',
