@@ -17,30 +17,32 @@ module('Integration | Component | application/info-card', function (hooks) {
     );
 
     assert.dom('[data-test-info-card-title]').hasText('About');
-    assert.dom('[data-test-info-item]').doesNotExist();
-    assert.dom('[data-test-info-block]').exists({ count: 2 });
+    assert.dom('[data-test-info-section]').exists({ count: 2 });
     assert.dom('.info-label').includesText('Intro');
     assert.dom('.info-value').includesText('Value 1');
+
+    assert
+      .dom('[data-test-info-section]:nth-child(1) .info-label')
+      .hasText('Intro');
+    assert
+      .dom('[data-test-info-section]:nth-child(1) .info-value')
+      .hasText('Value 1');
+    assert
+      .dom('[data-test-info-section]:nth-child(2) .info-label')
+      .hasText('Fact');
+    assert
+      .dom('[data-test-info-section]:nth-child(2) .info-value')
+      .hasText('Value 2');
   });
 
-  test('it renders grid sections correctly', async function (assert) {
-    this.set('sections', [
-      {
-        type: 'grid',
-        items: [
-          { label: 'Item 1', value: 'Value 1' },
-          { label: 'Item 2', value: 'Value 2' },
-        ],
-      },
-    ]);
+  test('it handles empty sections correctly', async function (assert) {
+    this.set('sections', []);
 
     await render(
-      hbs`<Application::InfoCard @title="Grid Info" @sections={{this.sections}} />`,
+      hbs`<Application::InfoCard @title="Empty" @sections={{this.sections}} />`,
     );
 
-    assert.dom('[data-test-info-section]').exists();
-    assert.dom('[data-test-info-item]').exists({ count: 2 });
-    assert.dom('.info-label').includesText('Item 1');
-    assert.dom('.info-value').includesText('Value 1');
+    assert.dom('[data-test-info-card-title]').hasText('Empty');
+    assert.dom('[data-test-info-section]').doesNotExist();
   });
 });

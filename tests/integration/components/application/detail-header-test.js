@@ -44,6 +44,16 @@ module('Integration | Component | application/detail-header', function (hooks) {
     assert.dom('[data-test-button="edit-button"]').doesNotExist();
   });
 
+  test('it handles partial location data correctly', async function (assert) {
+    this.set('application', {
+      location: { city: 'Mumbai', country: 'India' },
+    });
+    await render(
+      hbs`<Application::DetailHeader @application={{this.application}} />`,
+    );
+    assert.dom('[data-test-header-profile]').includesText('Mumbai, India');
+  });
+
   test('it disables nudge button when status is not pending', async function (assert) {
     const app = { ...APPLICATIONS_DATA, status: 'accepted' };
     this.set('application', app);
@@ -56,6 +66,21 @@ module('Integration | Component | application/detail-header', function (hooks) {
       />
     `);
 
+    assert.dom('[data-test-button="nudge-button"]').hasAttribute('disabled');
+  });
+
+  test('it disables nudge button based on 24h timeout', async function (assert) {
+    const now = Date.now();
+    const recentNudge = new Date(now - 12 * 60 * 60 * 1000).toISOString();
+
+    this.set('application', {
+      status: 'pending',
+      lastNudgedAt: recentNudge,
+    });
+
+    await render(
+      hbs`<Application::DetailHeader @application={{this.application}} />`,
+    );
     assert.dom('[data-test-button="nudge-button"]').hasAttribute('disabled');
   });
 });

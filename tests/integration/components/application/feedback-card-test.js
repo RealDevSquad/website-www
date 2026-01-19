@@ -42,4 +42,17 @@ module('Integration | Component | application/feedback-card', function (hooks) {
 
     assert.dom('[data-test-feedback-date]').hasText('N/A');
   });
+
+  test('it handles invalid date string correctly', async function (assert) {
+    await render(hbs`
+      <Application::FeedbackCard
+        @status="pending"
+        @feedbackText="Wait"
+        @reviewerName="Reviewer"
+        @createdAt="invalid-date"
+      />
+    `);
+
+    assert.dom('[data-test-feedback-date]').hasText('N/A');
+  });
 });
