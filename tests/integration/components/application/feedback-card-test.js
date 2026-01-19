@@ -2,17 +2,14 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'website-www/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { APPLICATIONS_DATA } from 'website-www/tests/constants/application-data';
 
 module('Integration | Component | application/feedback-card', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders feedback details correctly', async function (assert) {
-    this.set('feedback', {
-      status: 'accepted',
-      feedback: 'Great job!',
-      reviewerName: 'Ankush',
-      createdAt: '2026-01-14T15:37:10.991Z',
-    });
+    const feedback = APPLICATIONS_DATA.feedback[0];
+    this.set('feedback', feedback);
 
     await render(hbs`
       <Application::FeedbackCard
@@ -23,12 +20,16 @@ module('Integration | Component | application/feedback-card', function (hooks) {
       />
     `);
 
-    assert.dom('[data-test-status-badge]').hasText('ACCEPTED');
-    assert.dom('[data-test-feedback-text]').hasText('Great job!');
-    assert.dom('[data-test-feedback-reviewer]').includesText('Ankush');
+    assert
+      .dom('[data-test-status-badge]')
+      .hasText(feedback.status.toUpperCase());
+    assert.dom('[data-test-feedback-text]').hasText(feedback.feedback);
+    assert
+      .dom('[data-test-feedback-reviewer]')
+      .includesText(feedback.reviewerName);
     assert
       .dom('[data-test-feedback-date]')
-      .hasText(new Date('2026-01-14T15:37:10.991Z').toLocaleDateString());
+      .hasText(new Date(feedback.createdAt).toLocaleDateString());
   });
 
   test('it renders N/A for missing date', async function (assert) {

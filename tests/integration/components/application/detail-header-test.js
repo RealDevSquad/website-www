@@ -8,7 +8,8 @@ module('Integration | Component | application/detail-header', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders application details correctly', async function (assert) {
-    this.set('application', APPLICATIONS_DATA);
+    const user = APPLICATIONS_DATA;
+    this.set('application', user);
     this.set('isAdmin', false);
 
     await render(hbs`
@@ -18,10 +19,18 @@ module('Integration | Component | application/detail-header', function (hooks) {
       />
     `);
 
-    assert.dom('[data-test-user-name]').includesText('John Doe');
-    assert.dom('[data-test-status-badge]').hasText('ACCEPTED');
-    assert.dom('[data-test-score-value]').hasText('250');
-    assert.dom('[data-test-social-link]').exists({ count: 7 });
+    const { firstName, lastName } = user.biodata;
+    assert
+      .dom('[data-test-user-name]')
+      .includesText(`${firstName} ${lastName}`);
+    assert.dom('[data-test-status-badge]').hasText(user.status.toUpperCase());
+    assert.dom('[data-test-score-value]').hasText(String(user.score));
+    assert
+      .dom('[data-test-nudge-details]')
+      .includesText(String(user.nudgeCount));
+    assert
+      .dom('[data-test-social-link]')
+      .exists({ count: Object.keys(user.socialLink).length });
 
     assert.dom('[data-test-button="nudge-button"]').exists();
     assert.dom('[data-test-button="edit-button"]').exists();
@@ -29,7 +38,8 @@ module('Integration | Component | application/detail-header', function (hooks) {
   });
 
   test('it renders admin actions correctly', async function (assert) {
-    this.set('application', APPLICATIONS_DATA);
+    const user = APPLICATIONS_DATA;
+    this.set('application', user);
     this.set('isAdmin', true);
 
     await render(hbs`
