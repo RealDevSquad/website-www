@@ -1,54 +1,78 @@
-{{page-title 'Subscribe'}}
+{{page-title "Subscribe"}}
 
-<div class='subscribe__container'>
+<div class="subscribe__container">
   {{#if this.isLoggedIn}}
     {{#if (or this.isSubscribed this.showSubscribedMessage)}}
       <div class="already-subscribed">
         <h1>🎉 You're Subscribed!</h1>
-        <p>Thanks for your interest! You're all set to receive notifications when new applications open.</p>
+        <p>Thanks for your interest! You're all set to receive notifications
+          when new applications open.</p>
       </div>
     {{else}}
       {{#if this.isFormOpen}}
         <div class="subscribe__form_container">
           <h1>Subscribe to Notifications</h1>
-          <p>Get notified as soon as new applications open and never miss an update!</p>
+          <p>Get notified as soon as new applications open and never miss an
+            update!</p>
           <div class="subscribe__form">
             <form {{on "submit" this.handleSubmit}}>
               <div class="input__group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" placeholder="eg: johndoe@gmail.com" required value={{this.email}} {{on "input" this.updateEmail}} />
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="eg: johndoe@gmail.com"
+                  required
+                  value={{this.email}}
+                  {{on "input" this.updateEmail}}
+                />
               </div>
 
-             <div class="input__group">
-              <label for="phone" class="{{if this.isPhoneValid '' 'invalid-input'}}">Phone Number <span class="input__group__span" >(Optional)</span></label>
-              <input 
-                type="tel" 
-                id="phone"
-                value="{{this.phone}}"
-                {{on "input" this.updatePhone}}
-                placeholder="Please enter with the country code (e.g., +91 1234567890)."
-              >
-            </div>
-              <button class="notify__btn subscribe__button" disabled={{this.isSubmitDisabled}} type="submit">{{#if this.isLoading}} Subscribing... {{else}} Subscribe {{/if}}</button>
+              <div class="input__group">
+                <label
+                  for="phone"
+                  class="{{if this.isPhoneValid '' 'invalid-input'}}"
+                >Phone Number
+                  <span class="input__group__span">(Optional)</span></label>
+                <input
+                  type="tel"
+                  id="phone"
+                  value="{{this.phone}}"
+                  {{on "input" this.updatePhone}}
+                  placeholder="Please enter with the country code (e.g., +91 1234567890)."
+                />
+              </div>
+              <button
+                class="notify__btn subscribe__button"
+                disabled={{this.isSubmitDisabled}}
+                type="submit"
+              >{{#if this.isLoading}} Subscribing... {{else}}
+                  Subscribe
+                {{/if}}</button>
             </form>
           </div>
         </div>
       {{else}}
         <h1>Join the Real Dev Squad Community</h1>
 
-        {{!-- NOTE: This has the new code on feature flag off. --}}
-        {{!-- If something goes wrong, we can enable a flag to restore previous behaviour --}}
-        {{!-- TODO: Clean up by Feb, 2025 --}}
+        {{! NOTE: This has the new code on feature flag off. }}
+        {{! If something goes wrong, we can enable a flag to restore previous behaviour }}
+        {{! TODO: Clean up by Feb, 2025 }}
         {{#if this.isDevMode}}
-        <p class="notification__text">
-          We're currently not accepting new applications. Please come back later.
-        </p>
+          <p class="notification__text">
+            We're currently not accepting new applications. Please come back
+            later.
+          </p>
         {{else}}
-        <NoticeForJoining class="notification__text" />
+          <NoticeForJoining class="notification__text" />
         {{/if}}
 
         <p class="sub__text">Be the first to know when applications open!</p>
-        <button class="notify__btn" type="button" {{on "click" this.toggleFormModal}}>Notify Me When Applications Open</button>
+        <button
+          class="notify__btn"
+          type="button"
+          {{on "click" this.toggleFormModal}}
+        >Notify Me When Applications Open</button>
       {{/if}}
     {{/if}}
   {{else}}

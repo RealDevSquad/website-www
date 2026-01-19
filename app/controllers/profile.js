@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { APPS } from '../constants/urls';
 import { tracked } from '@glimmer/tracking';
 import { action, set } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { TOAST_OPTIONS } from '../constants/toast-options';
 import { profile_fields } from '../constants/profile-field';
 const BASE_URL = APPS.API_BACKEND;

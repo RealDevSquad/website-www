@@ -1,17 +1,17 @@
-<div data-test-kickout-modal class='kickout-modal'>
+<div data-test-kickout-modal class="kickout-modal">
   <h4 data-test-kickout-heading>{{@message}}</h4>
-  <div data-test-kickout-buttons class='kickout-modal__buttons'>
+  <div data-test-kickout-buttons class="kickout-modal__buttons">
     <Reusables::Button
       @text={{@closeText}}
-      @variant='dark btn--sm'
-      @test='kickout-button-cancel'
+      @variant="dark btn--sm"
+      @test="kickout-button-cancel"
       @onClick={{this.closeModal}}
     />
     <Reusables::Button
       @text={{@confirmText}}
-      @variant='pink btn-dark btn--sm'
-      @test='kickout-button-remove'
-      @type='button'
+      @variant="pink btn-dark btn--sm"
+      @test="kickout-button-remove"
+      @type="button"
       @onClick={{this.confirmHandler}}
     />
   </div>

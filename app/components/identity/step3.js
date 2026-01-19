@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { toastNotificationTimeoutOptions } from '../../constants/toast-notification';
 import { APPS } from '../../constants/urls';
 
@@ -43,7 +43,7 @@ export default class Step3Component extends Component {
             toastNotificationTimeoutOptions,
           );
         }
-      } catch (error) {
+      } catch {
         this.toast.error(
           'Something went wrong. Please check console errors.',
           '',

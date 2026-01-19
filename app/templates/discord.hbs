@@ -1,135 +1,135 @@
-{{page-title 'Discord'}}
+{{page-title "Discord"}}
 
-<section class='discord vertical-flex mx-auto' id='discord'>
-  {{#if @model.isTokenExpired }}
-    <p class='error__text testing'>Token Expired. Please generate a new token using
-      slash commands</p>
+<section class="discord vertical-flex mx-auto" id="discord">
+  {{#if @model.isTokenExpired}}
+    <p class="error__text testing">Token Expired. Please generate a new token
+      using slash commands</p>
   {{else}}
     {{#if (or this.isLinkingInProgress)}}
-      <div class='loading'>
-         <FaIcon @icon="spinner" @size="0.5x" class="fa-spin" />
+      <div class="loading">
+        <FaIcon @icon="spinner" @size="0.5x" class="fa-spin" />
       </div>
     {{else}}
       {{#if
         (or
           (eq @model.userData.roles.archived false)
-          (eq this.linkStatus 'linked')
+          (eq this.linkStatus "linked")
         )
       }}
-        <div class='discord__success'>
-          <p class='success__text'>Your Discord account has been successfully
+        <div class="discord__success">
+          <p class="success__text">Your Discord account has been successfully
             linked.</p>
-          <p class='success__text'>You can close this tab now.</p>
+          <p class="success__text">You can close this tab now.</p>
         </div>
-      {{else if (eq this.linkStatus 'failure')}}
-        <div class='discord__error'>
-          <p class='error__text'>Something went wrong. Please try again.</p>
+      {{else if (eq this.linkStatus "failure")}}
+        <div class="discord__error">
+          <p class="error__text">Something went wrong. Please try again.</p>
         </div>
-      {{else if (eq this.linkStatus 'not-linked')}}
-        <header class='header horizontal-flex w-100' data-test-header>
+      {{else if (eq this.linkStatus "not-linked")}}
+        <header class="header horizontal-flex w-100" data-test-header>
           <img
-            src='/assets/images/rds-logo.png'
-            alt='real_dev_squad'
-            class='logo'
+            src="/assets/images/rds-logo.png"
+            alt="real_dev_squad"
+            class="logo"
             data-test-rds-logo
           />
-          <div class='line w-100' data-test-platform-link-line></div>
+          <div class="line w-100" data-test-platform-link-line></div>
           <img
-            src='/assets/images/discord-logo.png'
-            alt='discord'
-            class='logo'
+            src="/assets/images/discord-logo.png"
+            alt="discord"
+            class="logo"
             data-test-discord-logo
           />
         </header>
 
-        <h2 class='heading' data-test-heading>Authorize Bot</h2>
+        <h2 class="heading" data-test-heading>Authorize Bot</h2>
 
-        <main class='discord-card vertical-flex w-100' data-test-main-content>
+        <main class="discord-card vertical-flex w-100" data-test-main-content>
 
-          <p class='my-same' data-test-card-header><strong>Real Dev Squad</strong>
+          <p class="my-same" data-test-card-header><strong>Real Dev Squad</strong>
             wants to access your
             <strong>Discord</strong>.</p>
 
-          <hr class='w-100 dark mx-auto' />
+          <hr class="w-100 dark mx-auto" />
 
-          <div class='profiles horizontal-flex w-100'>
+          <div class="profiles horizontal-flex w-100">
             <div
-              class='profile-card vertical-flex'
+              class="profile-card vertical-flex"
               data-test-discord-profile-card
             >
               <img
-                class='logo'
+                class="logo"
                 data-test-discord-profile-image
                 src={{if
                   @model.externalAccountData.attributes.userAvatar
                   @model.externalAccountData.attributes.userAvatar
-                  'assets/images/profile.png'
+                  "assets/images/profile.png"
                 }}
-                alt='Discord Avatar'
+                alt="Discord Avatar"
               />
-              <p class='username' data-test-discord-username>
+              <p class="username" data-test-discord-username>
                 {{@model.externalAccountData.attributes.userName}}#{{@model.externalAccountData.attributes.discriminator}}</p>
-              <p class='account' data-test-discord-account>Discord</p>
+              <p class="account" data-test-discord-account>Discord</p>
             </div>
 
             <img
-              src='/assets/images/discord-connector.svg'
-              class='logo'
-              alt='connectingline'
+              src="/assets/images/discord-connector.svg"
+              class="logo"
+              alt="connectingline"
               data-test-profile-connector
             />
 
             <div
-              class='profile-card vertical-flex my-same'
+              class="profile-card vertical-flex my-same"
               data-test-rds-profile-card
             >
               <img
-                class='logo'
+                class="logo"
                 data-test-rds-profile-image
                 src={{if
                   @model.userData.picture.url
                   @model.userData.picture.url
-                  '/assets/images/profile.png'
+                  "/assets/images/profile.png"
                 }}
-                alt='Real Dev Squad Avatar'
+                alt="Real Dev Squad Avatar"
               />
               <p
-                class='username'
+                class="username"
                 data-test-rds-username
               >{{@model.userData.username}}</p>
-              <p class='account' data-test-rds-account>Real Dev Squad</p>
+              <p class="account" data-test-rds-account>Real Dev Squad</p>
             </div>
           </div>
 
-          <hr class='w-100 dark mx-auto' />
+          <hr class="w-100 dark mx-auto" />
 
-          <div class='TnC w-100 my-same' data-test-tnc>
+          <div class="TnC w-100 my-same" data-test-tnc>
             <p>By authorizing us you allow us to:</p>
-            <ul class='mx-auto' data-test-tnc-points>
+            <ul class="mx-auto" data-test-tnc-points>
               <li>Change your name within our server.</li>
               <li>Read/process your messages.</li>
             </ul>
           </div>
 
-          <hr class='w-100 dark mx-auto' />
+          <hr class="w-100 dark mx-auto" />
 
-          <div class='my-same' data-test-consent>
+          <div class="my-same" data-test-consent>
             <input
               data-test-consent-checkbox
-              name='authorize'
-              id='authorize'
-              type='checkbox'
-              {{on 'input' this.setConsent}}
+              name="authorize"
+              id="authorize"
+              type="checkbox"
+              {{on "input" this.setConsent}}
             />
-            <label for='authorize' data-test-consent-label>I Accept the above
+            <label for="authorize" data-test-consent-label>I Accept the above
               mentioned clauses</label>
           </div>
           <button
             data-test-authorize-button
-            type='button'
-            class='button my-same
-              {{if this.consent "btn-enabled" "btn-disabled"}}'
-            {{on 'click' this.linkDiscordAccount}}
+            type="button"
+            class="button my-same
+              {{if this.consent 'btn-enabled' 'btn-disabled'}}"
+            {{on "click" this.linkDiscordAccount}}
           >Authorize</button>
         </main>
       {{/if}}

@@ -35,6 +35,7 @@ Now since we are migrating this project from `Vanilla JS` to `emberJS` we had to
 git checkout develop-ember
 
 ```
+
 Now you should install the required packages to run this project by doing:
 
 ```
@@ -176,4 +177,7 @@ Click on it, submit your pull request (also known as _PR_) explaining what you'v
 Now the maintainers/admins will review your pull request. They might suggest some changes if required. You should then make the required changes in the **same branch**, commit them and push your changes to the **same branch** (follow the steps 7, 8 and 9 for the same).
 
 12. **Congratulations on your first Pull Request in Real Dev Squad! 🎉**
+
+```
+
 ```

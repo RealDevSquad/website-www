@@ -1,35 +1,35 @@
-<div data-test='profile-service' class='profile-service-page'>
-  <h3 data-test='heading' class='profile-service-page__heading heading__h3'>
+<div data-test="profile-service" class="profile-service-page">
+  <h3 data-test="heading" class="profile-service-page__heading heading__h3">
     Deploy Profile Service
   </h3>
-  <p data-test='description' class='profile-service-page__description'>
+  <p data-test="description" class="profile-service-page__description">
     Set the chaincode on your profile service.<br />
     Deploy it and enter your profile service URL
   </p>
-  <div class='profile-service-page__input-container'>
+  <div class="profile-service-page__input-container">
     <label
-      for='profile-service-url'
-      class='profile-service-page__input-label'
+      for="profile-service-url"
+      class="profile-service-page__input-label"
     ></label>
     <input
-      data-test-input-field='profile-service'
-      id='profile-service-url'
-      class='profile-service-page__input-url'
-      type='text'
-      placeholder='Enter your profile service URL'
+      data-test-input-field="profile-service"
+      id="profile-service-url"
+      class="profile-service-page__input-url"
+      type="text"
+      placeholder="Enter your profile service URL"
       value={{this.profileURL}}
-      {{on 'keyup' this.changeProfileURL}}
+      {{on "keyup" this.changeProfileURL}}
     />
   </div>
 
-  <div class='profile-service-page__button'>
+  <div class="profile-service-page__button">
     <Reusables::Button
-      @text='Next'
-      @variant='dark'
+      @text="Next"
+      @variant="dark"
       @onClick={{this.handleEdit}}
-      @test='next'
+      @test="next"
       @disabled={{this.nextButtonDisabled}}
-      @type='button'
+      @type="button"
       @isLoading={{this.isLoading}}
     />
   </div>

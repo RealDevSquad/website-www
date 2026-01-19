@@ -1,19 +1,19 @@
-<div data-test='chaincode' class='chaincode-page'>
-  <h3 data-test='heading' class='chaincode-page__heading heading__h3'>
+<div data-test="chaincode" class="chaincode-page">
+  <h3 data-test="heading" class="chaincode-page__heading heading__h3">
     Chaincode Generation
   </h3>
-  <p data-test='description' class='chaincode-page__description'>
+  <p data-test="description" class="chaincode-page__description">
     A private key that you need to use in your profile service URL and deploy
     for source that you're the source of the URL
   </p>
   {{#if @isChaincodeClicked}}
-    <div data-test='chaincode-container' class='chaincode-container'>
+    <div data-test="chaincode-container" class="chaincode-container">
       <div
-        data-test='chaincode-container__value'
+        data-test="chaincode-container__value"
         class={{if
           this.hideChaincode
-          'chaincode-container__value-invisible'
-          'chaincode-container__value-visible'
+          "chaincode-container__value-invisible"
+          "chaincode-container__value-visible"
         }}
       >
         {{#if this.hideChaincode}}
@@ -23,29 +23,27 @@
         {{/if}}
       </div>
       <div
-        data-test='chaincode-container-action'
-        class='chaincode-container-action'
+        data-test="chaincode-container-action"
+        class="chaincode-container-action"
       >
         <button
-          data-test-button='eye-icon'
-          class='chaicode-button-icon'
-          type='button'
-          {{on 'click' this.toggleEye}}
+          data-test-button="eye-icon"
+          class="chaicode-button-icon"
+          type="button"
+          {{on "click" this.toggleEye}}
         >
-          <FaIcon
-            @icon={{if this.hideChaincode 'eye' 'eye-slash'}}
-          />
+          <FaIcon @icon={{if this.hideChaincode "eye" "eye-slash"}} />
         </button>
         <button
-          data-test-button='copy-icon'
-          class='chaicode-button-icon'
-          type='button'
-          {{on 'click' this.handleCopy}}
+          data-test-button="copy-icon"
+          class="chaicode-button-icon"
+          type="button"
+          {{on "click" this.handleCopy}}
         >
-          <FaIcon @icon='copy' />
+          <FaIcon @icon="copy" />
           <Tooltip
             @isVisible={{this.isTooltipVisible}}
-            @text='Copy this code to go to next step'
+            @text="Copy this code to go to next step"
           />
         </button>
       </div>
@@ -53,21 +51,21 @@
   {{else}}
     <Reusables::Button
       @text={{@chaincode}}
-      @variant='chaincode'
+      @variant="chaincode"
       @onClick={{@handleGenerateChaincode}}
-      @test='chaincode'
+      @test="chaincode"
       @isLoading={{@isLoading}}
-      @type='button'
+      @type="button"
     />
   {{/if}}
-  <div class='chaincode-page__button'>
+  <div class="chaincode-page__button">
     <Reusables::Button
-      @text='Next'
-      @variant='dark'
+      @text="Next"
+      @variant="dark"
       @onClick={{@startHandler}}
-      @test='next'
+      @test="next"
       @disabled={{if this.isChaincodePageButtonDisabled true false}}
-      @type='button'
+      @type="button"
     />
   </div>
 </div>

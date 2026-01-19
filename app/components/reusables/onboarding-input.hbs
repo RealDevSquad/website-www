@@ -1,33 +1,33 @@
-<div data-test-input={{@name}} class='input-box input-box--btn'>
+<div data-test-input={{@name}} class="input-box input-box--btn">
   <label
     data-test-label={{@name}}
-    class='label'
+    class="label"
     for={{@name}}
   >{{@field}}</label>
   {{#if @required}}
-    <span data-test-required={{@name}} class='required'>*</span>
+    <span data-test-required={{@name}} class="required">*</span>
   {{/if}}
   <input
     data-test-input-field={{@name}}
     name={{@name}}
-    class='input__field user-input input-regular {{@classDisableInput}}'
+    class="input__field user-input input-regular {{@classDisableInput}}"
     type={{@type}}
     id={{@name}}
     placeholder={{@placeHolder}}
     required={{@required}}
     value={{@value}}
     disabled={{@disabled}}
-    {{on 'input' @onInput}}
+    {{on "input" @onInput}}
   />
   {{#if @hasButtonInsideInput}}
     <Reusables::Button
-      @text='Generate Username'
-      @variant='dark'
-      @classGenerateUsername='generateUsername'
+      @text="Generate Username"
+      @variant="dark"
+      @classGenerateUsername="generateUsername"
       @onClick={{@onClickGetUsername}}
       @disabled={{@isValid}}
-      @test='generateUsername'
-      @type='button'
+      @test="generateUsername"
+      @type="button"
     />
   {{/if}}
 </div>

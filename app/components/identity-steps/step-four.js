@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { APPS } from '../../constants/urls';
 import checkURL from '../../utils/check-url';
 import { TOAST_OPTIONS } from '../../constants/toast-options';

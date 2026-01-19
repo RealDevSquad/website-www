@@ -1,9 +1,17 @@
-<section class='intro'>
-  <h3 class='intro__title' data-test-validate-text>Let's check {{this.applicantData.biodata.firstName}}'s information 📜 </h3>
+<section class="intro">
+  <h3 class="intro__title" data-test-validate-text>Let's check
+    {{this.applicantData.biodata.firstName}}'s information 📜
+  </h3>
   {{#each this.APPLICANT_DATA as |applicantData|}}
-    <div class='intro__item'>
-      <h3 class='item__label' data-test-join-label={{applicantData.id}}>{{applicantData.label}}</h3>
-      <p class='item__data' data-test-join-data={{applicantData.id}}>{{applicantData.data}}</p>
+    <div class="intro__item">
+      <h3
+        class="item__label"
+        data-test-join-label={{applicantData.id}}
+      >{{applicantData.label}}</h3>
+      <p
+        class="item__data"
+        data-test-join-data={{applicantData.id}}
+      >{{applicantData.data}}</p>
     </div>
   {{/each}}
 </section>

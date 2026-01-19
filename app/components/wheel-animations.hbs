@@ -1,25 +1,25 @@
-<section class='animation__container' data-test-wheel-animation-section>
+<section class="animation__container" data-test-wheel-animation-section>
   {{#if @users}}
     <div>
       {{#each @users as |member index|}}
         <a
-          href='https://members.realdevsquad.com/{{member.username}}'
-          target='_blank'
-          class='member__link'
-          rel='noopener noreferrer'
+          href="https://members.realdevsquad.com/{{member.username}}"
+          target="_blank"
+          class="member__link"
+          rel="noopener noreferrer"
           data-test-wheel-animation-member-link
         >
           <img
-            style={{(this.memberStyle index)}}
-            class='circle member__img'
-            src='{{(this.resizeImageUrl member.picture.publicId 150 150)}}'
-            alt='{{member.first_name}} {{member.last_name}}'
+            style={{this.memberStyle index}}
+            class="circle member__img"
+            src="{{this.resizeImageUrl member.picture.publicId 150 150}}"
+            alt="{{member.first_name}} {{member.last_name}}"
             data-test-wheel-animation-member-image
           />
         </a>
       {{/each}}
     </div>
   {{else}}
-    <div class='circle shine'></div>
+    <div class="circle shine"></div>
   {{/if}}
 </section>

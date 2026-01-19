@@ -1,13 +1,13 @@
-<section data-test-events-section class='events-section'>
-  <h2 data-test-events-section-header class='events-section__heading'>You can
+<section data-test-events-section class="events-section">
+  <h2 data-test-events-section-header class="events-section__heading">You can
     check out all our events below!!</h2>
   {{#each-in this.EVENTS_CATEGORIES as |category events|}}
-    <div class='events-section__category'>
+    <div class="events-section__category">
       <h3
         data-test-events-category={{category}}
-        class='events-section__category-heading'
+        class="events-section__category-heading"
       >{{category}}:</h3>
-      <div class='events-section__links-container'>
+      <div class="events-section__links-container">
         {{#each events as |event index|}}
           {{#if (not-eq index 0)}}
             <span>|</span>
@@ -15,7 +15,7 @@
           <a
             data-test-events-link={{event.name}}
             href={{event.link}}
-            class='events-section__link'
+            class="events-section__link"
           >{{event.name}}</a>
         {{/each}}
       </div>

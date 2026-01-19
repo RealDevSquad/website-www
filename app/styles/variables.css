@@ -36,7 +36,7 @@
   --skeleton-bg: #483bc0;
   --skeleton-shine-color: #edeef1;
   --color-yellow-low-opacity: #ffffe0;
-  --color-grayish-blue-shadow: rgba(136 165 191/ 48%);
+  --color-grayish-blue-shadow: rgb(136 165 191/48%);
   --body-bg-color: white;
   --input-field-border: #666;
   --input-field-border-error: #e74c3c;
@@ -94,7 +94,7 @@
   --color-black-40: #00000040;
   --color-black-59: rgb(0 0 0 / 58.9%);
   --color-gray-37: rgb(158 158 158 / 36.8%);
-  --info-tab-before-box-shadow: rgba(0 0 0 / 50%);
+  --info-tab-before-box-shadow: rgb(0 0 0 / 50%);
   --info-tab-after-border-b: #fff;
   --tip-box-alert-text: #212121;
   --tip-box-alert-bg: #fff8e1;

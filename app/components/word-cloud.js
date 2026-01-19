@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { registerDestructor } from '@ember/destroyable';
 
 const SHOW_WORD_CLOUD_AFTER_TIME = 1000; //time in milliseconds

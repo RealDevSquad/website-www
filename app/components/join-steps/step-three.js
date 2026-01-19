@@ -3,7 +3,7 @@ import { heardFrom } from '../../constants/social-data';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { validator } from '../../utils/validator';
-import { debounce } from '@ember/runloop';
+import { debounceTask } from 'ember-lifeline';
 import { JOIN_DEBOUNCE_TIME, STEP_THREE_LIMITS } from '../../constants/join';
 
 export default class StepThreeComponent extends Component {
@@ -54,51 +54,50 @@ export default class StepThreeComponent extends Component {
     );
   }
 
+  setValToLocalStorage(e) {
+    let inputValue = e.target.value;
+    if (e.target.name === 'numberOfHours') {
+      inputValue = parseInt(inputValue);
+    }
+    this.data = { ...this.data, [e.target.name]: inputValue };
+    localStorage.setItem('stepThreeData', JSON.stringify(this.data));
+
+    // Only validate the changed field
+    const field = e.target.name;
+    if (field !== 'numberOfHours') {
+      const { isValid, remainingWords } = validator(
+        this.data[field],
+        STEP_THREE_LIMITS.word[field],
+      );
+      this.errorMessage = {
+        ...this.errorMessage,
+        [field]: isValid
+          ? ''
+          : `At least ${remainingWords} more word(s) required`,
+      };
+    } else if (
+      field === 'numberOfHours' &&
+      (inputValue < STEP_THREE_LIMITS.hour.numberOfHours.min ||
+        inputValue > STEP_THREE_LIMITS.hour.numberOfHours.max)
+    ) {
+      this.errorMessage = {
+        ...this.errorMessage,
+        [field]: `Enter value between ${STEP_THREE_LIMITS.hour.numberOfHours.min}-${STEP_THREE_LIMITS.hour.numberOfHours.max}`,
+      };
+    } else {
+      this.errorMessage = {
+        ...this.errorMessage,
+        [field]: '',
+      };
+    }
+
+    const isAllValid = this.isDataValid();
+    this.setIsValid(isAllValid);
+    localStorage.setItem('isValid', isAllValid);
+  }
+
   @action inputHandler(e) {
     this.setIsPreValid(false);
-
-    const setValToLocalStorage = () => {
-      let inputValue = e.target.value;
-      if (e.target.name === 'numberOfHours') {
-        inputValue = parseInt(inputValue);
-      }
-      this.data = { ...this.data, [e.target.name]: inputValue };
-      localStorage.setItem('stepThreeData', JSON.stringify(this.data));
-
-      // Only validate the changed field
-      const field = e.target.name;
-      if (field !== 'numberOfHours') {
-        const { isValid, remainingWords } = validator(
-          this.data[field],
-          STEP_THREE_LIMITS.word[field],
-        );
-        this.errorMessage = {
-          ...this.errorMessage,
-          [field]: isValid
-            ? ''
-            : `At least ${remainingWords} more word(s) required`,
-        };
-      } else if (
-        field === 'numberOfHours' &&
-        (inputValue < STEP_THREE_LIMITS.hour.numberOfHours.min ||
-          inputValue > STEP_THREE_LIMITS.hour.numberOfHours.max)
-      ) {
-        this.errorMessage = {
-          ...this.errorMessage,
-          [field]: `Enter value between ${STEP_THREE_LIMITS.hour.numberOfHours.min}-${STEP_THREE_LIMITS.hour.numberOfHours.max}`,
-        };
-      } else {
-        this.errorMessage = {
-          ...this.errorMessage,
-          [field]: '',
-        };
-      }
-
-      const isAllValid = this.isDataValid();
-      this.setIsValid(isAllValid);
-      localStorage.setItem('isValid', isAllValid);
-    };
-
-    debounce(this.data, setValToLocalStorage, JOIN_DEBOUNCE_TIME);
+    debounceTask(this, 'setValToLocalStorage', e, JOIN_DEBOUNCE_TIME);
   }
 }

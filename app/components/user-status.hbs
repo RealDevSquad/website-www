@@ -25,32 +25,29 @@
   <div class="buttons">
     {{#each this.currentUserStatus as |currentStatus|}}
       {{#if (eq @status currentStatus.status)}}
-    {{#if (eq currentStatus.status "OOO")}}
+        {{#if (eq currentStatus.status "OOO")}}
+          <button
+            data-test-cancel-status-OOO
+            class="buttons__cancel--ooo"
+            type="button"
+            disabled={{@isStatusUpdating}}
+            {{on "click" (fn this.cancelOOOStatus currentStatus.status)}}
+          >
+            <span>Cancel OOO</span>
+          </button>
+        {{else}}
+          {{#each currentStatus.otherAvailableStatus as |otherPossibleStatus|}}
             <button
-              data-test-cancel-status-OOO
-              class="buttons__cancel--ooo"
+              data-test-update-status-OOO
+              class={{otherPossibleStatus.class}}
               type="button"
               disabled={{@isStatusUpdating}}
-              {{on "click" (fn this.cancelOOOStatus currentStatus.status)}}
+              {{on "click" (fn this.changeStatus otherPossibleStatus.status)}}
             >
-              <span>Cancel OOO</span>
+              <span>{{otherPossibleStatus.message}}</span>
             </button>
-          {{else}}
-            {{#each
-              currentStatus.otherAvailableStatus
-              as |otherPossibleStatus|
-            }}
-              <button
-                data-test-update-status-OOO
-                class={{otherPossibleStatus.class}}
-                type="button"
-                disabled={{@isStatusUpdating}}
-                {{on "click" (fn this.changeStatus otherPossibleStatus.status)}}
-              >
-                <span>{{otherPossibleStatus.message}}</span>
-              </button>
-            {{/each}}
-       {{/if}}
+          {{/each}}
+        {{/if}}
       {{/if}}
     {{/each}}
   </div>

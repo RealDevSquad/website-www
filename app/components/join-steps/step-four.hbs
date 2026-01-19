@@ -1,15 +1,15 @@
-<section class='preview'>
-  <h3 class='details' data-test-validate-text>Please validate before submitting</h3>
+<section class="preview">
+  <h3 class="details" data-test-validate-text>Please validate before submitting</h3>
   {{#each this.JOIN_DATA as |joinData|}}
-    <div class='preview__container'>
+    <div class="preview__container">
       <h3
-        class='preview__label'
+        class="preview__label"
         data-test-join-label={{joinData.id}}
       >{{joinData.label}}</h3>
       <p
-        class='preview__data'
+        class="preview__data"
         data-test-join-data={{joinData.id}}
       >{{joinData.data}}</p>
     </div>
   {{/each}}
-</section>  
+</section>

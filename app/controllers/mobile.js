@@ -37,7 +37,7 @@ export default class MobileController extends Controller {
       if (status === AUTH_STATUS.AUTHORIZED) {
         this.router.transitionTo('/');
       }
-    } catch (error) {
+    } catch {
       this.toast.error(
         ERROR_MESSAGES.somethingWentWrong,
         'Error!',
@@ -64,7 +64,7 @@ export default class MobileController extends Controller {
       } else {
         this.toast.error(QR_SCAN_MESSAGE, 'Not verified', TOAST_OPTIONS);
       }
-    } catch (error) {
+    } catch {
       this.toast.error(
         ERROR_MESSAGES.somethingWentWrong,
         'Error!',

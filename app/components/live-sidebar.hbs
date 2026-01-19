@@ -1,34 +1,34 @@
-<div data-test-sidebar class='sidebar {{if this.isSideBarOpen "open" "close"}}'>
-  <div data-test-sidebar-participants class='sidebar__participants'>
+<div data-test-sidebar class="sidebar {{if this.isSideBarOpen 'open' 'close'}}">
+  <div data-test-sidebar-participants class="sidebar__participants">
     <h4>Participants</h4>
     <button
       data-test-sidebar-button
-      class='sidebar__accordian-button'
-      {{on 'click' this.toggleMobileSidebar}}
-      type='button'
+      class="sidebar__accordian-button"
+      {{on "click" this.toggleMobileSidebar}}
+      type="button"
     >
       <IconifyIcon
-        data-test-icon='arrow-down'
-        height='40'
-        width='40'
-        @icon='material-symbols:keyboard-arrow-down-rounded'
+        data-test-icon="arrow-down"
+        height="40"
+        width="40"
+        @icon="material-symbols:keyboard-arrow-down-rounded"
       />
     </button>
   </div>
   <div
     data-test-sidebar-body
-    class='sidebar__body {{if this.isSideBarOpen "open" "close"}}'
+    class="sidebar__body {{if this.isSideBarOpen 'open' 'close'}}"
   >
-    <div data-test-sidebar-body-host class='body__host'>
-      <span data-test-sidebar-host-container class='host__container'>
+    <div data-test-sidebar-body-host class="body__host">
+      <span data-test-sidebar-host-container class="host__container">
         <img
           data-test-sidebar-host-image
-          class='host__image'
-          src='/assets/images/profile.png'
-          alt='host'
+          class="host__image"
+          src="/assets/images/profile.png"
+          alt="host"
         />
       </span>
-      <span data-test-sidebar-host-name class='host__name'>
+      <span data-test-sidebar-host-name class="host__name">
         {{#if this.liveService.isScreenShareOn}}
           {{#each @peers as |peer|}}
             {{#if (eq peer.roleName this.ROLES.host)}}
@@ -42,32 +42,32 @@
       </span>
     </div>
     <LiveParticipants
-      @user='Host'
-      @role='host'
+      @user="Host"
+      @role="host"
       @peers={{@peers}}
       @minimumParticipants={{this.liveService.hostRole}}
       @openKickoutModal={{@openKickoutModal}}
       @peerToRemove={{@peerToRemove}}
     />
     <LiveParticipants
-      @user='Mavens'
-      @role='maven'
+      @user="Mavens"
+      @role="maven"
       @peers={{@peers}}
       @minimumParticipants={{this.liveService.mavenRole}}
       @openKickoutModal={{@openKickoutModal}}
       @peerToRemove={{@peerToRemove}}
     />
     <LiveParticipants
-      @user='Moderators'
-      @role='moderator'
+      @user="Moderators"
+      @role="moderator"
       @peers={{@peers}}
       @minimumParticipants={{this.liveService.moderatorRole}}
       @openKickoutModal={{@openKickoutModal}}
       @peerToRemove={{@peerToRemove}}
     />
     <LiveParticipants
-      @user='Guests'
-      @role='guest'
+      @user="Guests"
+      @role="guest"
       @peers={{@peers}}
       @minimumParticipants={{this.liveService.guestRole}}
       @openKickoutModal={{@openKickoutModal}}

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { validator } from '../../utils/validator';
-import { debounce } from '@ember/runloop';
+import { debounceTask } from 'ember-lifeline';
 import { JOIN_DEBOUNCE_TIME, STEP_TWO_LIMITS } from '../../constants/join';
 
 export default class StepTwoComponent extends Component {
@@ -45,31 +45,30 @@ export default class StepTwoComponent extends Component {
     return true;
   }
 
-  @action inputHandler(e) {
-    this.setIsPreValid(false);
+  setValToLocalStorage(e) {
+    this.data = { ...this.data, [e.target.name]: e.target.value };
+    localStorage.setItem('stepTwoData', JSON.stringify(this.data));
 
-    const setValToLocalStorage = () => {
-      this.data = { ...this.data, [e.target.name]: e.target.value };
-      localStorage.setItem('stepTwoData', JSON.stringify(this.data));
-
-      // Only validate the changed field
-      const field = e.target.name;
-      const { isValid, remainingWords } = validator(
-        this.data[field],
-        STEP_TWO_LIMITS[field],
-      );
-      this.errorMessage = {
-        ...this.errorMessage,
-        [field]: isValid
-          ? ''
-          : `At least, ${remainingWords} more word(s) required`,
-      };
-
-      const isAllValid = this.isDataValid();
-      this.setIsValid(isAllValid);
-      localStorage.setItem('isValid', isAllValid);
+    // Only validate the changed field
+    const field = e.target.name;
+    const { isValid, remainingWords } = validator(
+      this.data[field],
+      STEP_TWO_LIMITS[field],
+    );
+    this.errorMessage = {
+      ...this.errorMessage,
+      [field]: isValid
+        ? ''
+        : `At least, ${remainingWords} more word(s) required`,
     };
 
-    debounce(this.data, setValToLocalStorage, JOIN_DEBOUNCE_TIME);
+    const isAllValid = this.isDataValid();
+    this.setIsValid(isAllValid);
+    localStorage.setItem('isValid', isAllValid);
+  }
+
+  @action inputHandler(e) {
+    this.setIsPreValid(false);
+    debounceTask(this, 'setValToLocalStorage', e, JOIN_DEBOUNCE_TIME);
   }
 }

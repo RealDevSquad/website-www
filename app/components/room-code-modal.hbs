@@ -1,18 +1,18 @@
-<div data-test-room-code-modal class='room-code-modal'>
-  <div class='room-code-modal__header'>
+<div data-test-room-code-modal class="room-code-modal">
+  <div class="room-code-modal__header">
     <h4 data-test-room-code-modal-heading>Here's your room codes</h4>
     <Reusables::IconButton
-      @id='close-modal'
-      @class='icon-button--md room-code-modal--close'
-      @title='Close modal'
+      @id="close-modal"
+      @class="icon-button--md room-code-modal--close"
+      @title="Close modal"
       @onClick={{this.closeModal}}
-      @icon='material-symbols:close'
+      @icon="material-symbols:close"
     />
   </div>
-  <ul class='room-code-modal__codes'>
+  <ul class="room-code-modal__codes">
     {{#if @isLoading}}
-      <div data-test-loading class='room-code-modal__message'>
-        <Fa-Icon @size='2x' @icon='circle-notch' @spin={{true}} />
+      <div data-test-loading class="room-code-modal__message">
+        <Fa-Icon @size="2x" @icon="circle-notch" @spin={{true}} />
       </div>
     {{else}}
       {{#if (gt @roomCodes.length 0)}}
@@ -20,38 +20,38 @@
           <li><RoomCode @code={{roomCode.code}} @toast={{@toast}} /></li>
         {{/each}}
       {{else}}
-        <p data-test-room-code-modal-message class='room-code-modal__message'>No
+        <p data-test-room-code-modal-message class="room-code-modal__message">No
           codes</p>
       {{/if}}
     {{/if}}
   </ul>
   {{#if this.isOptionOpen}}
-    <div data-test-room-code-options class='room-code-modal__options'>
+    <div data-test-room-code-options class="room-code-modal__options">
       <form onsubmit={{fn @createRoomCode @newCode}}>
         <input
           data-test-room-code-modal-input
-          type='password'
-          name='room-code'
-          id='room-code'
-          class='user-input input-regular'
-          placeholder='create code'
+          type="password"
+          name="room-code"
+          id="room-code"
+          class="user-input input-regular"
+          placeholder="create code"
           required={{true}}
           value={{@newCode}}
-          {{on 'input' @onInput}}
+          {{on "input" @onInput}}
         />
         <Reusables::Button
-          @text='Create'
-          @variant='dark btn--sm'
-          @test='create-new-code'
+          @text="Create"
+          @variant="dark btn--sm"
+          @test="create-new-code"
           @onClick={{fn @createRoomCode @newCode}}
         />
       </form>
     </div>
   {{else}}
     <Reusables::Button
-      @text='Create new code'
-      @variant='dark btn--md'
-      @test='create-code'
+      @text="Create new code"
+      @variant="dark btn--md"
+      @test="create-code"
       @onClick={{this.toggleOptions}}
     />
   {{/if}}

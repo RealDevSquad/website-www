@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { getOwner } from '@ember/application';
 import { globalRef } from 'ember-ref-bucket';
 import { registerDestructor } from '@ember/destroyable';
@@ -193,10 +193,10 @@ export default class LiveController extends Controller {
       this.answerValidationDetails.helperText = `Minimum character limit is ${ANSWER_MIN_LENGTH} characters`;
       this.answerValidationDetails.isHelperTextVisible = true;
 
-      this.answerValidationDetails = this.answerValidationDetails;
+      this.answerValidationDetails = { ...this.answerValidationDetails };
 
       this.answerSubmitButtonState.isDisabled = true;
-      this.answerSubmitButtonState = this.answerSubmitButtonState;
+      this.answerSubmitButtonState = { ...this.answerSubmitButtonState };
 
       return;
     }
@@ -210,10 +210,10 @@ export default class LiveController extends Controller {
       this.answerValidationDetails.isError = true;
       this.answerValidationDetails.helperText = `Maximum character limit is ${maxCharacters} characters`;
       this.answerValidationDetails.isHelperTextVisible = true;
-      this.answerValidationDetails = this.answerValidationDetails;
+      this.answerValidationDetails = { ...this.answerValidationDetails };
 
       this.answerSubmitButtonState.isDisabled = true;
-      this.answerSubmitButtonState = this.answerSubmitButtonState;
+      this.answerSubmitButtonState = { ...this.answerSubmitButtonState };
     } else {
       this.resetAnswerValidators();
     }
@@ -223,7 +223,7 @@ export default class LiveController extends Controller {
     this.answerSubmitButtonState.isLoading = true;
     this.answerSubmitButtonState.isDisabled = true;
 
-    this.answerSubmitButtonState = this.answerSubmitButtonState;
+    this.answerSubmitButtonState = { ...this.answerSubmitButtonState };
 
     const answerBody = {
       answer: this.answerValue.trim(),
@@ -238,7 +238,7 @@ export default class LiveController extends Controller {
       this.isAnswerReplyModalOpen = false;
       this.answerSubmitButtonState.isLoading = false;
       this.answerSubmitButtonState.isDisabled = false;
-      this.answerSubmitButtonState = this.answerSubmitButtonState;
+      this.answerSubmitButtonState = { ...this.answerSubmitButtonState };
     }
   }
 
@@ -291,10 +291,10 @@ export default class LiveController extends Controller {
     this.answerValidationDetails.isError = false;
     this.answerValidationDetails.helperText = '';
     this.answerValidationDetails.isHelperTextVisible = false;
-    this.answerValidationDetails = this.answerValidationDetails;
+    this.answerValidationDetails = { ...this.answerValidationDetails };
 
     this.answerSubmitButtonState.isDisabled = false;
-    this.answerSubmitButtonState = this.answerSubmitButtonState;
+    this.answerSubmitButtonState = { ...this.answerSubmitButtonState };
   }
   questionSSEListener() {
     const event = new EventSource(`${APPS.API_BACKEND}/questions`);
@@ -312,7 +312,7 @@ export default class LiveController extends Controller {
       this.answerValidationDetails.isError = false;
       this.answerValidationDetails.helperText = `Minimum character limit is ${ANSWER_MIN_LENGTH} characters`;
       this.answerValidationDetails.isHelperTextVisible = true;
-      this.answerValidationDetails = this.answerValidationDetails;
+      this.answerValidationDetails = { ...this.answerValidationDetails };
 
       if (isQuestionChanged) {
         this.answerEventSource?.close();

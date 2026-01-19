@@ -1,4 +1,4 @@
-<div class='base-modal {{if @isOpen "base-modal--show" "base-modal--hide"}}'>
+<div class="base-modal {{if @isOpen 'base-modal--show' 'base-modal--hide'}}">
   {{yield (hash closeModal=this.closeModal)}}
 
 </div>

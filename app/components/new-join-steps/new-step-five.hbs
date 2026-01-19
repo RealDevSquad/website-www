@@ -4,29 +4,47 @@
     <p class="section-instruction">{{@subHeading}}</p>
   </div>
 
-  <Reusables::TextAreaBox @field='Why you want to join Real Dev Squad?' @name='whyRds'
-    @placeHolder='Tell us why you want to join our community...' @required={{true}} @value={{this.data.whyRds}}
-    @onInput={{this.inputHandler}} />
+  <Reusables::TextAreaBox
+    @field="Why you want to join Real Dev Squad?"
+    @name="whyRds"
+    @placeHolder="Tell us why you want to join our community..."
+    @required={{true}}
+    @value={{this.data.whyRds}}
+    @onInput={{this.inputHandler}}
+  />
   {{#if this.errorMessage.whyRds}}
-  <div class='error__message'>{{this.errorMessage.whyRds}}</div>
+    <div class="error__message">{{this.errorMessage.whyRds}}</div>
   {{/if}}
 
   <div class="form-grid form-grid--2">
     <div class="form-grid__item">
-      <Reusables::InputBox @field='No of hours/week you are willing to contribute?' @name='numberOfHours'
-        @placeHolder='Enter value between 1-100.' @type='number' @required={{true}} @value={{this.data.numberOfHours}}
-        @onInput={{this.inputHandler}} @options={{this.heardFrom}} />
+      <Reusables::InputBox
+        @field="No of hours/week you are willing to contribute?"
+        @name="numberOfHours"
+        @placeHolder="Enter value between 1-100."
+        @type="number"
+        @required={{true}}
+        @value={{this.data.numberOfHours}}
+        @onInput={{this.inputHandler}}
+        @options={{this.heardFrom}}
+      />
       {{#if this.errorMessage.numberOfHours}}
-      <div class='error__message'>{{this.errorMessage.numberOfHours}}</div>
+        <div class="error__message">{{this.errorMessage.numberOfHours}}</div>
       {{/if}}
     </div>
 
     <div class="form-grid__item">
-      <Reusables::Dropdown @field='How did you hear about us?' @name='foundFrom'
-        @placeHolder='Choose from below options' @required={{true}} @value={{this.data.foundFrom}}
-        @options={{this.heardFrom}} @onChange={{this.inputHandler}} />
+      <Reusables::Dropdown
+        @field="How did you hear about us?"
+        @name="foundFrom"
+        @placeHolder="Choose from below options"
+        @required={{true}}
+        @value={{this.data.foundFrom}}
+        @options={{this.heardFrom}}
+        @onChange={{this.inputHandler}}
+      />
       {{#if this.errorMessage.foundFrom}}
-      <div class='error__message'>{{this.errorMessage.foundFrom}}</div>
+        <div class="error__message">{{this.errorMessage.foundFrom}}</div>
       {{/if}}
     </div>
   </div>

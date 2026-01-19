@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { APPS } from '../../constants/urls';
 import { TOAST_OPTIONS } from '../../constants/toast-options';
 
@@ -31,7 +31,7 @@ export default class IdentityStepsStepFiveComponent extends Component {
       } else {
         throw new Error('Your request has not been queued');
       }
-    } catch (error) {
+    } catch {
       this.toast.error(
         'Something went wrong. Please check console errors.',
         'Error',

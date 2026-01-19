@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { TITLE_MESSAGES } from '../constants/stepper-data';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { TOAST_OPTIONS } from '../constants/toast-options';
 import { JOIN_URL } from '../constants/apis';
 
@@ -13,8 +13,9 @@ export default class StepperComponent extends Component {
   @service onboarding;
   @tracked preValid = false;
   @tracked isValid = JSON.parse(localStorage.getItem('isValid')) ?? false;
-  @tracked currentStep =
-    +localStorage.getItem('currentStep') ?? +this.args.step ?? 0;
+  @tracked currentStep = Number(
+    localStorage.getItem('currentStep') ?? this.args.step ?? 0,
+  );
   TITLE_MESSAGES = TITLE_MESSAGES;
   @tracked stepOneData = JSON.parse(localStorage.getItem('stepOneData'));
   @tracked stepTwoData = JSON.parse(localStorage.getItem('stepTwoData'));

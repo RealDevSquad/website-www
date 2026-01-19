@@ -55,7 +55,7 @@
   border-radius: 10px;
   padding: 15px;
   text-align: justify;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Step Five: Copy Link */
@@ -76,7 +76,6 @@
   padding: 20px;
   margin: 10px 0;
   overflow-wrap: break-word;
-  word-wrap: break-word;
   max-width: 20rem;
   border-radius: 10px;
   text-align: center;

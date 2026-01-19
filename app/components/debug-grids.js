@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { isoToLocalDate } from '../utils/common-utils';
 import { action } from '@ember/object';
@@ -82,7 +82,7 @@ export default class DebugGridsComponent extends Component {
         'Success!',
         TOAST_OPTIONS,
       );
-    } catch (error) {
+    } catch {
       // On failure, revert the toggle button state
       this.debugUserRolesData = {
         ...this.debugUserRolesData,

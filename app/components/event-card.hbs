@@ -1,30 +1,54 @@
 <div data-test-event-card class="event-card">
-    <h1 data-test-event-card-title class="event-card__title">{{@title}}</h1>
-    <h3 data-test-event-card-description class="event-card__description">
-        {{@description}}
-    </h3>
-    <h3 data-test-event-card-timing class="event-card__timing">{{@timing}}</h3>
-    {{#each @speakers as |speaker|}}
+  <h1 data-test-event-card-title class="event-card__title">{{@title}}</h1>
+  <h3 data-test-event-card-description class="event-card__description">
+    {{@description}}
+  </h3>
+  <h3 data-test-event-card-timing class="event-card__timing">{{@timing}}</h3>
+  {{#each @speakers as |speaker|}}
     <h2 data-test-event-card="speaker-name" class="event-card__speaker-name">
-        {{speaker.name}}
-        <span data-test-event-card="linkedin-logo" class="speaker-social-info linkedin-info">
-            <a target="_blank" rel="noopener noreferrer" href="{{speaker.linkedinProfile}}">
-                <img class="social-media-logo" src="/assets/icons/linkedin-logo.png" alt="LinkedIn" />
-            </a>
-        </span>
+      {{speaker.name}}
+      <span
+        data-test-event-card="linkedin-logo"
+        class="speaker-social-info linkedin-info"
+      >
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="{{speaker.linkedinProfile}}"
+        >
+          <img
+            class="social-media-logo"
+            src="/assets/icons/linkedin-logo.png"
+            alt="LinkedIn"
+          />
+        </a>
+      </span>
     </h2>
-    <h3 data-test-event-card="speaker-info" class="event-card__speaker-info">{{speaker.info}}</h3>
+    <h3
+      data-test-event-card="speaker-info"
+      class="event-card__speaker-info"
+    >{{speaker.info}}</h3>
 
     <ul data-test-event-card="highlights" class="event-card__highlights">
-        {{#each speaker.topicsCovered as |topic|}}
+      {{#each speaker.topicsCovered as |topic|}}
         <li>{{topic}}</li>
-        {{/each}}
+      {{/each}}
     </ul>
-    {{/each}}
+  {{/each}}
 
-    <div  data-test-event-card="cta-button-container" class="event-card__cta-button-container">
-        <a data-test-event-card="button" type="button" class="event-card__button" href="{{@eventLink}}" target="_blank" rel="noopener noreferrer">
-            <span> Register & grab your seat! </span>
-        </a>
-    </div>
+  <div
+    data-test-event-card="cta-button-container"
+    class="event-card__cta-button-container"
+  >
+    <a
+      data-test-event-card="button"
+      type="button"
+      class="event-card__button"
+      href="{{@eventLink}}"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span> Register & grab your seat! </span>
+    </a>
+  </div>
 </div>

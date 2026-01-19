@@ -33,3 +33,5 @@
 # unconventional files
 /blueprints/*/files/
 
+# compiled output
+/dist/

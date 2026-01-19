@@ -71,7 +71,6 @@ nav li {
   border: 2px solid var(--color-white);
   border-radius: 6px;
   padding: 5px;
-  background-color: none;
   color: var(--color-white);
   cursor: pointer;
   font-size: 0.85rem;

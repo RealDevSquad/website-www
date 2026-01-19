@@ -1,8 +1,8 @@
 <button
-  class='icon-button {{@class}}'
-  type='button'
+  class="icon-button {{@class}}"
+  type="button"
   title={{@title}}
-  {{on 'click' (fn @onClick @id)}}
+  {{on "click" (fn @onClick @id)}}
   data-test-icon-button={{@id}}
 >
   <IconifyIcon data-test-icon={{@id}} @icon={{@icon}} />

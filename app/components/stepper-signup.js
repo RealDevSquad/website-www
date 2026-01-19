@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { TOAST_OPTIONS } from '../constants/toast-options';
 
 const MAX_STEP = 15;
@@ -15,7 +15,7 @@ export default class StepperSignupComponent extends Component {
   @service onboarding;
   @tracked preValid = false;
   @tracked isValid = JSON.parse(localStorage.getItem('isValid')) ?? false;
-  @tracked currentStep = Number(localStorage.getItem('currentStep')) ?? 0;
+  @tracked currentStep = Number(localStorage.getItem('currentStep') ?? 0);
   @tracked stepOneData = JSON.parse(localStorage.getItem('stepOneData'));
   @tracked stepTwoData = JSON.parse(localStorage.getItem('stepTwoData'));
   @tracked stepThreeData = JSON.parse(localStorage.getItem('stepThreeData'));
