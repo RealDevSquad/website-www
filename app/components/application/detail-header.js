@@ -44,24 +44,6 @@ export default class DetailHeader extends Component {
     return this.application?.nudgeCount ?? 0;
   }
 
-  get lastNudgedAt() {
-    return this.application?.lastNudgedAt ?? null;
-  }
-
-  get lastNudgedRelative() {
-    if (!this.lastNudgedAt) return 'Never';
-
-    const now = new Date();
-    const nudged = new Date(this.lastNudgedAt);
-    const diffMs = now - nudged;
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-    const diffDays = Math.floor(diffHours / 24);
-
-    if (diffHours < 1) return '<1h ago';
-    if (diffHours < 48) return `${diffHours}h ago`;
-    return `${diffDays} days ago`;
-  }
-
   get isNudgeDisabled() {
     if (this.status !== 'pending') {
       return true;
@@ -97,21 +79,21 @@ export default class DetailHeader extends Component {
     return links;
   }
 
-  //ToDo: Implement logic for callling nudge API here
   @action
   nudgeApplication() {
-    return false;
+    //ToDo: Implement logic for callling nudge API here
+    console.log('nudge application');
   }
 
-  //ToDo: Implement logic for edit application here
   @action
   editApplication() {
-    return false;
+    //ToDo: Implement logic for edit application here
+    console.log('edit application');
   }
 
-  //ToDo: Navigate to dashboard site for admin actions
   @action
   navigateToDashboard() {
-    return false;
+    //ToDo: Navigate to dashboard site for admin actions
+    console.log('navigate to dashboard');
   }
 }

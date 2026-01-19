@@ -57,7 +57,7 @@
           @variant="dark"
           @class="btn--xs"
           @onClick={{this.navigateToDashboard}}
-          data-test-navigate-button
+          @test="navigate-button"
         />
       {{else}}
         <Reusables::Button
@@ -66,14 +66,14 @@
           @class="btn--xs"
           @disabled={{this.isNudgeDisabled}}
           @onClick={{this.nudgeApplication}}
-          data-test-nudge-button
+          @test="nudge-button"
         />
         <Reusables::Button
           @text="Edit"
           @variant="light"
           @class="btn--xs"
           @onClick={{this.editApplication}}
-          data-test-edit-button
+          @test="edit-button"
         />
       {{/if}}
     </div>
