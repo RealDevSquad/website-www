@@ -58,6 +58,7 @@
 @import url("confirm-modal.module.css");
 @import url("new-signup.module.css");
 @import url("new-stepper.module.css");
+@import url("application-detail.module.css");
 
 * {
   margin: 0;
