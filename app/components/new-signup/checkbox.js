@@ -13,10 +13,8 @@ export default class SignupComponent extends Component {
     return LABEL_TEXT[currentStep];
   }
 
-  @action checkboxFieldChanged(event) {
+  @action checkboxFieldChanged(selectedRole, event) {
     const { onChange } = this.args;
-    const roleKey = event.target.name;
-    const value = event.target.checked;
-    onChange(roleKey, value);
+    onChange(selectedRole, event.target.checked);
   }
 }
