@@ -28,13 +28,12 @@ module('Unit | Route | applications/detail', function (hooks) {
 
   test('fetches application by id successfully', async function (assert) {
     const mockApplication = { id: '123', userId: 'user1' };
+    const mockUser = { first_name: 'John' };
     const applicationId = '123';
 
     this.fetchStub
       .onCall(0)
-      .resolves(
-        new Response(JSON.stringify({ first_name: 'John' }), { status: 200 }),
-      );
+      .resolves(new Response(JSON.stringify(mockUser), { status: 200 }));
 
     this.fetchStub.onCall(1).resolves(
       new Response(JSON.stringify({ application: mockApplication }), {
@@ -44,7 +43,11 @@ module('Unit | Route | applications/detail', function (hooks) {
 
     const result = await this.route.model({ id: applicationId });
 
-    assert.deepEqual(result, mockApplication, 'Returns application from API');
+    assert.deepEqual(
+      result,
+      { application: mockApplication, currentUser: mockUser },
+      'Returns application and currentUser from API',
+    );
     assert.ok(
       this.fetchStub.firstCall.calledWith(
         SELF_USER_PROFILE_URL,
@@ -66,7 +69,11 @@ module('Unit | Route | applications/detail', function (hooks) {
 
     const result = await this.route.model({ id: '123' });
 
-    assert.strictEqual(result, null, 'Returns null for 401');
+    assert.deepEqual(
+      result,
+      { application: null, currentUser: null },
+      'Returns null object for 401',
+    );
     assert.ok(this.route.toast.error.calledOnce, 'Error toast is displayed');
   });
 
@@ -80,7 +87,11 @@ module('Unit | Route | applications/detail', function (hooks) {
 
     const result = await this.route.model({ id: '123' });
 
-    assert.strictEqual(result, null, 'Returns null for 404');
+    assert.deepEqual(
+      result,
+      { application: null, currentUser: null },
+      'Returns null object for 404',
+    );
     assert.ok(
       this.route.toast.error.calledOnce,
       'Error toast is displayed for 404',
@@ -97,7 +108,11 @@ module('Unit | Route | applications/detail', function (hooks) {
 
     const result = await this.route.model({ id: '123' });
 
-    assert.strictEqual(result, null, 'Returns null on error');
+    assert.deepEqual(
+      result,
+      { application: null, currentUser: null },
+      'Returns null object on error',
+    );
     assert.ok(this.route.toast.error.calledOnce, 'Error toast is displayed');
   });
 });

@@ -16,15 +16,10 @@ export default class ApplicationsDetailRoute extends Route {
   async model(params) {
     try {
       const userResponse = await apiRequest(SELF_USER_PROFILE_URL);
-
       if (userResponse.status === 401) {
         this.toast.error(ERROR_MESSAGES.notLoggedIn, '', TOAST_OPTIONS);
         setTimeout(redirectAuth, 2000);
-        return null;
-      }
-
-      if (!userResponse.ok) {
-        throw new Error(`HTTP error! status: ${userResponse.status}`);
+        return { application: null, currentUser: null };
       }
 
       const applicationResponse = await apiRequest(
@@ -33,22 +28,26 @@ export default class ApplicationsDetailRoute extends Route {
 
       if (applicationResponse.status === 404) {
         this.toast.error('Application not found', 'Error!', TOAST_OPTIONS);
-        return null;
+        return { application: null, currentUser: null };
       }
 
       if (!applicationResponse.ok) {
         throw new Error(`HTTP error! status: ${applicationResponse.status}`);
       }
 
+      const userData = await userResponse.json();
       const applicationData = await applicationResponse.json();
-      return applicationData?.application;
+      return {
+        application: applicationData?.application,
+        currentUser: userData,
+      };
     } catch (error) {
       this.toast.error(
         'Something went wrong. ' + error.message,
         'Error!',
         TOAST_OPTIONS,
       );
-      return null;
+      return { application: null, currentUser: null };
     }
   }
 }
