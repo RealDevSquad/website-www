@@ -7,7 +7,7 @@
   text-align: center;
   text-decoration: none;
   color: var(--color-pink);
-  box-shadow: 0 10px 10px var(--color-darkblack-low-opacity);
+  box-shadow: 0 0 10px var(--color-darkblack-low-opacity);
 }
 
 .card__live__title {
