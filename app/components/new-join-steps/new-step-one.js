@@ -7,6 +7,8 @@ import {
   ROLE_OPTIONS,
   STEP_DATA_STORAGE_KEY,
 } from '../../constants/new-join-form';
+import { PROFILE_IMAGE_UPLOAD_URL } from '../../constants/apis';
+import { TOAST_OPTIONS } from '../../constants/toast-options';
 import BaseStepComponent from './base-step';
 
 export default class NewStepOneComponent extends BaseStepComponent {
@@ -67,7 +69,7 @@ export default class NewStepOneComponent extends BaseStepComponent {
   }
 
   @action
-  handleImageSelect(event) {
+  async handleImageSelect(event) {
     const file = event.target.files?.[0];
     if (!file || !file.type.startsWith('image/')) {
       this.toast.error(
@@ -84,21 +86,45 @@ export default class NewStepOneComponent extends BaseStepComponent {
 
     this.isImageUploading = true;
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const base64String = e.target.result;
-      this.imagePreview = base64String;
-      this.updateFieldValue?.('profileImageBase64', base64String);
-      this.isImageUploading = false;
-    };
-    reader.onerror = () => {
-      this.toast.error(
-        'Failed to read the selected file. Please try again.',
-        'Error!',
-      );
-      this.isImageUploading = false;
-    };
+    try {
+      const formData = new FormData();
+      formData.append('profile', file);
 
-    reader.readAsDataURL(file);
+      const response = await fetch(PROFILE_IMAGE_UPLOAD_URL, {
+        method: 'POST',
+        credentials: 'include',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const imageUrl = data.picture || data.url;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const base64String = e.target.result;
+          this.imagePreview = base64String;
+          this.updateFieldValue?.('imageUrl', imageUrl);
+        };
+        reader.readAsDataURL(file);
+
+        this.toast.success(
+          'Profile image uploaded successfully!',
+          'Success!',
+          TOAST_OPTIONS,
+        );
+      } else {
+        const errorData = await response.json();
+        this.toast.error(
+          errorData.message || 'Failed to upload image. Please try again.',
+          'Error!',
+        );
+      }
+    } catch (error) {
+      console.error('Image upload error:', error);
+      this.toast.error('Failed to upload image. Please try again.', 'Error!');
+    } finally {
+      this.isImageUploading = false;
+    }
   }
 }
