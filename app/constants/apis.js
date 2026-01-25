@@ -66,3 +66,5 @@ export const NUDGE_APPLICATION_URL = (applicationId) => {
 export const APPLICATIONS_BY_USER_URL = (userId) => {
   return `${APPS.API_BACKEND}/applications?userId=${userId}&dev=true`;
 };
+
+export const APPLICATION_PROFILE_IMAGE_URL = `${APPS.API_BACKEND}/users/picture`;
