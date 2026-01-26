@@ -94,7 +94,12 @@
         @test={{if this.isReviewStep "submit-review" "next-btn"}}
         @type="button"
         @onClick={{if this.isReviewStep this.handleSubmit this.incrementStep}}
-        @disabled={{unless this.isReviewStep this.isNextButtonDisabled}}
+        @disabled={{if
+          this.isReviewStep
+          this.isSubmitting
+          this.isNextButtonDisabled
+        }}
+        @isLoading={{if this.isReviewStep this.isSubmitting false}}
       />
     </div>
   {{/if}}

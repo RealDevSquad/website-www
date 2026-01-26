@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import { CREATE_APPLICATION_URL } from '../constants/apis';
 import {
   NEW_FORM_STEPS,
+  USER_ROLE_MAP,
   STEP_DATA_STORAGE_KEY,
 } from '../constants/new-join-form';
 import { TOAST_OPTIONS } from '../constants/toast-options';
@@ -22,6 +23,7 @@ export default class NewStepperComponent extends Component {
 
   @tracked preValid = false;
   @tracked isValid = getLocalStorageItem('isValid') === 'true';
+  @tracked isSubmitting = false;
 
   @tracked currentStep = 0;
 
@@ -111,6 +113,7 @@ export default class NewStepperComponent extends Component {
   }
 
   @action async handleSubmit() {
+    this.isSubmitting = true;
     try {
       const applicationData = this.collectApplicationData();
 
@@ -129,6 +132,7 @@ export default class NewStepperComponent extends Component {
           'Application Exists!',
           TOAST_OPTIONS,
         );
+        this.isSubmitting = false;
         return;
       }
 
@@ -138,6 +142,7 @@ export default class NewStepperComponent extends Component {
           'Error!',
           TOAST_OPTIONS,
         );
+        this.isSubmitting = false;
         return;
       }
 
@@ -151,7 +156,10 @@ export default class NewStepperComponent extends Component {
       );
 
       this.clearAllStepData();
-      this.router.refresh();
+      this.isSubmitting = false;
+      this.router.replaceWith('join', {
+        queryParams: { dev: true },
+      });
     } catch (error) {
       console.error('Error submitting application:', error);
       this.toast.error(
@@ -159,6 +167,7 @@ export default class NewStepperComponent extends Component {
         'Error!',
         TOAST_OPTIONS,
       );
+      this.isSubmitting = false;
     }
   }
 
@@ -180,13 +189,13 @@ export default class NewStepperComponent extends Component {
     );
 
     return {
-      firstName: this.login.userData?.first_name || '',
-      lastName: this.login.userData?.last_name || '',
       ...stepOneData,
       ...stepTwoData,
       ...stepThreeData,
-      ...stepFourData,
       ...stepFiveData,
+      socialLink: { ...stepFourData },
+      role: stepOneData.role ? USER_ROLE_MAP[stepOneData.role] : '',
+      numberOfHours: Number(stepFiveData.numberOfHours) || 0,
     };
   }
 
