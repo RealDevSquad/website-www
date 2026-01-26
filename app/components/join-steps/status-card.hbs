@@ -67,15 +67,25 @@
       <div class="joining__copy">
         <h3 class="details" data-test-link-text>Here is your personalized link</h3>
         <p id="url" class="copy__link">{{this.introLink}}</p>
-        <CopyButton
-          data-test-copy-btn
-          @target="#url"
-          @onSuccess={{this.onSuccess}}
-          @onError={{this.onError}}
-          class="btn btn-dark"
-        >
-          Copy
-        </CopyButton>
+
+        <div class="status-card__buttons">
+          <CopyButton
+            data-test-copy-btn
+            @target="#url"
+            @onSuccess={{this.onSuccess}}
+            @onError={{this.onError}}
+            class="btn btn-dark"
+          >
+            Copy
+          </CopyButton>
+          <Reusables::Button
+            @text="Track Application"
+            @variant="dark"
+            @onClick={{this.trackApplication}}
+            @test="track-application-btn"
+            @type="button"
+          />
+        </div>
       </div>
     {{/if}}
 

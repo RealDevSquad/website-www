@@ -50,4 +50,12 @@
 
 .status-card__buttons {
   margin-top: 20px;
+  display: flex;
+  gap: 1rem;
+}
+
+@media (width <= 425px) {
+  .status-card__buttons {
+    flex-direction: column;
+  }
 }

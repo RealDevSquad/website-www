@@ -401,6 +401,10 @@
   color: var(--color-lightgrey);
 }
 
+.review-field__image-preview {
+  width: 60%;
+}
+
 .review-actions {
   display: flex;
   justify-content: center;

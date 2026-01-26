@@ -31,19 +31,24 @@ export default class NewStepOneComponent extends BaseStepComponent {
     role: NEW_STEP_LIMITS.stepOne.role,
   };
 
+  get fullName() {
+    const firstName = this.data.firstName || '';
+    const lastName = this.data.lastName || '';
+    return `${firstName} ${lastName}`.trim();
+  }
+
   postLoadInitialize() {
     if (
-      !this.data.fullName &&
+      !this.data.firstName &&
+      !this.data.lastName &&
       this.login.userData?.first_name &&
       this.login.userData?.last_name
     ) {
-      this.updateFieldValue(
-        'fullName',
-        `${this.login.userData.first_name} ${this.login.userData.last_name}`,
-      );
+      this.updateFieldValue('firstName', this.login.userData.first_name);
+      this.updateFieldValue('lastName', this.login.userData.last_name);
     }
-    if (this.data.profileImageBase64) {
-      this.imagePreview = this.data.profileImageBase64;
+    if (this.data.imageUrl) {
+      this.imagePreview = this.data.imageUrl;
     }
   }
 
@@ -88,7 +93,7 @@ export default class NewStepOneComponent extends BaseStepComponent {
     reader.onload = (e) => {
       const base64String = e.target.result;
       this.imagePreview = base64String;
-      this.updateFieldValue?.('profileImageBase64', base64String);
+      this.updateFieldValue?.('imageUrl', base64String);
       this.isImageUploading = false;
     };
     reader.onerror = () => {

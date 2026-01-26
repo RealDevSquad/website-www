@@ -8,22 +8,22 @@
     <div class="form-grid__item">
       <Reusables::TextAreaBox
         @field="What do you do for fun? Your hobbies/interests?"
-        @name="hobbies"
+        @name="forFun"
         @placeHolder="Tell us about your hobbies and interests..."
         @required={{true}}
-        @value={{this.data.hobbies}}
+        @value={{this.data.forFun}}
         @onInput={{this.inputHandler}}
       />
       <div
         class="word-count"
-        data-test-word-count="hobbies"
-      >{{this.wordCount.hobbies}}/{{this.stepValidation.hobbies.max}}
+        data-test-word-count="forFun"
+      >{{this.wordCount.forFun}}/{{this.stepValidation.forFun.max}}
         words</div>
-      {{#if this.errorMessage.hobbies}}
+      {{#if this.errorMessage.forFun}}
         <div
           class="error__message"
-          data-test-error="hobbies"
-        >{{this.errorMessage.hobbies}}</div>
+          data-test-error="forFun"
+        >{{this.errorMessage.forFun}}</div>
       {{/if}}
     </div>
 

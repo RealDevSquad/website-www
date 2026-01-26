@@ -1,22 +1,29 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { NEW_FORM_STEPS } from '../constants/new-join-form';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { CREATE_APPLICATION_URL } from '../constants/apis';
+import {
+  NEW_FORM_STEPS,
+  USER_ROLE_MAP,
+  STEP_DATA_STORAGE_KEY,
+} from '../constants/new-join-form';
+import { TOAST_OPTIONS } from '../constants/toast-options';
 import { getLocalStorageItem, setLocalStorageItem } from '../utils/storage';
 
 export default class NewStepperComponent extends Component {
   MIN_STEP = 0;
   MAX_STEP = 6;
-  applicationId = '4gchuf690';
 
   @service login;
   @service router;
   @service onboarding;
   @service joinApplicationTerms;
+  @service toast;
 
   @tracked preValid = false;
   @tracked isValid = getLocalStorageItem('isValid') === 'true';
+  @tracked isSubmitting = false;
 
   @tracked currentStep = 0;
 
@@ -105,11 +112,98 @@ export default class NewStepperComponent extends Component {
     }
   }
 
-  @action handleSubmit() {
-    // ToDo: handle create application
-    console.log('Submit application for review');
-    this.currentStep = this.MAX_STEP + 1;
-    setLocalStorageItem('currentStep', String(this.currentStep));
-    this.updateQueryParam(this.currentStep);
+  @action async handleSubmit() {
+    this.isSubmitting = true;
+    try {
+      const applicationData = this.collectApplicationData();
+
+      const response = await fetch(CREATE_APPLICATION_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(applicationData),
+      });
+
+      if (response.status === 409) {
+        this.toast.error(
+          'You have already submitted an application.',
+          'Application Exists!',
+          TOAST_OPTIONS,
+        );
+        this.isSubmitting = false;
+        return;
+      }
+
+      if (!response.ok) {
+        this.toast.error(
+          response.message || 'Failed to submit application. Please try again.',
+          'Error!',
+          TOAST_OPTIONS,
+        );
+        this.isSubmitting = false;
+        return;
+      }
+
+      const data = await response.json();
+      this.applicationId = data.application?.id;
+
+      this.toast.success(
+        'Application submitted successfully!',
+        'Success!',
+        TOAST_OPTIONS,
+      );
+
+      this.clearAllStepData();
+      this.isSubmitting = false;
+      this.router.replaceWith('join', {
+        queryParams: { dev: true },
+      });
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      this.toast.error(
+        'Failed to submit application. Please try again.',
+        'Error!',
+        TOAST_OPTIONS,
+      );
+      this.isSubmitting = false;
+    }
+  }
+
+  collectApplicationData() {
+    const stepOneData = JSON.parse(
+      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepOne) || '{}',
+    );
+    const stepTwoData = JSON.parse(
+      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepTwo) || '{}',
+    );
+    const stepThreeData = JSON.parse(
+      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepThree) || '{}',
+    );
+    const stepFourData = JSON.parse(
+      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepFour) || '{}',
+    );
+    const stepFiveData = JSON.parse(
+      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepFive) || '{}',
+    );
+
+    return {
+      ...stepOneData,
+      ...stepTwoData,
+      ...stepThreeData,
+      ...stepFiveData,
+      socialLink: { ...stepFourData },
+      role: stepOneData.role ? USER_ROLE_MAP[stepOneData.role] : '',
+      numberOfHours: Number(stepFiveData.numberOfHours) || 0,
+    };
+  }
+
+  clearAllStepData() {
+    Object.values(STEP_DATA_STORAGE_KEY).forEach((key) => {
+      localStorage.removeItem(key);
+    });
+    localStorage.removeItem('isValid');
+    localStorage.removeItem('currentStep');
   }
 }

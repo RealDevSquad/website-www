@@ -62,6 +62,10 @@ export default class StatusCardComponent extends Component {
     return USER_JOINED_LINK(this.login.userData.id);
   }
 
+  get applicationId() {
+    return this.onboarding.applicationData?.id;
+  }
+
   @action
   async fetchStatus() {
     await this.onboarding.getApplicationDetails();
@@ -95,5 +99,15 @@ export default class StatusCardComponent extends Component {
   @action
   onError() {
     this.toast.error('Error in copying to clipboard', 'Error!', TOAST_OPTIONS);
+  }
+
+  @action
+  trackApplication() {
+    if (this.applicationId) {
+      // ToDo: remove dev=true once feature flag is removed from application detail apge
+      this.router.transitionTo('applications.detail', this.applicationId, {
+        queryParams: { dev: true },
+      });
+    }
   }
 }
