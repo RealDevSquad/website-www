@@ -1,0 +1,11 @@
+<div class="info-card" data-test-info-card>
+  <h3 class="info-card-title" data-test-info-card-title>{{@title}}</h3>
+  <div class="info-card-content" data-test-info-card-content>
+    {{#each @sections as |section|}}
+      <div class="info-section" data-test-info-section>
+        <label class="info-label">{{section.label}}</label>
+        <p class="info-value">{{section.value}}</p>
+      </div>
+    {{/each}}
+  </div>
+</div>

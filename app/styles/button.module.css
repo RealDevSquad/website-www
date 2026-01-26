@@ -41,6 +41,13 @@
   width: 8rem;
 }
 
+.btn--xs {
+  width: 6rem;
+  height: 2.25rem;
+  min-height: fit-content;
+  min-width: fit-content;
+}
+
 .btn-generateUsername {
   position: absolute;
   top: 1rem;
