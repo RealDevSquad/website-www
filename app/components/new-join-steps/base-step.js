@@ -1,7 +1,7 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { debounceTask } from 'ember-lifeline';
+import { debounceTask, runTask } from 'ember-lifeline';
 import { JOIN_DEBOUNCE_TIME } from '../../constants/join';
 import { validateWordCount } from '../../utils/validator';
 import { getLocalStorageItem, setLocalStorageItem } from '../../utils/storage';
@@ -46,7 +46,7 @@ export default class BaseStepComponent extends Component {
       }),
     );
 
-    this.postLoadInitialize();
+    runTask(this, 'postLoadInitialize');
 
     const valid = this.isDataValid();
     this.args.setIsPreValid(valid);

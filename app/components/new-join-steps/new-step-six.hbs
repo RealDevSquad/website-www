@@ -20,16 +20,9 @@
         <span class="review-field__label">Full Name:</span>
         <span
           class="review-field__value
-            {{unless
-              this.stepData.one.fullName
-              'review-field__value--missing'
-            }}"
+            {{unless this.fullName 'review-field__value--missing'}}"
         >
-          {{if
-            this.stepData.one.fullName
-            this.stepData.one.fullName
-            "Not provided"
-          }}
+          {{if this.fullName this.fullName "Not provided"}}
         </span>
       </div>
       <div class="review-field">
@@ -52,9 +45,19 @@
       </div>
       <div class="review-field">
         <span class="review-field__label">Profile Image:</span>
-        <span class="review-field__value review-field__value--empty">
-          Not uploaded
-        </span>
+        {{#if this.hasProfileImage}}
+          <div class="review-field__image-preview">
+            <img
+              src={{this.profileImage}}
+              alt="Profile preview"
+              class="image-preview"
+            />
+          </div>
+        {{else}}
+          <span class="review-field__value review-field__value--empty">
+            Not uploaded
+          </span>
+        {{/if}}
       </div>
     </div>
   </div>
@@ -88,13 +91,13 @@
         <span class="review-field__label">Institution/Company:</span>
         <span
           class="review-field__value
-            {{unless this.stepData.two.company 'review-field__value--missing'}}"
+            {{unless this.stepData.two.college 'review-field__value--missing'}}"
         >
-          {{if
-            this.stepData.two.company
-            this.stepData.two.company
-            "Not provided"
-          }}
+          {{#if this.stepData.two.college}}
+            {{this.stepData.two.college}}
+          {{else}}
+            Not provided
+          {{/if}}
         </span>
       </div>
       <div class="review-field">
@@ -129,19 +132,19 @@
     </div>
     <div class="review-section__content">
       <div class="review-field">
-        <span class="review-field__label">Hobbies:</span>
+        <span class="review-field__label">For fun:</span>
         <span
           class="review-field__value
             {{unless
-              this.stepData.three.hobbies
+              this.stepData.three.forFun
               'review-field__value--missing'
             }}"
         >
-          {{if
-            this.stepData.three.hobbies
-            this.stepData.three.hobbies
-            "Not provided"
-          }}
+          {{#if this.stepData.three.forFun}}
+            {{this.stepData.three.forFun}}
+          {{else}}
+            Not provided
+          {{/if}}
         </span>
       </div>
       <div class="review-field">

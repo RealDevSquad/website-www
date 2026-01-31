@@ -9,7 +9,7 @@ export default class NewStepFourComponent extends BaseStepComponent {
   storageKey = STEP_DATA_STORAGE_KEY.stepFour;
 
   stepValidation = {
-    phoneNumber: NEW_STEP_LIMITS.stepFour.phoneNumber,
+    phoneNo: NEW_STEP_LIMITS.stepFour.phoneNo,
     twitter: NEW_STEP_LIMITS.stepFour.twitter,
     linkedin: NEW_STEP_LIMITS.stepFour.linkedin,
     instagram: NEW_STEP_LIMITS.stepFour.instagram,
@@ -59,7 +59,7 @@ export default class NewStepFourComponent extends BaseStepComponent {
   }
 
   validateField(field, value) {
-    if (field === 'phoneNumber') {
+    if (field === 'phoneNo') {
       const trimmedValue = value?.trim() || '';
       const isValid = trimmedValue && phoneNumberRegex.test(trimmedValue);
       return {
@@ -71,7 +71,7 @@ export default class NewStepFourComponent extends BaseStepComponent {
   }
 
   formatError(field, result) {
-    if (field === 'phoneNumber') {
+    if (field === 'phoneNo') {
       if (result.isValid) return '';
       return 'Please enter a valid phone number (e.g., +91 80000 00000)';
     }

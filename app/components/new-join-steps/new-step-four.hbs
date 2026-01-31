@@ -6,16 +6,16 @@
 
   <Reusables::InputBox
     @field="Phone Number"
-    @name="phoneNumber"
+    @name="phoneNo"
     @placeHolder="+91 80000 00000"
     @type="tel"
     @required={{true}}
-    @value={{this.data.phoneNumber}}
+    @value={{this.data.phoneNo}}
     @onInput={{this.inputHandler}}
     @variant="input--full-width"
   />
-  {{#if this.errorMessage.phoneNumber}}
-    <div class="error__message">{{this.errorMessage.phoneNumber}}</div>
+  {{#if this.errorMessage.phoneNo}}
+    <div class="error__message">{{this.errorMessage.phoneNo}}</div>
   {{/if}}
 
   <Reusables::InputBox

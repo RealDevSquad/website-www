@@ -26,6 +26,15 @@ export const ROLE_OPTIONS = [
   'Social Media',
 ];
 
+export const USER_ROLE_MAP = {
+  Developer: 'developer',
+  Designer: 'designer',
+  'Product Manager': 'product_manager',
+  'Project Manager': 'project_manager',
+  QA: 'qa',
+  'Social Media': 'social_media',
+};
+
 export const NEW_STEP_LIMITS = {
   stepOne: {
     country: { min: 1, type: 'dropdown' },
@@ -35,15 +44,15 @@ export const NEW_STEP_LIMITS = {
   },
   stepTwo: {
     skills: { min: 5, max: 20 },
-    company: { min: 1 },
+    college: { min: 1 },
     introduction: { min: 100, max: 500 },
   },
   stepThree: {
-    hobbies: { min: 100, max: 500 },
+    forFun: { min: 100, max: 500 },
     funFact: { min: 100, max: 500 },
   },
   stepFour: {
-    phoneNumber: { min: 1 },
+    phoneNo: { min: 1 },
     twitter: { min: 1 },
     github: { min: 1 },
     linkedin: { min: 1 },

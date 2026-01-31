@@ -50,3 +50,5 @@ export const APPLICATIONS_URL = (size = 6) => {
 export const APPLICATION_BY_ID_URL = (applicationId) => {
   return `${APPS.API_BACKEND}/applications/${applicationId}?dev=true`;
 };
+
+export const CREATE_APPLICATION_URL = `${APPS.API_BACKEND}/applications`;

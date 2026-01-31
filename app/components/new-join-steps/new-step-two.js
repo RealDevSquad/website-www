@@ -8,7 +8,7 @@ export default class NewStepTwoComponent extends BaseStepComponent {
   storageKey = STEP_DATA_STORAGE_KEY.stepTwo;
   stepValidation = {
     skills: NEW_STEP_LIMITS.stepTwo.skills,
-    company: NEW_STEP_LIMITS.stepTwo.company,
+    college: NEW_STEP_LIMITS.stepTwo.college,
     introduction: NEW_STEP_LIMITS.stepTwo.introduction,
   };
 }
