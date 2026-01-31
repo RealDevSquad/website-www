@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { getLocalStorageItem } from '../../utils/storage';
 import { STEP_DATA_STORAGE_KEY } from '../../constants/new-join-form';
+import { safeParse } from '../../utils/storage';
 
 export default class NewStepSixComponent extends Component {
   @tracked stepData = {
@@ -18,21 +18,11 @@ export default class NewStepSixComponent extends Component {
   }
 
   loadAllStepData() {
-    this.stepData.one = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepOne),
-    );
-    this.stepData.two = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepTwo),
-    );
-    this.stepData.three = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepThree),
-    );
-    this.stepData.four = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepFour),
-    );
-    this.stepData.five = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepFive),
-    );
+    this.stepData.one = safeParse(STEP_DATA_STORAGE_KEY.stepOne);
+    this.stepData.two = safeParse(STEP_DATA_STORAGE_KEY.stepTwo);
+    this.stepData.three = safeParse(STEP_DATA_STORAGE_KEY.stepThree);
+    this.stepData.four = safeParse(STEP_DATA_STORAGE_KEY.stepFour);
+    this.stepData.five = safeParse(STEP_DATA_STORAGE_KEY.stepFive);
   }
 
   get fullName() {
