@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupTest } from 'website-www/tests/helpers';
 import sinon from 'sinon';
 import {
-  APPLICATION_BY_ID_URL,
+  APPLICATIONS_BY_USER_URL,
   SELF_USER_PROFILE_URL,
 } from 'website-www/constants/apis';
 
@@ -26,27 +26,28 @@ module('Unit | Route | applications/detail', function (hooks) {
     assert.ok(route, 'The applications/detail route exists');
   });
 
-  test('fetches application by id successfully', async function (assert) {
-    const mockApplication = { id: '123', userId: 'user1' };
-    const mockUser = { first_name: 'John' };
-    const applicationId = '123';
+  test('fetches application by userId successfully', async function (assert) {
+    const mockApplications = [
+      { id: '123', userId: 'user1', status: 'pending' },
+    ];
+    const mockUser = { first_name: 'John', id: 'user1' };
 
     this.fetchStub
       .onCall(0)
       .resolves(new Response(JSON.stringify(mockUser), { status: 200 }));
 
     this.fetchStub.onCall(1).resolves(
-      new Response(JSON.stringify({ application: mockApplication }), {
+      new Response(JSON.stringify({ applications: mockApplications }), {
         status: 200,
       }),
     );
 
-    const result = await this.route.model({ id: applicationId });
+    const result = await this.route.model({ id: '123' }); // params.id still passed but unused
 
     assert.deepEqual(
       result,
-      { application: mockApplication, currentUser: mockUser },
-      'Returns application and currentUser from API',
+      { application: mockApplications[0], currentUser: mockUser },
+      'Returns first application and currentUser from API',
     );
     assert.ok(
       this.fetchStub.firstCall.calledWith(
@@ -57,10 +58,10 @@ module('Unit | Route | applications/detail', function (hooks) {
     );
     assert.ok(
       this.fetchStub.secondCall.calledWith(
-        APPLICATION_BY_ID_URL(applicationId),
+        APPLICATIONS_BY_USER_URL('user1'),
         sinon.match.object,
       ),
-      'Second API call is made to fetch application by id',
+      'Second API call is made to fetch applications by userId',
     );
   });
 
@@ -80,39 +81,73 @@ module('Unit | Route | applications/detail', function (hooks) {
   test('displays error toast on 404 response', async function (assert) {
     this.fetchStub
       .onCall(0)
-      .resolves(new Response(JSON.stringify({}), { status: 200 }));
+      .resolves(new Response(JSON.stringify({ id: 'user1' }), { status: 200 }));
     this.fetchStub
       .onCall(1)
-      .resolves(new Response(JSON.stringify({}), { status: 404 }));
+      .resolves(
+        new Response(JSON.stringify({ applications: [] }), { status: 404 }),
+      );
 
     const result = await this.route.model({ id: '123' });
 
     assert.deepEqual(
       result,
-      { application: null, currentUser: null },
-      'Returns null object for 404',
+      { application: null, currentUser: { id: 'user1' } },
+      'Returns null application for 404 but returns user',
     );
     assert.ok(
-      this.route.toast.error.calledOnce,
-      'Error toast is displayed for 404',
+      this.fetchStub.secondCall.calledWith(
+        APPLICATIONS_BY_USER_URL('user1'),
+        sinon.match.object,
+      ),
+      'API call is made to fetch applications by userId',
+    );
+    assert.ok(this.toast.error.calledOnce, 'Error toast is displayed for 404');
+  });
+
+  test('handles empty applications array gracefully', async function (assert) {
+    this.fetchStub
+      .onCall(0)
+      .resolves(new Response(JSON.stringify({ id: 'user1' }), { status: 200 }));
+    this.fetchStub
+      .onCall(1)
+      .resolves(
+        new Response(JSON.stringify({ applications: [] }), { status: 200 }),
+      );
+
+    const result = await this.route.model({ id: '123' });
+
+    assert.deepEqual(
+      result,
+      { application: null, currentUser: { id: 'user1' } },
+      'Returns null application when array is empty',
+    );
+    assert.ok(
+      this.fetchStub.secondCall.calledWith(
+        APPLICATIONS_BY_USER_URL('user1'),
+        sinon.match.object,
+      ),
+      'API call is made to fetch applications by userId',
     );
   });
 
-  test('displays error toast on API error', async function (assert) {
+  test('handles missing userId in user data', async function (assert) {
     this.fetchStub
       .onCall(0)
-      .resolves(new Response(JSON.stringify({}), { status: 200 }));
-    this.fetchStub
-      .onCall(1)
-      .resolves(new Response(JSON.stringify({}), { status: 500 }));
+      .resolves(
+        new Response(JSON.stringify({ first_name: 'John' }), { status: 200 }),
+      );
 
     const result = await this.route.model({ id: '123' });
 
     assert.deepEqual(
       result,
-      { application: null, currentUser: null },
-      'Returns null object on error',
+      { application: null, currentUser: { first_name: 'John' } },
+      'Returns null application when userId is missing',
     );
-    assert.ok(this.route.toast.error.calledOnce, 'Error toast is displayed');
+    assert.ok(
+      this.toast.error.calledOnce,
+      'Error toast is displayed for missing userId',
+    );
   });
 });

@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 import { adminMessage } from '../../constants/applications';
 
 export default class ApplicationsDetailController extends Controller {
@@ -40,5 +41,12 @@ export default class ApplicationsDetailController extends Controller {
 
   get showAdminMessage() {
     return adminMessage(this.application?.status);
+  }
+
+  @action
+  handleNudge(nudgeData) {
+    const application = this.application;
+    application.nudgeCount = nudgeData.nudgeCount;
+    application.lastNudgedAt = nudgeData.lastNudgedAt;
   }
 }

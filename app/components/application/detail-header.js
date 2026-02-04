@@ -1,7 +1,14 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { TOAST_OPTIONS } from '../../constants/toast-options';
+import nudgeApplication from '../../utils/nudge-api';
 
 export default class DetailHeader extends Component {
+  @service toast;
+
+  @tracked isLoading = false;
   get application() {
     return this.args.application;
   }
@@ -45,7 +52,7 @@ export default class DetailHeader extends Component {
   }
 
   get isNudgeDisabled() {
-    if (this.status !== 'pending') {
+    if (this.isLoading || this.status !== 'pending') {
       return true;
     }
     if (!this.application?.lastNudgedAt) {
@@ -80,9 +87,31 @@ export default class DetailHeader extends Component {
   }
 
   @action
-  nudgeApplication() {
-    //ToDo: Implement logic for callling nudge API here
-    console.log('nudge application');
+  async nudgeApplication() {
+    this.isLoading = true;
+
+    try {
+      await nudgeApplication(this.application.id);
+
+      const currentNudgeCount = this.nudgeCount;
+      const updatedNudgeData = {
+        nudgeCount: currentNudgeCount + 1,
+        lastNudgedAt: new Date().toISOString(),
+      };
+
+      this.toast.success(
+        'Nudge successful, you will be able to nudge again after 24hrs',
+        'Success!',
+        TOAST_OPTIONS,
+      );
+
+      this.args.onNudge?.(updatedNudgeData);
+    } catch (error) {
+      console.error('Nudge failed:', error);
+      this.toast.error('Failed to nudge application', 'Error!', TOAST_OPTIONS);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   @action
