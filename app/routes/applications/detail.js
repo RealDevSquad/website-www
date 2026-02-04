@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import {
-  APPLICATION_BY_ID_URL,
+  APPLICATIONS_BY_USER_URL,
   SELF_USER_PROFILE_URL,
 } from '../../constants/apis';
 import { ERROR_MESSAGES } from '../../constants/error-messages';
@@ -13,7 +13,7 @@ export default class ApplicationsDetailRoute extends Route {
   @service toast;
   @service router;
 
-  async model(params) {
+  async model() {
     try {
       const userResponse = await apiRequest(SELF_USER_PROFILE_URL);
       if (userResponse.status === 401) {
@@ -22,23 +22,33 @@ export default class ApplicationsDetailRoute extends Route {
         return { application: null, currentUser: null };
       }
 
+      const userData = await userResponse.json();
+      const userId = userData.id || userData.user?.id;
+
+      if (!userId) {
+        this.toast.error('User ID not found', 'Error!', TOAST_OPTIONS);
+        return { application: null, currentUser: userData };
+      }
+
       const applicationResponse = await apiRequest(
-        APPLICATION_BY_ID_URL(params.id),
+        APPLICATIONS_BY_USER_URL(userId),
       );
 
       if (applicationResponse.status === 404) {
         this.toast.error('Application not found', 'Error!', TOAST_OPTIONS);
-        return { application: null, currentUser: null };
+        return { application: null, currentUser: userData };
       }
 
       if (!applicationResponse.ok) {
         throw new Error(`HTTP error! status: ${applicationResponse.status}`);
       }
 
-      const userData = await userResponse.json();
       const applicationData = await applicationResponse.json();
+      const applications = applicationData?.applications || [];
+      const application = applications[0] || null;
+
       return {
-        application: applicationData?.application,
+        application: application,
         currentUser: userData,
       };
     } catch (error) {
