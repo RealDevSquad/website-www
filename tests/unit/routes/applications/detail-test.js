@@ -102,7 +102,10 @@ module('Unit | Route | applications/detail', function (hooks) {
       ),
       'API call is made to fetch applications by userId',
     );
-    assert.ok(this.toast.error.calledOnce, 'Error toast is displayed for 404');
+    assert.ok(
+      this.route.toast.error.calledOnce,
+      'Error toast is displayed for 404',
+    );
   });
 
   test('handles empty applications array gracefully', async function (assert) {
@@ -146,7 +149,7 @@ module('Unit | Route | applications/detail', function (hooks) {
       'Returns null application when userId is missing',
     );
     assert.ok(
-      this.toast.error.calledOnce,
+      this.route.toast.error.calledOnce,
       'Error toast is displayed for missing userId',
     );
   });
