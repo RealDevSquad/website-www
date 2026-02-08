@@ -4,7 +4,7 @@ import { NUDGE_APPLICATION_URL } from '../constants/apis';
 export default async function nudgeApplication(applicationId) {
   const response = await apiRequest(
     NUDGE_APPLICATION_URL(applicationId),
-    'POST',
+    'PATCH',
   );
 
   if (!response.ok) {

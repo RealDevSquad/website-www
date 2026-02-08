@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { TOAST_OPTIONS } from '../../constants/toast-options';
-import nudgeApplication from '../../utils/nudge-api';
+import nudgeApplicationApi from '../../utils/nudge-api';
 
 export default class DetailHeader extends Component {
   @service toast;
@@ -91,12 +91,11 @@ export default class DetailHeader extends Component {
     this.isLoading = true;
 
     try {
-      await nudgeApplication(this.application.id);
+      const response = await nudgeApplicationApi(this.application.id);
 
-      const currentNudgeCount = this.nudgeCount;
       const updatedNudgeData = {
-        nudgeCount: currentNudgeCount + 1,
-        lastNudgedAt: new Date().toISOString(),
+        nudgeCount: response?.nudgeCount ?? this.nudgeCount + 1,
+        lastNudgedAt: response?.lastNudgedAt ?? new Date().toISOString(),
       };
 
       this.toast.success(
