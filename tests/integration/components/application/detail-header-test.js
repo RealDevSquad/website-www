@@ -114,7 +114,15 @@ module('Integration | Component | application/detail-header', function (hooks) {
     let resolveNudge;
     window.fetch = () =>
       new Promise((resolve) => {
-        resolveNudge = () => resolve({ ok: true });
+        resolveNudge = () =>
+          resolve({
+            ok: true,
+            json: () =>
+              Promise.resolve({
+                nudgeCount: 1,
+                lastNudgeAt: new Date().toISOString(),
+              }),
+          });
       });
 
     click('[data-test-button="nudge-button"]');
@@ -144,11 +152,19 @@ module('Integration | Component | application/detail-header', function (hooks) {
         6,
         'Nudge count should be incremented',
       );
-      assert.ok(nudgeData.lastNudgeAt, 'Last nudged at should be set');
+      assert.ok(nudgeData.lastNudgeAt, 'Last nudge at should be set');
     });
 
     const originalFetch = window.fetch;
-    window.fetch = () => Promise.resolve({ ok: true });
+    window.fetch = () =>
+      Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            nudgeCount: 6,
+            lastNudgeAt: new Date().toISOString(),
+          }),
+      });
 
     await render(hbs`
       <Application::DetailHeader

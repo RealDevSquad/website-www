@@ -49,18 +49,22 @@ export default class DetailHeader extends Component {
   }
 
   get nudgeCount() {
-    return this.application?.nudgeCount ?? 0;
+    return this.args.nudgeCount ?? this.application?.nudgeCount ?? 0;
+  }
+
+  get lastNudgeAt() {
+    return this.args.lastNudgeAt ?? this.application?.lastNudgeAt ?? null;
   }
 
   get isNudgeDisabled() {
     if (this.isLoading || this.status !== 'pending') {
       return true;
     }
-    if (!this.application?.lastNudgeAt) {
+    if (!this.lastNudgeAt) {
       return false;
     }
     const now = Date.now();
-    const lastNudgeTime = new Date(this.application.lastNudgeAt).getTime();
+    const lastNudgeTime = new Date(this.lastNudgeAt).getTime();
     const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
     return now - lastNudgeTime < TWENTY_FOUR_HOURS;
   }
@@ -101,9 +105,11 @@ export default class DetailHeader extends Component {
         throw new Error(`Nudge failed: ${response.status}`);
       }
 
+      const data = await response.json();
+
       const updatedNudgeData = {
-        nudgeCount: response?.nudgeCount ?? this.nudgeCount + 1,
-        lastNudgeAt: response?.lastNudgeAt ?? new Date().toISOString(),
+        nudgeCount: data?.nudgeCount ?? this.nudgeCount + 1,
+        lastNudgeAt: data?.lastNudgeAt ?? new Date().toISOString(),
       };
 
       this.toast.success(
