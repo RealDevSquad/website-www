@@ -85,7 +85,7 @@ module('Integration | Component | application/detail-header', function (hooks) {
 
     this.set('application', {
       status: 'pending',
-      lastNudgedAt: recentNudge,
+      lastNudgeAt: recentNudge,
     });
 
     await render(
@@ -144,7 +144,7 @@ module('Integration | Component | application/detail-header', function (hooks) {
         6,
         'Nudge count should be incremented',
       );
-      assert.ok(nudgeData.lastNudgedAt, 'Last nudged at should be set');
+      assert.ok(nudgeData.lastNudgeAt, 'Last nudged at should be set');
     });
 
     const originalFetch = window.fetch;

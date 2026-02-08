@@ -56,11 +56,11 @@ export default class DetailHeader extends Component {
     if (this.isLoading || this.status !== 'pending') {
       return true;
     }
-    if (!this.application?.lastNudgedAt) {
+    if (!this.application?.lastNudgeAt) {
       return false;
     }
     const now = Date.now();
-    const lastNudgeTime = new Date(this.application.lastNudgedAt).getTime();
+    const lastNudgeTime = new Date(this.application.lastNudgeAt).getTime();
     const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
     return now - lastNudgeTime < TWENTY_FOUR_HOURS;
   }
@@ -103,7 +103,7 @@ export default class DetailHeader extends Component {
 
       const updatedNudgeData = {
         nudgeCount: response?.nudgeCount ?? this.nudgeCount + 1,
-        lastNudgedAt: response?.lastNudgedAt ?? new Date().toISOString(),
+        lastNudgeAt: response?.lastNudgeAt ?? new Date().toISOString(),
       };
 
       this.toast.success(
