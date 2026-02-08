@@ -3,7 +3,8 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { TOAST_OPTIONS } from '../../constants/toast-options';
-import nudgeApplicationApi from '../../utils/nudge-api';
+import { NUDGE_APPLICATION_URL } from '../../constants/apis';
+import apiRequest from '../../utils/api-request';
 
 export default class DetailHeader extends Component {
   @service toast;
@@ -91,7 +92,14 @@ export default class DetailHeader extends Component {
     this.isLoading = true;
 
     try {
-      const response = await nudgeApplicationApi(this.application.id);
+      const response = await apiRequest(
+        NUDGE_APPLICATION_URL(this.application.id),
+        'PATCH',
+      );
+
+      if (!response.ok) {
+        throw new Error(`Nudge failed: ${response.status}`);
+      }
 
       const updatedNudgeData = {
         nudgeCount: response?.nudgeCount ?? this.nudgeCount + 1,

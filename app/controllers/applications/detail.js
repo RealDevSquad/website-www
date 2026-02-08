@@ -44,7 +44,7 @@ export default class ApplicationsDetailController extends Controller {
   }
 
   @action
-  handleNudge(nudgeData) {
+  handleApplicationNudge(nudgeData) {
     const application = this.application;
     application.nudgeCount = nudgeData.nudgeCount;
     application.lastNudgedAt = nudgeData.lastNudgedAt;

@@ -47,10 +47,7 @@ export default class ApplicationsDetailRoute extends Route {
       const applications = applicationData?.applications || [];
       const application = applications[0] || null;
 
-      return {
-        application: application,
-        currentUser: userData,
-      };
+      return { application, currentUser: userData };
     } catch (error) {
       this.toast.error(
         'Something went wrong. ' + error.message,
