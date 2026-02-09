@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'website-www/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { render, click, settled, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { APPLICATIONS_DATA } from 'website-www/tests/constants/application-data';
 
@@ -85,12 +85,96 @@ module('Integration | Component | application/detail-header', function (hooks) {
 
     this.set('application', {
       status: 'pending',
-      lastNudgedAt: recentNudge,
+      lastNudgeAt: recentNudge,
     });
 
     await render(
       hbs`<Application::DetailHeader @application={{this.application}} />`,
     );
     assert.dom('[data-test-button="nudge-button"]').hasAttribute('disabled');
+  });
+
+  test('it shows loading state during nudge API call', async function (assert) {
+    const application = {
+      ...APPLICATIONS_DATA,
+      status: 'pending',
+      id: 'test-id',
+    };
+    this.set('application', application);
+    this.set('onNudge', () => {});
+
+    await render(hbs`
+      <Application::DetailHeader
+        @application={{this.application}}
+        @onNudge={{this.onNudge}}
+      />
+    `);
+
+    const originalFetch = window.fetch;
+    let resolveNudge;
+    window.fetch = () =>
+      new Promise((resolve) => {
+        resolveNudge = () =>
+          resolve({
+            ok: true,
+            json: () =>
+              Promise.resolve({
+                nudgeCount: 1,
+                lastNudgeAt: new Date().toISOString(),
+              }),
+          });
+      });
+
+    click('[data-test-button="nudge-button"]');
+
+    await waitFor('[data-test-button="nudge-button"][disabled]');
+    assert.dom('[data-test-button="nudge-button"]').hasAttribute('disabled');
+
+    resolveNudge();
+    await settled();
+
+    window.fetch = originalFetch;
+  });
+
+  test('it calls onNudge callback with updated data on successful nudge', async function (assert) {
+    assert.expect(2);
+
+    const application = {
+      ...APPLICATIONS_DATA,
+      status: 'pending',
+      nudgeCount: 5,
+      id: 'test-id',
+    };
+    this.set('application', application);
+    this.set('onNudge', (nudgeData) => {
+      assert.strictEqual(
+        nudgeData.nudgeCount,
+        6,
+        'Nudge count should be incremented',
+      );
+      assert.ok(nudgeData.lastNudgeAt, 'Last nudge at should be set');
+    });
+
+    const originalFetch = window.fetch;
+    window.fetch = () =>
+      Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            nudgeCount: 6,
+            lastNudgeAt: new Date().toISOString(),
+          }),
+      });
+
+    await render(hbs`
+      <Application::DetailHeader
+        @application={{this.application}}
+        @onNudge={{this.onNudge}}
+      />
+    `);
+
+    await click('[data-test-button="nudge-button"]');
+
+    window.fetch = originalFetch;
   });
 });

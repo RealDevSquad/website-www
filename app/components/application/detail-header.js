@@ -1,7 +1,15 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { TOAST_OPTIONS } from '../../constants/toast-options';
+import { NUDGE_APPLICATION_URL } from '../../constants/apis';
+import apiRequest from '../../utils/api-request';
 
 export default class DetailHeader extends Component {
+  @service toast;
+
+  @tracked isLoading = false;
   get application() {
     return this.args.application;
   }
@@ -41,18 +49,22 @@ export default class DetailHeader extends Component {
   }
 
   get nudgeCount() {
-    return this.application?.nudgeCount ?? 0;
+    return this.args.nudgeCount ?? this.application?.nudgeCount ?? 0;
+  }
+
+  get lastNudgeAt() {
+    return this.args.lastNudgeAt ?? this.application?.lastNudgeAt ?? null;
   }
 
   get isNudgeDisabled() {
-    if (this.status !== 'pending') {
+    if (this.isLoading || this.status !== 'pending') {
       return true;
     }
-    if (!this.application?.lastNudgedAt) {
+    if (!this.lastNudgeAt) {
       return false;
     }
     const now = Date.now();
-    const lastNudgeTime = new Date(this.application.lastNudgedAt).getTime();
+    const lastNudgeTime = new Date(this.lastNudgeAt).getTime();
     const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
     return now - lastNudgeTime < TWENTY_FOUR_HOURS;
   }
@@ -80,9 +92,39 @@ export default class DetailHeader extends Component {
   }
 
   @action
-  nudgeApplication() {
-    //ToDo: Implement logic for callling nudge API here
-    console.log('nudge application');
+  async nudgeApplication() {
+    this.isLoading = true;
+
+    try {
+      const response = await apiRequest(
+        NUDGE_APPLICATION_URL(this.application.id),
+        'PATCH',
+      );
+
+      if (!response.ok) {
+        throw new Error(`Nudge failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      const updatedNudgeData = {
+        nudgeCount: data?.nudgeCount ?? this.nudgeCount + 1,
+        lastNudgeAt: data?.lastNudgeAt ?? new Date().toISOString(),
+      };
+
+      this.toast.success(
+        'Nudge successful, you will be able to nudge again after 24hrs',
+        'Success!',
+        TOAST_OPTIONS,
+      );
+
+      this.args.onNudge?.(updatedNudgeData);
+    } catch (error) {
+      console.error('Nudge failed:', error);
+      this.toast.error('Failed to nudge application', 'Error!', TOAST_OPTIONS);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   @action
