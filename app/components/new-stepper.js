@@ -2,14 +2,21 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { CREATE_APPLICATION_URL, UPDATE_APPLICATION_URL } from '../constants/apis';
+import {
+  CREATE_APPLICATION_URL,
+  UPDATE_APPLICATION_URL,
+} from '../constants/apis';
 import {
   NEW_FORM_STEPS,
   USER_ROLE_MAP,
   STEP_DATA_STORAGE_KEY,
 } from '../constants/new-join-form';
 import { TOAST_OPTIONS } from '../constants/toast-options';
-import { getLocalStorageItem, safeParse, setLocalStorageItem } from '../utils/storage';
+import {
+  getLocalStorageItem,
+  safeParse,
+  setLocalStorageItem,
+} from '../utils/storage';
 import apiRequest from '../utils/api-request';
 
 export default class NewStepperComponent extends Component {
@@ -122,11 +129,9 @@ export default class NewStepperComponent extends Component {
     try {
       const applicationData = this.collectApplicationData();
       const url = this.isEditMode
-        ? UPDATE_APPLICATION_URL(this.applicationId)
+        ? UPDATE_APPLICATION_URL(this.onboarding.applicationData?.id)
         : CREATE_APPLICATION_URL;
       const method = this.isEditMode ? 'PATCH' : 'POST';
-
-      console.log("application data: ", applicationData)
 
       const response = await apiRequest(url, method, applicationData);
 
@@ -150,8 +155,7 @@ export default class NewStepperComponent extends Component {
         return;
       }
 
-      const data = await response.json();
-      this.applicationId = data.application?.id;
+      await response.json();
 
       this.toast.success(
         'Application submitted successfully!',
@@ -182,9 +186,7 @@ export default class NewStepperComponent extends Component {
     const stepFourData = safeParse(STEP_DATA_STORAGE_KEY.stepFour);
     const stepFiveData = safeParse(STEP_DATA_STORAGE_KEY.stepFive);
 
-    // handle edit mode here...
-
-    return {
+    const formData = {
       ...stepOneData,
       ...stepTwoData,
       ...stepThreeData,
@@ -193,6 +195,71 @@ export default class NewStepperComponent extends Component {
       role: stepOneData.role ? USER_ROLE_MAP[stepOneData.role] : '',
       numberOfHours: Number(stepFiveData.numberOfHours) || 0,
     };
+
+    if (this.isEditMode && this.onboarding.applicationData) {
+      return this.getChangedFields(formData, this.onboarding.applicationData);
+    }
+
+    return formData;
+  }
+
+  getChangedFields(formData, originalApp) {
+    const changedData = {};
+
+    const fieldMap = {
+      firstName: originalApp.biodata?.firstName,
+      lastName: originalApp.biodata?.lastName,
+      city: originalApp.location?.city,
+      state: originalApp.location?.state,
+      country: originalApp.location?.country,
+      college: originalApp.professional?.institution,
+      skills: originalApp.professional?.skills,
+      introduction: originalApp.professional?.introduction,
+      forFun: originalApp.intro?.forFun,
+      funFact: originalApp.intro?.funFact,
+      whyRds: originalApp.intro?.whyRds,
+      numberOfHours: originalApp.intro?.numberOfHours,
+      foundFrom: originalApp.foundFrom,
+      role: originalApp.role,
+      imageUrl: originalApp.imageUrl,
+    };
+
+    Object.entries(fieldMap).forEach(([formKey, originalValue]) => {
+      if (formData[formKey] !== originalValue) {
+        if (formKey === 'college') {
+          changedData.institution = formData.college;
+        } else {
+          changedData[formKey] = formData[formKey];
+        }
+      }
+    });
+
+    const socialFields = [
+      'phoneNo',
+      'twitter',
+      'linkedin',
+      'instagram',
+      'github',
+      'peerlist',
+      'behance',
+      'dribble',
+    ];
+
+    const socialChanges = socialFields.reduce((acc, field) => {
+      const formValue = formData[field];
+      const originalValue = originalApp.socialLink?.[field];
+
+      if (formValue && formValue !== originalValue) {
+        acc[field] = formValue;
+      }
+      return acc;
+    }, {});
+
+    if (Object.keys(socialChanges).length) {
+      changedData.socialLink = socialChanges;
+    }
+
+    return changedData;
   }
 
   clearAllStepData() {
