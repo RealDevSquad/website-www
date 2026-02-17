@@ -32,7 +32,7 @@
           </div>
         </OnboardingCard>
       {{else}}
-        {{#if this.applicationData}}
+        {{#if (and this.applicationData (not this.isEditMode))}}
           <JoinSteps::StatusCard
             @status={{this.applicationData.status}}
             @feedback={{this.applicationData.feedback}}
@@ -40,7 +40,10 @@
           />
         {{else}}
           {{#if this.isDevMode}}
-            <NewStepper @step={{this.stepFromParam}} />
+            <NewStepper
+              @step={{this.stepFromParam}}
+              @isEditMode={{this.isEditMode}}
+            />
           {{else if this.isOldOnboarding}}
             <StepperSignup
               @chaincode={{this.chaincode}}

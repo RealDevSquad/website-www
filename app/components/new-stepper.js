@@ -2,14 +2,15 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { CREATE_APPLICATION_URL } from '../constants/apis';
+import { CREATE_APPLICATION_URL, UPDATE_APPLICATION_URL } from '../constants/apis';
 import {
   NEW_FORM_STEPS,
   USER_ROLE_MAP,
   STEP_DATA_STORAGE_KEY,
 } from '../constants/new-join-form';
 import { TOAST_OPTIONS } from '../constants/toast-options';
-import { getLocalStorageItem, setLocalStorageItem } from '../utils/storage';
+import { getLocalStorageItem, safeParse, setLocalStorageItem } from '../utils/storage';
+import apiRequest from '../utils/api-request';
 
 export default class NewStepperComponent extends Component {
   MIN_STEP = 0;
@@ -50,6 +51,10 @@ export default class NewStepperComponent extends Component {
         step,
       },
     });
+  }
+
+  get isEditMode() {
+    return this.args.isEditMode;
   }
 
   get showPreviousButton() {
@@ -116,15 +121,14 @@ export default class NewStepperComponent extends Component {
     this.isSubmitting = true;
     try {
       const applicationData = this.collectApplicationData();
+      const url = this.isEditMode
+        ? UPDATE_APPLICATION_URL(this.applicationId)
+        : CREATE_APPLICATION_URL;
+      const method = this.isEditMode ? 'PATCH' : 'POST';
 
-      const response = await fetch(CREATE_APPLICATION_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(applicationData),
-      });
+      console.log("application data: ", applicationData)
+
+      const response = await apiRequest(url, method, applicationData);
 
       if (response.status === 409) {
         this.toast.error(
@@ -172,21 +176,13 @@ export default class NewStepperComponent extends Component {
   }
 
   collectApplicationData() {
-    const stepOneData = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepOne) || '{}',
-    );
-    const stepTwoData = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepTwo) || '{}',
-    );
-    const stepThreeData = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepThree) || '{}',
-    );
-    const stepFourData = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepFour) || '{}',
-    );
-    const stepFiveData = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepFive) || '{}',
-    );
+    const stepOneData = safeParse(STEP_DATA_STORAGE_KEY.stepOne);
+    const stepTwoData = safeParse(STEP_DATA_STORAGE_KEY.stepTwo);
+    const stepThreeData = safeParse(STEP_DATA_STORAGE_KEY.stepThree);
+    const stepFourData = safeParse(STEP_DATA_STORAGE_KEY.stepFour);
+    const stepFiveData = safeParse(STEP_DATA_STORAGE_KEY.stepFive);
+
+    // handle edit mode here...
 
     return {
       ...stepOneData,

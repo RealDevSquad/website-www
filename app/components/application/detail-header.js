@@ -7,6 +7,7 @@ import { NUDGE_APPLICATION_URL } from '../../constants/apis';
 import apiRequest from '../../utils/api-request';
 
 export default class DetailHeader extends Component {
+  @service router;
   @service toast;
 
   @tracked isLoading = false;
@@ -129,8 +130,13 @@ export default class DetailHeader extends Component {
 
   @action
   editApplication() {
-    //ToDo: Implement logic for edit application here
-    console.log('edit application');
+    this.router.transitionTo('join', {
+      queryParams: {
+        edit: true,
+        dev: true,
+        step: 1,
+      },
+    });
   }
 
   @action

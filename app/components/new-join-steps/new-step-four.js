@@ -6,7 +6,9 @@ import {
 import { phoneNumberRegex } from '../../constants/regex';
 
 export default class NewStepFourComponent extends BaseStepComponent {
-  storageKey = STEP_DATA_STORAGE_KEY.stepFour;
+  get storageKey() {
+    return STEP_DATA_STORAGE_KEY.stepFour;
+  }
 
   stepValidation = {
     phoneNo: NEW_STEP_LIMITS.stepFour.phoneNo,
