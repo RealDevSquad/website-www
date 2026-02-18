@@ -61,7 +61,7 @@ module('Integration | Component | new-stepper', function (hooks) {
       },
       stepTwo: {
         skills: 'JavaScript, Python',
-        college: 'Stanford University',
+        institution: 'Stanford University',
         introduction: 'Passionate developer with 5 years experience.',
       },
       stepThree: {
@@ -206,7 +206,7 @@ module('Integration | Component | new-stepper', function (hooks) {
     assert.strictEqual(submittedData.lastName, 'Doe');
     assert.strictEqual(submittedData.role, 'developer');
     assert.strictEqual(submittedData.city, 'San Francisco');
-    assert.strictEqual(submittedData.college, 'Stanford University');
+    assert.strictEqual(submittedData.institution, 'Stanford University');
     assert.strictEqual(submittedData.skills, 'JavaScript, Python');
     assert.strictEqual(submittedData.forFun, 'I love hiking and photography.');
     assert.deepEqual(submittedData.socialLink, this.mockStepData.stepFour);

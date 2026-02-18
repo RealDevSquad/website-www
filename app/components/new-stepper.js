@@ -137,7 +137,9 @@ export default class NewStepperComponent extends Component {
 
       if (response.status === 409) {
         this.toast.error(
-          'You have already submitted an application.',
+          this.isEditMode
+            ? 'You will be able to edit after 24 hrs.'
+            : 'You have already submitted an application.',
           'Application Exists!',
           TOAST_OPTIONS,
         );
@@ -147,7 +149,8 @@ export default class NewStepperComponent extends Component {
 
       if (!response.ok) {
         this.toast.error(
-          response.message || 'Failed to submit application. Please try again.',
+          response.message ||
+            `Failed to ${this.isEditMode ? 'edit' : 'submit'} application. Please try again.`,
           'Error!',
           TOAST_OPTIONS,
         );
@@ -158,7 +161,9 @@ export default class NewStepperComponent extends Component {
       await response.json();
 
       this.toast.success(
-        'Application submitted successfully!',
+        this.isEditMode
+          ? 'You have successfully edited the application'
+          : 'Application submitted successfully!',
         'Success!',
         TOAST_OPTIONS,
       );
@@ -171,7 +176,7 @@ export default class NewStepperComponent extends Component {
     } catch (error) {
       console.error('Error submitting application:', error);
       this.toast.error(
-        'Failed to submit application. Please try again.',
+        `Failed to ${this.isEditMode ? 'edit' : 'submit'} application. Please try again.`,
         'Error!',
         TOAST_OPTIONS,
       );
@@ -197,40 +202,35 @@ export default class NewStepperComponent extends Component {
     };
 
     if (this.isEditMode && this.onboarding.applicationData) {
-      return this.getChangedFields(formData, this.onboarding.applicationData);
+      return this.getModifiedFields(formData, this.onboarding.applicationData);
     }
 
     return formData;
   }
 
-  getChangedFields(formData, originalApp) {
-    const changedData = {};
+  getModifiedFields(formData, originalApplication) {
+    const modifiedData = {};
 
-    const fieldMap = {
-      firstName: originalApp.biodata?.firstName,
-      lastName: originalApp.biodata?.lastName,
-      city: originalApp.location?.city,
-      state: originalApp.location?.state,
-      country: originalApp.location?.country,
-      college: originalApp.professional?.institution,
-      skills: originalApp.professional?.skills,
-      introduction: originalApp.professional?.introduction,
-      forFun: originalApp.intro?.forFun,
-      funFact: originalApp.intro?.funFact,
-      whyRds: originalApp.intro?.whyRds,
-      numberOfHours: originalApp.intro?.numberOfHours,
-      foundFrom: originalApp.foundFrom,
-      role: originalApp.role,
-      imageUrl: originalApp.imageUrl,
+    const originalValues = {
+      firstName: originalApplication.biodata?.firstName,
+      lastName: originalApplication.biodata?.lastName,
+      city: originalApplication.location?.city,
+      state: originalApplication.location?.state,
+      country: originalApplication.location?.country,
+      institution: originalApplication.professional?.institution,
+      skills: originalApplication.professional?.skills,
+      introduction: originalApplication.professional?.introduction,
+      forFun: originalApplication.intro?.forFun,
+      funFact: originalApplication.intro?.funFact,
+      whyRds: originalApplication.intro?.whyRds,
+      numberOfHours: originalApplication.intro?.numberOfHours,
+      foundFrom: originalApplication.foundFrom,
+      role: originalApplication.role,
+      imageUrl: originalApplication.imageUrl,
     };
-
-    Object.entries(fieldMap).forEach(([formKey, originalValue]) => {
+    Object.entries(originalValues).forEach(([formKey, originalValue]) => {
       if (formData[formKey] !== originalValue) {
-        if (formKey === 'college') {
-          changedData.institution = formData.college;
-        } else {
-          changedData[formKey] = formData[formKey];
-        }
+        modifiedData[formKey] = formData[formKey];
       }
     });
 
@@ -245,9 +245,9 @@ export default class NewStepperComponent extends Component {
       'dribble',
     ];
 
-    const socialChanges = socialFields.reduce((acc, field) => {
+    const socialLinkChanges = socialFields.reduce((acc, field) => {
       const formValue = formData[field];
-      const originalValue = originalApp.socialLink?.[field];
+      const originalValue = originalApplication.socialLink?.[field];
 
       if (formValue && formValue !== originalValue) {
         acc[field] = formValue;
@@ -255,11 +255,11 @@ export default class NewStepperComponent extends Component {
       return acc;
     }, {});
 
-    if (Object.keys(socialChanges).length) {
-      changedData.socialLink = socialChanges;
+    if (Object.keys(socialLinkChanges).length) {
+      modifiedData.socialLink = socialLinkChanges;
     }
 
-    return changedData;
+    return modifiedData;
   }
 
   clearAllStepData() {

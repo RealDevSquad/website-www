@@ -33,7 +33,7 @@ export default class BaseStepComponent extends Component {
       imageUrl: app.imageUrl || '',
     }),
     newStepTwoData: (app) => ({
-      college: app.professional?.institution || '',
+      institution: app.professional?.institution || '',
       skills: app.professional?.skills || '',
       introduction: app.intro?.introduction || '',
     }),

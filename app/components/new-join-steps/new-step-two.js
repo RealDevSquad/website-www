@@ -10,7 +10,7 @@ export default class NewStepTwoComponent extends BaseStepComponent {
   }
   stepValidation = {
     skills: NEW_STEP_LIMITS.stepTwo.skills,
-    college: NEW_STEP_LIMITS.stepTwo.college,
+    institution: NEW_STEP_LIMITS.stepTwo.institution,
     introduction: NEW_STEP_LIMITS.stepTwo.introduction,
   };
 }
