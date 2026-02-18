@@ -63,3 +63,38 @@ export const APPLICATIONS_DATA = {
   isNew: false,
   notFound: false,
 };
+
+export const NEW_STEPS_APPLICATIONS_DATA = {
+  stepOne: {
+    firstName: 'Anuj',
+    lastName: 'Chhikara',
+    role: 'Developer',
+    city: 'Haryana',
+    state: 'Haryana',
+    country: 'India',
+    imageUrl: 'https://example.com/profile.jpg',
+  },
+  stepTwo: {
+    skills: 'JavaScript, TypeScript, React',
+    college: 'University of Rizz',
+    introduction:
+      'Experienced full-stack developer passionate about building scalable applications.',
+  },
+  stepThree: {
+    forFun: 'I enjoy rock climbing and contributing to open source projects.',
+    funFact:
+      'I built my first website at age 12 and have been coding ever since.',
+  },
+  stepFour: {
+    phoneNo: '+1-699-969-6969',
+    twitter: 'anujchhikara',
+    github: 'anujchhikara',
+    linkedin: 'anujchhikara',
+    instagram: 'anujchhikara',
+  },
+  stepFive: {
+    numberOfHours: '15',
+    whyRds: 'Real Dev Squad aligns with my values of continuous learning.',
+    foundFrom: 'Twitter',
+  },
+};
