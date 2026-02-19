@@ -105,13 +105,15 @@ export default class NewStepOneComponent extends BaseStepComponent {
         const data = await response.json();
         const imageUrl = data.url || data.picture;
 
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const base64String = e.target.result;
-          this.imagePreview = base64String;
-          this.updateFieldValue?.('imageUrl', imageUrl);
-        };
-        reader.readAsDataURL(file);
+        if (!imageUrl) {
+          this.toast.error(
+            'Upload succeeded but no image URL was returned. Please try again.',
+            'Error!',
+          );
+          return;
+        }
+        this.imagePreview = imageUrl;
+        this.updateFieldValue?.('imageUrl', imageUrl);
 
         this.toast.success(
           'Profile image uploaded successfully!',
@@ -123,11 +125,14 @@ export default class NewStepOneComponent extends BaseStepComponent {
         this.toast.error(
           errorData.message || 'Failed to upload image. Please try again.',
           'Error!',
+          TOAST_OPTIONS,
         );
       }
     } catch (error) {
-      console.error('Image upload error:', error);
-      this.toast.error('Failed to upload image. Please try again.', 'Error!');
+      this.toast.error(
+        error.message || 'Failed to upload image. Please try again.',
+        'Error!',
+      );
     } finally {
       this.isImageUploading = false;
     }

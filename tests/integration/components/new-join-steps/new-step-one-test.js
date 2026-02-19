@@ -38,8 +38,9 @@ module(
       });
 
       assert.ok(
-        this.toast.error.calledWith(
+        this.toast.error.calledWithExactly(
           'Invalid file type. Please upload an image file.',
+          'Error!',
         ),
         'Shows error for non-image file',
       );
@@ -59,13 +60,16 @@ module(
       });
 
       assert.ok(
-        this.toast.error.calledWith('Image size must be less than 2MB'),
+        this.toast.error.calledWithExactly(
+          'Image size must be less than 2MB',
+          'Error!',
+        ),
         'Shows error for oversized file',
       );
     });
 
     test('imagePreview and imageUrl are updated on successful upload', async function (assert) {
-      const fetchStub = sinon.stub(window, 'fetch').resolves({
+      sinon.stub(window, 'fetch').resolves({
         ok: true,
         json: async () => ({ url: 'https://example.com/photo.jpg' }),
       });
@@ -84,16 +88,27 @@ module(
 
       assert.dom('[data-test-image-preview]').exists();
       assert.dom('[data-test-image-preview]').hasAttribute('src');
+
+      const storedData = JSON.parse(
+        localStorage.getItem('newStepOneData') || '{}',
+      );
+      assert.strictEqual(
+        storedData.imageUrl,
+        'https://example.com/photo.jpg',
+        'Persists returned image URL to localStorage',
+      );
       assert.ok(
-        this.toast.success.calledWith('Profile image uploaded successfully!'),
+        this.toast.success.calledWithExactly(
+          'Profile image uploaded successfully!',
+          'Success!',
+          sinon.match.object,
+        ),
         'Shows success toast',
       );
-
-      fetchStub.restore();
     });
 
     test('shows error toast on image upload API failure', async function (assert) {
-      const fetchStub = sinon.stub(window, 'fetch').resolves({
+      sinon.stub(window, 'fetch').resolves({
         ok: false,
         json: async () => ({ message: 'Server error' }),
       });
@@ -110,11 +125,13 @@ module(
 
       assert.dom('[data-test-image-preview]').doesNotExist();
       assert.ok(
-        this.toast.error.calledWith('Server error'),
+        this.toast.error.calledWithExactly(
+          'Server error',
+          'Error!',
+          sinon.match.object,
+        ),
         'Shows error toast with API message',
       );
-
-      fetchStub.restore();
     });
   },
 );
