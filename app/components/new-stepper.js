@@ -12,6 +12,7 @@ import {
   STEP_DATA_STORAGE_KEY,
 } from '../constants/new-join-form';
 import { TOAST_OPTIONS } from '../constants/toast-options';
+import { socialFields } from '../constants/applications';
 import {
   getLocalStorageItem,
   safeParse,
@@ -233,17 +234,6 @@ export default class NewStepperComponent extends Component {
         modifiedData[formKey] = formData[formKey];
       }
     });
-
-    const socialFields = [
-      'phoneNo',
-      'twitter',
-      'linkedin',
-      'instagram',
-      'github',
-      'peerlist',
-      'behance',
-      'dribble',
-    ];
 
     const socialLinkChanges = socialFields.reduce((acc, field) => {
       const formValue = formData[field];
