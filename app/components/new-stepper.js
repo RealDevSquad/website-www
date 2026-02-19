@@ -2,14 +2,23 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { CREATE_APPLICATION_URL } from '../constants/apis';
+import {
+  CREATE_APPLICATION_URL,
+  UPDATE_APPLICATION_URL,
+} from '../constants/apis';
 import {
   NEW_FORM_STEPS,
   USER_ROLE_MAP,
   STEP_DATA_STORAGE_KEY,
 } from '../constants/new-join-form';
 import { TOAST_OPTIONS } from '../constants/toast-options';
-import { getLocalStorageItem, setLocalStorageItem } from '../utils/storage';
+import { socialFields } from '../constants/applications';
+import {
+  getLocalStorageItem,
+  safeParse,
+  setLocalStorageItem,
+} from '../utils/storage';
+import apiRequest from '../utils/api-request';
 
 export default class NewStepperComponent extends Component {
   MIN_STEP = 0;
@@ -50,6 +59,10 @@ export default class NewStepperComponent extends Component {
         step,
       },
     });
+  }
+
+  get isEditMode() {
+    return this.args.isEditMode;
   }
 
   get showPreviousButton() {
@@ -116,19 +129,18 @@ export default class NewStepperComponent extends Component {
     this.isSubmitting = true;
     try {
       const applicationData = this.collectApplicationData();
+      const url = this.isEditMode
+        ? UPDATE_APPLICATION_URL(this.onboarding.applicationData?.id)
+        : CREATE_APPLICATION_URL;
+      const method = this.isEditMode ? 'PATCH' : 'POST';
 
-      const response = await fetch(CREATE_APPLICATION_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(applicationData),
-      });
+      const response = await apiRequest(url, method, applicationData);
 
       if (response.status === 409) {
         this.toast.error(
-          'You have already submitted an application.',
+          this.isEditMode
+            ? 'You will be able to edit after 24 hrs.'
+            : 'You have already submitted an application.',
           'Application Exists!',
           TOAST_OPTIONS,
         );
@@ -138,7 +150,8 @@ export default class NewStepperComponent extends Component {
 
       if (!response.ok) {
         this.toast.error(
-          response.message || 'Failed to submit application. Please try again.',
+          response.message ||
+            `Failed to ${this.isEditMode ? 'edit' : 'submit'} application. Please try again.`,
           'Error!',
           TOAST_OPTIONS,
         );
@@ -146,11 +159,12 @@ export default class NewStepperComponent extends Component {
         return;
       }
 
-      const data = await response.json();
-      this.applicationId = data.application?.id;
+      await response.json();
 
       this.toast.success(
-        'Application submitted successfully!',
+        this.isEditMode
+          ? 'You have successfully edited the application'
+          : 'Application submitted successfully!',
         'Success!',
         TOAST_OPTIONS,
       );
@@ -163,7 +177,7 @@ export default class NewStepperComponent extends Component {
     } catch (error) {
       console.error('Error submitting application:', error);
       this.toast.error(
-        'Failed to submit application. Please try again.',
+        `Failed to ${this.isEditMode ? 'edit' : 'submit'} application. Please try again.`,
         'Error!',
         TOAST_OPTIONS,
       );
@@ -172,23 +186,13 @@ export default class NewStepperComponent extends Component {
   }
 
   collectApplicationData() {
-    const stepOneData = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepOne) || '{}',
-    );
-    const stepTwoData = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepTwo) || '{}',
-    );
-    const stepThreeData = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepThree) || '{}',
-    );
-    const stepFourData = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepFour) || '{}',
-    );
-    const stepFiveData = JSON.parse(
-      getLocalStorageItem(STEP_DATA_STORAGE_KEY.stepFive) || '{}',
-    );
+    const stepOneData = safeParse(STEP_DATA_STORAGE_KEY.stepOne);
+    const stepTwoData = safeParse(STEP_DATA_STORAGE_KEY.stepTwo);
+    const stepThreeData = safeParse(STEP_DATA_STORAGE_KEY.stepThree);
+    const stepFourData = safeParse(STEP_DATA_STORAGE_KEY.stepFour);
+    const stepFiveData = safeParse(STEP_DATA_STORAGE_KEY.stepFive);
 
-    return {
+    const formData = {
       ...stepOneData,
       ...stepTwoData,
       ...stepThreeData,
@@ -197,6 +201,55 @@ export default class NewStepperComponent extends Component {
       role: stepOneData.role ? USER_ROLE_MAP[stepOneData.role] : '',
       numberOfHours: Number(stepFiveData.numberOfHours) || 0,
     };
+
+    if (this.isEditMode && this.onboarding.applicationData) {
+      return this.getModifiedFields(formData, this.onboarding.applicationData);
+    }
+
+    return formData;
+  }
+
+  getModifiedFields(formData, originalApplication) {
+    const modifiedData = {};
+
+    const originalValues = {
+      firstName: originalApplication.biodata?.firstName,
+      lastName: originalApplication.biodata?.lastName,
+      city: originalApplication.location?.city,
+      state: originalApplication.location?.state,
+      country: originalApplication.location?.country,
+      institution: originalApplication.professional?.institution,
+      skills: originalApplication.professional?.skills,
+      introduction: originalApplication.professional?.introduction,
+      forFun: originalApplication.intro?.forFun,
+      funFact: originalApplication.intro?.funFact,
+      whyRds: originalApplication.intro?.whyRds,
+      numberOfHours: originalApplication.intro?.numberOfHours,
+      foundFrom: originalApplication.foundFrom,
+      role: originalApplication.role,
+      imageUrl: originalApplication.imageUrl,
+    };
+    Object.entries(originalValues).forEach(([formKey, originalValue]) => {
+      if (formData[formKey] !== originalValue) {
+        modifiedData[formKey] = formData[formKey];
+      }
+    });
+
+    const socialLinkChanges = socialFields.reduce((acc, field) => {
+      const formValue = formData[field];
+      const originalValue = originalApplication.socialLink?.[field];
+
+      if (formValue && formValue !== originalValue) {
+        acc[field] = formValue;
+      }
+      return acc;
+    }, {});
+
+    if (Object.keys(socialLinkChanges).length) {
+      modifiedData.socialLink = socialLinkChanges;
+    }
+
+    return modifiedData;
   }
 
   clearAllStepData() {

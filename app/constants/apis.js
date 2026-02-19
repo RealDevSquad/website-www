@@ -18,6 +18,10 @@ export const APPLICATION_ID_LINK = (id) => {
   return `${APPS.DASHBOARD}/applications/?id=${id}`;
 };
 
+export const SELF_PROFILE_UPDATE_URL = (userId, devFlag) => {
+  return `${APPS.API_BACKEND}/users/${userId}?profile=true&dev=${devFlag}`;
+};
+
 export const GENERATE_USERNAME_URL = (
   sanitizedFirstname,
   sanitizedLastname,
@@ -28,8 +32,6 @@ export const GENERATE_USERNAME_URL = (
 export const CHECK_USERNAME_AVAILABILITY = (userName) => {
   return `${APPS.API_BACKEND}/users/isUsernameAvailable/${userName}`;
 };
-
-export const SELF_USERS_URL = `${APPS.API_BACKEND}/users/self`;
 
 export const SELF_USER_STATUS_URL = `${APPS.API_BACKEND}/users/status/self`;
 
@@ -52,6 +54,10 @@ export const APPLICATION_BY_ID_URL = (applicationId) => {
 };
 
 export const CREATE_APPLICATION_URL = `${APPS.API_BACKEND}/applications`;
+
+export const UPDATE_APPLICATION_URL = (applicationId) => {
+  return `${APPS.API_BACKEND}/applications/${applicationId}`;
+};
 
 export const NUDGE_APPLICATION_URL = (applicationId) => {
   return `${APPS.API_BACKEND}/applications/${applicationId}/nudge`;

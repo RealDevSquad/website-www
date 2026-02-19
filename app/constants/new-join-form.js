@@ -44,7 +44,7 @@ export const NEW_STEP_LIMITS = {
   },
   stepTwo: {
     skills: { min: 5, max: 20 },
-    college: { min: 1 },
+    institution: { min: 1 },
     introduction: { min: 100, max: 500 },
   },
   stepThree: {

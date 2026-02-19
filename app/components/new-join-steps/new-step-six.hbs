@@ -91,10 +91,13 @@
         <span class="review-field__label">Institution/Company:</span>
         <span
           class="review-field__value
-            {{unless this.stepData.two.college 'review-field__value--missing'}}"
+            {{unless
+              this.stepData.two.institution
+              'review-field__value--missing'
+            }}"
         >
-          {{#if this.stepData.two.college}}
-            {{this.stepData.two.college}}
+          {{#if this.stepData.two.institution}}
+            {{this.stepData.two.institution}}
           {{else}}
             Not provided
           {{/if}}

@@ -18,7 +18,7 @@ export default class JoinController extends Controller {
 
   ANKUSH_TWITTER = ANKUSH_TWITTER;
 
-  queryParams = ['step', 'dev', 'oldOnboarding'];
+  queryParams = ['step', 'dev', 'oldOnboarding', 'edit'];
 
   get isDevMode() {
     return this.featureFlag.isDevMode;
@@ -42,6 +42,10 @@ export default class JoinController extends Controller {
 
   get isLoggedIn() {
     return this.login.isLoggedIn && this.login.userData;
+  }
+
+  get isEditMode() {
+    return this.edit === 'true';
   }
 
   @action async handleGenerateChaincode(e) {

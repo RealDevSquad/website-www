@@ -6,7 +6,21 @@ import { TOAST_OPTIONS } from '../../constants/toast-options';
 import { NUDGE_APPLICATION_URL } from '../../constants/apis';
 import apiRequest from '../../utils/api-request';
 
+const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+
+function isWithinCooldown(timestamp, cooldownMs = TWENTY_FOUR_HOURS) {
+  if (!timestamp) {
+    return false;
+  }
+
+  const now = Date.now();
+  const time = new Date(timestamp).getTime();
+
+  return now - time < cooldownMs;
+}
+
 export default class DetailHeader extends Component {
+  @service router;
   @service toast;
 
   @tracked isLoading = false;
@@ -56,17 +70,22 @@ export default class DetailHeader extends Component {
     return this.args.lastNudgeAt ?? this.application?.lastNudgeAt ?? null;
   }
 
+  get lastEditAt() {
+    return this.application?.lastEditAt ?? null;
+  }
+
   get isNudgeDisabled() {
     if (this.isLoading || this.status !== 'pending') {
       return true;
     }
-    if (!this.lastNudgeAt) {
-      return false;
+    return isWithinCooldown(this.lastNudgeAt);
+  }
+
+  get isEditDisabled() {
+    if (this.isLoading) {
+      return true;
     }
-    const now = Date.now();
-    const lastNudgeTime = new Date(this.lastNudgeAt).getTime();
-    const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
-    return now - lastNudgeTime < TWENTY_FOUR_HOURS;
+    return isWithinCooldown(this.lastEditAt);
   }
 
   get socialLinks() {
@@ -129,13 +148,17 @@ export default class DetailHeader extends Component {
 
   @action
   editApplication() {
-    //ToDo: Implement logic for edit application here
-    console.log('edit application');
+    this.router.transitionTo('join', {
+      queryParams: {
+        edit: true,
+        dev: true,
+        step: 1,
+      },
+    });
   }
 
   @action
   navigateToDashboard() {
-    //ToDo: Navigate to dashboard site for admin actions
-    console.log('navigate to dashboard');
+    this.router.transitionTo(`/intro?id=${this.userDetails?.id}`);
   }
 }
