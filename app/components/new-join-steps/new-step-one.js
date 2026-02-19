@@ -96,7 +96,11 @@ export default class NewStepOneComponent extends BaseStepComponent {
       const formData = new FormData();
       formData.append('profile', file);
 
-      const response = await apiRequest(APPLICATION_PROFILE_IMAGE_URL, 'POST', formData);
+      const response = await apiRequest(
+        APPLICATION_PROFILE_IMAGE_URL,
+        'POST',
+        formData,
+      );
       if (response.ok) {
         const data = await response.json();
         const imageUrl = data.url || data.picture;
