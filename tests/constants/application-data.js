@@ -76,7 +76,7 @@ export const NEW_STEPS_APPLICATIONS_DATA = {
   },
   stepTwo: {
     skills: 'JavaScript, TypeScript, React',
-    college: 'University of Rizz',
+    institution: 'University of Rizz',
     introduction:
       'Experienced full-stack developer passionate about building scalable applications.',
   },

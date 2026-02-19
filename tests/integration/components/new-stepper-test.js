@@ -246,8 +246,8 @@ module('Integration | Component | new-stepper', function (hooks) {
         'Country collected correctly',
       );
       assert.strictEqual(
-        submittedData.college,
-        NEW_STEPS_APPLICATIONS_DATA.stepTwo.college,
+        submittedData.institution,
+        NEW_STEPS_APPLICATIONS_DATA.stepTwo.institution,
         'Institution collected correctly',
       );
       assert.strictEqual(
