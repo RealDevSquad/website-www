@@ -1,6 +1,6 @@
 import Service, { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { APPS, AUTH } from '../constants/urls';
+import { APPS } from '../constants/urls';
 
 export default class LoginService extends Service {
   @service store;
@@ -9,6 +9,7 @@ export default class LoginService extends Service {
   @tracked isLoading = true;
   @service fastboot;
   @service featureFlag;
+  @service router;
 
   HeadersToCopy = ['Host', 'Cookie', 'User-Agent'];
 
@@ -34,10 +35,9 @@ export default class LoginService extends Service {
         if (
           user.incompleteUserDetails &&
           !this.featureFlag.isDevMode &&
-          !this.fastboot.isFastBoot &&
-          window.location.pathname !== '/new-signup'
+          this.router.currentRoute?.name !== 'new-signup'
         ) {
-          window.location.replace(AUTH.SIGN_UP);
+          this.router.replaceWith('/new-signup');
         }
         this.isLoggedIn = true;
         this.userData = user;
