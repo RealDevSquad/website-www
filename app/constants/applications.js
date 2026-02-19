@@ -23,6 +23,17 @@ export const mapSocialUrls = {
   behance: 'https://behance.net',
 };
 
+export const socialFields = [
+  'phoneNo',
+  'twitter',
+  'linkedin',
+  'instagram',
+  'github',
+  'peerlist',
+  'behance',
+  'dribble',
+];
+
 export function adminMessage(status) {
   switch (status) {
     case 'pending':
