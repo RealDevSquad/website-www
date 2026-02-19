@@ -5,10 +5,12 @@ import {
 } from '../../constants/new-join-form';
 
 export default class NewStepTwoComponent extends BaseStepComponent {
-  storageKey = STEP_DATA_STORAGE_KEY.stepTwo;
+  get storageKey() {
+    return STEP_DATA_STORAGE_KEY.stepTwo;
+  }
   stepValidation = {
     skills: NEW_STEP_LIMITS.stepTwo.skills,
-    college: NEW_STEP_LIMITS.stepTwo.college,
+    institution: NEW_STEP_LIMITS.stepTwo.institution,
     introduction: NEW_STEP_LIMITS.stepTwo.introduction,
   };
 }

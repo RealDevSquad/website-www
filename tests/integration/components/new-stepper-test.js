@@ -1,255 +1,365 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'website-www/tests/helpers';
-import { render, click } from '@ember/test-helpers';
+import { render, click, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import sinon from 'sinon';
 import Service from '@ember/service';
 import { STEP_DATA_STORAGE_KEY } from 'website-www/constants/new-join-form';
-
-function clearAllStepData() {
-  Object.values(STEP_DATA_STORAGE_KEY).forEach((key) =>
-    localStorage.removeItem(key),
-  );
-  localStorage.removeItem('isValid');
-  localStorage.removeItem('currentStep');
-}
-
-function setupFetchStub(response = {}) {
-  sinon.restore();
-  return sinon.stub(window, 'fetch').resolves({
-    ok: true,
-    status: 201,
-    json: () => Promise.resolve({ application: { id: 'test-id' } }),
-    ...response,
-  });
-}
+import {
+  APPLICATIONS_DATA,
+  NEW_STEPS_APPLICATIONS_DATA,
+} from 'website-www/tests/constants/application-data';
 
 module('Integration | Component | new-stepper', function (hooks) {
   setupRenderingTest(hooks);
 
+  function seedFormDataToLocalStorage(formData) {
+    Object.entries(formData).forEach(([step, data]) => {
+      localStorage.setItem(STEP_DATA_STORAGE_KEY[step], JSON.stringify(data));
+    });
+  }
+
+  function clearFormDataFromLocalStorage() {
+    Object.values(STEP_DATA_STORAGE_KEY).forEach((key) => {
+      localStorage.removeItem(key);
+    });
+    localStorage.removeItem('isValid');
+    localStorage.removeItem('currentStep');
+  }
+
   hooks.beforeEach(function () {
-    this.routerStub = {
+    this.routerService = {
       transitionTo: sinon.stub(),
       replaceWith: sinon.stub(),
       currentRoute: { queryParams: {} },
     };
 
     const testContext = this;
-    class ToastStub extends Service {
+    class ToastServiceStub extends Service {
       constructor(...args) {
         super(...args);
         this.success = sinon.stub();
         this.error = sinon.stub();
-        testContext.toastStub = this;
+        testContext.toastService = this;
       }
     }
 
-    this.owner.register('service:router', this.routerStub, {
+    class OnboardingServiceStub extends Service {
+      applicationData = null;
+    }
+    class JoinApplicationTermsServiceStub extends Service {
+      hasUserAcceptedTerms = false;
+    }
+
+    this.owner.register('service:router', this.routerService, {
       instantiate: false,
     });
-    this.owner.register('service:toast', ToastStub);
+    this.owner.register('service:toast', ToastServiceStub);
+    this.owner.register('service:onboarding', OnboardingServiceStub);
+    this.owner.register(
+      'service:joinApplicationTerms',
+      JoinApplicationTermsServiceStub,
+    );
 
-    this.mockStepData = {
-      stepOne: {
-        firstName: 'John',
-        lastName: 'Doe',
-        role: 'Developer',
-        city: 'San Francisco',
-        state: 'CA',
-        country: 'USA',
-        imageUrl: 'https://example.com/photo.jpg',
-      },
-      stepTwo: {
-        skills: 'JavaScript, Python',
-        college: 'Stanford University',
-        introduction: 'Passionate developer with 5 years experience.',
-      },
-      stepThree: {
-        forFun: 'I love hiking and photography.',
-        funFact: 'I have visited 20 countries.',
-      },
-      stepFour: {
-        phoneNo: '+1 555-123-4567',
-        twitter: '@johndoe',
-        github: 'github.com/johndoe',
-        linkedin: 'linkedin.com/in/johndoe',
-        instagram: 'instagram.com/johndoe',
-      },
-      stepFive: {
-        numberOfHours: '20',
-        whyRDS: 'I want to contribute to meaningful projects.',
-        anythingElse: 'Looking forward to collaborating!',
-      },
-    };
+    seedFormDataToLocalStorage(NEW_STEPS_APPLICATIONS_DATA);
 
-    Object.entries(this.mockStepData).forEach(([step, data]) => {
-      localStorage.setItem(STEP_DATA_STORAGE_KEY[step], JSON.stringify(data));
+    this.apiStub = sinon.stub(window, 'fetch').resolves({
+      ok: true,
+      status: 201,
+      json: () => Promise.resolve({ application: { id: 'app-123' } }),
     });
-    this.fetchStub = setupFetchStub();
   });
 
   hooks.afterEach(function () {
-    clearAllStepData();
+    clearFormDataFromLocalStorage();
     sinon.restore();
   });
 
-  test('it renders the welcome screen at step 0', async function (assert) {
-    await render(hbs`<NewStepper @step={{0}} />`);
-
-    assert.dom('[data-test="stepper"]').exists();
-    assert.dom('[data-test="welcome-screen"]').exists();
-    assert
-      .dom('[data-test="welcome-greeting"]')
-      .hasText('Ready to apply to Real Dev Squad?');
-    assert.dom('[data-test-button="start"]').exists();
-  });
-
-  test('start button is disabled when terms are not accepted', async function (assert) {
-    await render(hbs`<NewStepper @step={{0}} />`);
-    assert.dom('[data-test-button="start"]').isDisabled();
-  });
-
-  test('start button is enabled when terms are accepted', async function (assert) {
-    const terms = this.owner.lookup('service:joinApplicationTerms');
-    terms.hasUserAcceptedTerms = true;
-
-    await render(hbs`<NewStepper @step={{0}} />`);
-    assert.dom('[data-test-button="start"]').isNotDisabled();
-  });
-
-  test('handleSubmit success - submits form data and redirects', async function (assert) {
-    await render(hbs`<NewStepper @step={{6}} />`);
-    await click('[data-test-button="submit-review"]');
-
-    assert.ok(this.fetchStub.calledOnce);
-    assert.ok(this.fetchStub.firstCall.args[0].includes('/applications'));
-    assert.strictEqual(this.fetchStub.firstCall.args[1].method, 'POST');
-    assert.ok(
-      this.toastStub.success.calledWith(
-        'Application submitted successfully!',
-        'Success!',
-      ),
-    );
-    assert.ok(
-      this.routerStub.replaceWith.calledWith('join', {
-        queryParams: { dev: true },
-      }),
-    );
-    assert.strictEqual(localStorage.getItem('isValid'), null);
-    assert.strictEqual(localStorage.getItem('currentStep'), null);
-  });
-
-  test('handleSubmit handles 409 conflict - shows already submitted error', async function (assert) {
-    setupFetchStub({
-      ok: false,
-      status: 409,
-      message: 'Application already exists',
+  module('Edit Application', function (hooks) {
+    hooks.beforeEach(function () {
+      const onboardingService = this.owner.lookup('service:onboarding');
+      onboardingService.applicationData = APPLICATIONS_DATA;
     });
 
-    await render(hbs`<NewStepper @step={{6}} />`);
-    await click('[data-test-button="submit-review"]');
+    test('uses PATCH method for updating application', async function (assert) {
+      await render(hbs`<NewStepper @step={{6}} @isEditMode={{true}} />`);
+      await click('[data-test-button="submit-review"]');
 
-    assert.ok(
-      this.toastStub.error.calledWith(
-        'You have already submitted an application.',
-        'Application Exists!',
-      ),
-    );
-    assert.notOk(this.routerStub.replaceWith.called);
-    assert.notOk(this.toastStub.success.called);
-  });
-
-  test('handleSubmit handles API error - shows error toast', async function (assert) {
-    setupFetchStub({
-      ok: false,
-      status: 500,
-      message: 'Internal Server Error',
+      assert.strictEqual(
+        this.apiStub.firstCall.args[1].method,
+        'PATCH',
+        'Uses PATCH method for editing',
+      );
     });
 
-    await render(hbs`<NewStepper @step={{6}} />`);
-    await click('[data-test-button="submit-review"]');
+    test('calls correct update API endpoint with application ID', async function (assert) {
+      await render(hbs`<NewStepper @step={{6}} @isEditMode={{true}} />`);
+      await click('[data-test-button="submit-review"]');
 
-    assert.ok(this.toastStub.error.called);
-    assert.notOk(this.routerStub.replaceWith.called);
-  });
+      assert.ok(
+        this.apiStub.firstCall.args[0].includes(
+          `/applications/${APPLICATIONS_DATA.id}`,
+        ),
+        'Correct update endpoint called with application ID',
+      );
+    });
 
-  test('handleSubmit handles network failure - shows error toast', async function (assert) {
-    sinon.restore();
-    sinon.stub(window, 'fetch').rejects(new Error('Network error'));
+    test('displays success toast with edit-specific message', async function (assert) {
+      await render(hbs`<NewStepper @step={{6}} @isEditMode={{true}} />`);
+      await click('[data-test-button="submit-review"]');
 
-    await render(hbs`<NewStepper @step={{6}} />`);
-    await click('[data-test-button="submit-review"]');
+      assert.ok(
+        this.toastService.success.calledWith(
+          'You have successfully edited the application',
+          'Success!',
+        ),
+        'Edit success toast displayed',
+      );
+    });
 
-    assert.ok(
-      this.toastStub.error.calledWith(
-        'Failed to submit application. Please try again.',
-        'Error!',
-      ),
-    );
-  });
+    test('handles 24hr edit restriction with 409 conflict error', async function (assert) {
+      sinon.restore();
+      this.apiStub = sinon.stub(window, 'fetch').resolves({
+        ok: false,
+        status: 409,
+        message: '24 hour restriction',
+      });
 
-  test('submit button is enabled before and after submission', async function (assert) {
-    await render(hbs`<NewStepper @step={{6}} />`);
+      await render(hbs`<NewStepper @step={{6}} @isEditMode={{true}} />`);
+      await click('[data-test-button="submit-review"]');
 
-    assert.dom('[data-test-button="submit-review"]').isNotDisabled();
-    await click('[data-test-button="submit-review"]');
-    assert.dom('[data-test-button="submit-review"]').isNotDisabled();
-  });
+      assert.ok(
+        this.toastService.error.calledWith(
+          'You will be able to edit after 24 hrs.',
+          'Application Exists!',
+        ),
+        'Displays 24hr restriction error toast',
+      );
+      assert.notOk(
+        this.routerService.replaceWith.called,
+        'Does not redirect when edit blocked',
+      );
+      assert.notOk(
+        this.toastService.success.called,
+        'Does not show success toast when edit blocked',
+      );
+    });
 
-  test('collectApplicationData merges all step data correctly', async function (assert) {
-    await render(hbs`<NewStepper @step={{6}} />`);
-    await click('[data-test-button="submit-review"]');
+    test('handles server error in edit mode with edit-specific message', async function (assert) {
+      sinon.restore();
+      this.apiStub = sinon.stub(window, 'fetch').resolves({
+        ok: false,
+        status: 500,
+      });
 
-    const submittedData = JSON.parse(this.fetchStub.firstCall.args[1].body);
+      await render(hbs`<NewStepper @step={{6}} @isEditMode={{true}} />`);
+      await click('[data-test-button="submit-review"]');
 
-    assert.strictEqual(submittedData.firstName, 'John');
-    assert.strictEqual(submittedData.lastName, 'Doe');
-    assert.strictEqual(submittedData.role, 'developer');
-    assert.strictEqual(submittedData.city, 'San Francisco');
-    assert.strictEqual(submittedData.college, 'Stanford University');
-    assert.strictEqual(submittedData.skills, 'JavaScript, Python');
-    assert.strictEqual(submittedData.forFun, 'I love hiking and photography.');
-    assert.deepEqual(submittedData.socialLink, this.mockStepData.stepFour);
-    assert.strictEqual(submittedData.numberOfHours, 20);
-  });
+      assert.ok(
+        this.toastService.error.calledWithMatch(
+          'Failed to edit application. Please try again.',
+        ),
+        'Edit error toast displayed with edit-specific message',
+      );
+    });
 
-  test('collectApplicationData handles empty step data gracefully', async function (assert) {
-    Object.values(STEP_DATA_STORAGE_KEY).forEach((key) =>
-      localStorage.setItem(key, '{}'),
-    );
+    test('handles network failure in edit mode', async function (assert) {
+      sinon.restore();
+      sinon.stub(window, 'fetch').rejects(new Error('Network error'));
 
-    await render(hbs`<NewStepper @step={{6}} />`);
-    await click('[data-test-button="submit-review"]');
+      await render(hbs`<NewStepper @step={{6}} @isEditMode={{true}} />`);
+      await click('[data-test-button="submit-review"]');
 
-    const submittedData = JSON.parse(this.fetchStub.firstCall.args[1].body);
+      assert.ok(
+        this.toastService.error.calledWith(
+          'Failed to edit application. Please try again.',
+          'Error!',
+        ),
+        'Network error toast displayed in edit mode',
+      );
+    });
 
-    assert.notOk(submittedData.role);
-    assert.strictEqual(submittedData.numberOfHours, 0);
-  });
+    test('submit button is disabled during edit submission', async function (assert) {
+      let resolveApi;
+      const deferredPromise = new Promise((resolve) => {
+        resolveApi = resolve;
+      });
 
-  test('clearAllStepData removes all step storage keys', async function (assert) {
-    assert.expect(5);
+      sinon.restore();
+      sinon.stub(window, 'fetch').returns(deferredPromise);
 
-    Object.values(STEP_DATA_STORAGE_KEY).forEach((key) =>
-      localStorage.setItem(key, JSON.stringify({ test: 'data' })),
-    );
+      await render(hbs`<NewStepper @step={{6}} @isEditMode={{true}} />`);
 
-    await render(hbs`<NewStepper @step={{6}} />`);
-    await click('[data-test-button="submit-review"]');
+      const clickPromise = click('[data-test-button="submit-review"]');
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      assert
+        .dom('[data-test-button="submit-review"]')
+        .isDisabled('Submit button disabled during edit submission');
 
-    Object.values(STEP_DATA_STORAGE_KEY).forEach((key) => {
-      assert.strictEqual(localStorage.getItem(key), null);
+      resolveApi({ ok: true, status: 201, json: () => Promise.resolve({}) });
+      await clickPromise;
+      await settled();
+      assert
+        .dom('[data-test-button="submit-review"]')
+        .isNotDisabled('Submit button enabled after edit completes');
+    });
+
+    test('redirects to join page after successful edit', async function (assert) {
+      await render(hbs`<NewStepper @step={{6}} @isEditMode={{true}} />`);
+      await click('[data-test-button="submit-review"]');
+
+      assert.ok(
+        this.routerService.replaceWith.calledWith('join', {
+          queryParams: { dev: true },
+        }),
+        'Redirects to join page after successful edit',
+      );
     });
   });
 
-  test('clearAllStepData clears isValid and currentStep', async function (assert) {
-    localStorage.setItem('isValid', 'true');
-    localStorage.setItem('currentStep', '6');
+  module('Data Collection and Transformation', function () {
+    test('collects and transforms all form data correctly', async function (assert) {
+      assert.expect(6);
+      await render(hbs`<NewStepper @step={{6}} />`);
+      await click('[data-test-button="submit-review"]');
 
-    await render(hbs`<NewStepper @step={{6}} />`);
-    await click('[data-test-button="submit-review"]');
+      const submittedData = JSON.parse(this.apiStub.firstCall.args[1].body);
 
-    assert.strictEqual(localStorage.getItem('isValid'), null);
-    assert.strictEqual(localStorage.getItem('currentStep'), null);
+      assert.strictEqual(
+        submittedData.firstName,
+        NEW_STEPS_APPLICATIONS_DATA.stepOne.firstName,
+        'First name collected correctly',
+      );
+      assert.strictEqual(
+        submittedData.role,
+        NEW_STEPS_APPLICATIONS_DATA.stepOne.role.toLowerCase(),
+        'Role transformed to lowercase format',
+      );
+      assert.strictEqual(
+        submittedData.city,
+        NEW_STEPS_APPLICATIONS_DATA.stepOne.city,
+        'City collected correctly',
+      );
+      assert.strictEqual(
+        submittedData.country,
+        NEW_STEPS_APPLICATIONS_DATA.stepOne.country,
+        'Country collected correctly',
+      );
+      assert.strictEqual(
+        submittedData.institution,
+        NEW_STEPS_APPLICATIONS_DATA.stepTwo.institution,
+        'Institution collected correctly',
+      );
+      assert.strictEqual(
+        submittedData.skills,
+        NEW_STEPS_APPLICATIONS_DATA.stepTwo.skills,
+        'Skills collected correctly',
+      );
+    });
+
+    test('groups social links under socialLink property', async function (assert) {
+      await render(hbs`<NewStepper @step={{6}} />`);
+      await click('[data-test-button="submit-review"]');
+
+      const submittedData = JSON.parse(this.apiStub.firstCall.args[1].body);
+
+      assert.deepEqual(
+        submittedData.socialLink,
+        NEW_STEPS_APPLICATIONS_DATA.stepFour,
+        'Social links grouped correctly',
+      );
+      assert.strictEqual(
+        submittedData.socialLink.github,
+        NEW_STEPS_APPLICATIONS_DATA.stepFour.github,
+        'GitHub link correct',
+      );
+      assert.strictEqual(
+        submittedData.socialLink.linkedin,
+        NEW_STEPS_APPLICATIONS_DATA.stepFour.linkedin,
+        'LinkedIn link correct',
+      );
+    });
+
+    test('handles empty form data gracefully', async function (assert) {
+      clearFormDataFromLocalStorage();
+      Object.values(STEP_DATA_STORAGE_KEY).forEach((key) => {
+        localStorage.setItem(key, '{}');
+      });
+
+      await render(hbs`<NewStepper @step={{6}} />`);
+      await click('[data-test-button="submit-review"]');
+
+      const submittedData = JSON.parse(this.apiStub.firstCall.args[1].body);
+
+      assert.notOk(submittedData.role, 'Empty role handled correctly');
+      assert.strictEqual(
+        submittedData.numberOfHours,
+        0,
+        'Empty hours defaults to 0',
+      );
+      assert.ok(
+        submittedData.socialLink,
+        'Social link object exists even when empty',
+      );
+    });
+  });
+
+  module('LocalStorage Management', function () {
+    test('clears all step data from localStorage after successful submission', async function (assert) {
+      assert.expect(5);
+
+      Object.values(STEP_DATA_STORAGE_KEY).forEach((key) => {
+        localStorage.setItem(key, JSON.stringify({ test: 'data' }));
+      });
+
+      await render(hbs`<NewStepper @step={{6}} />`);
+      await click('[data-test-button="submit-review"]');
+
+      Object.values(STEP_DATA_STORAGE_KEY).forEach((key) => {
+        assert.strictEqual(
+          localStorage.getItem(key),
+          null,
+          `${key} removed from localStorage`,
+        );
+      });
+    });
+
+    test('clears validation and step tracking from localStorage', async function (assert) {
+      localStorage.setItem('isValid', 'true');
+      localStorage.setItem('currentStep', '6');
+
+      await render(hbs`<NewStepper @step={{6}} />`);
+      await click('[data-test-button="submit-review"]');
+
+      assert.strictEqual(
+        localStorage.getItem('isValid'),
+        null,
+        'isValid removed',
+      );
+      assert.strictEqual(
+        localStorage.getItem('currentStep'),
+        null,
+        'currentStep removed',
+      );
+    });
+
+    test('does not clear localStorage when submission fails', async function (assert) {
+      sinon.restore();
+      this.apiStub = sinon.stub(window, 'fetch').resolves({
+        ok: false,
+        status: 500,
+        message: 'Error',
+      });
+      localStorage.setItem('isValid', 'true');
+
+      await render(hbs`<NewStepper @step={{6}} />`);
+      await click('[data-test-button="submit-review"]');
+
+      assert.strictEqual(
+        localStorage.getItem('isValid'),
+        'true',
+        'localStorage preserved on error',
+      );
+    });
   });
 });

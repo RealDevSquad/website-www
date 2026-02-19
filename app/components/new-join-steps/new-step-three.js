@@ -5,7 +5,9 @@ import {
 } from '../../constants/new-join-form';
 
 export default class NewStepThreeComponent extends BaseStepComponent {
-  storageKey = STEP_DATA_STORAGE_KEY.stepThree;
+  get storageKey() {
+    return STEP_DATA_STORAGE_KEY.stepThree;
+  }
   stepValidation = {
     forFun: NEW_STEP_LIMITS.stepThree.forFun,
     funFact: NEW_STEP_LIMITS.stepThree.funFact,

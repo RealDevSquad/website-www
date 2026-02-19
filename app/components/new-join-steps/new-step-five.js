@@ -6,7 +6,9 @@ import {
 import { heardFrom } from '../../constants/social-data';
 
 export default class NewStepFiveComponent extends BaseStepComponent {
-  storageKey = STEP_DATA_STORAGE_KEY.stepFive;
+  get storageKey() {
+    return STEP_DATA_STORAGE_KEY.stepFive;
+  }
   heardFrom = heardFrom;
 
   stepValidation = {

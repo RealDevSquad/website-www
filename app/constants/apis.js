@@ -55,6 +55,10 @@ export const APPLICATION_BY_ID_URL = (applicationId) => {
 
 export const CREATE_APPLICATION_URL = `${APPS.API_BACKEND}/applications`;
 
+export const UPDATE_APPLICATION_URL = (applicationId) => {
+  return `${APPS.API_BACKEND}/applications/${applicationId}`;
+};
+
 export const NUDGE_APPLICATION_URL = (applicationId) => {
   return `${APPS.API_BACKEND}/applications/${applicationId}/nudge`;
 };
