@@ -90,15 +90,15 @@ module('Unit | Controller | new-signup', function (hooks) {
     );
   });
 
-  test('handleCheckboxInputChange updates role and toggles button state', function (assert) {
-    controller.send('handleCheckboxInputChange', 'developer');
+  test('handleRoleSelection updates role and toggles button state', function (assert) {
+    controller.send('handleRoleSelection', 'developer');
     assert.strictEqual(controller.signupDetails.role, 'developer');
     assert.false(
       controller.isButtonDisabled,
       'Button enabled when one role is selected',
     );
 
-    controller.send('handleCheckboxInputChange', 'developer');
+    controller.send('handleRoleSelection', 'developer');
     assert.strictEqual(
       controller.signupDetails.role,
       'developer',
@@ -109,7 +109,7 @@ module('Unit | Controller | new-signup', function (hooks) {
       'Button remains enabled when role is selected',
     );
 
-    controller.send('handleCheckboxInputChange', '');
+    controller.send('handleRoleSelection', '');
     assert.strictEqual(
       controller.signupDetails.role,
       '',

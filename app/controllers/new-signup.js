@@ -8,7 +8,7 @@ import {
   CHECK_USERNAME_AVAILABILITY,
   GENERATE_USERNAME_URL,
   SELF_USER_PROFILE_URL,
-  SELF_USERS_URL,
+  SELF_PROFILE_UPDATE_URL,
 } from '../constants/apis';
 import {
   SIGNUP_ERROR_MESSAGES,
@@ -81,7 +81,7 @@ export default class NewSignupController extends Controller {
   async registerUser(signupDetails, devFlag) {
     const getResponse = await apiRequest(SELF_USER_PROFILE_URL);
     const userData = await getResponse.json();
-    const url = SELF_USERS_URL(userData?.id, devFlag);
+    const url = SELF_PROFILE_UPDATE_URL(userData?.id, devFlag);
     const res = await apiRequest(url, 'PATCH', signupDetails);
     if (!res) {
       throw new Error(SIGNUP_ERROR_MESSAGES.others);
@@ -119,7 +119,7 @@ export default class NewSignupController extends Controller {
     else this.isButtonDisabled = true;
   }
 
-  @action handleCheckboxInputChange(selectedRole) {
+  @action handleRoleSelection(selectedRole) {
     this.signupDetails.role = selectedRole;
     this.isButtonDisabled = !selectedRole;
   }
