@@ -7,6 +7,8 @@ import {
   ROLE_OPTIONS,
   STEP_DATA_STORAGE_KEY,
 } from '../../constants/new-join-form';
+import { USER_PROFILE_IMAGE_URL } from '../../constants/apis';
+import { TOAST_OPTIONS } from '../../constants/toast-options';
 import BaseStepComponent from './base-step';
 
 export default class NewStepOneComponent extends BaseStepComponent {
@@ -31,19 +33,24 @@ export default class NewStepOneComponent extends BaseStepComponent {
     role: NEW_STEP_LIMITS.stepOne.role,
   };
 
+  get fullName() {
+    const firstName = this.data.firstName || '';
+    const lastName = this.data.lastName || '';
+    return `${firstName} ${lastName}`.trim();
+  }
+
   postLoadInitialize() {
     if (
-      !this.data.fullName &&
+      !this.data.firstName &&
+      !this.data.lastName &&
       this.login.userData?.first_name &&
       this.login.userData?.last_name
     ) {
-      this.updateFieldValue(
-        'fullName',
-        `${this.login.userData.first_name} ${this.login.userData.last_name}`,
-      );
+      this.updateFieldValue('firstName', this.login.userData.first_name);
+      this.updateFieldValue('lastName', this.login.userData.last_name);
     }
-    if (this.data.profileImageBase64) {
-      this.imagePreview = this.data.profileImageBase64;
+    if (this.data.imageUrl) {
+      this.imagePreview = this.data.imageUrl;
     }
   }
 
@@ -67,7 +74,7 @@ export default class NewStepOneComponent extends BaseStepComponent {
   }
 
   @action
-  handleImageSelect(event) {
+  async handleImageSelect(event) {
     const file = event.target.files?.[0];
     if (!file || !file.type.startsWith('image/')) {
       this.toast.error(
@@ -84,21 +91,50 @@ export default class NewStepOneComponent extends BaseStepComponent {
 
     this.isImageUploading = true;
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const base64String = e.target.result;
-      this.imagePreview = base64String;
-      this.updateFieldValue?.('profileImageBase64', base64String);
-      this.isImageUploading = false;
-    };
-    reader.onerror = () => {
+    try {
+      const formData = new FormData();
+      formData.append('type', 'application');
+      formData.append('profile', file);
+
+      const response = await fetch(USER_PROFILE_IMAGE_URL, {
+        method: 'POST',
+        credentials: 'include',
+        body: formData,
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const imageUrl = data?.image?.url || data.picture;
+
+        if (!imageUrl) {
+          this.toast.error(
+            'Upload succeeded but no image URL was returned. Please try again.',
+            'Error!',
+          );
+          return;
+        }
+        this.imagePreview = imageUrl;
+        this.updateFieldValue?.('imageUrl', imageUrl);
+
+        this.toast.success(
+          'Profile image uploaded successfully!',
+          'Success!',
+          TOAST_OPTIONS,
+        );
+      } else {
+        const errorData = await response.json();
+        this.toast.error(
+          errorData.message || 'Failed to upload image. Please try again.',
+          'Error!',
+          TOAST_OPTIONS,
+        );
+      }
+    } catch (error) {
       this.toast.error(
-        'Failed to read the selected file. Please try again.',
+        error.message || 'Failed to upload image. Please try again.',
         'Error!',
       );
+    } finally {
       this.isImageUploading = false;
-    };
-
-    reader.readAsDataURL(file);
+    }
   }
 }

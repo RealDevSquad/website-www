@@ -2,8 +2,7 @@
   <div class="two-column-layout__left">
     <h3 class="section-heading">Profile Picture</h3>
     {{#if this.isImageUploading}}
-      <div class="image-preview-container">
-        <Spinner />
+      <div class="image-preview-loading">
         <p>Processing image...</p>
       </div>
     {{else}}
@@ -13,6 +12,7 @@
             src={{this.imagePreview}}
             alt="Profile preview"
             class="image-preview"
+            data-test-image-preview
           />
           <Reusables::Button
             @type="button"
@@ -68,7 +68,7 @@
       @type="text"
       @disabled={{true}}
       @required={{true}}
-      @value={{this.data.fullName}}
+      @value={{this.fullName}}
       @onInput={{this.inputHandler}}
     />
 

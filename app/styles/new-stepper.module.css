@@ -239,6 +239,14 @@
   gap: 1rem;
 }
 
+.image-preview-loading {
+  display: flex;
+  height: 8rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .image-preview {
   width: 9.5rem;
   height: 9.5rem;
@@ -399,6 +407,10 @@
 
 .review-field__value--empty {
   color: var(--color-lightgrey);
+}
+
+.review-field__image-preview {
+  width: 60%;
 }
 
 .review-actions {

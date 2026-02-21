@@ -1,3 +1,12 @@
+export const safeParse = (key) => {
+  try {
+    const value = getLocalStorageItem(key, '{}');
+    return JSON.parse(value || '{}');
+  } catch {
+    return {};
+  }
+};
+
 export function getLocalStorageItem(key, defaultValue = null) {
   try {
     return localStorage.getItem(key) ?? defaultValue;

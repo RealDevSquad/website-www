@@ -1,23 +1,62 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { debounceTask } from 'ember-lifeline';
+import { debounceTask, runTask } from 'ember-lifeline';
 import { JOIN_DEBOUNCE_TIME } from '../../constants/join';
+import { USER_ROLE_MAP } from '../../constants/new-join-form';
 import { validateWordCount } from '../../utils/validator';
 import { getLocalStorageItem, setLocalStorageItem } from '../../utils/storage';
 
 export default class BaseStepComponent extends Component {
+  @service onboarding;
+
   stepValidation = {};
 
   @tracked data = {};
   @tracked errorMessage = {};
   @tracked wordCount = {};
 
-  get storageKey() {
-    return '';
-  }
-
   postLoadInitialize() {}
+
+  STEP_FORM_DATA_MAPPING = {
+    newStepOneData: (app) => ({
+      firstName: app.biodata?.firstName || '',
+      lastName: app.biodata?.lastName || '',
+      city: app.location?.city || '',
+      state: app.location?.state || '',
+      country: app.location?.country || '',
+      role:
+        Object.keys(USER_ROLE_MAP).find(
+          (key) => USER_ROLE_MAP[key] === app.role,
+        ) || '',
+      imageUrl: app.imageUrl || '',
+    }),
+    newStepTwoData: (app) => ({
+      institution: app.professional?.institution || '',
+      skills: app.professional?.skills || '',
+      introduction: app.intro?.introduction || '',
+    }),
+    newStepThreeData: (app) => ({
+      forFun: app.intro?.forFun || '',
+      funFact: app.intro?.funFact || '',
+    }),
+    newStepFourData: (app) => ({
+      phoneNumber: app.socialLink?.phoneNumber || '',
+      twitter: app.socialLink?.twitter || '',
+      linkedin: app.socialLink?.linkedin || '',
+      instagram: app.socialLink?.instagram || '',
+      github: app.socialLink?.github || '',
+      peerlist: app.socialLink?.peerlist || '',
+      behance: app.socialLink?.behance || '',
+      dribble: app.socialLink?.dribble || '',
+    }),
+    newStepFiveData: (app) => ({
+      whyRds: app.intro?.whyRds || '',
+      foundFrom: app.foundFrom || '',
+      numberOfHours: app.intro?.numberOfHours || '',
+    }),
+  };
 
   constructor(...args) {
     super(...args);
@@ -25,15 +64,22 @@ export default class BaseStepComponent extends Component {
   }
 
   initializeFormState() {
-    let saved = {};
-    try {
-      const stored = getLocalStorageItem(this.storageKey, '{}');
-      saved = stored ? JSON.parse(stored) : {};
-    } catch (e) {
-      console.warn('Failed to parse stored form data:', e);
-      saved = {};
+    const storedData = getLocalStorageItem(this.storageKey, '{}');
+    let initialFormData = storedData ? JSON.parse(storedData) : {};
+
+    if (
+      Object.keys(initialFormData).length === 0 &&
+      this.onboarding.applicationData
+    ) {
+      const stepDataMapper = this.STEP_FORM_DATA_MAPPING[this.storageKey];
+
+      if (stepDataMapper) {
+        initialFormData = stepDataMapper(this.onboarding.applicationData);
+        setLocalStorageItem(this.storageKey, JSON.stringify(initialFormData));
+      }
     }
-    this.data = saved;
+
+    this.data = initialFormData;
 
     this.errorMessage = Object.fromEntries(
       Object.keys(this.stepValidation).map((k) => [k, '']),
@@ -46,7 +92,7 @@ export default class BaseStepComponent extends Component {
       }),
     );
 
-    this.postLoadInitialize();
+    runTask(this, 'postLoadInitialize');
 
     const valid = this.isDataValid();
     this.args.setIsPreValid(valid);

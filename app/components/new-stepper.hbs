@@ -1,7 +1,5 @@
 <section class="stepper" data-test="stepper">
-  {{#if
-    (and (not-eq this.currentStep this.MIN_STEP) (not-eq this.currentStep 7))
-  }}
+  {{#if (not-eq this.currentStep this.MIN_STEP)}}
     <NewJoinSteps::StepperHeader
       @currentStep={{this.currentStep}}
       @totalSteps={{this.MAX_STEP}}
@@ -73,19 +71,10 @@
         @navigateToStep={{this.navigateToStep}}
         @onSubmit={{this.handleSubmit}}
       />
-
-    {{else if (eq this.currentStep 7)}}
-      <NewJoinSteps::ThankYouScreen
-        @firstName={{this.firstName}}
-        @applicationId={{this.applicationId}}
-        @onTrackApplication={{this.handleTrackApplication}}
-      />
     {{/if}}
   </form>
 
-  {{#if
-    (and (not-eq this.currentStep this.MIN_STEP) (not-eq this.currentStep 7))
-  }}
+  {{#if (not-eq this.currentStep this.MIN_STEP)}}
     <div class="new-stepper__buttons">
       {{#if this.showPreviousButton}}
         <Reusables::Button
@@ -105,7 +94,12 @@
         @test={{if this.isReviewStep "submit-review" "next-btn"}}
         @type="button"
         @onClick={{if this.isReviewStep this.handleSubmit this.incrementStep}}
-        @disabled={{unless this.isReviewStep this.isNextButtonDisabled}}
+        @disabled={{if
+          this.isReviewStep
+          this.isSubmitting
+          this.isNextButtonDisabled
+        }}
+        @isLoading={{if this.isReviewStep this.isSubmitting false}}
       />
     </div>
   {{/if}}

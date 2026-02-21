@@ -1,9 +1,22 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { adminMessage } from '../../constants/applications';
 
 export default class ApplicationsDetailController extends Controller {
+  @tracked nudgeCount = null;
+  @tracked lastNudgeAt = null;
+
   get application() {
     return this.model?.application;
+  }
+
+  get nudgeCountValue() {
+    return this.nudgeCount ?? this.application?.nudgeCount ?? 0;
+  }
+
+  get lastNudgeAtValue() {
+    return this.lastNudgeAt ?? this.application?.lastNudgeAt ?? null;
   }
 
   get currentUser() {
@@ -40,5 +53,11 @@ export default class ApplicationsDetailController extends Controller {
 
   get showAdminMessage() {
     return adminMessage(this.application?.status);
+  }
+
+  @action
+  handleApplicationNudge(nudgeData) {
+    this.nudgeCount = nudgeData.nudgeCount;
+    this.lastNudgeAt = nudgeData.lastNudgeAt;
   }
 }
