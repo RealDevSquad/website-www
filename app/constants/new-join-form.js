@@ -52,7 +52,7 @@ export const NEW_STEP_LIMITS = {
     funFact: { min: 100, max: 500 },
   },
   stepFour: {
-    phoneNo: { min: 1 },
+    phoneNumber: { min: 1 },
     twitter: { min: 1 },
     github: { min: 1 },
     linkedin: { min: 1 },

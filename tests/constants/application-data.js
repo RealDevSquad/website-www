@@ -86,7 +86,7 @@ export const NEW_STEPS_APPLICATIONS_DATA = {
       'I built my first website at age 12 and have been coding ever since.',
   },
   stepFour: {
-    phoneNo: '+1-699-969-6969',
+    phoneNumber: '+1-699-969-6969',
     twitter: 'anujchhikara',
     github: 'anujchhikara',
     linkedin: 'anujchhikara',

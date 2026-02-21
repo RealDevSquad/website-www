@@ -42,7 +42,7 @@ export default class BaseStepComponent extends Component {
       funFact: app.intro?.funFact || '',
     }),
     newStepFourData: (app) => ({
-      phoneNo: app.socialLink?.phoneNo || '',
+      phoneNumber: app.socialLink?.phoneNumber || '',
       twitter: app.socialLink?.twitter || '',
       linkedin: app.socialLink?.linkedin || '',
       instagram: app.socialLink?.instagram || '',
