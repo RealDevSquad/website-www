@@ -7,10 +7,9 @@ import {
   ROLE_OPTIONS,
   STEP_DATA_STORAGE_KEY,
 } from '../../constants/new-join-form';
-import { APPLICATION_PROFILE_IMAGE_URL } from '../../constants/apis';
+import { USER_PROFILE_IMAGE_URL } from '../../constants/apis';
 import { TOAST_OPTIONS } from '../../constants/toast-options';
 import BaseStepComponent from './base-step';
-import apiRequest from '../../utils/api-request';
 
 export default class NewStepOneComponent extends BaseStepComponent {
   @service login;
@@ -94,16 +93,17 @@ export default class NewStepOneComponent extends BaseStepComponent {
 
     try {
       const formData = new FormData();
+      formData.append('type', 'application');
       formData.append('profile', file);
 
-      const response = await apiRequest(
-        APPLICATION_PROFILE_IMAGE_URL,
-        'POST',
-        formData,
-      );
+      const response = await fetch(USER_PROFILE_IMAGE_URL, {
+        method: 'POST',
+        credentials: 'include',
+        body: formData,
+      });
       if (response.ok) {
         const data = await response.json();
-        const imageUrl = data.url || data.picture;
+        const imageUrl = data?.image?.url || data.picture;
 
         if (!imageUrl) {
           this.toast.error(

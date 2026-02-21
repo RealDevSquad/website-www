@@ -2,8 +2,7 @@
   <div class="two-column-layout__left">
     <h3 class="section-heading">Profile Picture</h3>
     {{#if this.isImageUploading}}
-      <div class="image-preview-container">
-        <Spinner />
+      <div class="image-preview-loading">
         <p>Processing image...</p>
       </div>
     {{else}}

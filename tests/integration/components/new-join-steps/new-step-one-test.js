@@ -71,7 +71,11 @@ module(
     test('imagePreview and imageUrl are updated on successful upload', async function (assert) {
       sinon.stub(window, 'fetch').resolves({
         ok: true,
-        json: async () => ({ url: 'https://example.com/photo.jpg' }),
+        json: async () => ({
+          image: {
+            url: 'https://example.com/photo.jpg',
+          },
+        }),
       });
 
       await render(
