@@ -24,7 +24,7 @@ export const mapSocialUrls = {
 };
 
 export const socialFields = [
-  'phoneNo',
+  'phoneNumber',
   'twitter',
   'linkedin',
   'instagram',
