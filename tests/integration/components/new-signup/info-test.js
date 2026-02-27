@@ -2,7 +2,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'website-www/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { NEW_SIGNUP_STEPS } from 'website-www/constants/new-signup';
+import {
+  NEW_SIGNUP_STEPS,
+  GET_STARTED_MAIN_HEADING,
+} from 'website-www/constants/new-signup';
 
 module('Integration | Component | new-signup/info', function (hooks) {
   setupRenderingTest(hooks);
@@ -22,9 +25,7 @@ module('Integration | Component | new-signup/info', function (hooks) {
       />
     `);
     assert.dom('[data-test-landing]').exists();
-    assert
-      .dom('[data-test-mainHeading]')
-      .hasText('Thank you for connecting your socials!');
+    assert.dom('[data-test-mainHeading]').hasText(GET_STARTED_MAIN_HEADING);
     assert
       .dom('[data-test-subHeading]')
       .hasText('Please complete the signup in order to:');

@@ -106,6 +106,7 @@
       <p>Applying as
         {{#if this.isRoleAvailable}}<span
             class="role-selection-message"
+            data-test="role-selection-message"
           >(auto-applied from profile)</span>{{/if}}</p>
       <div class="role-buttons" role="radiogroup" aria-label="Select your role">
         {{#each this.roleOptions as |role|}}
@@ -116,6 +117,7 @@
             role="radio"
             aria-checked="{{if (eq this.data.role role) 'true' 'false'}}"
             disabled={{this.isRoleAvailable}}
+            data-test="role-button"
             {{on "click" (fn this.selectRole role)}}
           >
             {{role}}

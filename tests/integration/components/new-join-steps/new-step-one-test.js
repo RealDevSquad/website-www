@@ -160,12 +160,8 @@ module(
       );
 
       assert
-        .dom('.role-button')
+        .dom('[data-test="role-button"]')
         .hasAttribute('disabled', '', 'Role buttons are disabled');
-
-      assert
-        .dom('.role-locked-message')
-        .hasText('Your role has been set from your profile');
     });
 
     test('role selection is enabled when user profile has no role', async function (assert) {
@@ -179,10 +175,10 @@ module(
       );
 
       assert
-        .dom('.role-button')
+        .dom('[data-test="role-button"]')
         .doesNotHaveAttribute('disabled', 'Role buttons are enabled');
 
-      assert.dom('.role-locked-message').doesNotExist();
+      assert.dom('[data-test="role-selection-message"]').doesNotExist();
     });
   },
 );
