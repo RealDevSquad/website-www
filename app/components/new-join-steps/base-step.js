@@ -163,6 +163,9 @@ export default class BaseStepComponent extends Component {
     if (fieldType === 'select' || fieldType === 'dropdown') {
       return 'Please choose an option';
     }
+    if (fieldType === 'image') {
+      return 'Please upload a profile image';
+    }
     if (result.remainingToMin) {
       return `At least ${result.remainingToMin} more word(s) required`;
     }

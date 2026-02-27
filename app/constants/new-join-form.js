@@ -41,6 +41,7 @@ export const NEW_STEP_LIMITS = {
     state: { min: 1 },
     city: { min: 1 },
     role: { min: 1, type: 'select' },
+    imageUrl: { min: 1, type: 'image' },
   },
   stepTwo: {
     skills: { min: 5, max: 20 },

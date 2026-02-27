@@ -32,7 +32,7 @@ module('Integration | Component | signup-steps/step-zero', function (hooks) {
     );
     assert
       .dom('[data-test-signup-heading]')
-      .hasText('Thank you for connecting your GitHub');
+      .hasText('Thank you for connecting your socials');
     assert
       .dom('[data-test-signup-paragraph]')
       .hasText(

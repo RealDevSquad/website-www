@@ -6,6 +6,7 @@ import {
   NEW_STEP_LIMITS,
   ROLE_OPTIONS,
   STEP_DATA_STORAGE_KEY,
+  USER_ROLE_MAP,
 } from '../../constants/new-join-form';
 import { USER_PROFILE_IMAGE_URL } from '../../constants/apis';
 import { TOAST_OPTIONS } from '../../constants/toast-options';
@@ -21,6 +22,7 @@ export default class NewStepOneComponent extends BaseStepComponent {
   @tracked imagePreview = null;
   @tracked isImageUploading = false;
   @tracked fileInputElement = null;
+  @tracked isRoleAvailable = false;
 
   get storageKey() {
     return STEP_DATA_STORAGE_KEY.stepOne;
@@ -31,6 +33,7 @@ export default class NewStepOneComponent extends BaseStepComponent {
     state: NEW_STEP_LIMITS.stepOne.state,
     city: NEW_STEP_LIMITS.stepOne.city,
     role: NEW_STEP_LIMITS.stepOne.role,
+    imageUrl: NEW_STEP_LIMITS.stepOne.imageUrl,
   };
 
   get fullName() {
@@ -51,6 +54,14 @@ export default class NewStepOneComponent extends BaseStepComponent {
     }
     if (this.data.imageUrl) {
       this.imagePreview = this.data.imageUrl;
+    }
+    const userRole = this.login.userData?.role;
+    if (userRole) {
+      const roleKey = Object.keys(USER_ROLE_MAP).find(
+        (key) => USER_ROLE_MAP[key] === userRole,
+      );
+      this.updateFieldValue('role', roleKey);
+      this.isRoleAvailable = true;
     }
   }
 

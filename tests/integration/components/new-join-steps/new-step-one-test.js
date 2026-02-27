@@ -18,6 +18,13 @@ module(
 
       this.setIsPreValid = sinon.stub();
       this.setIsValid = sinon.stub();
+
+      this.loginService = this.owner.lookup('service:login');
+      this.loginService.userData = {
+        first_name: 'John',
+        last_name: 'Doe',
+        role: 'developer',
+      };
     });
 
     hooks.afterEach(function () {
@@ -136,6 +143,46 @@ module(
         ),
         'Shows error toast with API message',
       );
+    });
+
+    test('role is automatically selected and disabled when user profile has role', async function (assert) {
+      await render(
+        hbs`<NewJoinSteps::NewStepOne @setIsPreValid={{this.setIsPreValid}} @setIsValid={{this.setIsValid}} />`,
+      );
+
+      const storedData = JSON.parse(
+        localStorage.getItem('newStepOneData') || '{}',
+      );
+      assert.strictEqual(
+        storedData.role,
+        'Developer',
+        'Role is automatically selected from user profile',
+      );
+
+      assert
+        .dom('.role-button')
+        .hasAttribute('disabled', '', 'Role buttons are disabled');
+
+      assert
+        .dom('.role-locked-message')
+        .hasText('Your role has been set from your profile');
+    });
+
+    test('role selection is enabled when user profile has no role', async function (assert) {
+      this.loginService.userData = {
+        first_name: 'John',
+        last_name: 'Doe',
+      };
+
+      await render(
+        hbs`<NewJoinSteps::NewStepOne @setIsPreValid={{this.setIsPreValid}} @setIsValid={{this.setIsValid}} />`,
+      );
+
+      assert
+        .dom('.role-button')
+        .doesNotHaveAttribute('disabled', 'Role buttons are enabled');
+
+      assert.dom('.role-locked-message').doesNotExist();
     });
   },
 );

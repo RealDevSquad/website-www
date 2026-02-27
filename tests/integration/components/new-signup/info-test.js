@@ -24,7 +24,7 @@ module('Integration | Component | new-signup/info', function (hooks) {
     assert.dom('[data-test-landing]').exists();
     assert
       .dom('[data-test-mainHeading]')
-      .hasText('Thank you for connecting your GitHub!');
+      .hasText('Thank you for connecting your socials!');
     assert
       .dom('[data-test-subHeading]')
       .hasText('Please complete the signup in order to:');
