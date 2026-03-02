@@ -31,7 +31,7 @@ export const socialFields = [
   'github',
   'peerlist',
   'behance',
-  'dribble',
+  'dribbble',
 ];
 
 export function adminMessage(status) {
