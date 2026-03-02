@@ -18,107 +18,168 @@
     <div class="error__message">{{this.errorMessage.phoneNumber}}</div>
   {{/if}}
 
-  <Reusables::InputBox
-    @field="Twitter"
-    @name="twitter"
-    @placeHolder="https://twitter.com/gangster-rishi"
-    @type="text"
-    @required={{true}}
-    @value={{this.data.twitter}}
-    @onInput={{this.inputHandler}}
-    @variant="input--full-width"
-  />
+  <div class="input-box input--full-width">
+    <label class="label" for="twitter">Twitter
+      <span class="required">*</span></label>
+    <div class="social-input-wrapper">
+      <span class="social-input-prefix">{{this.getSocialPrefix
+          "twitter"
+        }}/</span>
+      <input
+        name="twitter"
+        class="social-input-field"
+        type="text"
+        id="twitter"
+        placeholder="username"
+        required="required"
+        value={{this.data.twitter}}
+        {{on "input" this.inputHandler}}
+      />
+    </div>
+  </div>
   {{#if this.errorMessage.twitter}}
     <div class="error__message">{{this.errorMessage.twitter}}</div>
   {{/if}}
 
   {{#if this.showGitHub}}
-    <Reusables::InputBox
-      @field="GitHub"
-      @name="github"
-      @placeHolder="https://github.com/codewithrishi"
-      @type="text"
-      @required={{true}}
-      @value={{this.data.github}}
-      @onInput={{this.inputHandler}}
-      @variant="input--full-width"
-    />
+    <div class="input-box input--full-width">
+      <label class="label" for="github">GitHub
+        <span class="required">*</span></label>
+      <div class="social-input-wrapper">
+        <span class="social-input-prefix">{{this.getSocialPrefix
+            "github"
+          }}/</span>
+        <input
+          name="github"
+          class="social-input-field"
+          type="text"
+          id="github"
+          placeholder="username"
+          required="required"
+          value={{this.data.github}}
+          {{on "input" this.inputHandler}}
+        />
+      </div>
+    </div>
     {{#if this.errorMessage.github}}
       <div class="error__message">{{this.errorMessage.github}}</div>
     {{/if}}
   {{/if}}
 
-  <Reusables::InputBox
-    @field="LinkedIn"
-    @name="linkedin"
-    @placeHolder="https://linkedin.com/in/professional-rishi"
-    @type="text"
-    @required={{true}}
-    @value={{this.data.linkedin}}
-    @onInput={{this.inputHandler}}
-    @variant="input--full-width"
-  />
+  <div class="input-box input--full-width">
+    <label class="label" for="linkedin">LinkedIn
+      <span class="required">*</span></label>
+    <div class="social-input-wrapper">
+      <span class="social-input-prefix">{{this.getSocialPrefix
+          "linkedin"
+        }}/</span>
+      <input
+        name="linkedin"
+        class="social-input-field"
+        type="text"
+        id="linkedin"
+        placeholder="username"
+        required="required"
+        value={{this.data.linkedin}}
+        {{on "input" this.inputHandler}}
+      />
+    </div>
+  </div>
   {{#if this.errorMessage.linkedin}}
     <div class="error__message">{{this.errorMessage.linkedin}}</div>
   {{/if}}
 
-  <Reusables::InputBox
-    @field="Instagram"
-    @name="instagram"
-    @placeHolder="https://instagram.com/gangster-rishi"
-    @type="text"
-    @required={{false}}
-    @value={{this.data.instagram}}
-    @onInput={{this.inputHandler}}
-    @variant="input--full-width"
-  />
+  <div class="input-box input--full-width">
+    <label class="label" for="instagram">Instagram</label>
+    <div class="social-input-wrapper">
+      <span class="social-input-prefix">{{this.getSocialPrefix
+          "instagram"
+        }}/</span>
+      <input
+        name="instagram"
+        class="social-input-field"
+        type="text"
+        id="instagram"
+        placeholder="username"
+        value={{this.data.instagram}}
+        {{on "input" this.inputHandler}}
+      />
+    </div>
+  </div>
   {{#if this.errorMessage.instagram}}
     <div class="error__message">{{this.errorMessage.instagram}}</div>
   {{/if}}
 
-  <Reusables::InputBox
-    @field="Peerlist"
-    @name="peerlist"
-    @placeHolder="https://peerlist.io/richy-rishi"
-    @type="text"
-    @required={{true}}
-    @value={{this.data.peerlist}}
-    @onInput={{this.inputHandler}}
-    @variant="input--full-width"
-  />
+  <div class="input-box input--full-width">
+    <label class="label" for="peerlist">Peerlist
+      <span class="required">*</span></label>
+    <div class="social-input-wrapper">
+      <span class="social-input-prefix">{{this.getSocialPrefix
+          "peerlist"
+        }}/</span>
+      <input
+        name="peerlist"
+        class="social-input-field"
+        type="text"
+        id="peerlist"
+        placeholder="username"
+        required="required"
+        value={{this.data.peerlist}}
+        {{on "input" this.inputHandler}}
+      />
+    </div>
+  </div>
   {{#if this.errorMessage.peerlist}}
     <div class="error__message">{{this.errorMessage.peerlist}}</div>
   {{/if}}
 
   {{#if this.showBehance}}
-    <Reusables::InputBox
-      @field="Behance"
-      @name="behance"
-      @placeHolder="https://behance.net/designer-rishi"
-      @type="text"
-      @required={{true}}
-      @value={{this.data.behance}}
-      @onInput={{this.inputHandler}}
-      @variant="input--full-width"
-    />
+    <div class="input-box input--full-width">
+      <label class="label" for="behance">Behance
+        <span class="required">*</span></label>
+      <div class="social-input-wrapper">
+        <span class="social-input-prefix">{{this.getSocialPrefix
+            "behance"
+          }}/</span>
+        <input
+          name="behance"
+          class="social-input-field"
+          type="text"
+          id="behance"
+          placeholder="username"
+          required="required"
+          value={{this.data.behance}}
+          {{on "input" this.inputHandler}}
+        />
+      </div>
+    </div>
     {{#if this.errorMessage.behance}}
       <div class="error__message">{{this.errorMessage.behance}}</div>
     {{/if}}
   {{/if}}
 
-  {{#if this.showDribble}}
-    <Reusables::InputBox
-      @field="Dribble"
-      @name="dribble"
-      @placeHolder="https://dribbble.com/dribwithrishi"
-      @type="text"
-      @required={{true}}
-      @value={{this.data.dribble}}
-      @onInput={{this.inputHandler}}
-      @variant="input--full-width"
-    />
-    {{#if this.errorMessage.dribble}}
-      <div class="error__message">{{this.errorMessage.dribble}}</div>
+  {{#if this.showdribbble}}
+    <div class="input-box input--full-width">
+      <label class="label" for="dribbble">Dribbble
+        <span class="required">*</span></label>
+      <div class="social-input-wrapper">
+        <span class="social-input-prefix">{{this.getSocialPrefix
+            "dribbble"
+          }}/</span>
+        <input
+          name="dribbble"
+          class="social-input-field"
+          type="text"
+          id="dribbble"
+          placeholder="username"
+          required="required"
+          value={{this.data.dribbble}}
+          {{on "input" this.inputHandler}}
+        />
+      </div>
+    </div>
+    {{#if this.errorMessage.dribbble}}
+      <div class="error__message">{{this.errorMessage.dribbble}}</div>
     {{/if}}
   {{/if}}
 </div>
