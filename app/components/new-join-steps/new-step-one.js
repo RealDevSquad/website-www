@@ -60,8 +60,10 @@ export default class NewStepOneComponent extends BaseStepComponent {
       const roleKey = Object.keys(USER_ROLE_MAP).find(
         (key) => USER_ROLE_MAP[key] === userRole,
       );
-      this.updateFieldValue('role', roleKey);
-      this.isRoleAvailable = true;
+      if (roleKey) {
+        this.updateFieldValue('role', roleKey);
+        this.isRoleAvailable = true;
+      }
     }
   }
 
