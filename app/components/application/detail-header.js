@@ -151,7 +151,6 @@ export default class DetailHeader extends Component {
     this.router.transitionTo('join', {
       queryParams: {
         edit: true,
-        dev: true,
         step: 1,
       },
     });
