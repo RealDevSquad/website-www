@@ -28,7 +28,7 @@
         <h3>Feedback History</h3>
         <div class="feedback-history" data-test-feedback-history>
           {{#if this.hasFeedback}}
-            {{#each this.application.feedback as |feedback|}}
+            {{#each this.feedbackHistory as |feedback|}}
               <Application::FeedbackCard
                 @status={{feedback.status}}
                 @feedbackText={{feedback.feedback}}

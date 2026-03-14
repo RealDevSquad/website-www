@@ -15,6 +15,8 @@ export default class JoinController extends Controller {
   @tracked isLoading = false;
   @tracked oldOnboarding = null;
   @tracked step = null;
+  @tracked edit = null;
+  @tracked dev = null;
 
   ANKUSH_TWITTER = ANKUSH_TWITTER;
 

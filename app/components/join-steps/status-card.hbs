@@ -60,6 +60,32 @@
         {{/if}}
         <p data-test-status-card-description-4>You're almost there! Join our
           Discord server to connect with the team.</p>
+      {{else if
+        (eq this.status this.APPLICATION_STATUS_TYPES.changes_requested)
+      }}
+        <p data-test-status-card-description-1>
+          Admin has requested some changes on your application.
+        </p>
+
+        {{#if this.feedback}}
+          <div class="status-card__feedback">
+            <p data-test-status-card-feedback-title><strong
+              >Feedback:</strong></p>
+            <p data-test-status-card-feedback-content>{{this.feedback}}</p>
+          </div>
+        {{/if}}
+
+        <p data-test-status-card-description-encouragement>
+          Please review the feedback and update your application accordingly.
+        </p>
+
+        <Reusables::Button
+          @text="Edit Application"
+          @variant="dark"
+          @onClick={{this.editApplication}}
+          @test="edit-application-btn"
+          @type="button"
+        />
       {{/if}}
     </div>
 

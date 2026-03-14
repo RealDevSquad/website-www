@@ -12,7 +12,7 @@ export default class GotoController extends Controller {
 
   WELCOME_URL = APPS.WELCOME;
   SIGN_UP_URL = AUTH.SIGN_UP;
-  HOME_URL = 'index';
+  HOME_URL = APPS.HOME;
 
   constructor() {
     super(...arguments);
@@ -31,18 +31,8 @@ export default class GotoController extends Controller {
   redirectionHandler(isDev, user) {
     if (user.incompleteUserDetails) {
       this.redirectUserToPage(this.SIGN_UP_URL);
-    } else if (isDev) {
-      if (user.roles?.developer && !user.roles?.in_discord) {
-        this.redirectUserToPage(this.WELCOME_URL);
-      } else {
-        this.router.transitionTo(this.HOME_URL);
-      }
     } else {
-      if (!user.roles?.in_discord) {
-        this.redirectUserToPage(this.WELCOME_URL);
-      } else {
-        this.router.transitionTo(this.HOME_URL);
-      }
+      this.redirectUserToPage(this.HOME_URL);
     }
   }
 
