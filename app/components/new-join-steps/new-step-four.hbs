@@ -1,7 +1,7 @@
 <div class="step-container">
   <div class="form-header__text">
-    <h1 class="section-heading">{{@heading}}</h1>
-    <p class="section-instruction">{{@subHeading}}</p>
+    <h1 class="section-heading" data-test-heading>{{@heading}}</h1>
+    <p class="section-instruction" data-test-sub-heading>{{@subHeading}}</p>
   </div>
 
   <Reusables::InputBox
@@ -15,7 +15,10 @@
     @variant="input--full-width"
   />
   {{#if this.errorMessage.phoneNumber}}
-    <div class="error__message">{{this.errorMessage.phoneNumber}}</div>
+    <div
+      class="error__message"
+      data-test-error="phoneNumber"
+    >{{this.errorMessage.phoneNumber}}</div>
   {{/if}}
 
   <div class="input-box input--full-width">
