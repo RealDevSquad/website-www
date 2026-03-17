@@ -122,7 +122,10 @@ module('Integration | Component | new-stepper', function (hooks) {
       this.apiStub = sinon.stub(window, 'fetch').resolves({
         ok: false,
         status: 409,
-        message: '24 hour restriction',
+        json: () =>
+          Promise.resolve({
+            message: 'You will be able to edit after 24 hrs.',
+          }),
       });
 
       await render(hbs`<NewStepper @step={{6}} @isEditMode={{true}} />`);
@@ -204,15 +207,19 @@ module('Integration | Component | new-stepper', function (hooks) {
         .isNotDisabled('Submit button enabled after edit completes');
     });
 
-    test('redirects to join page after successful edit', async function (assert) {
+    test('redirects to application detail page after successful edit', async function (assert) {
       await render(hbs`<NewStepper @step={{6}} @isEditMode={{true}} />`);
       await click('[data-test-button="submit-review"]');
 
       assert.ok(
-        this.routerService.replaceWith.calledWith('join', {
-          queryParams: { dev: true },
-        }),
-        'Redirects to join page after successful edit',
+        this.routerService.transitionTo.calledWith(
+          'applications.detail',
+          APPLICATIONS_DATA.id,
+          {
+            queryParams: { dev: true },
+          },
+        ),
+        'Redirects to application detail page after successful edit',
       );
     });
   });
