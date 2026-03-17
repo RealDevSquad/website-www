@@ -15,7 +15,10 @@
     @variant="input--full-width"
   />
   {{#if this.errorMessage.phoneNumber}}
-    <div class="error__message">{{this.errorMessage.phoneNumber}}</div>
+    <div
+      class="error__message"
+      data-test-error="phoneNumber"
+    >{{this.errorMessage.phoneNumber}}</div>
   {{/if}}
 
   <div class="input-box input--full-width">
