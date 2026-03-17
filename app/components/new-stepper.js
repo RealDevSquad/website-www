@@ -31,7 +31,7 @@ export default class NewStepperComponent extends Component {
   @service toast;
 
   @tracked preValid = false;
-  @tracked isValid = getLocalStorageItem('isValid') === 'true';
+  @tracked isValid = false;
   @tracked isSubmitting = false;
 
   @tracked currentStep = 0;
@@ -135,6 +135,7 @@ export default class NewStepperComponent extends Component {
       const method = this.isEditMode ? 'PATCH' : 'POST';
 
       const response = await apiRequest(url, method, applicationData);
+      const data = await response.json();
 
       if (response.status === 409) {
         this.toast.error(
@@ -150,7 +151,7 @@ export default class NewStepperComponent extends Component {
 
       if (!response.ok) {
         this.toast.error(
-          response.message ||
+          data.message ||
             `Failed to ${this.isEditMode ? 'edit' : 'submit'} application. Please try again.`,
           'Error!',
           TOAST_OPTIONS,
@@ -158,8 +159,6 @@ export default class NewStepperComponent extends Component {
         this.isSubmitting = false;
         return;
       }
-
-      await response.json();
 
       this.toast.success(
         this.isEditMode
@@ -169,9 +168,10 @@ export default class NewStepperComponent extends Component {
         TOAST_OPTIONS,
       );
 
+      const applicationId =
+        data?.applicationId ?? this.onboarding.applicationData?.id;
       this.clearAllStepData();
-      this.isSubmitting = false;
-      this.router.replaceWith('join', {
+      this.router.transitionTo('applications.detail', applicationId, {
         queryParams: { dev: true },
       });
     } catch (error) {
@@ -181,6 +181,7 @@ export default class NewStepperComponent extends Component {
         'Error!',
         TOAST_OPTIONS,
       );
+    } finally {
       this.isSubmitting = false;
     }
   }
