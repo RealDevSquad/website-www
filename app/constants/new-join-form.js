@@ -41,6 +41,7 @@ export const NEW_STEP_LIMITS = {
     state: { min: 1 },
     city: { min: 1 },
     role: { min: 1, type: 'select' },
+    imageUrl: { min: 1, type: 'image' },
   },
   stepTwo: {
     skills: { min: 5, max: 20 },
@@ -59,7 +60,7 @@ export const NEW_STEP_LIMITS = {
     instagram: { min: 0 },
     peerlist: { min: 1 },
     behance: { min: 1 },
-    dribble: { min: 1 },
+    dribbble: { min: 1 },
   },
   stepFive: {
     whyRds: { min: 100 },

@@ -49,7 +49,7 @@ export default class BaseStepComponent extends Component {
       github: app.socialLink?.github || '',
       peerlist: app.socialLink?.peerlist || '',
       behance: app.socialLink?.behance || '',
-      dribble: app.socialLink?.dribble || '',
+      dribbble: app.socialLink?.dribbble || '',
     }),
     newStepFiveData: (app) => ({
       whyRds: app.intro?.whyRds || '',
