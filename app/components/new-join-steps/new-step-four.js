@@ -58,7 +58,7 @@ export default class NewStepFourComponent extends BaseStepComponent {
     return this.userRole === 'Designer';
   }
 
-  get showdribbble() {
+  get showDribbble() {
     return this.userRole === 'Designer';
   }
 
@@ -79,7 +79,7 @@ export default class NewStepFourComponent extends BaseStepComponent {
 
       const url = new URL(normalized);
       const segments = url.pathname.split('/').filter(Boolean);
-      return segments[0] ?? trimmedValue;
+      return segments.length > 0 ? segments[segments.length - 1] : trimmedValue;
     } catch {
       return trimmedValue;
     }
