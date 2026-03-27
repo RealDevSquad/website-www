@@ -26,11 +26,11 @@ export const GENERATE_USERNAME_URL = (
   sanitizedFirstname,
   sanitizedLastname,
 ) => {
-  return `${APPS.API_BACKEND}/users/username?dev=true&firstname=${sanitizedFirstname}&lastname=${sanitizedLastname}`;
+  return `${APPS.API_BACKEND}/users/username?dev=true&firstname=${encodeURIComponent(sanitizedFirstname)}&lastname=${encodeURIComponent(sanitizedLastname)}`;
 };
 
 export const CHECK_USERNAME_AVAILABILITY = (userName) => {
-  return `${APPS.API_BACKEND}/users/isUsernameAvailable/${userName}`;
+  return `${APPS.API_BACKEND}/users/isUsernameAvailable/${encodeURIComponent(userName)}`;
 };
 
 export const SELF_USER_STATUS_URL = `${APPS.API_BACKEND}/users/status/self`;
