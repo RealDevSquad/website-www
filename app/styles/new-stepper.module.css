@@ -272,6 +272,10 @@
   color: var(--color-black);
 }
 
+.role-selection-message {
+  font-size: 0.875rem;
+}
+
 .role-buttons {
   display: flex;
   gap: 0.5rem;

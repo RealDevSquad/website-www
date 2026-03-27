@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import { TOAST_OPTIONS } from '../../constants/toast-options';
 import { NUDGE_APPLICATION_URL } from '../../constants/apis';
 import apiRequest from '../../utils/api-request';
+import { USER_ROLE_MAP } from '../../constants/new-join-form';
 
 const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
 
@@ -42,7 +43,13 @@ export default class DetailHeader extends Component {
   }
 
   get role() {
-    return this.application?.role ?? 'N/A';
+    const roleValue = this.application?.role;
+    if (!roleValue) return 'N/A';
+    return (
+      Object.keys(USER_ROLE_MAP).find(
+        (role) => USER_ROLE_MAP[role] === roleValue,
+      ) || roleValue
+    );
   }
 
   get status() {
