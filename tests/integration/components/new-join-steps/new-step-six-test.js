@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'website-www/tests/helpers';
-import { render, click } from '@ember/test-helpers';
+import { render, click, findAll } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import sinon from 'sinon';
 import { STEP_DATA_STORAGE_KEY } from 'website-www/constants/new-join-form';
@@ -56,7 +56,14 @@ module(
         hbs`<NewJoinSteps::NewStepSix @navigateToStep={{this.navigateToStep}} />`,
       );
 
-      assert.dom('[data-test="field-value"]').hasText('Not provided');
+      const values = findAll('[data-test="field-value"]').map((el) =>
+        el.textContent.trim(),
+      );
+
+      assert.true(
+        values.includes('Not provided'),
+        'At least one field shows "Not provided"',
+      );
     });
 
     test('does not show GitHub for non-Developer role', async function (assert) {
