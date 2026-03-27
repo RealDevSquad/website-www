@@ -348,6 +348,10 @@
   margin: 0;
 }
 
+.social-field-label {
+  text-transform: capitalize;
+}
+
 .review-section {
   background-color: var(--color-bgpink);
   border-radius: 0.5rem;
