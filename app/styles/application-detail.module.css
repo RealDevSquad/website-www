@@ -126,7 +126,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: var(--color-lightgray);
+  background: var(--color-light-gray);
   border-radius: 50px;
   text-decoration: none;
   color: var(--color-black);

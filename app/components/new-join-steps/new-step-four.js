@@ -3,6 +3,7 @@ import BaseStepComponent from './base-step';
 import {
   NEW_STEP_LIMITS,
   STEP_DATA_STORAGE_KEY,
+  STEP_FOUR_SOCIAL_FIELDS,
 } from '../../constants/new-join-form';
 import { phoneNumberRegex } from '../../constants/regex';
 import { mapSocialUrls, socialFields } from '../../constants/applications';
@@ -19,6 +20,8 @@ export default class NewStepFourComponent extends BaseStepComponent {
     instagram: NEW_STEP_LIMITS.stepFour.instagram,
     peerlist: NEW_STEP_LIMITS.stepFour.peerlist,
   };
+
+  socialFields = STEP_FOUR_SOCIAL_FIELDS;
 
   get userRole() {
     const stepOneData = JSON.parse(
@@ -58,7 +61,7 @@ export default class NewStepFourComponent extends BaseStepComponent {
     return this.userRole === 'Designer';
   }
 
-  get showdribbble() {
+  get showDribbble() {
     return this.userRole === 'Designer';
   }
 
@@ -79,7 +82,7 @@ export default class NewStepFourComponent extends BaseStepComponent {
 
       const url = new URL(normalized);
       const segments = url.pathname.split('/').filter(Boolean);
-      return segments[0] ?? trimmedValue;
+      return segments.length > 0 ? segments[segments.length - 1] : trimmedValue;
     } catch {
       return trimmedValue;
     }

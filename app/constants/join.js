@@ -1,4 +1,4 @@
-export const JOIN_DEBOUNCE_TIME = 1000;
+export const JOIN_DEBOUNCE_TIME = 300;
 export const STEP_ONE_LIMITS = {
   city: 1,
   state: 1,
@@ -25,4 +25,5 @@ export const APPLICATION_STATUS_TYPES = {
   accepted: 'accepted',
   rejected: 'rejected',
   pending: 'pending',
+  changes_requested: 'changes_requested',
 };

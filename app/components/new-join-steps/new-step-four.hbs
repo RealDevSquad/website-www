@@ -21,168 +21,38 @@
     >{{this.errorMessage.phoneNumber}}</div>
   {{/if}}
 
-  <div class="input-box input--full-width">
-    <label class="label" for="twitter">Twitter
-      <span class="required">*</span></label>
-    <div class="social-input-wrapper">
-      <span class="social-input-prefix">{{this.getSocialPrefix
-          "twitter"
-        }}/</span>
-      <input
-        name="twitter"
-        class="social-input-field"
-        type="text"
-        id="twitter"
-        placeholder="username"
-        required="required"
-        value={{this.data.twitter}}
-        {{on "input" this.inputHandler}}
-      />
-    </div>
-  </div>
-  {{#if this.errorMessage.twitter}}
-    <div class="error__message">{{this.errorMessage.twitter}}</div>
-  {{/if}}
+  {{#each this.socialFields as |social|}}
+    {{#if (or (not social.showFlag) (get this social.showFlag))}}
+      <div class="input-box input--full-width">
+        <label class="social-field-label" for={{social.key}}>
+          {{social.key}}
+          {{#if social.required}}
+            <span>*</span>
+          {{/if}}
+        </label>
 
-  {{#if this.showGitHub}}
-    <div class="input-box input--full-width">
-      <label class="label" for="github">GitHub
-        <span class="required">*</span></label>
-      <div class="social-input-wrapper">
-        <span class="social-input-prefix">{{this.getSocialPrefix
-            "github"
-          }}/</span>
-        <input
-          name="github"
-          class="social-input-field"
-          type="text"
-          id="github"
-          placeholder="username"
-          required="required"
-          value={{this.data.github}}
-          {{on "input" this.inputHandler}}
-        />
+        <div class="social-input-wrapper">
+          <span class="social-input-prefix">
+            {{this.getSocialPrefix social.key}}/
+          </span>
+          <input
+            name={{social.key}}
+            class="social-input-field"
+            type="text"
+            id={{social.key}}
+            placeholder="username"
+            value={{get this.data social.key}}
+            required={{if social.required "required"}}
+            {{on "input" this.inputHandler}}
+          />
+        </div>
       </div>
-    </div>
-    {{#if this.errorMessage.github}}
-      <div class="error__message">{{this.errorMessage.github}}</div>
+
+      {{#if (get this.errorMessage social.key)}}
+        <div class="error__message">
+          {{get this.errorMessage social.key}}
+        </div>
+      {{/if}}
     {{/if}}
-  {{/if}}
-
-  <div class="input-box input--full-width">
-    <label class="label" for="linkedin">LinkedIn
-      <span class="required">*</span></label>
-    <div class="social-input-wrapper">
-      <span class="social-input-prefix">{{this.getSocialPrefix
-          "linkedin"
-        }}/</span>
-      <input
-        name="linkedin"
-        class="social-input-field"
-        type="text"
-        id="linkedin"
-        placeholder="username"
-        required="required"
-        value={{this.data.linkedin}}
-        {{on "input" this.inputHandler}}
-      />
-    </div>
-  </div>
-  {{#if this.errorMessage.linkedin}}
-    <div class="error__message">{{this.errorMessage.linkedin}}</div>
-  {{/if}}
-
-  <div class="input-box input--full-width">
-    <label class="label" for="instagram">Instagram</label>
-    <div class="social-input-wrapper">
-      <span class="social-input-prefix">{{this.getSocialPrefix
-          "instagram"
-        }}/</span>
-      <input
-        name="instagram"
-        class="social-input-field"
-        type="text"
-        id="instagram"
-        placeholder="username"
-        value={{this.data.instagram}}
-        {{on "input" this.inputHandler}}
-      />
-    </div>
-  </div>
-  {{#if this.errorMessage.instagram}}
-    <div class="error__message">{{this.errorMessage.instagram}}</div>
-  {{/if}}
-
-  <div class="input-box input--full-width">
-    <label class="label" for="peerlist">Peerlist
-      <span class="required">*</span></label>
-    <div class="social-input-wrapper">
-      <span class="social-input-prefix">{{this.getSocialPrefix
-          "peerlist"
-        }}/</span>
-      <input
-        name="peerlist"
-        class="social-input-field"
-        type="text"
-        id="peerlist"
-        placeholder="username"
-        required="required"
-        value={{this.data.peerlist}}
-        {{on "input" this.inputHandler}}
-      />
-    </div>
-  </div>
-  {{#if this.errorMessage.peerlist}}
-    <div class="error__message">{{this.errorMessage.peerlist}}</div>
-  {{/if}}
-
-  {{#if this.showBehance}}
-    <div class="input-box input--full-width">
-      <label class="label" for="behance">Behance
-        <span class="required">*</span></label>
-      <div class="social-input-wrapper">
-        <span class="social-input-prefix">{{this.getSocialPrefix
-            "behance"
-          }}/</span>
-        <input
-          name="behance"
-          class="social-input-field"
-          type="text"
-          id="behance"
-          placeholder="username"
-          required="required"
-          value={{this.data.behance}}
-          {{on "input" this.inputHandler}}
-        />
-      </div>
-    </div>
-    {{#if this.errorMessage.behance}}
-      <div class="error__message">{{this.errorMessage.behance}}</div>
-    {{/if}}
-  {{/if}}
-
-  {{#if this.showdribbble}}
-    <div class="input-box input--full-width">
-      <label class="label" for="dribbble">Dribbble
-        <span class="required">*</span></label>
-      <div class="social-input-wrapper">
-        <span class="social-input-prefix">{{this.getSocialPrefix
-            "dribbble"
-          }}/</span>
-        <input
-          name="dribbble"
-          class="social-input-field"
-          type="text"
-          id="dribbble"
-          placeholder="username"
-          required="required"
-          value={{this.data.dribbble}}
-          {{on "input" this.inputHandler}}
-        />
-      </div>
-    </div>
-    {{#if this.errorMessage.dribbble}}
-      <div class="error__message">{{this.errorMessage.dribbble}}</div>
-    {{/if}}
-  {{/if}}
+  {{/each}}
 </div>

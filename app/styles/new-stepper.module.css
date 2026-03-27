@@ -272,6 +272,10 @@
   color: var(--color-black);
 }
 
+.role-selection-message {
+  font-size: 0.875rem;
+}
+
 .role-buttons {
   display: flex;
   gap: 0.5rem;
@@ -342,6 +346,10 @@
 
 .step-container .textarea-box {
   margin: 0;
+}
+
+.social-field-label {
+  text-transform: capitalize;
 }
 
 .review-section {

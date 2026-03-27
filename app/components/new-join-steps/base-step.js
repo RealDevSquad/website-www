@@ -101,10 +101,14 @@ export default class BaseStepComponent extends Component {
 
   @action inputHandler(e) {
     if (!e?.target) return;
-    this.args.setIsPreValid(false);
     const field = e.target.name;
     const value = e.target.value;
-    debounceTask(this, 'handleFieldUpdate', field, value, JOIN_DEBOUNCE_TIME);
+    this.updateFieldValue(field, value);
+    const result = this.validateField(field, value);
+    this.updateWordCount(field, result);
+    this.updateErrorMessage(field, result);
+    this.args.setIsPreValid(this.isDataValid());
+    debounceTask(this, 'syncFormValidity', JOIN_DEBOUNCE_TIME);
   }
 
   validateField(field, value) {
@@ -158,6 +162,9 @@ export default class BaseStepComponent extends Component {
     const fieldType = limits?.type || 'text';
     if (fieldType === 'select' || fieldType === 'dropdown') {
       return 'Please choose an option';
+    }
+    if (fieldType === 'image') {
+      return 'Please upload a profile image';
     }
     if (result.remainingToMin) {
       return `At least ${result.remainingToMin} more word(s) required`;

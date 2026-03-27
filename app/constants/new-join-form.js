@@ -75,3 +75,13 @@ export const STEP_DATA_STORAGE_KEY = {
   stepFour: 'newStepFourData',
   stepFive: 'newStepFiveData',
 };
+
+export const STEP_FOUR_SOCIAL_FIELDS = [
+  { key: 'twitter', required: true },
+  { key: 'github', required: true, showFlag: 'showGitHub' },
+  { key: 'linkedin', required: true },
+  { key: 'instagram', required: false },
+  { key: 'peerlist', required: true },
+  { key: 'behance', required: true, showFlag: 'showBehance' },
+  { key: 'dribbble', required: true, showFlag: 'showDribbble' },
+];
