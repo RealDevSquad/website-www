@@ -31,6 +31,7 @@ export default class NewStepOneComponent extends BaseStepComponent {
     state: NEW_STEP_LIMITS.stepOne.state,
     city: NEW_STEP_LIMITS.stepOne.city,
     role: NEW_STEP_LIMITS.stepOne.role,
+    imageUrl: NEW_STEP_LIMITS.stepOne.imageUrl,
   };
 
   get fullName() {
