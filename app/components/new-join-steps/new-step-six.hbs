@@ -1,7 +1,7 @@
 <div class="step-container">
   <div class="form-header__text">
-    <h1 class="section-heading">{{@heading}}</h1>
-    <p class="section-instruction">{{@subHeading}}</p>
+    <h1 class="section-heading" data-test-heading>{{@heading}}</h1>
+    <p class="section-instruction" data-test-sub-heading>{{@subHeading}}</p>
   </div>
 
   <div class="review-section">
@@ -16,45 +16,57 @@
       />
     </div>
     <div class="review-section__content">
-      <div class="review-field">
-        <span class="review-field__label">Full Name:</span>
+      <div class="review-field" data-test="review-field">
+        <span class="review-field__label" data-test="field-label">Full Name:</span>
         <span
           class="review-field__value
             {{unless this.fullName 'review-field__value--missing'}}"
+          data-test="field-value"
         >
           {{if this.fullName this.fullName "Not provided"}}
         </span>
       </div>
-      <div class="review-field">
-        <span class="review-field__label">Location:</span>
+      <div class="review-field" data-test="review-field">
+        <span
+          class="review-field__label"
+          data-test="field-label"
+        >Location:</span>
         <span
           class="review-field__value
             {{unless this.locationDisplay 'review-field__value--missing'}}"
+          data-test="field-value"
         >
           {{this.locationDisplay}}
         </span>
       </div>
-      <div class="review-field">
-        <span class="review-field__label">Applying as:</span>
+      <div class="review-field" data-test="review-field">
+        <span class="review-field__label" data-test="field-label">Applying as:</span>
         <span
           class="review-field__value
             {{unless this.stepData.one.role 'review-field__value--missing'}}"
+          data-test="field-value"
         >
           {{if this.stepData.one.role this.stepData.one.role "Not provided"}}
         </span>
       </div>
-      <div class="review-field">
-        <span class="review-field__label">Profile Image:</span>
+      <div class="review-field" data-test="review-field">
+        <span class="review-field__label" data-test="field-label">Profile Image:</span>
         {{#if this.hasProfileImage}}
-          <div class="review-field__image-preview">
+          <div
+            class="review-field__image-preview"
+            data-test="profile-image-container"
+          >
             <img
               src={{this.profileImage}}
               alt="Profile preview"
-              class="image-preview"
+              data-test="profile-image"
             />
           </div>
         {{else}}
-          <span class="review-field__value review-field__value--empty">
+          <span
+            class="review-field__value review-field__value--empty"
+            data-test="field-empty"
+          >
             Not uploaded
           </span>
         {{/if}}
@@ -74,11 +86,12 @@
       />
     </div>
     <div class="review-section__content">
-      <div class="review-field">
-        <span class="review-field__label">Skills:</span>
+      <div class="review-field" data-test="review-field">
+        <span class="review-field__label" data-test="field-label">Skills:</span>
         <span
           class="review-field__value
             {{unless this.stepData.two.skills 'review-field__value--missing'}}"
+          data-test="field-value"
         >
           {{if
             this.stepData.two.skills
@@ -87,14 +100,18 @@
           }}
         </span>
       </div>
-      <div class="review-field">
-        <span class="review-field__label">Institution/College:</span>
+      <div class="review-field" data-test="review-field">
+        <span
+          class="review-field__label"
+          data-test="field-label"
+        >Institution/College:</span>
         <span
           class="review-field__value
             {{unless
               this.stepData.two.institution
               'review-field__value--missing'
             }}"
+          data-test="field-value"
         >
           {{#if this.stepData.two.institution}}
             {{this.stepData.two.institution}}
@@ -103,14 +120,18 @@
           {{/if}}
         </span>
       </div>
-      <div class="review-field">
-        <span class="review-field__label">Introduction:</span>
+      <div class="review-field" data-test="review-field">
+        <span
+          class="review-field__label"
+          data-test="field-label"
+        >Introduction:</span>
         <span
           class="review-field__value
             {{unless
               this.stepData.two.introduction
               'review-field__value--missing'
             }}"
+          data-test="field-value"
         >
           {{if
             this.stepData.two.introduction
@@ -134,14 +155,15 @@
       />
     </div>
     <div class="review-section__content">
-      <div class="review-field">
-        <span class="review-field__label">For fun:</span>
+      <div class="review-field" data-test="review-field">
+        <span class="review-field__label" data-test="field-label">For fun:</span>
         <span
           class="review-field__value
             {{unless
               this.stepData.three.forFun
               'review-field__value--missing'
             }}"
+          data-test="field-value"
         >
           {{#if this.stepData.three.forFun}}
             {{this.stepData.three.forFun}}
@@ -150,14 +172,15 @@
           {{/if}}
         </span>
       </div>
-      <div class="review-field">
-        <span class="review-field__label">Fun Fact:</span>
+      <div class="review-field" data-test="review-field">
+        <span class="review-field__label" data-test="field-label">Fun Fact:</span>
         <span
           class="review-field__value
             {{unless
               this.stepData.three.funFact
               'review-field__value--missing'
             }}"
+          data-test="field-value"
         >
           {{if
             this.stepData.three.funFact
@@ -181,14 +204,15 @@
       />
     </div>
     <div class="review-section__content">
-      <div class="review-field">
-        <span class="review-field__label">Phone Number:</span>
+      <div class="review-field" data-test="review-field">
+        <span class="review-field__label" data-test="field-label">Phone Number:</span>
         <span
           class="review-field__value
             {{unless
               this.stepData.four.phoneNumber
               'review-field__value--missing'
             }}"
+          data-test="field-value"
         >
           {{if
             this.stepData.four.phoneNumber
@@ -197,14 +221,18 @@
           }}
         </span>
       </div>
-      <div class="review-field">
-        <span class="review-field__label">Twitter:</span>
+      <div class="review-field" data-test="review-field">
+        <span
+          class="review-field__label"
+          data-test="field-label"
+        >Twitter:</span>
         <span
           class="review-field__value
             {{unless
               this.stepData.four.twitter
               'review-field__value--missing'
             }}"
+          data-test="field-value"
         >
           {{if
             this.stepData.four.twitter
@@ -214,14 +242,18 @@
         </span>
       </div>
       {{#if this.showGitHub}}
-        <div class="review-field">
-          <span class="review-field__label">GitHub:</span>
+        <div class="review-field" data-test="review-field">
+          <span
+            class="review-field__label"
+            data-test="field-label"
+          >GitHub:</span>
           <span
             class="review-field__value
               {{unless
                 this.stepData.four.github
                 'review-field__value--missing'
               }}"
+            data-test="field-value"
           >
             {{if
               this.stepData.four.github
@@ -231,14 +263,18 @@
           </span>
         </div>
       {{/if}}
-      <div class="review-field">
-        <span class="review-field__label">LinkedIn:</span>
+      <div class="review-field" data-test="review-field">
+        <span
+          class="review-field__label"
+          data-test="field-label"
+        >LinkedIn:</span>
         <span
           class="review-field__value
             {{unless
               this.stepData.four.linkedin
               'review-field__value--missing'
             }}"
+          data-test="field-value"
         >
           {{if
             this.stepData.four.linkedin
@@ -247,11 +283,15 @@
           }}
         </span>
       </div>
-      <div class="review-field">
-        <span class="review-field__label">Instagram:</span>
+      <div class="review-field" data-test="review-field">
+        <span
+          class="review-field__label"
+          data-test="field-label"
+        >Instagram:</span>
         <span
           class="review-field__value
             {{if this.stepData.four.instagram '' 'review-field__value--empty'}}"
+          data-test="field-value"
         >
           {{if
             this.stepData.four.instagram
@@ -260,14 +300,18 @@
           }}
         </span>
       </div>
-      <div class="review-field">
-        <span class="review-field__label">Peerlist:</span>
+      <div class="review-field" data-test="review-field">
+        <span
+          class="review-field__label"
+          data-test="field-label"
+        >Peerlist:</span>
         <span
           class="review-field__value
             {{unless
               this.stepData.four.peerlist
               'review-field__value--missing'
             }}"
+          data-test="field-value"
         >
           {{if
             this.stepData.four.peerlist
@@ -277,14 +321,18 @@
         </span>
       </div>
       {{#if this.showBehance}}
-        <div class="review-field">
-          <span class="review-field__label">Behance:</span>
+        <div class="review-field" data-test="review-field">
+          <span
+            class="review-field__label"
+            data-test="field-label"
+          >Behance:</span>
           <span
             class="review-field__value
               {{unless
                 this.stepData.four.behance
                 'review-field__value--missing'
               }}"
+            data-test="field-value"
           >
             {{if
               this.stepData.four.behance
@@ -303,6 +351,7 @@
                 this.stepData.four.dribbble
                 'review-field__value--missing'
               }}"
+            data-test="field-value"
           >
             {{if
               this.stepData.four.dribbble
@@ -327,11 +376,13 @@
       />
     </div>
     <div class="review-section__content">
-      <div class="review-field">
-        <span class="review-field__label">Why you want to join Real Dev Squad?:</span>
+      <div class="review-field" data-test="review-field">
+        <span class="review-field__label" data-test="field-label">Why you want
+          to join Real Dev Squad?:</span>
         <span
           class="review-field__value
             {{unless this.stepData.five.whyRds 'review-field__value--missing'}}"
+          data-test="field-value"
         >
           {{if
             this.stepData.five.whyRds
@@ -340,14 +391,16 @@
           }}
         </span>
       </div>
-      <div class="review-field">
-        <span class="review-field__label">Hours per week:</span>
+      <div class="review-field" data-test="review-field">
+        <span class="review-field__label" data-test="field-label">Hours per
+          week:</span>
         <span
           class="review-field__value
             {{unless
               this.stepData.five.numberOfHours
               'review-field__value--missing'
             }}"
+          data-test="field-value"
         >
           {{if
             this.stepData.five.numberOfHours
@@ -356,14 +409,16 @@
           }}
         </span>
       </div>
-      <div class="review-field">
-        <span class="review-field__label">How did you hear about us?:</span>
+      <div class="review-field" data-test="review-field">
+        <span class="review-field__label" data-test="field-label">How did you
+          hear about us?:</span>
         <span
           class="review-field__value
             {{unless
               this.stepData.five.foundFrom
               'review-field__value--missing'
             }}"
+          data-test="field-value"
         >
           {{if
             this.stepData.five.foundFrom
