@@ -19,7 +19,7 @@ module('Integration | Component | new-signup/input', function (hooks) {
 
     await render(hbs`
       <NewSignup::Input
-        @onClick={{this.onClick}} 
+        @onClick={{this.onClick}}
         @currentStep={{this.currentStep}}
       />`);
 
@@ -41,7 +41,7 @@ module('Integration | Component | new-signup/input', function (hooks) {
 
     await render(hbs`
       <NewSignup::Input
-        @onClick={{this.onClick}} 
+        @onClick={{this.onClick}}
         @currentStep={{this.currentStep}}
       />`);
 
@@ -64,7 +64,7 @@ module('Integration | Component | new-signup/input', function (hooks) {
 
     await render(hbs`
       <NewSignup::Input
-        @onClick={{this.onClick}} 
+        @onClick={{this.onClick}}
         @currentStep={{this.currentStep}}
       />`);
 
@@ -74,26 +74,7 @@ module('Integration | Component | new-signup/input', function (hooks) {
     assert.dom('[data-test-signup-form-input]').exists();
   });
 
-  test('button should have text Submit if the current step is lastName', async function (assert) {
-    assert.expect(2);
-    this.setProperties({
-      onClick: function () {
-        this.currentStep = NEW_SIGNUP_STEPS[5];
-      },
-      currentStep: 'lastName',
-    });
-
-    await render(hbs`
-      <NewSignup::Input
-        @onClick={{this.onClick}} 
-        @currentStep={{this.currentStep}}
-      />`);
-
-    assert.dom('[data-test-button="signup"]').exists();
-    assert.dom('[data-test-button="signup"]').hasText('Submit');
-  });
-
-  test('button should have text Next if the current step is lastName and dev is true', async function (assert) {
+  test('button should have text Submit if the current step is lastName and dev is true', async function (assert) {
     assert.expect(2);
     this.setProperties({
       onClick: function () {
@@ -105,13 +86,32 @@ module('Integration | Component | new-signup/input', function (hooks) {
 
     await render(hbs`
       <NewSignup::Input
-        @onClick={{this.onClick}} 
+        @onClick={{this.onClick}}
         @currentStep={{this.currentStep}}
         @dev={{this.isDevMode}}
       />`);
 
     assert.dom('[data-test-button="signup"]').exists();
-    assert.dom('[data-test-button="signup"]').hasText('Next');
+    assert.dom('[data-test-button="signup"]').hasText('Submit');
+  });
+
+  test('button should have text Next if the current step is role', async function (assert) {
+    assert.expect(2);
+    this.setProperties({
+      onClick: function () {
+        this.currentStep = NEW_SIGNUP_STEPS[5];
+      },
+      currentStep: 'role',
+    });
+
+    await render(hbs`
+      <NewSignup::Input
+        @onClick={{this.onClick}}
+        @currentStep={{this.currentStep}}
+      />`);
+
+    assert.dom('[data-test-button="signup"]').exists();
+    assert.dom('[data-test-button="signup"]').hasText('Submit');
   });
 
   test('disables button when input is not provided', async function (assert) {
@@ -124,13 +124,13 @@ module('Integration | Component | new-signup/input', function (hooks) {
     });
 
     await render(hbs`
-      <NewSignup::Input 
-        @currentStep={{this.currentStep}} 
-        @isButtonDisabled={{this.isButtonDisabled}} 
-        @isLoading={{this.isLoading}} 
-        @onChange={{this.onChange}} 
-        @onClick={{this.onClick}} 
-        @error={{this.error}} 
+      <NewSignup::Input
+        @currentStep={{this.currentStep}}
+        @isButtonDisabled={{this.isButtonDisabled}}
+        @isLoading={{this.isLoading}}
+        @onChange={{this.onChange}}
+        @onClick={{this.onClick}}
+        @error={{this.error}}
       />
     `);
 

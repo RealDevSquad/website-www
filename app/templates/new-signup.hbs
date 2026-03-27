@@ -19,8 +19,8 @@
       <NewSignup::Input
         @onClick={{if
           this.isDevMode
-          (fn this.changeStep this.FOURTH_STEP)
           this.register
+          (fn this.changeStep this.FOURTH_STEP)
         }}
         @dev={{this.isDevMode}}
         @currentStep={{step}}
@@ -29,7 +29,7 @@
         @isLoading={{this.isLoading}}
         @error={{this.error}}
       />
-    {{else if (and this.isDevMode (eq step this.FOURTH_STEP))}}
+    {{else if (eq step this.FOURTH_STEP)}}
       <NewSignup::Checkbox
         @onClick={{this.register}}
         @dev={{this.isDevMode}}
