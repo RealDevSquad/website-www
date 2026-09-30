@@ -1,0 +1,25 @@
+<div
+  class="event-info"
+  data-test-event-info
+  {{on "mouseenter" this.showOnHover}}
+  {{on "mouseleave" this.hideOnHover}}
+>
+  <button
+    type="button"
+    class="event-info__icon"
+    aria-label="Show event ID"
+    data-test-event-info-button
+  >
+    <FaIcon @icon="circle-info" />
+  </button>
+
+  {{#if this.isCardVisible}}
+    <div class="event-info__card" data-test-event-info-card>
+      <span class="event-info__label">Event ID</span>
+      <span
+        class="event-info__value"
+        data-test-event-info-id
+      >{{@eventId}}</span>
+    </div>
+  {{/if}}
+</div>

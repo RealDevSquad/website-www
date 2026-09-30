@@ -10,6 +10,22 @@
   position: relative;
 }
 
+/* Vertically centred with the tab row: 10px tab margin + (3rem tab - 2rem icon) / 2 */
+.live__event-info {
+  position: absolute;
+  top: calc(10px + 0.5rem);
+  right: 1rem;
+  z-index: 5;
+}
+
+@media (width <= 1024px) {
+  /* Centred with the collapsed tabs toggle row (~82px tall) */
+  .live__event-info {
+    top: calc(41px - 1rem);
+    right: 25px;
+  }
+}
+
 .live__loader-container {
   display: grid;
   place-items: center;

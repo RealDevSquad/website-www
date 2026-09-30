@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, currentURL } from '@ember/test-helpers';
+import { visit, currentURL, settled, triggerEvent } from '@ember/test-helpers';
 import { setupApplicationTest } from 'website-www/tests/helpers';
 
 module('Acceptance | live', function (hooks) {
@@ -43,5 +43,23 @@ module('Acceptance | live', function (hooks) {
 
       This can be solved by waiting for the promise to get resolved before the test is torn down
     */
+  });
+
+  test('event info icon shows only after joining, with the right event ID', async function (assert) {
+    await visit('/live?dev=true');
+
+    assert.dom('[data-test-event-info]').doesNotExist();
+
+    // Simulate a joined state instead of connecting to a real 100ms room
+    const liveService = this.owner.lookup('service:live');
+    liveService.activeRoomId = 'test-event-1';
+    liveService.isJoined = true;
+    await settled();
+
+    assert.dom('[data-test-event-info]').exists();
+
+    await triggerEvent('[data-test-event-info]', 'mouseenter');
+
+    assert.dom('[data-test-event-info-id]').hasText('test-event-1');
   });
 });
