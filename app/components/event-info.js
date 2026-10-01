@@ -25,4 +25,11 @@ export default class EventInfoComponent extends Component {
   @action hideOnFocus() {
     this.isFocused = false;
   }
+
+  @action closeOnEscape(event) {
+    if (event.key === 'Escape') {
+      this.isHovered = false;
+      this.isFocused = false;
+    }
+  }
 }

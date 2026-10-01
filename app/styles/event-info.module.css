@@ -41,6 +41,10 @@
   animation: event-info-fade-in 0.2s ease-out forwards;
 }
 
+.event-info__card[hidden] {
+  display: none;
+}
+
 /* Invisible bridge over the gap so the mouse can move from icon to card */
 .event-info__card::before {
   content: "";
