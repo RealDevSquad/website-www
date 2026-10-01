@@ -3,6 +3,8 @@
   data-test-event-info
   {{on "mouseenter" this.showOnHover}}
   {{on "mouseleave" this.hideOnHover}}
+  {{on "focusin" this.showOnFocus}}
+  {{on "focusout" this.hideOnFocus}}
 >
   <button
     type="button"

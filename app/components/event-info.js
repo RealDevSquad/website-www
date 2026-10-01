@@ -4,9 +4,10 @@ import { action } from '@ember/object';
 
 export default class EventInfoComponent extends Component {
   @tracked isHovered = false;
+  @tracked isFocused = false;
 
   get isCardVisible() {
-    return this.isHovered;
+    return this.isHovered || this.isFocused;
   }
 
   @action showOnHover() {
@@ -15,5 +16,13 @@ export default class EventInfoComponent extends Component {
 
   @action hideOnHover() {
     this.isHovered = false;
+  }
+
+  @action showOnFocus() {
+    this.isFocused = true;
+  }
+
+  @action hideOnFocus() {
+    this.isFocused = false;
   }
 }
