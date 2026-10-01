@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'website-www/tests/helpers';
 import {
   blur,
+  click,
   focus,
   render,
   triggerEvent,
@@ -113,5 +114,29 @@ module('Integration | Component | event-info', function (hooks) {
     await triggerKeyEvent('[data-test-event-info-button]', 'keydown', 'Escape');
 
     assert.dom('[data-test-event-info-card]').isNotVisible();
+  });
+
+  test('it reopens the card on click after Escape', async function (assert) {
+    await render(hbs`<EventInfo @eventId="test-event-1" />`);
+
+    await focus('[data-test-event-info-button]');
+    await triggerKeyEvent('[data-test-event-info-button]', 'keydown', 'Escape');
+    assert.dom('[data-test-event-info-card]').isNotVisible();
+
+    await click('[data-test-event-info-button]');
+
+    assert.dom('[data-test-event-info-card]').isVisible();
+  });
+
+  test('it keeps the card visible after Escape and hover while the button is focused', async function (assert) {
+    await render(hbs`<EventInfo @eventId="test-event-1" />`);
+
+    await focus('[data-test-event-info-button]');
+    await triggerKeyEvent('[data-test-event-info-button]', 'keydown', 'Escape');
+
+    await triggerEvent('[data-test-event-info]', 'mouseenter');
+    await triggerEvent('[data-test-event-info]', 'mouseleave');
+
+    assert.dom('[data-test-event-info-card]').isVisible();
   });
 });

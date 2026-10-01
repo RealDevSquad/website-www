@@ -16,6 +16,7 @@
       aria-describedby={{cardId}}
       data-test-event-info-button
       {{on "keydown" this.closeOnEscape}}
+      {{on "click" this.reopen}}
     >
       <FaIcon @icon="circle-info" />
     </button>
