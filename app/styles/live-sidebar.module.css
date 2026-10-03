@@ -208,39 +208,16 @@
 
   .sidebar__body {
     overflow: hidden;
+    transition: height 1s;
+    transition-timing-function: linear;
   }
 
   .sidebar__body.open {
-    animation: opensidebar 2s;
-    transition: height 2s;
-    animation-fill-mode: forwards;
-    overflow: auto;
+    height: 300px;
   }
 
   .sidebar__body.close {
-    animation: closesidebar 2s;
-    transition: height 2s;
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes opensidebar {
-    0% {
-      height: 0;
-    }
-
-    100% {
-      height: 300px;
-    }
-  }
-
-  @keyframes closesidebar {
-    0% {
-      height: 300px;
-    }
-
-    100% {
-      height: 0;
-    }
+    height: 0;
   }
 }
 
