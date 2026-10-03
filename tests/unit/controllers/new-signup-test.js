@@ -173,7 +173,6 @@ module('Unit | Controller | new-signup', function (hooks) {
     };
 
     sinon.stub(controller, 'generateUsername').resolves(fakeUserData.username);
-    sinon.stub(controller, 'checkUserName').resolves(true);
     sinon.stub(controller, 'registerUser').resolves({ status: 204 });
 
     await controller.signup();
@@ -193,7 +192,6 @@ module('Unit | Controller | new-signup', function (hooks) {
     };
 
     sinon.stub(controller, 'generateUsername').resolves(fakeUserData.username);
-    sinon.stub(controller, 'checkUserName').resolves(true);
     sinon
       .stub(controller, 'registerUser')
       .throws(new Error(SIGNUP_ERROR_MESSAGES.others));
@@ -214,10 +212,9 @@ module('Unit | Controller | new-signup', function (hooks) {
     controller.signupDetails = {
       firstName: fakeUserData.first_name,
       lastName: fakeUserData.last_name,
-      roles: 'developer',
     };
 
-    sinon.stub(controller, 'checkUserName').resolves(true);
+    sinon.stub(controller, 'generateUsername').resolves(fakeUserData.username);
     sinon
       .stub(controller, 'registerUser')
       .throws(new Error(SIGNUP_ERROR_MESSAGES.others));

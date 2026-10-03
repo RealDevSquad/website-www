@@ -24,7 +24,11 @@
   <div class="signup-action__btn">
     <Reusables::Button
       @type="button"
-      @text={{if (or @dev (not (eq @currentStep "lastName"))) "Next" "Submit"}}
+      @text={{if
+        (or (eq @currentStep "role") (and @dev (eq @currentStep "lastName")))
+        "Submit"
+        "Next"
+      }}
       @test="signup"
       @isLoading={{@isLoading}}
       @onClick={{@onClick}}

@@ -40,10 +40,7 @@
           />
         {{else}}
           {{#if this.isDevMode}}
-            <NewStepper
-              @step={{this.stepFromParam}}
-              @isEditMode={{this.isEditMode}}
-            />
+            <Stepper @joinDiscord={{this.joinDiscordAction}} />
           {{else if this.isOldOnboarding}}
             <StepperSignup
               @chaincode={{this.chaincode}}
@@ -52,7 +49,10 @@
               @handleGenerateChaincode={{this.handleGenerateChaincode}}
             />
           {{else}}
-            <Stepper @joinDiscord={{this.joinDiscordAction}} />
+            <NewStepper
+              @step={{this.stepFromParam}}
+              @isEditMode={{this.isEditMode}}
+            />
           {{/if}}
         {{/if}}
       {{/if}}

@@ -120,10 +120,7 @@ export default class StatusCardComponent extends Component {
   @action
   trackApplication() {
     if (this.applicationId) {
-      // ToDo: remove dev=true once feature flag is removed from application detail apge
-      this.router.transitionTo('applications.detail', this.applicationId, {
-        queryParams: { dev: true },
-      });
+      this.router.transitionTo('applications.detail', this.applicationId);
     }
   }
 }
