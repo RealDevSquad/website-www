@@ -7,6 +7,11 @@
       @activeTab={{this.activeTab}}
       @tabHandler={{this.tabHandler}}
     />
+    {{#if this.liveService.activeRoomId}}
+      <div class="live__event-info">
+        <EventInfo @eventId={{this.liveService.activeRoomId}} />
+      </div>
+    {{/if}}
   {{/if}}
   <AnswerReplyModal
     @openModal={{this.openAnswerReplyModal}}
