@@ -106,6 +106,8 @@
           {{else}}
             <LivePanel
               @isScreenShareOn={{this.liveService.isScreenShareOn}}
+              @isPictureInPicture={{this.liveService.isPictureInPicture}}
+              @isPictureInPictureSupported={{this.liveService.isPictureInPictureSupported}}
               @isCopied={{this.isCopied}}
               @role={{this.role}}
               @buttonClickHandler={{this.buttonClickHandler}}

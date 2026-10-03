@@ -151,6 +151,10 @@ export default class LiveController extends Controller {
     this.liveService.shareScreen();
   }
 
+  @action togglePictureInPicture() {
+    this.liveService.togglePictureInPicture();
+  }
+
   @action removePeer() {
     this.liveService.removePeer(this.peerToRemove?.id);
     this.isKickoutModalOpen = false;
@@ -257,6 +261,9 @@ export default class LiveController extends Controller {
         break;
       case BUTTONS_TYPE.LEAVE_ROOM:
         this.leaveSession();
+        break;
+      case BUTTONS_TYPE.PICTURE_IN_PICTURE:
+        this.togglePictureInPicture();
         break;
       default:
         console.error('No matching type');

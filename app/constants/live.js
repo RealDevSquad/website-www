@@ -8,6 +8,12 @@ export const BUTTONS_TYPE = {
   SCREEN_SHARE: 'screen-share',
   COPY_LINK: 'copy-link',
   LEAVE_ROOM: 'leave-room',
+  PICTURE_IN_PICTURE: 'picture-in-picture',
+};
+
+export const PICTURE_IN_PICTURE_MODE = {
+  PIP: 'picture-in-picture',
+  INLINE: 'inline',
 };
 
 export const API_METHOD = { POST: 'POST', GET: 'GET', PATCH: 'PATCH' };

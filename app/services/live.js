@@ -10,11 +10,13 @@ import {
 import { tracked } from '@glimmer/tracking';
 import { APPS } from 'website-www/constants/urls';
 import { globalRef } from 'ember-ref-bucket';
+import { action } from '@ember/object';
 import {
   ROLES,
   PATCH_API_CONFIGS,
   POST_API_CONFIGS,
   GET_API_CONFIGS,
+  PICTURE_IN_PICTURE_MODE,
 } from '../constants/live';
 import { TOAST_OPTIONS } from '../constants/toast-options';
 export default class LiveService extends Service {
@@ -39,6 +41,8 @@ export default class LiveService extends Service {
   @tracked roomCodeLoading = false;
   @tracked userData = this.login?.userData;
   @tracked isUserRemoved = false;
+  @tracked isPictureInPicture = false;
+  pictureInPictureListenerElement;
 
   constructor() {
     super(...arguments);
@@ -432,6 +436,144 @@ export default class LiveService extends Service {
       }
       this.isScreenShareOn = false;
     }
+  }
+
+  get isPictureInPictureSupported() {
+    if (typeof document === 'undefined' || typeof window === 'undefined') {
+      return false;
+    }
+
+    const videoPrototype = window.HTMLVideoElement?.prototype;
+
+    if (!videoPrototype) return false;
+
+    const hasStandardApi =
+      'requestPictureInPicture' in videoPrototype &&
+      Boolean(document.pictureInPictureEnabled);
+    const hasWebkitApi = 'webkitSupportsPresentationMode' in videoPrototype;
+
+    return hasStandardApi || hasWebkitApi;
+  }
+
+  /**
+   * Toggles picture in picture for the screen share video element.
+   * Called straight from the click handler, without awaiting anything first,
+   * because browsers only allow picture in picture inside a user gesture.
+   */
+  @action togglePictureInPicture() {
+    const videoEl = this.videoEl;
+
+    try {
+      if (typeof document !== 'undefined' && document.pictureInPictureElement) {
+        const exitRequest = document.exitPictureInPicture();
+        exitRequest?.catch?.((error) => this.onPictureInPictureError(error));
+        return;
+      }
+
+      if (!videoEl) {
+        this.toast.info(
+          'The screen share is not ready yet!',
+          'Info!',
+          TOAST_OPTIONS,
+        );
+        return;
+      }
+
+      if (videoEl.webkitPresentationMode === PICTURE_IN_PICTURE_MODE.PIP) {
+        videoEl.webkitSetPresentationMode(PICTURE_IN_PICTURE_MODE.INLINE);
+        this.isPictureInPicture = false;
+        return;
+      }
+
+      if (
+        videoEl.requestPictureInPicture &&
+        typeof document !== 'undefined' &&
+        document.pictureInPictureEnabled
+      ) {
+        const pipRequest = videoEl.requestPictureInPicture();
+        pipRequest?.catch?.((error) => this.onPictureInPictureError(error));
+        return;
+      }
+
+      if (
+        videoEl.webkitSupportsPresentationMode?.(PICTURE_IN_PICTURE_MODE.PIP)
+      ) {
+        videoEl.webkitSetPresentationMode(PICTURE_IN_PICTURE_MODE.PIP);
+        this.isPictureInPicture = true;
+        return;
+      }
+
+      this.toast.info(
+        'Pop out is not supported in this browser!',
+        'Info!',
+        TOAST_OPTIONS,
+      );
+    } catch (error) {
+      this.onPictureInPictureError(error);
+    }
+  }
+
+  onPictureInPictureError(error) {
+    console.error(error);
+    this.toast.error('Could not pop out the video!', 'Error!', TOAST_OPTIONS);
+  }
+
+  onEnterPictureInPicture = () => {
+    this.isPictureInPicture = true;
+  };
+
+  onLeavePictureInPicture = () => {
+    this.isPictureInPicture = false;
+  };
+
+  onPresentationModeChange = (event) => {
+    const videoEl = event?.target ?? this.videoEl;
+    this.isPictureInPicture =
+      videoEl?.webkitPresentationMode === PICTURE_IN_PICTURE_MODE.PIP;
+  };
+
+  @action registerPictureInPictureListeners(element) {
+    if (!element) return;
+
+    this.removePictureInPictureListeners(this.pictureInPictureListenerElement);
+
+    element.addEventListener(
+      'enterpictureinpicture',
+      this.onEnterPictureInPicture,
+    );
+    element.addEventListener(
+      'leavepictureinpicture',
+      this.onLeavePictureInPicture,
+    );
+    element.addEventListener(
+      'webkitpresentationmodechanged',
+      this.onPresentationModeChange,
+    );
+
+    this.pictureInPictureListenerElement = element;
+  }
+
+  @action removePictureInPictureListeners(element) {
+    if (!element) return;
+
+    element.removeEventListener(
+      'enterpictureinpicture',
+      this.onEnterPictureInPicture,
+    );
+    element.removeEventListener(
+      'leavepictureinpicture',
+      this.onLeavePictureInPicture,
+    );
+    element.removeEventListener(
+      'webkitpresentationmodechanged',
+      this.onPresentationModeChange,
+    );
+
+    if (this.pictureInPictureListenerElement === element) {
+      this.pictureInPictureListenerElement = undefined;
+    }
+
+    this.isPictureInPicture = false;
   }
 
   async roomCodesHandler(value) {
