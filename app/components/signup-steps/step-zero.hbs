@@ -6,8 +6,10 @@
     data-test-rds-logo-img
   />
   {{#if this.login.isLoggedIn}}
-    <h2 class="heading__h3" data-test-signup-heading>Thank you for connecting
-      your GitHub</h2>
+    <h2
+      class="heading__h3"
+      data-test-signup-heading
+    >{{this.GET_STARTED_MAIN_HEADING}}</h2>
     <p class="p2-description" data-test-signup-paragraph>Please continue with
       Sign Up with in order to use features display yourself on members page etc</p>
     <Reusables::Button

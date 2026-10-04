@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { AUTH } from '../../constants/urls';
+import { GET_STARTED_MAIN_HEADING } from '../../constants/new-signup';
 import { tracked } from '@glimmer/tracking';
 
 export default class SignupStepsStepZeroComponent extends Component {
@@ -11,6 +12,7 @@ export default class SignupStepsStepZeroComponent extends Component {
   @service store;
   @service controller;
   @tracked currentStep = 0;
+  GET_STARTED_MAIN_HEADING = GET_STARTED_MAIN_HEADING;
 
   @action loginWithGithub() {
     if (!this.login.isLoggedIn) {

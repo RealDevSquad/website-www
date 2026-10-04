@@ -1,9 +1,16 @@
+import { action } from '@ember/object';
 import BaseStepComponent from './base-step';
 import {
   NEW_STEP_LIMITS,
   STEP_DATA_STORAGE_KEY,
+  STEP_FOUR_SOCIAL_FIELDS,
 } from '../../constants/new-join-form';
 import { phoneNumberRegex } from '../../constants/regex';
+import {
+  mapSocialUrls,
+  SOCIAL_HOST_ALIASES,
+  socialFields,
+} from '../../constants/applications';
 
 export default class NewStepFourComponent extends BaseStepComponent {
   get storageKey() {
@@ -17,6 +24,8 @@ export default class NewStepFourComponent extends BaseStepComponent {
     instagram: NEW_STEP_LIMITS.stepFour.instagram,
     peerlist: NEW_STEP_LIMITS.stepFour.peerlist,
   };
+
+  socialFields = STEP_FOUR_SOCIAL_FIELDS;
 
   get userRole() {
     const stepOneData = JSON.parse(
@@ -32,7 +41,7 @@ export default class NewStepFourComponent extends BaseStepComponent {
 
     if (this.userRole === 'Designer') {
       this.stepValidation.behance = NEW_STEP_LIMITS.stepFour.behance;
-      this.stepValidation.dribble = NEW_STEP_LIMITS.stepFour.dribble;
+      this.stepValidation.dribbble = NEW_STEP_LIMITS.stepFour.dribbble;
     }
 
     // re-calculate the errorMessage and wordCount for new input fields
@@ -56,8 +65,47 @@ export default class NewStepFourComponent extends BaseStepComponent {
     return this.userRole === 'Designer';
   }
 
-  get showDribble() {
+  get showDribbble() {
     return this.userRole === 'Designer';
+  }
+
+  getSocialPrefix(platform) {
+    const url = mapSocialUrls[platform];
+    if (!url) return null;
+    return url.replace('https://', '');
+  }
+
+  extractUsername(field, value) {
+    if (!value || !socialFields.includes(field)) return value;
+
+    const trimmed = value.trim().replace(/^@/, '');
+    const base = (mapSocialUrls[field] || '').replace(/^https?:\/\//i, '');
+    if (!base) return trimmed;
+
+    const stripped = trimmed
+      .replace(/^https?:\/\//i, '')
+      .replace(/^www\./i, '');
+    const hosts = [base, ...(SOCIAL_HOST_ALIASES[field] || [])];
+    const lower = stripped.toLowerCase();
+    const matched = hosts.find((host) =>
+      lower.startsWith(`${host.toLowerCase()}/`),
+    );
+    if (!matched) return trimmed;
+
+    const rest = stripped
+      .slice(matched.length)
+      .replace(/^\/+/, '')
+      .split(/[/?#]/)[0];
+    return rest || trimmed;
+  }
+
+  @action normalizeHandler(e) {
+    if (!e?.target) return;
+    const { name, value } = e.target;
+    const username = this.extractUsername(name, value);
+    if (username === value) return;
+    e.target.value = username;
+    this.handleFieldUpdate(name, username);
   }
 
   validateField(field, value) {

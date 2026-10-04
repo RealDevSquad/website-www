@@ -4,6 +4,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { GET_STARTED_MAIN_HEADING } from 'website-www/constants/new-signup';
 
 class LoginStub extends Service {
   @tracked isLoggedIn = false;
@@ -30,9 +31,7 @@ module('Integration | Component | signup-steps/step-zero', function (hooks) {
     await render(
       hbs`<SignupSteps::StepZero @startHandler={{this.startHandler}} />`,
     );
-    assert
-      .dom('[data-test-signup-heading]')
-      .hasText('Thank you for connecting your GitHub');
+    assert.dom('[data-test-signup-heading]').hasText(GET_STARTED_MAIN_HEADING);
     assert
       .dom('[data-test-signup-paragraph]')
       .hasText(

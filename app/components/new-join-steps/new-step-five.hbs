@@ -1,7 +1,7 @@
 <div class="step-container">
   <div class="form-header__text">
-    <h1 class="section-heading">{{@heading}}</h1>
-    <p class="section-instruction">{{@subHeading}}</p>
+    <h1 class="section-heading" data-test-heading>{{@heading}}</h1>
+    <p class="section-instruction" data-test-sub-heading>{{@subHeading}}</p>
   </div>
 
   <Reusables::TextAreaBox
@@ -13,7 +13,10 @@
     @onInput={{this.inputHandler}}
   />
   {{#if this.errorMessage.whyRds}}
-    <div class="error__message">{{this.errorMessage.whyRds}}</div>
+    <div
+      class="error__message"
+      data-test-error="whyRds"
+    >{{this.errorMessage.whyRds}}</div>
   {{/if}}
 
   <div class="form-grid form-grid--2">

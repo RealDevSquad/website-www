@@ -35,6 +35,11 @@ export default class StatusCardComponent extends Component {
       heading: 'Accepted',
       icon: 'square-check',
     },
+    {
+      status: APPLICATION_STATUS_TYPES.changes_requested,
+      heading: 'Changes Requested',
+      icon: 'edit',
+    },
   ];
 
   constructor() {
@@ -99,6 +104,17 @@ export default class StatusCardComponent extends Component {
   @action
   onError() {
     this.toast.error('Error in copying to clipboard', 'Error!', TOAST_OPTIONS);
+  }
+
+  @action
+  editApplication() {
+    this.router.transitionTo('join', {
+      queryParams: {
+        edit: true,
+        dev: true,
+        step: 1,
+      },
+    });
   }
 
   @action

@@ -1,0 +1,37 @@
+{{#let (unique-id) as |cardId|}}
+  <div
+    class="event-info"
+    data-test-event-info
+    {{on "mouseenter" this.showOnHover}}
+    {{on "mouseleave" this.hideOnHover}}
+    {{on "focusin" this.showOnFocus}}
+    {{on "focusout" this.hideOnFocus}}
+  >
+    <button
+      type="button"
+      class="event-info__icon"
+      aria-label="Show event ID"
+      aria-expanded={{if this.isCardVisible "true" "false"}}
+      aria-controls={{cardId}}
+      aria-describedby={{cardId}}
+      data-test-event-info-button
+      {{on "keydown" this.closeOnEscape}}
+      {{on "click" this.reopen}}
+    >
+      <FaIcon @icon="circle-info" />
+    </button>
+
+    <div
+      id={{cardId}}
+      class="event-info__card"
+      hidden={{not this.isCardVisible}}
+      data-test-event-info-card
+    >
+      <span class="event-info__label">Event ID</span>
+      <span
+        class="event-info__value"
+        data-test-event-info-id
+      >{{@eventId}}</span>
+    </div>
+  </div>
+{{/let}}

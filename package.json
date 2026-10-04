@@ -28,11 +28,10 @@
     "dev:reverse-ssl": "local-ssl-proxy --source 443 --target 4200",
     "start": "ember serve",
     "test": "concurrently \"pnpm:lint\" \"pnpm:test:*\" --names \"lint,test:\" --prefixColors auto",
-    "test:ember": "ember test",
-    "preinstall": "npx only-allow pnpm"
+    "test:ember": "ember test"
   },
   "dependencies": {
-    "@100mslive/hms-video-store": "0.10.6",
+    "@100mslive/hms-video-store": "0.15.0",
     "@warp-drive/ember": "5.7.0",
     "cropperjs": "^2.1.0",
     "d3-cloud": "1.2.8",
@@ -123,11 +122,20 @@
   "engines": {
     "node": ">= 25"
   },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^25.3.0",
+      "onFail": "download"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": ">=12.0.0 <13.0.0",
+      "onFail": "download"
+    }
+  },
   "ember": {
     "edition": "octane"
-  },
-  "volta": {
-    "node": "25.3.0"
   },
   "pre-commit": {
     "run": "lint"

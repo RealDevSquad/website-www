@@ -47,8 +47,12 @@ export default class ApplicationsDetailController extends Controller {
     ];
   }
 
+  get feedbackHistory() {
+    return this.application?.feedback?.slice().reverse() || [];
+  }
+
   get hasFeedback() {
-    return this.application?.feedback?.length > 0;
+    return this.feedbackHistory.length > 0;
   }
 
   get showAdminMessage() {

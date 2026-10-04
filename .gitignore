@@ -22,3 +22,9 @@
 
 # vs-code config
 /.vscode/
+
+# Local AI agent configuration and session data
+/.claude/
+/.codex/
+/.cursor/
+/.entire/

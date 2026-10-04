@@ -23,6 +23,8 @@ export const mapSocialUrls = {
   behance: 'https://behance.net',
 };
 
+export const SOCIAL_HOST_ALIASES = { twitter: ['x.com'] };
+
 export const socialFields = [
   'phoneNumber',
   'twitter',
@@ -31,7 +33,7 @@ export const socialFields = [
   'github',
   'peerlist',
   'behance',
-  'dribble',
+  'dribbble',
 ];
 
 export function adminMessage(status) {

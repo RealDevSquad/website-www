@@ -1,0 +1,15 @@
+allowBuilds:
+  core-js: false
+  pre-commit: true
+  spawn-sync: false
+
+engineStrict: true
+autoInstallPeers: true
+strictPeerDependencies: false
+shamefullyHoist: true
+publicHoistPattern:
+  - "*ember*"
+  - "*fastboot*"
+  - "@glimmer/*"
+  - "**/ember-cli-htmlbars"
+  - "**/htmlbars-inline-precompile"

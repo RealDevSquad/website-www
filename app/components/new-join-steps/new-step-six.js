@@ -43,7 +43,7 @@ export default class NewStepSixComponent extends Component {
     return this.userRole === 'Designer';
   }
 
-  get showDribble() {
+  get showDribbble() {
     return this.userRole === 'Designer';
   }
 

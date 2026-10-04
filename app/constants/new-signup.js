@@ -60,7 +60,8 @@ export const CHECK_BOX_DATA = [
   },
 ];
 
-export const GET_STARTED_MAIN_HEADING = 'Thank you for connecting your GitHub!';
+export const GET_STARTED_MAIN_HEADING =
+  'Thank you for connecting your socials!';
 export const GET_STARTED_SUB_HEADING =
   'Please complete the signup in order to:';
 export const THANK_YOU_MAIN_HEADING = 'Congratulations!';

@@ -50,6 +50,9 @@ export default [
       'node_modules/',
       'coverage/',
       '!**/.*',
+      // must come after '!**/.*': that negation un-ignores all dotfiles,
+      // which would otherwise pull local agent worktrees into the lint run
+      '.claude/',
     ],
   },
   /**

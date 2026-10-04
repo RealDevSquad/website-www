@@ -1,0 +1,84 @@
+.event-info {
+  position: relative;
+  display: inline-flex;
+}
+
+.event-info__icon {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  color: var(--color-navyblue);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.event-info__icon:hover {
+  background-color: var(--color-cultured);
+}
+
+.event-info__card {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.6rem 0.9rem;
+  background-color: var(--color-offwhite);
+  border-radius: 10px;
+  border-top-right-radius: 0;
+  box-shadow:
+    var(--color-blackshadow) 0 1px 2px 0,
+    var(--color-blackshadow2) 0 2px 6px 2px;
+  white-space: nowrap;
+  z-index: 10;
+  animation: event-info-fade-in 0.2s ease-out forwards;
+}
+
+.event-info__card[hidden] {
+  display: none;
+}
+
+/* Invisible bridge over the gap so the mouse can move from icon to card */
+.event-info__card::before {
+  content: "";
+  position: absolute;
+  top: -0.5rem;
+  left: 0;
+  right: 0;
+  height: 0.5rem;
+}
+
+.event-info__label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-navyblue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.event-info__value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-darkblack);
+  user-select: all;
+  cursor: text;
+}
+
+@keyframes event-info-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

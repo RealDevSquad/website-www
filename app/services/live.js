@@ -422,7 +422,14 @@ export default class LiveService extends Service {
       await this.hmsActions.attachVideo(presenterTrackId, this.videoEl);
       this.isScreenShareOn = true;
     } else {
-      await this.hmsActions.detachVideo(presenterTrackId, this.videoEl);
+      // Since hms-video-store 0.11, detachVideo reads the SDK store, which
+      // only exists once a room has been joined. The peers subscription also
+      // fires on construction and before join, where there is nothing to
+      // detach yet. Read the HMS store (not the tracked isJoined) so this
+      // does not consume a tracked property during render.
+      if (this.hmsStore.getState(selectIsConnectedToRoom)) {
+        await this.hmsActions.detachVideo(presenterTrackId, this.videoEl);
+      }
       this.isScreenShareOn = false;
     }
   }
