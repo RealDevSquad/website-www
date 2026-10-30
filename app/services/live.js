@@ -289,7 +289,10 @@ export default class LiveService extends Service {
       const isHost = ROLES.host === role;
       const isModerator = ROLES.moderator === role;
 
-      if ((isModerator && !isMember) || (isHost && !isSuperUser)) {
+      if (
+        (isModerator && !isMember && !isSuperUser) ||
+        (isHost && !isSuperUser)
+      ) {
         if (!this.userData) {
           this.isLoading = false;
           return this.toast.info(
