@@ -3,8 +3,8 @@ import { setupTest } from 'website-www/tests/helpers';
 import sinon from 'sinon';
 import { ROLES } from 'website-www/constants/live';
 
-const NOT_AUTHORIZED = "You're not authorized to join with this role!";
-const PLEASE_LOGIN = 'Please login to join with this role!';
+const jsonResponse = (status, body) =>
+  new Response(JSON.stringify(body), { status });
 
 module('Unit | Service | live', function (hooks) {
   setupTest(hooks);
@@ -18,68 +18,60 @@ module('Unit | Service | live', function (hooks) {
     hooks.beforeEach(function () {
       this.service = this.owner.lookup('service:live');
 
-      this.joinAdminRoom = sinon
-        .stub(this.service, 'joinAdminRoom')
-        .resolves('test-token');
-      sinon.stub(this.service.hmsActions, 'join').resolves();
+      this.fetch = sinon.stub(window, 'fetch');
+      this.hmsJoin = sinon.stub(this.service.hmsActions, 'join').resolves();
       sinon.stub(this.service, 'addPeer').resolves(null);
 
       this.toastError = sinon.stub(this.service.toast, 'error');
-      this.toastInfo = sinon.stub(this.service.toast, 'info');
-      sinon.stub(this.service.toast, 'success');
     });
 
-    const allowed = [
-      [
-        'super_user without member',
-        { super_user: true, member: false },
-        ROLES.moderator,
-      ],
-      ['member', { super_user: false, member: true }, ROLES.moderator],
-      ['super_user', { super_user: true, member: false }, ROLES.host],
-    ];
+    hooks.afterEach(function () {
+      sinon.restore();
+    });
 
-    allowed.forEach(([who, roles, role]) => {
-      test(`${who} can join as ${role}`, async function (assert) {
-        this.service.userData = { roles };
+    [ROLES.host, ROLES.moderator].forEach((role) => {
+      test(`joins as ${role} with the token from the backend`, async function (assert) {
+        this.fetch.resolves(jsonResponse(201, { token: 'test-token' }));
 
         await this.service.joinSession('room-id', 'test-user', role);
 
         assert.true(
-          this.joinAdminRoom.calledOnceWith('room-id', role, 'test-user'),
+          this.fetch.calledOnceWith(sinon.match('/events/join-admin')),
         );
-        assert.false(this.toastError.calledWith(NOT_AUTHORIZED));
+        assert.deepEqual(JSON.parse(this.fetch.firstCall.args[1].body), {
+          roomId: 'room-id',
+          role,
+          userId: 'test-user',
+        });
+        assert.true(
+          this.hmsJoin.calledOnceWith({
+            userName: 'test-user',
+            authToken: 'test-token',
+          }),
+        );
+        assert.true(this.toastError.notCalled);
       });
-    });
 
-    const blocked = [
-      ['member', { super_user: false, member: true }, ROLES.host],
-      [
-        'user with no roles',
-        { super_user: false, member: false },
-        ROLES.moderator,
-      ],
-    ];
-
-    blocked.forEach(([who, roles, role]) => {
-      test(`${who} cannot join as ${role}`, async function (assert) {
-        this.service.userData = { roles };
+      test(`shows the backend message when joining as ${role} is rejected`, async function (assert) {
+        const message = 'Rejected by the backend';
+        this.fetch.resolves(jsonResponse(403, { message }));
 
         await this.service.joinSession('room-id', 'test-user', role);
 
-        assert.true(this.joinAdminRoom.notCalled);
-        assert.true(this.toastError.calledWith(NOT_AUTHORIZED));
+        assert.true(this.hmsJoin.notCalled);
+        assert.true(this.toastError.calledOnceWith(message));
         assert.false(this.service.isLoading);
       });
     });
 
-    test('logged out user is asked to login when joining as moderator', async function (assert) {
-      this.service.userData = undefined;
+    test('shows a generic error when the join request fails', async function (assert) {
+      this.fetch.rejects(new Error('Network error'));
 
       await this.service.joinSession('room-id', 'test-user', ROLES.moderator);
 
-      assert.true(this.joinAdminRoom.notCalled);
-      assert.true(this.toastInfo.calledWith(PLEASE_LOGIN));
+      assert.true(this.hmsJoin.notCalled);
+      assert.true(this.toastError.calledOnceWith('Something went wrong!'));
+      assert.false(this.service.isLoading);
     });
   });
 });
