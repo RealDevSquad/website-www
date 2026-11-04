@@ -291,8 +291,31 @@ export default class LiveService extends Service {
   async joinSession(roomId, userName, role, roomCode = null) {
     try {
       this.isLoading = true;
+      const isSuperUser = this?.userData?.roles?.super_user;
+      const isMember = this?.userData?.roles?.member;
       const isHost = ROLES.host === role;
       const isModerator = ROLES.moderator === role;
+
+      if (
+        (isModerator && !isMember && !isSuperUser) ||
+        (isHost && !isSuperUser)
+      ) {
+        if (!this.userData) {
+          this.isLoading = false;
+          return this.toast.info(
+            'Please login to join with this role!',
+            'Unauthenticated!',
+            TOAST_OPTIONS,
+          );
+        }
+        this.toast.error(
+          "You're not authorized to join with this role!",
+          'Error!',
+          TOAST_OPTIONS,
+        );
+        this.isLoading = false;
+        return;
+      }
 
       if (isHost || isModerator) {
         try {
