@@ -14,6 +14,18 @@ module('Unit | Service | live', function (hooks) {
     assert.ok(service);
   });
 
+  test('userData stays in sync with the login service', function (assert) {
+    const service = this.owner.lookup('service:live');
+    const login = this.owner.lookup('service:login');
+
+    assert.strictEqual(service.userData, undefined);
+
+    const user = { roles: { super_user: true } };
+    login.userData = user;
+
+    assert.strictEqual(service.userData, user);
+  });
+
   module('joinSession', function (hooks) {
     hooks.beforeEach(function () {
       this.service = this.owner.lookup('service:live');

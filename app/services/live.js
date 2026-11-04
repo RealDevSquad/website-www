@@ -37,7 +37,6 @@ export default class LiveService extends Service {
   @tracked guestRole = '';
   @tracked roomCodesForMaven = [];
   @tracked roomCodeLoading = false;
-  @tracked userData = this.login?.userData;
   @tracked isUserRemoved = false;
 
   constructor() {
@@ -66,6 +65,10 @@ export default class LiveService extends Service {
         );
       }
     });
+  }
+
+  get userData() {
+    return this.login?.userData;
   }
 
   onConnection(isConnected) {
