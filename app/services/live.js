@@ -37,7 +37,6 @@ export default class LiveService extends Service {
   @tracked guestRole = '';
   @tracked roomCodesForMaven = [];
   @tracked roomCodeLoading = false;
-  @tracked userData = this.login?.userData;
   @tracked isUserRemoved = false;
 
   constructor() {
@@ -66,6 +65,10 @@ export default class LiveService extends Service {
         );
       }
     });
+  }
+
+  get userData() {
+    return this.login?.userData;
   }
 
   onConnection(isConnected) {
@@ -118,7 +121,11 @@ export default class LiveService extends Service {
           userId: userName,
         }),
       });
-      const { token } = await response.json();
+      const { token, message } = await response.json();
+      if (!response.ok) {
+        this.toast.error(message, 'Error!', TOAST_OPTIONS);
+        return;
+      }
       return token;
     } catch (error) {
       console.error(error);
@@ -289,7 +296,10 @@ export default class LiveService extends Service {
       const isHost = ROLES.host === role;
       const isModerator = ROLES.moderator === role;
 
-      if ((isModerator && !isMember) || (isHost && !isSuperUser)) {
+      if (
+        (isModerator && !isMember && !isSuperUser) ||
+        (isHost && !isSuperUser)
+      ) {
         if (!this.userData) {
           this.isLoading = false;
           return this.toast.info(
@@ -310,6 +320,10 @@ export default class LiveService extends Service {
       if (isHost || isModerator) {
         try {
           const token = await this.joinAdminRoom(roomId, role, userName);
+          if (!token) {
+            this.isLoading = false;
+            return;
+          }
           await this.hmsActions.join({
             userName,
             authToken: token,
