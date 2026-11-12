@@ -161,11 +161,6 @@ module('Integration | Component | status-card', function (hooks) {
         'app-123',
         'passes application ID as route parameter',
       );
-      assert.deepEqual(
-        this.router.transitionTo.firstCall.args[2],
-        { queryParams: { dev: true } },
-        'includes dev=true query parameter',
-      );
     });
 
     test('trackApplication does nothing when applicationId is missing', async function (assert) {

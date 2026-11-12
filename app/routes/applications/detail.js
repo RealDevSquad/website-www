@@ -11,7 +11,6 @@ import redirectAuth from '../../utils/redirect-auth';
 
 export default class ApplicationsDetailRoute extends Route {
   @service toast;
-  @service router;
 
   async model() {
     try {

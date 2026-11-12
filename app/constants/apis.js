@@ -18,8 +18,8 @@ export const APPLICATION_ID_LINK = (id) => {
   return `${APPS.DASHBOARD}/applications/?id=${id}`;
 };
 
-export const SELF_PROFILE_UPDATE_URL = (userId, devFlag) => {
-  return `${APPS.API_BACKEND}/users/${userId}?profile=true&dev=${devFlag}`;
+export const SELF_PROFILE_UPDATE_URL = (userId) => {
+  return `${APPS.API_BACKEND}/users/${userId}?profile=true&dev=true`;
 };
 
 export const GENERATE_USERNAME_URL = (

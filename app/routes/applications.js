@@ -10,17 +10,6 @@ const APPLICATIONS_SIZE = 6;
 
 export default class ApplicationsRoute extends Route {
   @service toast;
-  @service router;
-
-  queryParams = {
-    dev: { refreshModel: true },
-  };
-
-  beforeModel(transition) {
-    if (transition?.to?.queryParams?.dev !== 'true') {
-      this.router.replaceWith('/page-not-found');
-    }
-  }
 
   async model(params, transition) {
     if (transition?.to?.name === 'applications.detail') {
