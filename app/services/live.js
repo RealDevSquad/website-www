@@ -15,6 +15,8 @@ import {
   PATCH_API_CONFIGS,
   POST_API_CONFIGS,
   GET_API_CONFIGS,
+  PARTICIPANTS_COUNT_POLL_TIME,
+  PARTICIPANTS_REFRESH_BUFFER_MS,
 } from '../constants/live';
 import { TOAST_OPTIONS } from '../constants/toast-options';
 export default class LiveService extends Service {
@@ -38,6 +40,11 @@ export default class LiveService extends Service {
   @tracked roomCodesForMaven = [];
   @tracked roomCodeLoading = false;
   @tracked isUserRemoved = false;
+  @tracked participantsByRole = null;
+  @tracked hideParticipantsCount = false;
+  participantsPollTimer = null;
+  participantsRefreshTimer = null;
+  participantsCacheExpiresAt = 0;
 
   constructor() {
     super(...arguments);
@@ -77,6 +84,9 @@ export default class LiveService extends Service {
       window.addEventListener('beforeunload', this.onCloseAlert);
     } else {
       window.removeEventListener('beforeunload', this.onCloseAlert);
+      this.stopParticipantsPolling();
+      this.participantsByRole = null;
+      this.hideParticipantsCount = false;
     }
     if (isConnected) {
       this.isLoading = false;
@@ -258,6 +268,76 @@ export default class LiveService extends Service {
     }
   }
 
+  async fetchParticipantsCount(roomId) {
+    try {
+      const response = await fetch(
+        `${APPS.API_BACKEND}/events/${roomId}/participants`,
+        GET_API_CONFIGS,
+      );
+
+      if (roomId !== this.activeRoomId || !this.participantsPollTimer) return;
+
+      if (response.status === 404) {
+        this.stopShowingParticipantsCount();
+        return;
+      }
+
+      if (!response.ok) return;
+
+      const { data } = await response.json();
+
+      if (!data.countsByRole) {
+        this.stopShowingParticipantsCount();
+        return;
+      }
+
+      this.participantsByRole = data.countsByRole;
+      this.participantsCacheExpiresAt = Date.now() + (data.refreshAfterMs ?? 0);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  startParticipantsPolling(roomId) {
+    this.stopParticipantsPolling();
+    this.participantsPollTimer = setInterval(
+      () => this.fetchParticipantsCount(roomId),
+      PARTICIPANTS_COUNT_POLL_TIME,
+    );
+    this.fetchParticipantsCount(roomId);
+  }
+
+  scheduleParticipantsRefresh() {
+    if (!this.participantsPollTimer || this.participantsRefreshTimer) return;
+    const roomId = this.activeRoomId;
+    const delay =
+      Math.max(0, this.participantsCacheExpiresAt - Date.now()) +
+      PARTICIPANTS_REFRESH_BUFFER_MS;
+    this.participantsRefreshTimer = setTimeout(() => {
+      this.participantsRefreshTimer = null;
+      this.fetchParticipantsCount(roomId);
+    }, delay);
+  }
+
+  stopShowingParticipantsCount() {
+    this.hideParticipantsCount = true;
+    this.participantsByRole = null;
+    this.stopParticipantsPolling();
+  }
+
+  stopParticipantsPolling() {
+    clearInterval(this.participantsPollTimer);
+    clearTimeout(this.participantsRefreshTimer);
+    this.participantsPollTimer = null;
+    this.participantsRefreshTimer = null;
+    this.participantsCacheExpiresAt = 0;
+  }
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.stopParticipantsPolling();
+  }
+
   async removePeer(peerId) {
     const roomId = this.hmsStore?.getState()?.room?.id;
     const reason = 'You have been kicked out for inappropriate behavior!';
@@ -331,6 +411,7 @@ export default class LiveService extends Service {
           const peer = this.hmsStore.getState(selectLocalPeer);
           this.localPeer = peer;
           this.activeRoomId = roomId;
+          this.startParticipantsPolling(roomId);
           const addedPeerData = await this.addPeer(roomId, peer);
           if (addedPeerData) {
             this.toast.success(
@@ -356,6 +437,7 @@ export default class LiveService extends Service {
         const peer = this.hmsStore.getState(selectLocalPeer);
         this.localPeer = peer;
         this.activeRoomId = roomId;
+        this.startParticipantsPolling(roomId);
         const addedPeerData = await this.addPeer(roomId, peer);
         if (addedPeerData) {
           this.toast.success(
@@ -376,6 +458,7 @@ export default class LiveService extends Service {
       const peer = this.hmsStore.getState(selectLocalPeer);
       this.localPeer = peer;
       this.activeRoomId = roomId;
+      this.startParticipantsPolling(roomId);
       const addedPeerData = await this.addPeer(roomId, peer);
       if (addedPeerData) {
         this.toast.success(
@@ -421,6 +504,7 @@ export default class LiveService extends Service {
 
   async renderScreenVideoToPeers(peers) {
     this.peers = peers;
+    this.scheduleParticipantsRefresh();
     const host = peers.find((peer) => peer.roleName === ROLES.host);
     const maven = peers.find((peer) => peer.roleName === ROLES.maven);
     const moderator = peers.find((peer) => peer.roleName === ROLES.moderator);
