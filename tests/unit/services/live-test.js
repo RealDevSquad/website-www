@@ -280,5 +280,69 @@ module('Unit | Service | live', function (hooks) {
       await this.clock.tickAsync(PARTICIPANTS_COUNT_POLL_TIME * 2);
       assert.strictEqual(this.fetchStub.callCount, 1);
     });
+
+    module('stale responses', function (hooks) {
+      hooks.beforeEach(function () {
+        this.pendingBodies = [];
+        this.fetchStub.callsFake(async () => ({
+          ok: true,
+          status: 200,
+          json: () =>
+            new Promise((resolve) => this.pendingBodies.push(resolve)),
+        }));
+      });
+
+      test('stopping polling aborts the in-flight request', async function (assert) {
+        this.service.startParticipantsPolling(ROOM_ID);
+        const { signal } = this.fetchStub.firstCall.args[1];
+
+        assert.false(signal.aborted);
+        this.service.stopParticipantsPolling();
+        assert.true(signal.aborted);
+      });
+
+      test('ignores a body that resolves after polling stops', async function (assert) {
+        this.service.startParticipantsPolling(ROOM_ID);
+        await this.clock.tickAsync(0);
+
+        this.service.stopParticipantsPolling();
+        this.pendingBodies[0](liveBody(COUNTS));
+        await this.clock.tickAsync(0);
+
+        assert.strictEqual(this.service.participantsByRole, null);
+      });
+
+      test('an old room ended response does not stop the new room polling', async function (assert) {
+        this.service.startParticipantsPolling(ROOM_ID);
+        await this.clock.tickAsync(0);
+
+        this.service.activeRoomId = 'room-2';
+        this.service.startParticipantsPolling('room-2');
+        await this.clock.tickAsync(0);
+
+        this.pendingBodies[0](endedBody('Event has ended'));
+        await this.clock.tickAsync(0);
+
+        assert.false(this.service.hideParticipantsCount);
+        assert.ok(this.service.participantsPollTimer, 'new room still polling');
+
+        this.pendingBodies[1](liveBody(COUNTS));
+        await this.clock.tickAsync(0);
+        assert.deepEqual(this.service.participantsByRole, COUNTS);
+      });
+
+      test('ignores an old response after polling restarts for the same room', async function (assert) {
+        this.service.startParticipantsPolling(ROOM_ID);
+        await this.clock.tickAsync(0);
+
+        this.service.startParticipantsPolling(ROOM_ID);
+        await this.clock.tickAsync(0);
+
+        this.pendingBodies[0](liveBody(COUNTS));
+        await this.clock.tickAsync(0);
+
+        assert.strictEqual(this.service.participantsByRole, null);
+      });
+    });
   });
 });
