@@ -45,6 +45,7 @@ export default class LiveService extends Service {
   participantsPollTimer = null;
   participantsRefreshTimer = null;
   participantsCacheExpiresAt = 0;
+  participantsAbortController = null;
 
   constructor() {
     super(...arguments);
@@ -269,13 +270,17 @@ export default class LiveService extends Service {
   }
 
   async fetchParticipantsCount(roomId) {
+    const signal = this.participantsAbortController?.signal;
+    if (!signal) return;
+    const isStale = () => signal.aborted || roomId !== this.activeRoomId;
+
     try {
       const response = await fetch(
         `${APPS.API_BACKEND}/events/${roomId}/participants`,
-        GET_API_CONFIGS,
+        { ...GET_API_CONFIGS, signal },
       );
 
-      if (roomId !== this.activeRoomId || !this.participantsPollTimer) return;
+      if (isStale()) return;
 
       if (response.status === 404) {
         this.stopShowingParticipantsCount();
@@ -286,7 +291,9 @@ export default class LiveService extends Service {
 
       const { data } = await response.json();
 
-      if (!data.countsByRole) {
+      if (isStale()) return;
+
+      if (!data?.countsByRole) {
         this.stopShowingParticipantsCount();
         return;
       }
@@ -294,12 +301,13 @@ export default class LiveService extends Service {
       this.participantsByRole = data.countsByRole;
       this.participantsCacheExpiresAt = Date.now() + (data.refreshAfterMs ?? 0);
     } catch (error) {
-      console.error(error);
+      if (error?.name !== 'AbortError') console.error(error);
     }
   }
 
   startParticipantsPolling(roomId) {
     this.stopParticipantsPolling();
+    this.participantsAbortController = new AbortController();
     this.participantsPollTimer = setInterval(
       () => this.fetchParticipantsCount(roomId),
       PARTICIPANTS_COUNT_POLL_TIME,
@@ -326,6 +334,8 @@ export default class LiveService extends Service {
   }
 
   stopParticipantsPolling() {
+    this.participantsAbortController?.abort();
+    this.participantsAbortController = null;
     clearInterval(this.participantsPollTimer);
     clearTimeout(this.participantsRefreshTimer);
     this.participantsPollTimer = null;
