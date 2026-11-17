@@ -1,4 +1,5 @@
 import Service, { service } from '@ember/service';
+import { later, cancel } from '@ember/runloop';
 import {
   HMSReactiveStore,
   selectIsSomeoneScreenSharing,
@@ -308,11 +309,19 @@ export default class LiveService extends Service {
   startParticipantsPolling(roomId) {
     this.stopParticipantsPolling();
     this.participantsAbortController = new AbortController();
-    this.participantsPollTimer = setInterval(
-      () => this.fetchParticipantsCount(roomId),
+    this.fetchParticipantsCount(roomId);
+    this.scheduleNextParticipantsPoll(roomId);
+  }
+
+  scheduleNextParticipantsPoll(roomId) {
+    this.participantsPollTimer = later(
+      this,
+      () => {
+        this.fetchParticipantsCount(roomId);
+        this.scheduleNextParticipantsPoll(roomId);
+      },
       PARTICIPANTS_COUNT_POLL_TIME,
     );
-    this.fetchParticipantsCount(roomId);
   }
 
   scheduleParticipantsRefresh() {
@@ -321,10 +330,14 @@ export default class LiveService extends Service {
     const delay =
       Math.max(0, this.participantsCacheExpiresAt - Date.now()) +
       PARTICIPANTS_REFRESH_BUFFER_MS;
-    this.participantsRefreshTimer = setTimeout(() => {
-      this.participantsRefreshTimer = null;
-      this.fetchParticipantsCount(roomId);
-    }, delay);
+    this.participantsRefreshTimer = later(
+      this,
+      () => {
+        this.participantsRefreshTimer = null;
+        this.fetchParticipantsCount(roomId);
+      },
+      delay,
+    );
   }
 
   stopShowingParticipantsCount() {
@@ -336,8 +349,8 @@ export default class LiveService extends Service {
   stopParticipantsPolling() {
     this.participantsAbortController?.abort();
     this.participantsAbortController = null;
-    clearInterval(this.participantsPollTimer);
-    clearTimeout(this.participantsRefreshTimer);
+    cancel(this.participantsPollTimer);
+    cancel(this.participantsRefreshTimer);
     this.participantsPollTimer = null;
     this.participantsRefreshTimer = null;
     this.participantsCacheExpiresAt = 0;
