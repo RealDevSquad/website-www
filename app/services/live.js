@@ -1,5 +1,5 @@
 import Service, { service } from '@ember/service';
-import { later, cancel } from '@ember/runloop';
+import { runTask, cancelTask } from 'ember-lifeline';
 import {
   HMSReactiveStore,
   selectIsSomeoneScreenSharing,
@@ -314,7 +314,7 @@ export default class LiveService extends Service {
   }
 
   scheduleNextParticipantsPoll(roomId) {
-    this.participantsPollTimer = later(
+    this.participantsPollTimer = runTask(
       this,
       () => {
         this.fetchParticipantsCount(roomId);
@@ -330,7 +330,7 @@ export default class LiveService extends Service {
     const delay =
       Math.max(0, this.participantsCacheExpiresAt - Date.now()) +
       PARTICIPANTS_REFRESH_BUFFER_MS;
-    this.participantsRefreshTimer = later(
+    this.participantsRefreshTimer = runTask(
       this,
       () => {
         this.participantsRefreshTimer = null;
@@ -349,8 +349,12 @@ export default class LiveService extends Service {
   stopParticipantsPolling() {
     this.participantsAbortController?.abort();
     this.participantsAbortController = null;
-    cancel(this.participantsPollTimer);
-    cancel(this.participantsRefreshTimer);
+    if (this.participantsPollTimer) {
+      cancelTask(this, this.participantsPollTimer);
+    }
+    if (this.participantsRefreshTimer) {
+      cancelTask(this, this.participantsRefreshTimer);
+    }
     this.participantsPollTimer = null;
     this.participantsRefreshTimer = null;
     this.participantsCacheExpiresAt = 0;
