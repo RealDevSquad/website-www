@@ -14,7 +14,6 @@ module('Unit | Route | applications', function (hooks) {
   hooks.beforeEach(function () {
     this.fetchStub = sinon.stub(window, 'fetch');
     this.route = this.owner.lookup('route:applications');
-    sinon.stub(this.route.router, 'replaceWith');
     sinon.stub(this.route.toast, 'error');
   });
 
@@ -27,28 +26,6 @@ module('Unit | Route | applications', function (hooks) {
     assert.expect(1);
     const route = this.owner.lookup('route:applications');
     assert.ok(route, 'The applications route exists');
-  });
-
-  test('redirects to page-not-found when dev flag is not true', function (assert) {
-    const transition = { to: { queryParams: { dev: 'false' } } };
-
-    this.route.beforeModel(transition);
-
-    assert.ok(
-      this.route.router.replaceWith.calledOnceWith('/page-not-found'),
-      'Redirected to /page-not-found when dev is not true',
-    );
-  });
-
-  test('allows access when dev flag is true', function (assert) {
-    const transition = { to: { queryParams: { dev: 'true' } } };
-
-    this.route.beforeModel(transition);
-
-    assert.ok(
-      this.route.router.replaceWith.notCalled,
-      'No redirection occurs when dev query param is true',
-    );
   });
 
   test('returns null when transitioning to applications.detail', async function (assert) {

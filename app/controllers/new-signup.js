@@ -5,7 +5,6 @@ import { tracked } from '@glimmer/tracking';
 import { APPS } from '../constants/urls';
 import { TOAST_OPTIONS } from '../constants/toast-options';
 import {
-  CHECK_USERNAME_AVAILABILITY,
   GENERATE_USERNAME_URL,
   SELF_USER_PROFILE_URL,
   SELF_PROFILE_UPDATE_URL,
@@ -66,22 +65,10 @@ export default class NewSignupController extends Controller {
     }
   }
 
-  async checkUserName(userName) {
-    try {
-      const response = await apiRequest(CHECK_USERNAME_AVAILABILITY(userName));
-      const data = await response.json();
-      const { isUsernameAvailable } = data;
-      return isUsernameAvailable;
-    } catch {
-      this.toast.error(SIGNUP_ERROR_MESSAGES.others, 'error!', TOAST_OPTIONS);
-      return false;
-    }
-  }
-
-  async registerUser(signupDetails, devFlag) {
+  async registerUser(signupDetails) {
     const getResponse = await apiRequest(SELF_USER_PROFILE_URL);
     const userData = await getResponse.json();
-    const url = SELF_PROFILE_UPDATE_URL(userData?.id, devFlag);
+    const url = SELF_PROFILE_UPDATE_URL(userData?.id);
     const res = await apiRequest(url, 'PATCH', signupDetails);
     if (!res) {
       throw new Error(SIGNUP_ERROR_MESSAGES.others);
@@ -130,28 +117,16 @@ export default class NewSignupController extends Controller {
       const { firstName, lastName, role } = this.signupDetails;
       this.isLoading = true;
 
-      if (!this.isDevMode) {
-        username = await this.generateUsername(firstName, lastName);
+      username = await this.generateUsername(firstName, lastName);
 
-        const isUsernameAvailable = await this.checkUserName(username);
-
-        if (!isUsernameAvailable) {
-          this.isLoading = false;
-          this.isButtonDisabled = false;
-          return (this.error = SIGNUP_ERROR_MESSAGES.userName);
-        }
-      }
-
-      const basePayload = {
+      const signupDetails = {
         first_name: firstName,
         last_name: lastName,
+        username,
+        ...(!this.isDevMode && { role }),
       };
 
-      const signupDetails = this.isDevMode
-        ? { ...basePayload, role }
-        : { ...basePayload, username };
-
-      const res = await this.registerUser(signupDetails, this.isDevMode);
+      const res = await this.registerUser(signupDetails);
 
       if (res?.status === 204) {
         this.currentStep = this.LAST_STEP;
