@@ -126,6 +126,7 @@
     {{/if}}
   </div>
 
+  {{! Dropdown  }}
   <section
     data-test-dropdown
     class="menu {{if this.isMenuOpen 'active-menu' ''}}"
@@ -135,7 +136,6 @@
       @route={{this.HOME_PAGE}}
       class="menu__link"
       rel="noopener noreferrer"
-      target="_blank"
     >
       Home
     </LinkTo>
@@ -144,7 +144,6 @@
       href={{if @dev "/status?dev=true" this.MY_STATUS_URL}}
       class="menu__link"
       rel="noopener noreferrer"
-      target="_blank"
     >
       Status
     </a>
@@ -153,7 +152,6 @@
       href={{if @dev "/profile?dev=true" this.PROFILE_URL}}
       class="menu__link"
       rel="noopener noreferrer"
-      target="_blank"
     >
       Profile
     </a>
@@ -162,7 +160,6 @@
       href={{this.TASKS_URL}}
       class="menu__link"
       rel="noopener noreferrer"
-      target="_blank"
     >
       Tasks
     </a>
@@ -171,7 +168,6 @@
       href={{this.IDENTITY_URL}}
       class="menu__link"
       rel="noopener noreferrer"
-      target="_blank"
     >
       Identity
     </a>
