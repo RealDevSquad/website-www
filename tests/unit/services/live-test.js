@@ -121,13 +121,7 @@ module('Unit | Service | live', function (hooks) {
 
     hooks.beforeEach(function () {
       this.clock = sinon.useFakeTimers({
-        toFake: [
-          'setTimeout',
-          'clearTimeout',
-          'setInterval',
-          'clearInterval',
-          'Date',
-        ],
+        toFake: ['setTimeout', 'clearTimeout', 'Date'],
       });
       this.service = this.owner.lookup('service:live');
       this.service.activeRoomId = ROOM_ID;
