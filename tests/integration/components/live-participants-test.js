@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'website-www/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import {
   hostPeer,
@@ -175,5 +175,62 @@ module('Integration | Component | live-participants', function (hooks) {
     />`);
 
     assert.dom('[data-test-icon="remove"]').doesNotExist();
+  });
+
+  module('server participants count', function (hooks) {
+    hooks.beforeEach(function () {
+      this.live = this.owner.lookup('service:live');
+      this.setProperties({ peers: guestData, openKickoutModal: () => {} });
+    });
+
+    const renderGuests = () =>
+      render(hbs`<LiveParticipants
+        @user='Guests'
+        @role='guest'
+        @peers={{this.peers}}
+        @minimumParticipants="guest"
+        @openKickoutModal={{this.openKickoutModal}}
+      />`);
+
+    test('before the first response it shows the peer list count', async function (assert) {
+      await renderGuests();
+      assert.dom('[data-test-sidebar-body-role-guest]').hasText('Guests (2)');
+    });
+
+    test('switches to the server count when a live response arrives', async function (assert) {
+      await renderGuests();
+      assert.dom('[data-test-sidebar-body-role-guest]').hasText('Guests (2)');
+
+      this.live.participantsByRole = {
+        host: 1,
+        moderator: 0,
+        maven: 0,
+        guest: 5,
+      };
+      await settled();
+
+      assert.dom('[data-test-sidebar-body-role-guest]').hasText('Guests (5)');
+    });
+
+    test('live with total 0 shows (0) even if the peer list has guests', async function (assert) {
+      this.live.participantsByRole = {
+        host: 0,
+        moderator: 0,
+        maven: 0,
+        guest: 0,
+      };
+      await renderGuests();
+
+      assert.dom('[data-test-sidebar-body-role-guest]').hasText('Guests (0)');
+    });
+
+    test('when the count is hidden it shows only the role name', async function (assert) {
+      this.live.hideParticipantsCount = true;
+      this.live.participantsByRole = null;
+      await renderGuests();
+
+      assert.dom('[data-test-sidebar-body-role-guest]').hasText('Guests');
+      assert.dom('[data-test-sidebar-body-role-guest] span').doesNotExist();
+    });
   });
 });
